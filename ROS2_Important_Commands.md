@@ -61,3 +61,27 @@ This variable allows you to limit the ROS 2 communication to localhost only. Thi
 ```
 echo "export ROS_LOCALHOST_ONLY=1" >> ~/.bashrc
 ```
+
+<h3>Note: </h3>
+
+When needing to remove a given command within .bashrc you will need to go into that file via these commands:
+
+```
+#for locating the file
+ls -a
+
+#for entering into the file
+vi .bashrc
+```
+
+Important commands when editing a file:
+
+```
+i: for inserting
+
+esc: for getting out of inserting
+
+Shift ZZ: for saving the file and quickly exiting out of the file
+
+:q! -> for exiting the file without saving
+```
