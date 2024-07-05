@@ -52,3 +52,11 @@ links:<br><br>
 * https://www.imec-int.com/drupal/sites/default/files/2018-11/Accurate%20and%20secure%20Distance%20Measurement%20with%20Bluetooth.pdf (Bluetooth distance measuring)
 * https://www.swri.org/industry/industrial-robotics-automation/blog/web-based-robot-user-interface (webpage interface between robotics)
 
+**<h1>2. Overall Description**</h1><br>
+**2.1 Compete analysis**<br>
+
+| Top Competitor | Strengths | Weaknesses | Opportunities | Threats |
+| --- | --- |--- |--- |--- |
+| Gita(mini) & Gita(plus) | - both devices based on the type can carry up to 20-40 lbs <br> <br> - can follow the user and holder of the device while avoiding obstacles along the way <br> <br> - Contains an arrayset of sensors in order to track its leader and avoid obstacles along the way <br><br> - contains a bluetooth speaker that is used for music| - primary focus is to carry your groceries<br><br> -is not meant for rural or tedious terrain <br><br> - battery life can only hold up for 4 hours at most <br><br> - the price range for such a device is above $1000 | - Creating a product that will be able to carry more weight compared to the counterparts. <br> <br> - improve the battery life to withstand as much as 8 hours or more <br><br> - improve the costs for such a robot so that is affordable for any consumer | - improvement and increase of weight lifting for a device similar to what we plan to create <br><br> - The costs for a robot from a competitor decreases to a cosumer level friendly product |
+
+
