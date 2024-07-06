@@ -59,4 +59,92 @@ links:<br><br>
 | --- | --- |--- |--- |--- |
 | Gita(mini) & Gita(plus) | - both devices based on the type can carry up to 20-40 lbs <br> <br> - can follow the user and holder of the device while avoiding obstacles along the way <br> <br> - Contains an arrayset of sensors in order to track its leader and avoid obstacles along the way <br><br> - contains a bluetooth speaker that is used for music| - primary focus is to carry your groceries<br><br> -is not meant for rural or tedious terrain <br><br> - battery life can only hold up for 4 hours at most <br><br> - the price range for such a device is above $1000 | - Creating a product that will be able to carry more weight compared to the counterparts. <br> <br> - improve the battery life to withstand as much as 8 hours or more <br><br> - improve the costs for such a robot so that is affordable for any consumer | - improvement and increase of weight lifting for a device similar to what we plan to create <br><br> - The costs for a robot from a competitor decreases to a cosumer level friendly product |
 
+**2.2 User Classes and Customer Profile**<br>
+* The who for our user classes include Students, Elderly, Families, Workers, the Disabled, and Individuals <br>
+* The when for all of our users would be when they need to travel by foot with belongins that they do not wish to carry. <br>
+* The how would be by a connection between a users cellular phone via bluetooth and the robot itself in order for it to start following the user <br>
+* Frequency will be based on how far they will need to travel by foot, and how many belongings that they do not wish to carry with them. <br><br>
+
+**Intended Users:**
+| Who | What | Where | Why | When | How |
+| --- | --- |--- |--- |--- |--- |
+| Students | The robot is designed to carry students' belongings such as books, notebooks, and computers. | Schools ranging from elementary to university level. | To alleviate the burden of carrying heavy textbooks between classes or storing them in lockers. | During school hours and while moving from one location to another. | Students can place their belongings into the robot and control it via a mobile app connected through Bluetooth. |
+| Elderly | The robot can carry belongings for elderly individuals, especially when items are heavy or inconvenient to carry by hand. | Residential areas, open spaces, marketplaces, etc. | To assist elderly individuals in carrying heavy items during their daily activities. | Whenever an elderly individual needs to carry belongings or purchase items to store in the robot. | Elderly individuals can place their belongings into the robot and control it via a mobile app connected through Bluetooth. |
+| Families | The robot can carry a family's belongings, including food, drinks, toys, medical necessities, and heavy loads. | Residential areas, open spaces, marketplaces, etc. | To help family members avoid the inconvenience of carrying heavy items by hand during outings. | When the family is traveling on foot to places like recreational spaces, beaches, city parks, and events. | Families can place their belongings into the robot and control it via a mobile app connected through Bluetooth. |
+| Workers | The robot can carry personal belongings or necessary equipment for workers. | Workplaces. | To assist workers in carrying personal or work-related belongings that may be heavy or inconvenient. | When a worker needs to bring belongings to work, or when the workplace requires robots to transport work-related items from station to station. | Workers can place their belongings into the robot and control it via a mobile app connected through Bluetooth. |
+| The Disabled | The robot can carry personal or work-related belongings for individuals with disabilities. | Any location where the robot is needed by the disabled individual. | To assist disabled individuals in carrying their belongings, providing them with greater independence. | Anytime the robot is needed by the disabled individual, such as going to the store, walking downtown, or moving around residential areas. | Disabled individuals can place their belongings into the robot and control it via a mobile app connected through Bluetooth. |
+| Individuals | The robot can carry personal or work-related belongings for any individual. | Any location where the robot is needed by the individual. | To provide individuals with a convenient way to transport their belongings, whether due to weight or personal preference. | Anytime the robot is needed by the individual, such as going to the store, walking downtown, or moving around residential areas. | Individuals can place their belongings into the robot and control it via a mobile app connected through Bluetooth. |
+
+**In Reality:**<br>
+This robot is versatile and can be used by any individual, regardless of their current activity. Whether it's for work-related tasks, family outings, or simply to carry personal belongings, this robot is designed to meet the individual's needs. <br><br>
+
+**2.3 Design and Implementation Constraints**<br>
+
+The construction of the robot presents a significant challenge, given the intricate engineering required to create a device capable of carrying and autonomously following a user. The hardware components and their assembly will demand meticulous attention and precision.
+
+On the software side, we are currently utilizing an older version of ROS2, specifically the Foxy version, which is compatible with Raspberry Pi models 3 and below. This imposes certain limitations as some packages or libraries available in newer ROS2 versions are not accessible in Foxy. However, we anticipate that this will not pose a major issue, as the bulk of our project work will be executed on our controller hardware, aided by our controlling software operating on the Raspberry Pi.
+
+In terms of project success, our primary focus will be on systematic organization and incremental prototyping. We plan to develop a prototype during the first quarter and progressively refine it. Our goal is to deliver a practical and beneficial product for any consumer seeking a robot to carry their belongings.
+
+**2.4 Assumptions and Dependencies**<br>
+
+
+The successful completion of this project hinges on several factors. A significant challenge could arise from changes in the hardware and software resources required for the robot’s optimal functionality. However, these potential issues are secondary to the primary challenge of maintaining the product’s price under $500. This price point will be a constant consideration throughout the development of our product, but our determination and strategic planning aim to achieve or come close to this goal.
+
+Potential changes in hardware and software could cause temporary delays in the product’s development. The procurement of necessary materials for the hardware aspect of the project could affect our timeline. Similarly, on the software side, the development of the website and app may encounter delays due to software requirements, errors, and bugs. However, based on our past experiences, we are confident in our team’s ability to address these issues promptly and meet our project deadline.
+
+We plan to use reliable hardware that has proven effective in both major manufacturing environments and hobbyist builds. For the software, we will develop an API to establish a connection between the robot and the website/mobile app. This will allow users to visually monitor the robot’s activities, battery life, and control the device based on user input.
+<br><br>
+
+**<h1>3. Specific Requirements**</h1><br>
+
+**3.1 User Interfaces**<br>
+
+(These images will be created)
+![image](images/MobileAppInterface.png)
+![image](images/WebsiteInterface.png)
+
+**Homepage (Large Screen):**
+
+The homepage will prominently feature the product logo in the top left corner. The product’s name and image will be centrally displayed, serving as the focal point of the webpage. Navigation tabs at the top will provide easy access to specific product information that users are likely to seek. A summary positioned near the bottom, just below the robot’s image, will succinctly convey the product’s primary function and its global applicability to all consumers.
+
+The website’s design will reflect the product’s branding, incorporating elements such as the logo, color scheme, and visual identity. Specific elements will highlight our robotic product. The layout will be optimized for a cohesive and visually appealing user experience across various device screen sizes.
+
+**Mobile App:**
+
+The mobile app, available for free on all major mobile app stores (including Apple and Android), will provide users with vital information about the robot. Upon opening the app, users will be greeted with a 3D model of the robot. The top right corner will display a battery life indicator, while the top left corner will show the robot’s internal temperature. Positioned centrally at the bottom, just below the 3D model, an indicator will display the robot’s current carrying capacity, informing users of the weight the robot is presently carrying.
+
+**3.2 Functional Requirements**<br>
+* The functional requirements for this project includes a robot that will follow the user while avoiding obstacles and allow the user to place their belongings within it. 
+* At the same time the user will be able to control certain mechanics of the robot within the mobile app. 
+* And as a consumer that wishes to purchase the product, they will be able to visit the website that contains information about our product. And purchase our product from the site. <br>
+
+**3.3 Performance and Software Quality Requirements**<br>
+
+1. **Reliability**: The robot should operate without failure under specified conditions for a designated period of time. It should be able to recover from potential failures without significant downtime.<br><br>
+2. **Efficiency**: The robot should make optimal use of system resources such as memory, disk space, and processing power. The mobile app and website should load quickly and respond to user input without delay.<br><br>
+3. **Usability**: The robot, mobile app, and website should be user-friendly and intuitive. Users should be able to understand and use the system without extensive training or technical knowledge.<br><br>
+4. **Maintainability**: The software should be designed in a way that allows for easy updates and modifications. The code should be well-documented and follow best practices for readability and maintainability.<br><br>
+5. **Portability**: The mobile app should be compatible with various operating systems (iOS, Android) and the website should be accessible from different browsers (Chrome, Firefox, Safari, Edge).<br><br>
+6. **Scalability**: The system should be able to handle an increasing number of tasks effectively. It should be designed to scale up or down based on demand.<br><br>
+7. **Security**: The system should protect against unauthorized access and data breaches. User data should be encrypted and the system should comply with relevant privacy regulations.<br><br>
+8. **Interoperability**: The robot should be able to interact effectively with other systems or devices. It should follow standard protocols for communication and data exchange.<br><br>
+9. **Battery Life**: The robot should be able to operate for a reasonable amount of time on a single charge. Power management features should be implemented to extend battery life.<br><br>
+10. **Load Capacity**: The robot should be able to carry up to 50 lbs of weight without impacting its performance or stability.<br><br>
+
+**<h1>4. Breakdown of work/Project timeline plan**</h1><br>
+
+<br>
+
+(Requires changing)
+| Requirements | Millstone | Assigned to: |
+| --- | --- | --- |
+| Req. 1: General Documentation for the product | M1 | Frank, Igor|
+| Req. 2: prototyping the robot, mobile app, & website | M2 | Frank, Igor | 
+| Req. 3: polishing/refining the robot, mobile app, & website | M3  |  Frank, Igor  |   
+| Req. 4: Bug fixing, Security fixing, and polishing the robot, mobile app, & website | M4  | Frank, Igor |
+
+
+
+
 
