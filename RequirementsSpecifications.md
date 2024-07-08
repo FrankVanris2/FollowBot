@@ -136,13 +136,25 @@ The mobile app, available for free on all major mobile app stores (including App
 
 <br>
 
-(Requires changing)
-| Requirements | Millstone | Assigned to: |
+| Requirements | Quarters | Assigned to: |
 | --- | --- | --- |
-| Req. 1: General Documentation for the product | M1 | Frank, Igor|
-| Req. 2: prototyping the robot, mobile app, & website | M2 | Frank, Igor | 
-| Req. 3: polishing/refining the robot, mobile app, & website | M3  |  Frank, Igor  |   
-| Req. 4: Bug fixing, Security fixing, and polishing the robot, mobile app, & website | M4  | Frank, Igor |
+| Req. 1: General Documentation for the product | Q1 | Frank, Igor|
+| Req. 2: prototyping the robot, mobile app, & website | Q2 | Frank, Igor | 
+| Req. 3: polishing/refining the robot, mobile app, & website | Q3  |  Frank, Igor  |   
+| Req. 4: Bug fixing, Security fixing, and polishing the robot, mobile app, & website | Q4  | Frank, Igor |
+
+| User Stories | Millstone | Assigned to: |
+| --- | --- | --- |
+| A user will be allowed to click tabs in the website in order to seek information about the robot and how it performs and works. | M1  | Igor |   
+| The user will be allowed to find the website via a google search in order to seek information about the robot | M2 | Igor |
+| The User will be allowed to seek the cost of such a robot on the website | M3 | Igor |
+| The user will be allowed to sign in to their account within the website | M4 | Igor |
+| The User will be allowed to connect their robot (if they have one) via the website to test it's functionality for fun and testing purposes | M5 | Frank, Igor |
+| When clicking the connect button on the app, the bluetooth will connect with any Follow bot robot in the area | M6 | Frank|
+| The robot will follow the user always behind and stay about 1 meter away from the user, the user is allowed to move close to the robot without the robot moving away from the user. | M7 | Frank | 
+| The Mobile App will constantly update to retrieve information from the robot about it's battery life, temperature, and weight | M8  | Frank |
+| The battery life will be able to last for more than 4 hours | M9 | Frank |
+
 
 
 
