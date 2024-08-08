@@ -276,4 +276,6 @@ ros2 bag record -o subset /turtle1/cmd_vel /turtle1/pose
 `-o` allows you to choose a unique name for the bag
 `subset` is the name of the bag you are choosing.
 
-You can record data passed on topics in your ROS 2 system using the ros2 bag command. Whether you’re sharing your work with others or introspecting your own experiments, it’s a great tool to know about.
+You can record data passed on topics in your ROS 2 system using the ros2 bag command. Whether youre sharing your work with others or introspecting your own experiments, its a great tool to know about.
+
+There are more commands and information found on the wiki and the documentation page.
