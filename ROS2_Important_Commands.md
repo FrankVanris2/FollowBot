@@ -279,3 +279,22 @@ ros2 bag record -o subset /turtle1/cmd_vel /turtle1/pose
 You can record data passed on topics in your ROS 2 system using the ros2 bag command. Whether youre sharing your work with others or introspecting your own experiments, its a great tool to know about.
 
 There are more commands and information found on the wiki and the documentation page.
+
+<h2> Colcon IMPORTANT COMMAND </h2>
+
+When building Colcon on a raspberry pi with 1GB of RAM it is best advised
+to not use this command:
+
+```
+#DO NOT USE THIS COMMAND
+colcon build --symlink-install
+```
+Doing this will only crash your build and will cause more trouble in the end.
+To fix this you must run the following command:
+```
+#DO THIS
+export MAKEFLAGS="-j 1"
+colcon build --executor sequential
+```
+This will use 1 core of your cpu to run the build which will put less load on the RAM of the 
+Raspberry pi.
