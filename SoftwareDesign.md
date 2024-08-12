@@ -93,6 +93,69 @@ While playing with different kinds of motors, motor drivers, microcontroller, an
 
 <h2> System Overview<br> </h2>
 
+<h2>uwb controller<br> </h2>
+	To allow the robot to follow us 
+	???????<br><br>
+
+<h2>app<br> </h2>
+
+<h4>Goal:</h4>
+    The goal of app is to control, maniuplte the robot and  given status report.
+
+<h4>requirement :</h4>
+
+- **Light and Dark Mode**  
+  The app should support both light and dark themes for user interface customization.
+
+- **Robot Follow Feature**  
+  The app will allow the robot to follow the phone, potentially using GPS or similar technology.
+
+- **Robot Status Updates**  
+  The app will update the robot's status every 30 seconds. The update will include:
+  - Power level
+  - Temperature
+  - Weight of the robot
+  - Information on any movement issues related to the weight
+
+- **Distance Notifications**  
+  The app will send notifications if the robot gets too far away from the phone.
+
+- **Controller Functionality**  
+  The app will act as a controller for the robots, using the touchscreen. 
+  - Optionally, a game controller can be used if the touchscreen is not functional.
+
+<h2>website<br> </h2>
+
+
+## Website Requirements
+
+<h4>Goal:</h4>
+   The goal of the website is to inform the users what the robot does and send queries back to the owners of the websites. 
+
+- **Technologies**  
+  The website will be written in JavaScript, HTML, and CSS.
+
+- **Light and Dark Mode**  
+  The website will support both light and dark modes for user interface customization.
+
+- **Pages**  
+  The website will contain four main pages:
+  
+  1. **Robot**  
+     - This page will include text and an embedded video from YouTube.
+  
+  2. **App**  
+     - This page will include text, an embedded video from YouTube, and a link to download the app.
+  
+  3. **About Us**  
+     - This page will include text and links to our work and social media profiles.
+  
+  4. **Feedback**  
+     - This page will include a text area where users can provide feedback.
+     - A private section for owners will be available to download and delete messages.
+     - Consider using a database to store and manage feedback submissions.
+
+ 
 
 
 
