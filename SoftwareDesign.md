@@ -155,7 +155,15 @@ While playing with different kinds of motors, motor drivers, microcontroller, an
      - A private section for owners will be available to download and delete messages.
      - Consider using a database to store and manage feedback submissions.
 
+
+<h2>Robotic Architecture</h2>
+
+![alt text](image-2.png)
+
  
+ <h2>Systems Architecture:</h2>
 
+![alt text](image-3.png)
 
+<h2>Architectural Design for both Robotic and System sides: </h2>
 
