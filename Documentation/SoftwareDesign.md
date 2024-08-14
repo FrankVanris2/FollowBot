@@ -158,12 +158,253 @@ While playing with different kinds of motors, motor drivers, microcontroller, an
 
 <h2>Robotic Architecture</h2>
 
-![alt text](image-2.png)
+![alt text](RoboticArchitecture.png)
 
  
  <h2>Systems Architecture:</h2>
 
-![alt text](image-3.png)
+![alt text](SystemsArchitecture.png)
 
 <h2>Architectural Design for both Robotic and System sides: </h2>
+
+<h3> Robot Architectural Design </h3>
+
+1. Robot Server:
+
+    * Robot server takes place within the ROS2 Raspberry Pi
+    * allows information back and forth between client nodes.
+
+2. Universal Topic:
+    * Universal topic allows for message transferring and message retrieving between client and server nodes.
+
+3. Client Nodes:
+
+    a. Motor Controller Node:
+
+        * Control motor movement and allow for mathematical calculations between movements between a point to another point
+    
+    b. Sensors Node:
+        
+        * Object detection, and avoidance sensors such as Lidar, supersonic
+        and others. Messaging server when close to object or far from object.
+    
+    c. Motor Driver Node:
+
+        * Allows control for the motors and will allow speed control for the motor controller as well as battery life control.
+    
+    d. Distance Node:
+
+        * This will allow for identifying the distance between a point to another point in space.
+
+    e. Motor Node:
+
+        * Motor control and power supply to the motors itself.
+
+4. External Weight Node:
+    * This node is seperate from the others because this will instantly connect to the mobile device in order to give live data of how much weight is being stored on the device itself.
+
+<h3> Systems Architectural Design </h3>
+
+1. Server Follow Bot:
+    * We know that this will consist of all the connections to the client nodes, but it will also connect between the mobile app and the website itself.
+  
+2. ROS2 Raspberry Pi:
+    * This device consists of all the fundamental backends in order to connect to the website and the mobile app.
+
+3. Website interaction:
+    * Backend to frontend interaction between the website and the Raspberry pi
+    * With the website you will be able to also control the robot itself a bit if one is near by.
+
+4. Website:
+    * The website will consist of reliable information about the robot as well as have some minor interaction with the robot.
+
+5. Mobile interaction:
+    * Backend to frontend interaction between the mobile app and the Raspberry pi
+    * The mobile app will have the main control over the robot itself, and will display reliable information about the robot
+
+6. Mobile App:
+    * You will be able to interact with the robot through a mobile interface. It will allow you to see certain specs such as battery, temperature, weight, and distance. You will also be able to control the robot if needed.
+
+7. Mail Application interaction:
+    * There will be an interaction from frontend to frontend for sending messages through email to a website owner who.
+
+8. Mail Application:
+    * The owner of the website will recieve emails from users that use the feedback page on the website. This will allow owners of the website to gain reliable information based on issues or future add-ons for the robot.
+
+<h2> Decomposition of Architectural Design </h2>
+
+### Robot Architectural Design
+
+#### 1. Robot Server
+- **Description**: The Robot Server operates within the ROS2 Raspberry Pi and facilitates communication between client nodes.
+- **Subsystem Model**:
+  - **Class**: `RobotServer`
+  - **Attributes**: `serverID`, `status`
+  - **Methods**: `initialize()`, `sendMessage()`, `receiveMessage()`
+- **Interface Specifications**:
+  - **Interfaces**: `ICommunication`
+  - **Methods**: `sendMessage()`, `receiveMessage()`
+
+#### 2. Universal Topic
+- **Description**: The Universal Topic enables message transfer and retrieval between client and server nodes.
+- **Subsystem Model**:
+  - **Class**: `UniversalTopic`
+  - **Attributes**: `topicID`, `messageQueue`
+  - **Methods**: `publishMessage()`, `subscribe()`
+- **Interface Specifications**:
+  - **Interfaces**: `ITopic`
+  - **Methods**: `publishMessage()`, `subscribe()`
+
+#### 3. Client Nodes
+
+##### a. Motor Controller Node
+- **Description**: Controls motor movement and performs mathematical calculations for movement between points.
+- **Subsystem Model**:
+  - **Class**: `MotorControllerNode`
+  - **Attributes**: `controllerID`, `currentPosition`, `targetPosition`
+  - **Methods**: `calculatePath()`, `moveToTarget()`
+- **Interface Specifications**:
+  - **Interfaces**: `IMotorControl`
+  - **Methods**: `calculatePath()`, `moveToTarget()`
+
+##### b. Sensors Node
+- **Description**: Handles object detection and avoidance using sensors like Lidar and supersonic sensors.
+- **Subsystem Model**:
+  - **Class**: `SensorsNode`
+  - **Attributes**: `sensorID`, `objectDistance`
+  - **Methods**: `detectObject()`, `sendAlert()`
+- **Interface Specifications**:
+  - **Interfaces**: `ISensor`
+  - **Methods**: `detectObject()`, `sendAlert()`
+
+##### c. Motor Driver Node
+- **Description**: Controls the motors, including speed and battery life management.
+- **Subsystem Model**:
+  - **Class**: `MotorDriverNode`
+  - **Attributes**: `driverID`, `motorSpeed`, `batteryLevel`
+  - **Methods**: `controlSpeed()`, `monitorBattery()`
+- **Interface Specifications**:
+  - **Interfaces**: `IMotorDriver`
+  - **Methods**: `controlSpeed()`, `monitorBattery()`
+
+##### d. Distance Node
+- **Description**: Identifies the distance between points in space.
+- **Subsystem Model**:
+  - **Class**: `DistanceNode`
+  - **Attributes**: `distanceID`, `startPoint`, `endPoint`
+  - **Methods**: `calculateDistance()`
+- **Interface Specifications**:
+  - **Interfaces**: `IDistance`
+  - **Methods**: `calculateDistance()`
+
+##### e. Motor Node
+- **Description**: Manages motor control and power supply.
+- **Subsystem Model**:
+  - **Class**: `MotorNode`
+  - **Attributes**: `motorID`, `powerSupply`
+  - **Methods**: `controlMotor()`
+- **Interface Specifications**:
+  - **Interfaces**: `IMotor`
+  - **Methods**: `controlMotor()`
+
+#### 4. External Weight Node
+- **Description**: Connects to a mobile device to provide live data on the weight being stored on the device.
+- **Subsystem Model**:
+  - **Class**: `ExternalWeightNode`
+  - **Attributes**: `weightID`, `currentWeight`
+  - **Methods**: `connectToDevice()`, `sendWeightData()`
+- **Interface Specifications**:
+  - **Interfaces**: `IWeight`
+  - **Methods**: `connectToDevice()`, `sendWeightData()`
+
+
+### Systems Architectural Design
+
+#### 1. Server Follow Bot
+- **Description**: This subsystem consists of all the connections to the client nodes and connects the mobile app and the website.
+- **Subsystem Model**:
+  - **Class**: `ServerFollowBot`
+  - **Attributes**: `botID`, `status`
+  - **Methods**: `connectToClientNodes()`, `connectToMobileApp()`, `connectToWebsite()`
+- **Interface Specifications**:
+  - **Interfaces**: `IConnection`
+  - **Methods**: `connectToClientNodes()`, `connectToMobileApp()`, `connectToWebsite()`
+
+#### 2. ROS2 Raspberry Pi
+- **Description**: This device contains all the fundamental backends to connect to the website and the mobile app.
+- **Subsystem Model**:
+  - **Class**: `ROS2RaspberryPi`
+  - **Attributes**: `deviceID`, `backendStatus`
+  - **Methods**: `initializeBackend()`, `connectToWebsite()`, `connectToMobileApp()`
+- **Interface Specifications**:
+  - **Interfaces**: `IBackend`
+  - **Methods**: `initializeBackend()`, `connectToWebsite()`, `connectToMobileApp()`
+
+#### 3. Website Interaction
+- **Description**: Backend to frontend interaction between the website and the Raspberry Pi. Allows control of the robot if nearby.
+- **Subsystem Model**:
+  - **Class**: `WebsiteInteraction`
+  - **Attributes**: `interactionID`, `websiteStatus`
+  - **Methods**: `backendToFrontend()`, `controlRobot()`
+- **Interface Specifications**:
+  - **Interfaces**: `IWebsiteInteraction`
+  - **Methods**: `backendToFrontend()`, `controlRobot()`
+
+#### 4. Website
+- **Description**: Provides reliable information about the robot and allows minor interaction with the robot.
+- **Subsystem Model**:
+  - **Class**: `Website`
+  - **Attributes**: `websiteID`, `content`
+  - **Methods**: `displayInfo()`, `interactWithRobot()`
+- **Interface Specifications**:
+  - **Interfaces**: `IWebsite`
+  - **Methods**: `displayInfo()`, `interactWithRobot()`
+
+#### 5. Mobile Interaction
+- **Description**: Backend to frontend interaction between the mobile app and the Raspberry Pi. The mobile app has main control over the robot.
+- **Subsystem Model**:
+  - **Class**: `MobileInteraction`
+  - **Attributes**: `interactionID`, `mobileStatus`
+  - **Methods**: `backendToFrontend()`, `controlRobot()`
+- **Interface Specifications**:
+  - **Interfaces**: `IMobileInteraction`
+  - **Methods**: `backendToFrontend()`, `controlRobot()`
+
+#### 6. Mobile App
+- **Description**: Allows interaction with the robot through a mobile interface. Displays specs like battery, temperature, weight, and distance. Allows control of the robot.
+- **Subsystem Model**:
+  - **Class**: `MobileApp`
+  - **Attributes**: `appID`, `specs`
+  - **Methods**: `displaySpecs()`, `controlRobot()`
+- **Interface Specifications**:
+  - **Interfaces**: `IMobileApp`
+  - **Methods**: `displaySpecs()`, `controlRobot()`
+
+#### 7. Mail Application Interaction
+- **Description**: Frontend to frontend interaction for sending messages through email to the website owner.
+- **Subsystem Model**:
+  - **Class**: `MailAppInteraction`
+  - **Attributes**: `interactionID`, `emailStatus`
+  - **Methods**: `sendEmail()`
+- **Interface Specifications**:
+  - **Interfaces**: `IMailInteraction`
+  - **Methods**: `sendEmail()`
+
+#### 8. Mail Application
+- **Description**: The website owner receives emails from users using the feedback page. Provides reliable information based on issues or future add-ons for the robot.
+- **Subsystem Model**:
+  - **Class**: `MailApplication`
+  - **Attributes**: `mailID`, `feedback`
+  - **Methods**: `receiveEmail()`, `processFeedback()`
+- **Interface Specifications**:
+  - **Interfaces**: `IMailApplication`
+  - **Methods**: `receiveEmail()`, `processFeedback()`
+
+
+<h2> Robotic and Systems Design Rationale </h2>
+
+The reason we chose this design for our robotics system is to ensure simplicity and straightforwardness, avoiding the complexity seen in other systems. This design allows us to easily create our classes and facilitate seamless communication between nodes. Additionally, it enables smooth interaction between the frontend and backend, ensuring hassle-free operations.
+
+
+
 
