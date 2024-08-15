@@ -20,9 +20,14 @@ Bellevue College<br><br>
 **1.3.1 In scope**<br>
 * *The individual will be allowed to put up to 50 lbs of weight onto the robot itself with no hassle whatsoever.*<br>
 * *The robot will be able to avoid obstacles while following the individual with their belongings.*<br>
+* *The mobile app should be cross-platform between all mobile devices*.<br>
+* *The user will be able to sign in to the mobile app with a authentication protocol that will require the key of the robot near by.*<br>
+* *Website will consists of guides for the user in order to communicate any questions or problems with their device.*<br>
 * *The robot will contain a mobile user interface for the individual to use in order to control/look at the specs and health of the robot.*<br>
 * *Battery life for the robot should be above 8 hours of life and the device must be rechargable.*<br>
-* *Cost of product must be at most under $500 and at best under $300.*<br><br>
+* *Allow for historical data retrieval based on the battery life, autonomous movement of the robot, as well as distance control in order to find better ways for autonomous movement through machine learning models.*<br>
+* *Cost of product must be at most under $500 and at best under $300.
+*<br><br>
 
 **1.3.2 Out of scope**<br>
 * *Developing advanced AI capabilities for the robot, such as voice recognition or autonomous decision-making.*<br>
@@ -51,7 +56,9 @@ links:<br><br>
 * https://www.instructables.com/Building-a-Mobile-App-to-Control-Arduino-Board-Via/ (Mobile application interface with hardware)
 * https://www.imec-int.com/drupal/sites/default/files/2018-11/Accurate%20and%20secure%20Distance%20Measurement%20with%20Bluetooth.pdf (Bluetooth distance measuring)
 * https://www.swri.org/industry/industrial-robotics-automation/blog/web-based-robot-user-interface (webpage interface between robotics)
-
+* https://www.jetbrains.com/help/kotlin-multiplatform-dev/cross-platform-frameworks.html (cross platform frameworks)
+* https://tinyurl.com/3stbh3s6 (Security & Authentications)
+* https://daylightstrategy.com/ga4service/?gad_source=1&gclid=Cj0KCQjwzva1BhD3ARIsADQuPnU6rwu4H3Qc2IQ3Jj3uZGuMOJurd5xP66cfLx0qRI_F3QYRlXfNR4QaAn_IEALw_wcB (Google Analytics services)
 **<h1>2. Overall Description**</h1><br>
 **2.1 Compete analysis**<br>
 
@@ -82,7 +89,7 @@ This robot is versatile and can be used by any individual, regardless of their c
 
 The construction of the robot presents a significant challenge, given the intricate engineering required to create a device capable of carrying and autonomously following a user. The hardware components and their assembly will demand meticulous attention and precision.
 
-On the software side, we are currently utilizing an older version of ROS2, specifically the Foxy version, which is compatible with Raspberry Pi models 3 and below. This imposes certain limitations as some packages or libraries available in newer ROS2 versions are not accessible in Foxy. However, we anticipate that this will not pose a major issue, as the bulk of our project work will be executed on our controller hardware, aided by our controlling software operating on the Raspberry Pi.
+On the software side, we are currently utilizing a newer version of ROS2, specifically the Jazzy version, which is compatible with Raspberry Pi model 5, the newest one. This will allow us to use complex and newly added packages which will then improve the development for our robot and the software that will be used with the robot.
 
 In terms of project success, our primary focus will be on systematic organization and incremental prototyping. We plan to develop a prototype during the first quarter and progressively refine it. Our goal is to deliver a practical and beneficial product for any consumer seeking a robot to carry their belongings.
 
@@ -122,13 +129,34 @@ The homepage will prominently feature the product logo in the top left corner. T
 
 The website’s design will reflect the product’s branding, incorporating elements such as the logo, color scheme, and visual identity. Specific elements will highlight our robotic product. The layout will be optimized for a cohesive and visually appealing user experience across various device screen sizes.
 
+A section of the website will consist of discussion pages that will provide guides and support that will be essential for helping those who have questions or are in need of assistance with the robot they have on hand.
+
+The webpage on hand will have some form of minor interaction with the robot. The interaction will be a form of movemental patterns. We plan on adding 2 specific interactions.
+
+1. Moving in a circle while avoiding obstacles
+2. Allowing the user to control the robots movement
+
+The user will also be allowed to sign into his account when on the website, and will be able to see their purchases as well as their discussions that they have been in or created. They will as well be notified for future updates about the product in general.
+
 **Mobile App:**
 
-The mobile app, available for free on all major mobile app stores (including Apple and Android), will provide users with vital information about the robot. Upon opening the app, users will be greeted with a 3D model of the robot. The top right corner will display a battery life indicator, while the top left corner will show the robot’s internal temperature. Positioned centrally at the bottom, just below the 3D model, an indicator will display the robot’s current carrying capacity, informing users of the weight the robot is presently carrying.
+The mobile app, available for free on all major mobile app stores (including Apple and Android), will provide users with vital information about the robot. Upon opening the app, users will be greeted with an iconic image of an animated robot, followed by an authentication screen.
+
+If the user does not currently have an account, they will need to create one and input their robot’s authentication key. (Every robot has a unique key that is different from another). Once they complete the authentication, the mobile app will present them with a 3D model of the robot they currently have on hand.
+
+The top right corner will display a battery life indicator, while the top left corner will show the robot’s internal temperature. Positioned centrally at the bottom, just below the 3D model, an indicator will display the robot’s current carrying capacity, informing users of the weight the robot is presently carrying. Keep noted that this is all real time data.
+
+The mobile app will also be able to send the user notifications based on whether the health of the robot is stable, if the robot is able to track the user, or if certain components of the robot are outdated and in need of repair.
+
+Another notable feature that will be implemented through the app is the ability to control the robot. This will be meant for correcting it's position towards the user, playing with the robot, or just for testing purposes.
 
 **3.2 Functional Requirements**<br>
 * The functional requirements for this project includes a robot that will follow the user while avoiding obstacles and allow the user to place their belongings within it. 
 * At the same time the user will be able to control certain mechanics of the robot within the mobile app. 
+* The mobile app needs to send notifications to the user about the robots needs, as well as possible issues.
+
+* Store the data that is currently being taken as historical data to be used as a way to understand and learn how to incorporate a form of machine learning for the robot. This will give us better ways to understand battery power, battery control, as well as ways in enhancing the autonomous movement of the robots behavior.
+
 * And as a consumer that wishes to purchase the product, they will be able to visit the website that contains information about our product. And purchase our product from the site. <br>
 
 **3.3 Performance and Software Quality Requirements**<br>

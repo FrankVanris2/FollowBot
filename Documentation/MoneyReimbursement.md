@@ -16,5 +16,7 @@ Adhesive Velcro Wraps: $4.99
 4 x AA Battery Holder: $2.95
 * https://www.adafruit.com/product/3859?gad_source=1&gclid=Cj0KCQjwq_G1BhCSARIsACc7NxqmySwuW92BTtnVnrBfCsFoZvWYomsoT8mNf4rVfds12Yn4pkwjQH4aAmunEALw_wcB
 
+M3 Screws: $4.99
+* https://www.amazon.com/Washers-Sutemribor-Assortment-Stainless-Threaded/dp/B0CP7Y7M6D/ref=sr_1_7_sspa?crid=3M1QIDUXCZCGM&dib=eyJ2IjoiMSJ9.P_MOBrskKLS2bpPXZVnpjNLI5lJwFhf4K9AihT8oL_tSBkAQ3880WMSeORjA_-GvbmAU80VW3CwR7PwBx5J_wd98RhWSq87z3DpNKKOQiAUEQ3YQRGZGre_uD319OAmG-vXkEastTnxe0SRpfFogMhq4NsMWJ8Gx8vxoT4eazi8ABB5uZ-WzbEhUdzDwlKYc6t6i_IWYIe-_YGszyu3pom3fVsPQ9w-7DbmzQke_P9QGB-6bXr8n0LgFZjVlTXVkgf5vfbGbnBwAubV-RTsUdqCDnqyW9tv-FKz4MU4-3rs.qUdaGMPo1Q1Wej5BYb5g7X50JYRjY6Xku_yDZAgPi6A&dib_tag=se&keywords=m3+screws&qid=1723748760&s=industrial&sprefix=m3%2Cindustrial%2C194&sr=1-7-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9tdGY&psc=1
 
-<h3> Total Cost: $25.42 </h3>
+<h3> Total Cost: $30.41 </h3>
