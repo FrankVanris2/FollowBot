@@ -33,6 +33,8 @@ Here are the given sources that were used to rely information for this document:
 * https://www.klipper3d.org/
 * https://legacy.reactjs.org/docs/getting-started.html
 * https://www.nature.com/articles/s41598-023-33837-1
+* https://tinyurl.com/yc5y6r9x (AWS)
+* https://scikit-learn.org/stable/ 
 
 <h4> Books: </h4>
 
@@ -159,7 +161,10 @@ While playing with different kinds of motors, motor drivers, microcontroller, an
 <h2>Robotic Architecture</h2>
 
 ![alt text](RoboticArchitecture.png)
+*Robot Architecture*
 
+![alt text](realTime_historicalDataRetrieval.png)
+*Data Retrieval for app and learning model*
  
  <h2>Systems Architecture:</h2>
 
