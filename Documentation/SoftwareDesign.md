@@ -70,50 +70,14 @@ Here are the given sources that were used to rely information for this document:
 * ESP32: a microcontroller
 <br>
 
-<h2> Robotic Overview<br> </h2>
+## 2. System Overview
 
-<h4>Goal:</h4>
-The Goal of the robot is for it to carry up to 50 lbs of your belongings and follow you and manuever through different obstacles along the way<br><br>
+### App
 
+#### Goal
+The goal of the app is to control and have the robot follow the user autonomously while avoiding obstacles. The mobile app should also send live data on battery life, location, weight, and temperature.
 
-We will be playing with different kinds of motors, sensors, and modules to determine the best way for the robot to follow the user while maneuvering through different obstacles in a very fast pace. We also want to try and create a device that insentivies the idea of keeping costs to a minimum.<br><br>
-
-<h4> Weight Carrying and Following: </h4>
-The user itself will be able to place any type of belongings within the device such as food, electronics, books, sport items, clothing, and much more. The robot while carrying your belongings will track you based on your phones position and its current position via the GPS module that will be installed within the robot itself.<br><br>
-
-
-<h4> Sensors: </h4>
-The robot while following you will consist of many sensors that will be used in order to avoid and move away from any obstacles that will get in it's way. Forms of avoidance will vary between lidar sensors, computer vision, and echo locative tracking. The choices between many of these sensors will be decided as a team and based on how accurate any of these sensors are when it comes to avoiding obstacles as quickly as possible.<br><br>
-
-<h4> Hardware </h4>
-When designing the Hardware the idea of cost will be in mind. Hardware during the beginning will be done and created through 3D printing and simple wood work. Designing such hardware will be done through a variety of different design application such as FreeCAD, Fusion360, and Blender. For our preferences when it comes to robotics, freeCAD has the best variety in options and workbenches that us developers and engineers can use when developing and designing the hardware for our robot. <br><br>
-When it comes to electronic hardware development and electric wiring, the final design will be created via a pcb manufacturer.
-
-<h4> Real-Time Updates </h4>
-Through the mobile app the robot will be able to provide you with real-time updates on battery life, distance between you and the robot, the temperature within the capsule of the robot, as well as the weight distribution that is currently taking place on the robot. When battery life is low, or if the robot is in need of help or repair, it will send the user a notification if any problems are going to occur.
-
-<h4> Machine Learning Models </h4>
-When designing and creating the software for the robot, we should also try to add some form of machine learning to the robot itself. The capability for the robot to learn it's own mistakes through reinforcement learning could be quite beneficial when trying to find better ways for this robot to perform while conserving on battery life at the same time. Our goal is to try to conserve as much battery life so that the robot can be used on a daily basis without the worry of consistently charging up the system.
-
-<h4> Authentication/ Security </h4>
-When designing and providing a robot for a user our duty is to make sure the robot is secure and reliable to that specific user. That is why we plan on adding an authentication process when properly initializing your robot on your account through the mobile app and the website. We will have a secure number configuration that is different between all robots. A configuration that varies between numbers and letters, that no one will be able to change. This type of configuration will happen only once so that the user does not have to repeatedly initialize the robot when using.
-
-<h4> Cost: </h4>
-While playing with different kinds of motors, motor drivers, microcontroller, and material for constructing the robot we will also need to justify a price range for the robot that has to be and <b>MUST</b> be under $500 and at best under $300. The device should be stable useful and beneficial to the consumer that purchases the robot. And the cost should greatly intrigue the consumer in buying our product. However as developers and engineers for the product our goal is to make sure that the device is <b> Worth </b> their money, and try to go <b> ABOVE AND BEYOND </b> with our product.
-
-
-<h2> System Overview<br> </h2>
-
-<h2>uwb controller<br> </h2>
-	To allow the robot to follow us 
-	???????<br><br>
-
-<h2>app<br> </h2>
-
-<h4>Goal:</h4>
-    The goal of app is to control, maniuplte the robot and  given status report.
-
-<h4>requirement :</h4>
+#### Requirements
 
 - **Light and Dark Mode**  
   The app should support both light and dark themes for user interface customization.
@@ -135,13 +99,12 @@ While playing with different kinds of motors, motor drivers, microcontroller, an
   The app will act as a controller for the robots, using the touchscreen. 
   - Optionally, a game controller can be used if the touchscreen is not functional.
 
-<h2>website<br> </h2>
+### Website
 
+#### Goal
+The goal of the website is to inform the users about what the robot does and send queries back to the owners of the website.
 
-## Website Requirements
-
-<h4>Goal:</h4>
-   The goal of the website is to inform the users what the robot does and send queries back to the owners of the websites. 
+#### Requirements
 
 - **Technologies**  
   The website will be written in JavaScript, HTML, and CSS.
@@ -165,6 +128,35 @@ While playing with different kinds of motors, motor drivers, microcontroller, an
      - This page will include a text area where users can provide feedback.
      - A private section for owners will be available to download and delete messages.
      - Consider using a database to store and manage feedback submissions.
+
+### Robotic Overview
+
+#### Goal
+The goal of the robot is for it to carry up to 50 lbs of your belongings and follow you while maneuvering through different obstacles along the way.
+
+We will be experimenting with different kinds of motors, sensors, and modules to determine the best way for the robot to follow the user while maneuvering through obstacles quickly. We also aim to create a device that keeps costs to a minimum.
+
+#### Weight Carrying and Following
+The user will be able to place various belongings within the device, such as food, electronics, books, sports items, clothing, and more. The robot will track the user based on the phone's position and its current position via the GPS module installed within the robot.
+
+#### Sensors
+The robot will use multiple sensors to avoid and move away from obstacles. Forms of avoidance will include lidar sensors, computer vision, and echo locative tracking. The choice of sensors will be decided as a team based on their accuracy in avoiding obstacles quickly.
+
+#### Hardware
+When designing the hardware, cost will be a key consideration. Initially, hardware will be created through 3D printing and simple woodworking. Designing the hardware will be done using various design applications such as FreeCAD, Fusion360, and Blender. For electronic hardware development and wiring, the final design will be created via a PCB manufacturer.
+
+#### Real-Time Updates
+Through the mobile app, the robot will provide real-time updates on battery life, distance between the user and the robot, the temperature within the robot's capsule, and the weight distribution on the robot. Notifications will be sent to the user if the battery life is low or if the robot needs help or repair.
+
+#### Machine Learning Models
+We aim to add machine learning to the robot. The capability for the robot to learn from its mistakes through reinforcement learning could be beneficial in improving performance while conserving battery life. Our goal is to maximize battery life so the robot can be used daily without frequent charging.
+
+#### Authentication/Security
+We plan to add an authentication process when initializing the robot on the user's account through the mobile app and the website. Each robot will have a unique secure number configuration that cannot be changed. This configuration will only need to be done once.
+
+#### Cost
+We aim to keep the price range for the robot under $500, ideally under $300. The device should be stable, useful, and beneficial to the consumer. The cost should attract consumers to buy our product. Our goal is to ensure the device is worth their money and to exceed their expectations.
+
 
 
 <h2>Robotic Architecture</h2>
@@ -874,3 +866,156 @@ When it comes to data and obtaining historical data for the machine learning mod
   - Process: Send control commands to robot
   - Output: control command is executed
 
+<h2> 6. Human Interface Design </h2>
+
+<h3> Mobile App: </h3>
+As a user when it comes to both the mobild application, it will contain most of the major functionalities. For instance with the mobile app you will be able to see how much battery life is currently on the system, as well as how much weight, the current distance it is away from you, as well as the interior temperature. With the mobile app you will be able to as well interact with the device by controlling its movement if needed. You will be able to test given features with it. Look at the specs of the robot, as well as look at the health of the robot. Parts and services will also be shown of the application itself. The app will be able to as well send you notifications based on how much health is currently on the system, whether if the robot ran into some issues, or is in need of assistance. You as a user will be able to use the app throughout many different mobile devices ranging from apple to android. 
+<br><br>
+
+#### Important Functionalities 
+Visually on the top right corner of the screen will indicate the battery life of your robot. The middle of the screen will consist of a 3d model version of the robot, while beneath the robot will indicate the amount of weight that is currently on the system. In the middle above the robot will indicate the current temperature within the interior of the robot. A small tab button on the bottom right corner will allow the user to see how far away the robot is from the user. 
+<br><br>
+
+#### Settings
+on the top left corner will be a setting icon for the robot, where you will be able to find the specs of the robot, changing capabilities for when you want to change the distance between you and the robot, as well as the ability to switch on human control access towards the robot. When switching on human access within the mobile app, the ui will change to a control panel where you will now be able to control the robot through touch screen.
+
+#### Authentication
+When accessing the app it will first bring you to an authenticator screen, where you will need to input your username or password . If the user is signing in for the first time then they'll also need to input the robots authentication key in order to access their specific robot that they purchased, as well as their email. However once they do it the first time they won't need to do it again. As a user you will be able to change your password, or username if you forgot. In order to do so, an email will be sent to the user in which they will have to confirm or not that they want a change for a new username or password.
+
+
+### Website: 
+As for the website, it will have minor interactions with the user. But for the user, the website will offer another variety of options that is quite different compared to the mobile app. For instance, the web interface will consist of a variety of tabs to open and see. One tab will consist of a feedback page/guide where you as the user that is currently an owner of the device will be able to ask questions or discuss topics based on the robotic device that you have on hand. Questions can vary from hardware parts, to ways in keeping the robot clean, updating its software, or even future changes in parts for the robot. 
+<br><br>
+
+#### Relevant tabs for user to go about
+Other tabs will consists of information of the robot, as well as a video recording in how the robot interacts with it's surroundings. Another tab will be accessible to owners of the robot where they will be able to interact with their robot and see how well it's able to avoid obstacles while being able to follow a coordinated path. You will be able to control the robot with this minor interaction that will be found on the web page.
+<br><br>
+
+#### News Posting
+Another important feature that we would like to add is a news posting tab,
+where people will be able to get notified in future updates based on the robots development progress, or even updates on future releases for the robot itself, such as enhancements in parts or software.
+
+#### Authentication
+As mentioned within the Mobile App user interface, it will be the same. However the difference will be that you don't have to sign in immediately, The webpage is meant for informational purposes. If you wish to create an account or sign in. A user profile icon for that will be found above in the right hand corner of your screen.
+
+### 6.2 Screen Images
+
+#### Mobile App:
+```
++--------------------------------------+
+|                                      |
+|          [Animated Robot Image]      |
+|                                      |
+|  Username: [____________________]    |
+|  Password: [____________________]    |
+|                                      |
+|  [Sign In] [Sign Up]                 |
+|                                      |
+|  [Forgot Password?]                  |
+|                                      |
++--------------------------------------+
+```
+*Authentication Screen*
+```
++--------------------------------------+
+|  [Settings Icon]    [Battery: 80%]   |
+|                                      |
+|                                      |
+|                                      |
+|        [Temperature: 22°C]           |
+|                                      |
+|         [3D Robot Model]             |
+|                                      |
+|          [Weight: 5kg]               |
+|                                      |
+|                                      |
+|                                      |
+|                                      |
+|                                      |
+|          [Distance: 2m]              |
+|                                      |
+|                                      |
+|    [notifications][news][parts]      |
++--------------------------------------+
+```
+*Main Dashboard*
+```
++--------------------------------------+
+|  [Back Icon]                         |
+|                                      |
+|  [Robot Specs]                       |
+|                                      |
+|  [Change Distance]                   |
+|                                      |
+|  [Enable Human Control]              |
+|                                      |
+|  [Screen Color]                      |
+|                                      |
++--------------------------------------+
+```
+*Setting Screen*
+```
++--------------------------------------+
+|  [Back Icon]                         |
+|                                      |
+|  [Control Joystick]                  |
+|                                      |
+|  [Move Forward]                      |
+|  [Move Backward]                     |
+|  [Turn Left]                         |
+|  [Turn Right]                        |
+|                                      |
++--------------------------------------+
+```
+*Control Panels Screen*
+
+#### Website:
+```
++--------------------------------------+
+|  [Home] [Feedback] [Info] [Video]    |
+|  [Interact] [News] [Auth]            |
+|                                      |
+|  [Feedback Page/Guide]               |
+|  - Ask questions or discuss topics   |
+|  - Hardware parts, cleaning, updates |
+|                                      |
+|  [Robot Information]                 |
+|  - Details about the robot           |
+|                                      |
+|  [Video Recording]                   |
+|  - How the robot interacts           |
+|                                      |
+|  [Robot Interaction]                 |
+|  - Control the robot                 |
+|  - See obstacle avoidance            |
+|                                      |
+|  [News Posting]                      |
+|  - Updates on robot development      |
+|  - Future releases and enhancements  |
+|                                      |
+|  [Authentication]                    |
+|  - User profile icon at top right    |
+|  - Create account or sign in         |
+|                                      |
++--------------------------------------+
+```
+<br>
+
+### 7. Requirements Traceability Matrix
+
+| Requirement-ID| Requirement Description| Design Component| Data Design Component| Interface Design Component|
+|----------------|----------------|---------------|------------------|-----------------|
+| FR-001| User Authentication| AuthProcess| Database| Authentication|
+| FR-002| Display Battery Life| MobileApp| Data| RealTimeDataRetrieval|
+| FR-003| Display Weight Information| MobileApp| Data| RealTimeDataRetrieval| FR-004| Display Distance Information| MobileApp| Data| RealTimeDataRetrieval|
+| FR-005| Display Temperature Information| MobileApp| Data| RealTimeDataRetrieval|
+| FR-006| Control Robot Movement| MobileApp| MotorControllerNode| MotorDriverNode|
+| FR-007| Send Notifications| MobileApp| Data| RealTimeDataRetrieval|
+| FR-008| User Feedback and Guide| Website| Database| MailApplication|
+| FR-009| Display Robot Information| Website| Data| RealTimeDataRetrieval|
+| FR-010| Video Recording of Robot Interaction| Website| Data| RealTimeDataRetrieval|
+| FR-011| Robot Interaction and Control| Website| MotorControllerNode| MotorDriverNode|
+| FR-012| News Posting and Updates| Website| Database| MailApplication|
+| FR-013| Generate and Validate Robot Authentication Key| RobotAuthKey| Database| Authentication|
+| FR-014| Analyze Past Data for Movement Optimization| LearningModel| Data| RealTimeDataRetrieval|
+| FR-015| Store and Retrieve User Data| Database| Database| Authentication|
