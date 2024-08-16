@@ -19,4 +19,7 @@ Adhesive Velcro Wraps: $4.99
 M3 Screws: $4.99
 * https://www.amazon.com/Washers-Sutemribor-Assortment-Stainless-Threaded/dp/B0CP7Y7M6D/ref=sr_1_7_sspa?crid=3M1QIDUXCZCGM&dib=eyJ2IjoiMSJ9.P_MOBrskKLS2bpPXZVnpjNLI5lJwFhf4K9AihT8oL_tSBkAQ3880WMSeORjA_-GvbmAU80VW3CwR7PwBx5J_wd98RhWSq87z3DpNKKOQiAUEQ3YQRGZGre_uD319OAmG-vXkEastTnxe0SRpfFogMhq4NsMWJ8Gx8vxoT4eazi8ABB5uZ-WzbEhUdzDwlKYc6t6i_IWYIe-_YGszyu3pom3fVsPQ9w-7DbmzQke_P9QGB-6bXr8n0LgFZjVlTXVkgf5vfbGbnBwAubV-RTsUdqCDnqyW9tv-FKz4MU4-3rs.qUdaGMPo1Q1Wej5BYb5g7X50JYRjY6Xku_yDZAgPi6A&dib_tag=se&keywords=m3+screws&qid=1723748760&s=industrial&sprefix=m3%2Cindustrial%2C194&sr=1-7-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9tdGY&psc=1
 
-<h3> Total Cost: $30.41 </h3>
+Arduino Rev4 Wifi: $27.50
+* https://store-usa.arduino.cc/products/uno-r4-wifi?gad_source=1&gclid=Cj0KCQjwzva1BhD3ARIsADQuPnUe2QQbA0fWsK1f4miBPJ3SgAhI6EdM5A6ZmWw8PeZ75cRRGwPQ5DMaAoTVEALw_wcB
+
+<h3> Total Cost + Tax: $65.60 </h3>
