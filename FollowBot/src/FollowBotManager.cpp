@@ -6,16 +6,23 @@
 */
 
 #include "FollowBotManager.h"
-
+#include "Motors.h"
 //universal object
 FollowBotManager followBotManager;
 
-FollowBotManager::FollowBotManager() {}
+FollowBotManager::FollowBotManager() {
+    
+}
 
 
 //the setup that will store the many objects that will set in the main
-void FollowBotManager::followBotSetup() {}
+void FollowBotManager::followBotSetup() {
+    Serial.begin(9600);
+    myMotors.motorSetup();
+}
 
 
 //the loop that will store the many objects that will loop in the main
-void FollowBotManager::followBotLoop() {}
+void FollowBotManager::followBotLoop() {
+    myMotors.motorLoop();
+}
