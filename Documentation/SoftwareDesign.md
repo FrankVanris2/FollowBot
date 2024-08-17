@@ -159,7 +159,7 @@ We aim to keep the price range for the robot under $500, ideally under $300. The
 
 
 
-<h2>Robotic Architecture</h2>
+<h2>3. Robotic Architecture</h2>
 
 ![alt text](RoboticArchitecture.png)
 *Robot Architecture*
@@ -167,7 +167,7 @@ We aim to keep the price range for the robot under $500, ideally under $300. The
 ![alt text](realTime_historicalDataRetrieval.png)
 *Data Retrieval for app and learning model*
  
- <h2>Systems Architecture:</h2>
+ <h2>3. Systems Architecture:</h2>
 
 ![alt text](SystemsArchitecture.png)
 *Interaction between website app and robot*
@@ -179,7 +179,7 @@ We aim to keep the price range for the robot under $500, ideally under $300. The
 
 <h3> Robot Architectural Design </h3>
 
-<h4> Robot Architecture </h4>
+<h4> 3.1 Robot Architecture </h4>
 1. Robot Server:
 
   * Robot server takes place within the ROS2 Raspberry Pi.
@@ -245,7 +245,7 @@ We aim to keep the price range for the robot under $500, ideally under $300. The
     * Will be used to take in past data of the robot in order to find better ways to correct it's movement properly so it can easily, safely, and quickly follow you while trying to reduce battery consumption.
 <br><br>
 
-<h3> Systems Architectural Design </h3>
+<h3> 3.1 Systems Architectural Design </h3>
 
 <h4> Mobile and Web Application Interaction </h4>
 1. Server Follow Bot:
@@ -297,7 +297,7 @@ We aim to keep the price range for the robot under $500, ideally under $300. The
   * The database will be used to store the robots keys, passwords, and usernames of users that are subscribed to the product. The database will be a way of making sure certain keys are not the same from one another as well as passwords and usernames.
 <br><br>
 
-### Robot Architectural Design
+### 3.2 Robot Decomposition Architectural Design
 
 #### Robot Architecture
 
@@ -445,7 +445,7 @@ We aim to keep the price range for the robot under $500, ideally under $300. The
       - **Interfaces**: `ILearningModel`
       - **Methods**: `analyzeData()`, `optimizeMovement()`
 
-### Systems Architectural Design
+### 3.2 Systems Decomposition Architectural Design
 
 #### Mobile and Web Application Interaction
 
@@ -572,9 +572,9 @@ We aim to keep the price range for the robot under $500, ideally under $300. The
       - **Methods**: `storeData()`, `retrieveData()`
 
 
-<h2> Design Rationale </h2>
+<h2> 3.3 Design Rationale </h2>
 We chose this architecture because we needed something modulus in order to do things properly for the scope of our project. When it comes to the authentication process it was tedious in knowing how we would come about it, but we knew that if we made it modular it would make it less tedious in our side. The way we did it is by creating a Database that the authenticator would interact with in order to generate keys for the robot that would not create replicas based on the ones that are currently on the database. That was one rationale that we chose for this project. 
-
+<br><br>
 Another is by keeping the ros2 system on the raspberry pi very interactive between many different pieces of hardware and software. With the ROS2 most of the functionalities that will be introduced will always have to be modulus in order for us to communicate between many different areas of hardware and software. The way we structured our decomposition above makes it easier for us to understand how we will simplify yet comprehend how our system should be.
 
     
