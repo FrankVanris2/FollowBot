@@ -901,30 +901,30 @@ As mentioned within the Mobile App user interface, it will be the same. However 
 ### 6.2 Screen Images
 
 #### Mobile App:
-![alt text](AuthenticationScreen.png)
+![image](/Images/AuthenticationScreen.png)
 *Authentication Screen*
 
-![alt text](mainDashboard.png)
+![image](/Images/mainDashboard.png)
 *Main Dashboard*
 
-![alt text](SettingsScreen.png)
+![image](/Images/SettingsScreen.png)
 *Setting Screen*
 
-![alt text](ControlPanelsScreen.png)
+![image](/Images/ControlPanelsScreen.png)
 *Control Panels Screen*
 
 #### Website:
 
-![alt text](WebsiteFrontPage-1.png)
+![image](/Images/WebsiteFrontPage.png)
 *Front page of website*
 
-![alt text](FeedbackPageWebsite-1.png)
+![image](/Images/FeedbackPageWebsite.png)
 *Feedback page of website*
 
-![alt text](AboutUsPageWebsite-1.png)
+![image](/Images/AboutUsPageWebsite.png)
 *About us page of website*
 
-![alt text](VideoOfRobotPage-1.png)
+![image](/Images/VideoOfRobotPage.png)
 *Video of robot* 
 
 <br>

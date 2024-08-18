@@ -107,20 +107,21 @@ We plan to use reliable hardware that has proven effective in both major manufac
 
 **3.1 User Interfaces**<br>
 
-(These images will be created)
-![image](WebsiteFrontPage.png)
+
+![image](/Images/WebsiteFrontPage.png)
+
 *front page of website filled with information*
 
-![image](AboutUsPageWebsite.png)
+![image](/Images/AboutUsPageWebsite.png)
 *about us page which will contain a bio and photos of the developers*
 
-![image](VideoOfRobotPage.png)
+![image](/Images/VideoOfRobotPage.png)
 *video of the robot and app in action*
 
-![image](FeedbackPageWebsite.png)
+![image](/Images/FeedbackPageWebsite.png)
 *feedback page for the user to input questions or suggestions*
 
-![image](MobileApp.png)
+![image](/Images/MobileApp.png)
 *Mobile app that interfaces with the robot itself*
 
 **Homepage (Large Screen):**
