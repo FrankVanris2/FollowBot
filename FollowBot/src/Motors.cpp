@@ -21,7 +21,7 @@ AF_DCMotor motor3(3);
 AF_DCMotor motor4(4);
 
 // My constructor
-Motors::Motors(): input(0) {
+Motors::Motors(): input(0), lastInputTime(0) {
 
 }
 
@@ -36,11 +36,13 @@ void Motors::motorSetup() {
 }
 
 
-void Motors::motorLoop() {
-    if(Serial.available()) {
+
+void Motors::motorLoop() {  
+    int numBytes = Serial.available();
+    
+    if(numBytes > 0) {
         input = Serial.read();
-        
-        //switch case for control operations
+        lastInputTime = millis();
         switch(input) {
             case MOTOR_FORWARD:
                 motorForwards();
@@ -54,11 +56,19 @@ void Motors::motorLoop() {
                 motorLeft();
                 break;
             
-            case MOTOR_RIGHT:
+            case MOTOR_RIGHT: 
                 motorRight();
                 break;
-        }
-    }   
+            
+            case MOTOR_RELEASE:
+                motorStop();
+                break;
+        }   
+    }
+    
+    if(millis() - lastInputTime >= 500) {
+        motorStop(); // autostop
+    }
 }
 
 // Forward motion with the motors
@@ -91,4 +101,11 @@ void Motors::motorRight() {
     motor2.run(BACKWARD);
     motor3.run(FORWARD);
     motor4.run(FORWARD);
+}
+
+void Motors::motorStop() {
+    motor1.run(RELEASE);
+    motor2.run(RELEASE);
+    motor3.run(RELEASE);
+    motor4.run(RELEASE);
 }

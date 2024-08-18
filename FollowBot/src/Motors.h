@@ -15,7 +15,7 @@ public:
 
     void motorLoop();
 
-    void motorFowards();
+    void motorForwards();
 
     void motorBackwards();
 
@@ -23,8 +23,11 @@ public:
     
     void motorRight();
 
+    void motorStop();
+
 private:
     int input;
+    unsigned long lastInputTime;
 };
 
 extern Motors myMotors;

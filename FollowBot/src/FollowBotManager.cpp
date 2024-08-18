@@ -21,7 +21,6 @@ void FollowBotManager::followBotSetup() {
     myMotors.motorSetup();
 }
 
-
 //the loop that will store the many objects that will loop in the main
 void FollowBotManager::followBotLoop() {
     myMotors.motorLoop();
