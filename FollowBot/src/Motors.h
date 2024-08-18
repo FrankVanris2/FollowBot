@@ -15,6 +15,14 @@ public:
 
     void motorLoop();
 
+    void motorFowards();
+
+    void motorBackwards();
+
+    void motorLeft();
+    
+    void motorRight();
+
 private:
     int input;
 };

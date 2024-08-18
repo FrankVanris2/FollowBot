@@ -6,6 +6,7 @@
 */
 
 #include "Motors.h"
+#include "MotorControlStates.h"
 #include <AFMotor.h>
 #include "Arduino.h"
 
@@ -25,7 +26,9 @@ Motors::Motors(): input(0) {
 }
 
 //where I initialize my motors
-void Motors::motorSetup() {  
+void Motors::motorSetup() {
+
+    //setting speeds of all motors to high
     motor1.setSpeed(255);
     motor2.setSpeed(255);
     motor3.setSpeed(255);
@@ -36,45 +39,56 @@ void Motors::motorSetup() {
 void Motors::motorLoop() {
     if(Serial.available()) {
         input = Serial.read();
-        if(input == '1') {
-            motor1.run(FORWARD);
-            delay(2000);
-            motor1.run(RELEASE);
-            delay(1000);
-            motor1.run(BACKWARD);
-            delay(2000);
-            motor1.run(RELEASE);
-            delay(1000);
-        }
-        if(input == '2') {
-            motor2.run(FORWARD);
-            delay(2000);
-            motor2.run(RELEASE);
-            delay(1000);
-            motor2.run(BACKWARD);
-            delay(2000);
-            motor2.run(RELEASE);
-            delay(1000);
-        }
-        if(input == '3') {
-            motor3.run(FORWARD);
-            delay(2000);
-            motor3.run(RELEASE);
-            delay(1000);
-            motor3.run(BACKWARD);
-            delay(2000);
-            motor3.run(RELEASE);
-            delay(1000);
-        }
-        if(input == '4') {
-            motor4.run(FORWARD);
-            delay(2000);
-            motor4.run(RELEASE);
-            delay(1000);
-            motor4.run(BACKWARD);
-            delay(2000);
-            motor4.run(RELEASE);
-            delay(1000);
+        
+        //switch case for control operations
+        switch(input) {
+            case MOTOR_FORWARD:
+                motorForwards();
+                break;
+            
+            case MOTOR_BACKWARD:
+                motorBackwards();
+                break;
+            
+            case MOTOR_LEFT:
+                motorLeft();
+                break;
+            
+            case MOTOR_RIGHT:
+                motorRight();
+                break;
         }
     }   
+}
+
+// Forward motion with the motors
+void Motors::motorForwards() {
+    motor1.run(FORWARD);
+    motor2.run(FORWARD);
+    motor3.run(FORWARD);
+    motor4.run(FORWARD);
+}
+
+// Backward motions with the motors
+void Motors::motorBackwards() {
+    motor1.run(BACKWARD);
+    motor2.run(BACKWARD);
+    motor3.run(BACKWARD);
+    motor4.run(BACKWARD);
+}
+
+// Left motions with the motors
+void Motors::motorLeft() {
+    motor1.run(FORWARD);
+    motor2.run(FORWARD);
+    motor3.run(BACKWARD);
+    motor4.run(BACKWARD);
+}
+
+// Right motions with the motors
+void Motors::motorRight() {
+    motor1.run(BACKWARD);
+    motor2.run(BACKWARD);
+    motor3.run(FORWARD);
+    motor4.run(FORWARD);
 }
