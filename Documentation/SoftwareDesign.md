@@ -901,104 +901,32 @@ As mentioned within the Mobile App user interface, it will be the same. However 
 ### 6.2 Screen Images
 
 #### Mobile App:
-```
-+--------------------------------------+
-|                                      |
-|          [Animated Robot Image]      |
-|                                      |
-|  Username: [____________________]    |
-|  Password: [____________________]    |
-|                                      |
-|  [Sign In] [Sign Up]                 |
-|                                      |
-|  [Forgot Password?]                  |
-|                                      |
-+--------------------------------------+
-```
+![alt text](AuthenticationScreen.png)
 *Authentication Screen*
-```
-+--------------------------------------+
-|  [Settings Icon]    [Battery: 80%]   |
-|                                      |
-|                                      |
-|                                      |
-|        [Temperature: 22°C]           |
-|                                      |
-|         [3D Robot Model]             |
-|                                      |
-|          [Weight: 5kg]               |
-|                                      |
-|                                      |
-|                                      |
-|                                      |
-|                                      |
-|          [Distance: 2m]              |
-|                                      |
-|                                      |
-|    [notifications][news][parts]      |
-+--------------------------------------+
-```
+
+![alt text](mainDashboard.png)
 *Main Dashboard*
-```
-+--------------------------------------+
-|  [Back Icon]                         |
-|                                      |
-|  [Robot Specs]                       |
-|                                      |
-|  [Change Distance]                   |
-|                                      |
-|  [Enable Human Control]              |
-|                                      |
-|  [Screen Color]                      |
-|                                      |
-+--------------------------------------+
-```
+
+![alt text](SettingsScreen.png)
 *Setting Screen*
-```
-+--------------------------------------+
-|  [Back Icon]                         |
-|                                      |
-|  [Control Joystick]                  |
-|                                      |
-|  [Move Forward]                      |
-|  [Move Backward]                     |
-|  [Turn Left]                         |
-|  [Turn Right]                        |
-|                                      |
-+--------------------------------------+
-```
+
+![alt text](ControlPanelsScreen.png)
 *Control Panels Screen*
 
 #### Website:
-```
-+--------------------------------------+
-|  [Home] [Feedback] [Info] [Video]    |
-|  [Interact] [News] [Auth]            |
-|                                      |
-|  [Feedback Page/Guide]               |
-|  - Ask questions or discuss topics   |
-|  - Hardware parts, cleaning, updates |
-|                                      |
-|  [Robot Information]                 |
-|  - Details about the robot           |
-|                                      |
-|  [Video Recording]                   |
-|  - How the robot interacts           |
-|                                      |
-|  [Robot Interaction]                 |
-|  - Control the robot                 |
-|  - See obstacle avoidance            |
-|                                      |
-|  [News Posting]                      |
-|  - Updates on robot development      |
-|  - Future releases and enhancements  |
-|                                      |
-|  [Authentication]                    |
-|  - User profile icon at top right    |
-|  - Create account or sign in         |
-|                                      |
-+--------------------------------------+
-```
+
+![alt text](WebsiteFrontPage-1.png)
+*Front page of website*
+
+![alt text](FeedbackPageWebsite-1.png)
+*Feedback page of website*
+
+![alt text](AboutUsPageWebsite-1.png)
+*About us page of website*
+
+![alt text](VideoOfRobotPage-1.png)
+*Video of robot* 
+
 <br>
 
 ### 7. Requirements Traceability Matrix
