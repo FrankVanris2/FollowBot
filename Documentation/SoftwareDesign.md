@@ -902,29 +902,37 @@ As mentioned within the Mobile App user interface, it will be the same. However 
 
 #### Mobile App:
 ![image](/Images/AuthenticationScreen.png)
+
 *Authentication Screen*
 
 ![image](/Images/mainDashboard.png)
+
 *Main Dashboard*
 
 ![image](/Images/SettingsScreen.png)
+
 *Setting Screen*
 
 ![image](/Images/ControlPanelsScreen.png)
+
 *Control Panels Screen*
 
 #### Website:
 
 ![image](/Images/WebsiteFrontPage.png)
+
 *Front page of website*
 
 ![image](/Images/FeedbackPageWebsite.png)
+
 *Feedback page of website*
 
 ![image](/Images/AboutUsPageWebsite.png)
+
 *About us page of website*
 
 ![image](/Images/VideoOfRobotPage.png)
+
 *Video of robot* 
 
 <br>
