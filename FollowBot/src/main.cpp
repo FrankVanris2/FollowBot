@@ -9,13 +9,16 @@
 
 //testing purposes (Currently)
 void setup() {
-  followBotManager.followBotSetup();
+  Serial.begin(9600);
+  Serial.println("it is setting up");
+  //followBotManager.followBotSetup();
   // put your setup code here, to run once:
 }
 
 //testing purposes (Currently)
 void loop() {
-  followBotManager.followBotLoop();
+  Serial.println("it is looping");
+  //followBotManager.followBotLoop();
   
   // put your main code here, to run repeatedly:
 }

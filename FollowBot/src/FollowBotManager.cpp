@@ -17,7 +17,7 @@ FollowBotManager::FollowBotManager() {
 
 //the setup that will store the many objects that will set in the main
 void FollowBotManager::followBotSetup() {
-    Serial.begin(9600);
+    
     myMotors.motorSetup();
 }
 
