@@ -6,8 +6,8 @@
 */
 
 #include "FollowBotManager.h"
-#include "FollowBotWifi.h"
 #include "Motors.h"
+#include "FollowBotClient.h"
 //universal object
 FollowBotManager followBotManager;
 
@@ -18,12 +18,12 @@ FollowBotManager::FollowBotManager() {
 
 //the setup that will store the many objects that will set in the main
 void FollowBotManager::followBotSetup() {
-    followBotWifi.followBotWifi_Setup();
     //myMotors.motorSetup();
+    followBotClient.followBotClient_Setup();
 }
 
 //the loop that will store the many objects that will loop in the main
 void FollowBotManager::followBotLoop() {
-    followBotWifi.followBotWifi_Loop();
+    followBotClient.followBotClient_Loop();
     //myMotors.motorLoop();
 }
