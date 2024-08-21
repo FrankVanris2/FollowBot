@@ -1,0 +1,34 @@
+{
+  "name": "followbot",
+  "version": "1.0.0",
+  "description": "FollowBot",
+  "main": "src/index.jsx",
+  "scripts": {
+    "build": "webpack",
+    "watch": "webpack --watch",
+    "clean": "clean-windows",
+    "start": "run-server",
+    "startdebug": "run-server --debug"
+  },
+  "keywords": [],
+  "author": "Frank Vanris",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "7.22.10",
+    "@babel/preset-env": "7.22.10",
+    "@babel/preset-react": "7.22.5",
+    "babel-loader": "9.1.3",
+    "babel-plugin-styled-components": "2.1.4",
+    "browser-sync-webpack-plugin": "^2.3.0",
+    "copy-webpack-plugin": "^12.0.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-router-dom": "6.15.0",
+    "styled-components": "6.0.7",
+    "webpack": "5.88.2",
+    "webpack-cli": "5.1.4"
+  },
+  "dependencies": {
+    "file-loader": "^6.2.0"
+  }
+}

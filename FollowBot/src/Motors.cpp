@@ -48,22 +48,27 @@ void Motors::motorLoop() {
         lastInputTime = millis();
         switch(input) {
             case MOTOR_FORWARD:
+                Serial.println("Motor is Forward");
                 motorForwards();
                 break;
             
             case MOTOR_BACKWARD:
+                Serial.println("Motor is Backward");
                 motorBackwards();
                 break;
             
             case MOTOR_LEFT:
+            Serial.println("Motor is Left");
                 motorLeft();
                 break;
             
             case MOTOR_RIGHT: 
+                Serial.println("Motor is Right");
                 motorRight();
                 break;
             
             case MOTOR_RELEASE:
+            Serial.println("Motor is stop");
                 motorStop();
                 break;
         }   
