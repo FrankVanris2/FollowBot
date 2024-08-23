@@ -18,12 +18,21 @@ public:
 
 private:
 
-    void read_response();
-
     void printWifiStatus();
+
+    //Testing purposes
+    void test_read_response();
+
+    void test_read_robotMovement();
+
+    void testGet();
+
+    void testGetMove();
     
     int keyIndex;
     int status;
+    unsigned long interval;
+    unsigned long previousMillis;
 };
 
 extern FollowBotClient followBotClient;

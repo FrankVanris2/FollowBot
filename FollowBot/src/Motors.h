@@ -15,6 +15,13 @@ public:
 
     void motorLoop();
 
+    
+    // Testing purposes
+    void motorClientTesting(char* movement);
+
+private:
+
+    //Important movements
     void motorForwards();
 
     void motorBackwards();
@@ -24,8 +31,7 @@ public:
     void motorRight();
 
     void motorStop();
-
-private:
+    
     int input;
     unsigned long lastInputTime;
 };

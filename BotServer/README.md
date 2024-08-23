@@ -22,11 +22,15 @@ Two cmd windows:
 
 - First window (for javascript browser development):
 
-npm run watch
+`npm run watch`
 
 - Second window (for python server development):
 
-npm run startdebug
+`npm run startdebug`
 
 In the browser use url: http://localhost:3000/
+
+When finished adding changes please run clean:
+
+`npm run clean`
 

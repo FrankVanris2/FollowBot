@@ -79,20 +79,39 @@ void Motors::motorLoop() {
     }
 }
 
+//testing client, (very important)
+void Motors::motorClientTesting(char* movement) {
+    
+    
+    String movementString = String(movement);
+    if (movementString == "Forward") {
+        motorForwards();
+    } else if (movementString == "Backward") {
+        motorBackwards();
+    } else if (movementString == "Left") {
+        motorLeft();
+    } else if (movementString == "Right") {
+        motorRight();
+    } else if (movementString == "Stop") {
+        motorStop();
+    }
+
+}
+
 // Forward motion with the motors
 void Motors::motorForwards() {
     motor1->run(BACKWARD);
-    motor2->run(FORWARD);
+    motor2->run(BACKWARD);
     motor3->run(FORWARD);
-    motor4->run(BACKWARD);
+    motor4->run(FORWARD);
 }
 
 // Backward motions with the motors
 void Motors::motorBackwards() {
     motor1->run(FORWARD);
-    motor2->run(BACKWARD);
+    motor2->run(FORWARD);
     motor3->run(BACKWARD);
-    motor4->run(FORWARD);
+    motor4->run(BACKWARD);
 }
 
 // Left motions with the motors

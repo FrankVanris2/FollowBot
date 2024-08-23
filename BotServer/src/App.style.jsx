@@ -18,7 +18,7 @@ export const HelloWorld = styled.div`
   margin: 20px;
   color: lightBlue;
   font-weight: bolder;
-  background: linear-gradient(0.1turn, red, green);
+  background: linear-gradient(0.1turn, yellow, green);
 `;
 
 export const CrazyFace = styled.img`

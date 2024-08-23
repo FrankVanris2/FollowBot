@@ -1,4 +1,5 @@
 from flask import Flask
+import random
 
 app = Flask(__name__)
 
@@ -21,3 +22,14 @@ def getTextFiles(filename):
 def getImageFiles(filename):
     with open('./images/' + filename, mode='rb') as file:
         return file.read()
+
+@app.get("/move")
+def getMove():
+    # List of testing movements the robot will conduct
+    movementList = ['Forward', 'Backward', 'Left', 'Right', 'Stop']
+
+    # Selecting random item from list
+    selected_item = random.choice(movementList)
+
+    return selected_item
+

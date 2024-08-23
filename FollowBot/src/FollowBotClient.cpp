@@ -6,6 +6,7 @@
 */
 
 #include "FollowBotClient.h"
+#include "Motors.h"
 #include "WiFiS3.h"
 #include "FollowBot_Secrets.h"
 
@@ -18,7 +19,7 @@ char pass[] = SECRET_PASS;
 
 // If you don't want to use DNS (and reduce your sketch size)
 // use the numeric IP instead of the name for the server:
-IPAddress server(10, 12, 1, 239); // numeric IP for Google (no DNS)
+IPAddress server(10, 12, 0, 195); // numeric IP for Google (no DNS)
 // char server[] = "www.google.com";       // Name address for Google (using DNS)
 
 // Initializing the Ethernet client library
@@ -27,7 +28,7 @@ IPAddress server(10, 12, 1, 239); // numeric IP for Google (no DNS)
 WiFiClient client;
 
 // Constructor
-FollowBotClient::FollowBotClient(): keyIndex(0), status(WL_IDLE_STATUS) {}
+FollowBotClient::FollowBotClient(): keyIndex(0), status(WL_IDLE_STATUS), interval(1000), previousMillis(0) {}
 
 void FollowBotClient::followBotClient_Setup() {
     while(!Serial) {
@@ -62,32 +63,50 @@ void FollowBotClient::followBotClient_Setup() {
     Serial.println("\nStarting connection to server...");
 
     // If you get a connection, report back via serial:
+    /*
     if (client.connect(server, 5000)) { //originally 80
         Serial.println("connected to server");
 
         //Make a HTTP request:
-        client.println("GET /");
-        client.println("Host: 10.12.1.239");
+        //testGet();
+        
+        testGetMove();
+        client.println("Host: 10.12.0.195");
         client.println("Connection: close");
         client.println();
+        
     }
+    */
 }
 
 void FollowBotClient::followBotClient_Loop() {
-    read_response();
+    //test_read_response();
+    
+    if((unsigned long) (millis() - previousMillis) >= interval) {
+        previousMillis = millis();
 
-    // If the server's disconnected, stop the client:
-    if (!client.connected()) {
-        Serial.println();
-        Serial.println("disconnecting from server.");
-        client.stop();
+            testGetMove();
+            client.println("Host: 10.12.0.195");
+            client.println("Connection: close");
+            client.println();
 
-        // do nothing forevermore:
-        while (true);
+
+        test_read_robotMovement();
+
+        // If the server's disconnected, stop the client:
+        if (!client.connected()) {
+            Serial.println();
+            Serial.println("disconnecting from server.");
+            client.stop();
+
+            // do nothing forevermore:
+            //while (true);
+        }
     }
+        
 }
 
-void FollowBotClient::read_response() {
+void FollowBotClient::test_read_response() {
     uint32_t received_data_num = 0;
     while(client.available()) {
 
@@ -105,6 +124,22 @@ void FollowBotClient::read_response() {
     }
 }
 
+void FollowBotClient:: test_read_robotMovement() {
+    while(client.available()) {
+
+        /* actual data reception*/
+        const int SIZE = 20;
+        char buffer[SIZE];
+        int numChars = client.read(reinterpret_cast<uint8_t*>(buffer), SIZE);
+        buffer[numChars] = 0;
+
+        Serial.println(numChars);
+        Serial.println(buffer);
+
+        myMotors.motorClientTesting(buffer);
+
+    }
+}
 void FollowBotClient::printWifiStatus() {
     // Print the SSID of the network you're attached to:
     Serial.print("SSID: ");
@@ -120,4 +155,13 @@ void FollowBotClient::printWifiStatus() {
     Serial.print("signal strength (RSSI): ");
     Serial.print(rssi);
     Serial.println(" dBm");
+}
+
+// Testing mechanics
+void FollowBotClient::testGet() {
+    client.println("GET /");
+}
+
+void FollowBotClient::testGetMove() {
+    client.println("GET /move");
 }
