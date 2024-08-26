@@ -10,6 +10,7 @@
 #include "WiFiS3.h"
 #include "FollowBot_Secrets.h"
 #include "FollowBotManager.h"
+#include "MotorControlStates.h"
 
 // Universal Object
 FollowBotClient followBotClient;
@@ -33,7 +34,7 @@ IPAddress server(10, 12, 1, 195); // numeric IP for Google (no DNS)
 WiFiClient client;
 
 // Constructor
-FollowBotClient::FollowBotClient(): mConnectionStatus(WL_IDLE_STATUS), mPreviousMillis(0) {}
+FollowBotClient::FollowBotClient(): mConnectionStatus(WL_IDLE_STATUS), mPreviousMillis(0), mCountMoves(0) {}
 
 void FollowBotClient::followBotClient_Setup() {
     while(!Serial) {
@@ -65,11 +66,21 @@ void FollowBotClient::followBotClient_Setup() {
 }
 
 void FollowBotClient::followBotClient_Loop() {
-    unsigned long currentMillis = millis();
+    //Movement will run for at most 10 seconds until stopping
+
+    if(mCountMoves > 10) {
+        while(true) {
+            myMotors.motorStop();
+        }
+    }
+    unsigned long currentMillis = millis();   
+
     if((unsigned long) (currentMillis - mPreviousMillis) >= INTERVAL) {
         mPreviousMillis = currentMillis;
+        mCountMoves++;
         getMove();
-    }
+    }  
+    
 }
 
 void FollowBotClient::printWifiStatus() {

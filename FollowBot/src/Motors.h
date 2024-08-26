@@ -15,15 +15,15 @@ public:
     void motorSetup();
     void motorLoop();
 
-private:
-    void adjustDirection();
-
     void motorForwards();
     void motorBackwards();
     void motorLeft();
     void motorRight();
     void motorStop();
     
+private:
+    void adjustDirection();
+
     String mCurrentDirection;
 };
 

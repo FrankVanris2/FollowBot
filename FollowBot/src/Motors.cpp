@@ -15,7 +15,6 @@
 // Universal Object
 Motors myMotors;
 
-
 // Create motor shield object with the default 12C address
 Adafruit_MotorShield motorShield = Adafruit_MotorShield();
 
@@ -51,6 +50,7 @@ void Motors::motorLoop() {
 
 //testing client, (very important)
 void Motors::adjustDirection() {
+    
     if (mCurrentDirection == MOTOR_FORWARD) {
         motorForwards();
     } else if (mCurrentDirection == MOTOR_BACKWARD) {
@@ -62,6 +62,7 @@ void Motors::adjustDirection() {
     } else if (mCurrentDirection == MOTOR_STOP) {
         motorStop();
     }
+    
 
 }
 

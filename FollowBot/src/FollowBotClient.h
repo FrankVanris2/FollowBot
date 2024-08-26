@@ -20,6 +20,7 @@ private:
     void getMove();
     
     unsigned long mPreviousMillis;
+    int mCountMoves;
     int mConnectionStatus;
 };
 
