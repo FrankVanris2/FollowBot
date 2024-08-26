@@ -5,6 +5,7 @@
 */
 
 #include "ObjectAvoidance.h"
+#include "Motors.h"
 #include "Arduino.h"
 
 const int TRIG_PIN = 9;
@@ -43,5 +44,13 @@ void ObjectAvoidance::objectAvoidance_Loop() {
 
     Serial.println(distance);
 
+    if(distance < 10) {     
+        myMotors.motorBackwards();
+    } else {
+        myMotors.motorStop();
+    }
+
+    
+    
     delay(100);
 }
