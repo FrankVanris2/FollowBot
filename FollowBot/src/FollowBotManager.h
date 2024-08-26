@@ -15,10 +15,18 @@ public:
     FollowBotManager();
 
     void followBotSetup();
-
     void followBotLoop();
 
+    const String& getDirection() const {
+        return mDirection;
+    }
+
+    void setDirection(const String& direction) {
+        mDirection = direction;
+    } 
+
 private:
+    String mDirection; 
 };
 
 extern FollowBotManager followBotManager;

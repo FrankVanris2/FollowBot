@@ -4,12 +4,13 @@
 * Desc: A motor class that will store all the types of motors that will be used
 * for this project.
 */
-
+#include "Arduino.h"
 #include "Motors.h"
 #include "Wire.h"
 #include "MotorControlStates.h"
 #include "Adafruit_MotorShield.h"
-#include "Arduino.h"
+#include "FollowBotManager.h"
+
 
 // Universal Object
 Motors myMotors;
@@ -24,7 +25,7 @@ Adafruit_DCMotor *motor2 = motorShield.getMotor(2);
 Adafruit_DCMotor *motor3 = motorShield.getMotor(3);
 Adafruit_DCMotor *motor4 = motorShield.getMotor(4);
 // My constructor
-Motors::Motors(): input(0), lastInputTime(0) {
+Motors::Motors(): mCurrentDirection(MOTOR_STOP) {
 
 }
 
@@ -41,58 +42,24 @@ void Motors::motorSetup() {
 
 
 void Motors::motorLoop() {  
-    int numBytes = Serial.available();
-    
-    if(numBytes > 0) {
-        input = Serial.read();
-        lastInputTime = millis();
-        switch(input) {
-            case MOTOR_FORWARD:
-                Serial.println("Motor is Forward");
-                motorForwards();
-                break;
-            
-            case MOTOR_BACKWARD:
-                Serial.println("Motor is Backward");
-                motorBackwards();
-                break;
-            
-            case MOTOR_LEFT:
-            Serial.println("Motor is Left");
-                motorLeft();
-                break;
-            
-            case MOTOR_RIGHT: 
-                Serial.println("Motor is Right");
-                motorRight();
-                break;
-            
-            case MOTOR_RELEASE:
-            Serial.println("Motor is stop");
-                motorStop();
-                break;
-        }   
-    }
-    
-    if(millis() - lastInputTime >= 500) {
-        motorStop(); // autostop
+    String dir = followBotManager.getDirection();
+    if(dir != mCurrentDirection) {
+        mCurrentDirection = dir;
+        adjustDirection();
     }
 }
 
 //testing client, (very important)
-void Motors::motorClientTesting(char* movement) {
-    
-    
-    String movementString = String(movement);
-    if (movementString == "Forward") {
+void Motors::adjustDirection() {
+    if (mCurrentDirection == MOTOR_FORWARD) {
         motorForwards();
-    } else if (movementString == "Backward") {
+    } else if (mCurrentDirection == MOTOR_BACKWARD) {
         motorBackwards();
-    } else if (movementString == "Left") {
+    } else if (mCurrentDirection == MOTOR_LEFT) {
         motorLeft();
-    } else if (movementString == "Right") {
+    } else if (mCurrentDirection == MOTOR_RIGHT) {
         motorRight();
-    } else if (movementString == "Stop") {
+    } else if (mCurrentDirection == MOTOR_STOP) {
         motorStop();
     }
 

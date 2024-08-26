@@ -6,12 +6,13 @@
 */
 
 #include "FollowBotManager.h"
+#include "MotorControlStates.h"
 #include "Motors.h"
 #include "FollowBotClient.h"
 //universal object
 FollowBotManager followBotManager;
 
-FollowBotManager::FollowBotManager() {
+FollowBotManager::FollowBotManager(): mDirection(MOTOR_STOP) {
     
 }
 
@@ -25,5 +26,5 @@ void FollowBotManager::followBotSetup() {
 //the loop that will store the many objects that will loop in the main
 void FollowBotManager::followBotLoop() {
     followBotClient.followBotClient_Loop();
-    //myMotors.motorLoop();
+    myMotors.motorLoop();
 }

@@ -9,17 +9,22 @@
 #include "Motors.h"
 #include "WiFiS3.h"
 #include "FollowBot_Secrets.h"
+#include "FollowBotManager.h"
 
 // Universal Object
 FollowBotClient followBotClient;
 
 //sensitive information
 char ssid[] = SECRET_SSID;
-char pass[] = SECRET_PASS;
+// char pass[] = SECRET_PASS;
+
+// Interval
+const int INTERVAL = 1000;
 
 // If you don't want to use DNS (and reduce your sketch size)
 // use the numeric IP instead of the name for the server:
-IPAddress server(10, 12, 0, 195); // numeric IP for Google (no DNS)
+IPAddress server(10, 12, 1, 195); // numeric IP for Google (no DNS)
+//IPAddress server(10, 0, 0, 245); // numeric IP for Google (no DNS)
 // char server[] = "www.google.com";       // Name address for Google (using DNS)
 
 // Initializing the Ethernet client library
@@ -28,118 +33,45 @@ IPAddress server(10, 12, 0, 195); // numeric IP for Google (no DNS)
 WiFiClient client;
 
 // Constructor
-FollowBotClient::FollowBotClient(): keyIndex(0), status(WL_IDLE_STATUS), interval(1000), previousMillis(0) {}
+FollowBotClient::FollowBotClient(): mConnectionStatus(WL_IDLE_STATUS), mPreviousMillis(0) {}
 
 void FollowBotClient::followBotClient_Setup() {
     while(!Serial) {
         ; // wait for serial port to connect. Needed for native USB port only
     }
 
-    // check for the WiFi module:
-    if (WiFi.status() == WL_NO_MODULE) {
-        Serial.println("Communication with WiFi module failed!");
-        // don't continue
-        while(true);
-    }
-
-    String fv = WiFi.firmwareVersion();
-    if(fv < WIFI_FIRMWARE_LATEST_VERSION) {
+    String firmVersion = WiFi.firmwareVersion();
+    if(firmVersion < WIFI_FIRMWARE_LATEST_VERSION) {
         Serial.println("Please upgrade the firmware");
     }
 
+    // check for the WiFi module:
+    if (WiFi.status() == WL_NO_MODULE) {
+        Serial.println("Communication with WiFi module failed!");  
+    }
+
     // Attempt to connect to WiFi network;
-    while(status != WL_CONNECTED) {
+    while(mConnectionStatus != WL_CONNECTED) {
         Serial.print("Attempting to connect to SSID: ");
         Serial.println(ssid);
         // Connect to WPA/WPA2 network. Change this line if using open or WEP network:
-        status = WiFi.begin(ssid);
+        mConnectionStatus = WiFi.begin(ssid); //pass for huis
 
-        // wait 10 seconds for connection:
-        delay(10000);
+        // wait 1 seconds for connection:
+        delay(1000);
     }
 
-    printWifiStatus();
-
-    Serial.println("\nStarting connection to server...");
-
-    // If you get a connection, report back via serial:
-    /*
-    if (client.connect(server, 5000)) { //originally 80
-        Serial.println("connected to server");
-
-        //Make a HTTP request:
-        //testGet();
-        
-        testGetMove();
-        client.println("Host: 10.12.0.195");
-        client.println("Connection: close");
-        client.println();
-        
-    }
-    */
+    printWifiStatus(); 
 }
 
 void FollowBotClient::followBotClient_Loop() {
-    //test_read_response();
-    
-    if((unsigned long) (millis() - previousMillis) >= interval) {
-        previousMillis = millis();
-
-            testGetMove();
-            client.println("Host: 10.12.0.195");
-            client.println("Connection: close");
-            client.println();
-
-
-        test_read_robotMovement();
-
-        // If the server's disconnected, stop the client:
-        if (!client.connected()) {
-            Serial.println();
-            Serial.println("disconnecting from server.");
-            client.stop();
-
-            // do nothing forevermore:
-            //while (true);
-        }
-    }
-        
-}
-
-void FollowBotClient::test_read_response() {
-    uint32_t received_data_num = 0;
-    while(client.available()) {
-
-        /* actual data reception*/
-        char c = client.read();
-
-        /* print data to serial port */
-        Serial.print(c);
-
-        /* wrap data to 80 columns*/
-        received_data_num++;
-        if(received_data_num % 80 == 0) {
-            Serial.println();
-        }
+    unsigned long currentMillis = millis();
+    if((unsigned long) (currentMillis - mPreviousMillis) >= INTERVAL) {
+        mPreviousMillis = currentMillis;
+        getMove();
     }
 }
 
-void FollowBotClient:: test_read_robotMovement() {
-    while(client.available()) {
-
-        /* actual data reception*/
-        const int SIZE = 20;
-        char buffer[SIZE];
-        int numChars = client.read(reinterpret_cast<uint8_t*>(buffer), SIZE);
-        buffer[numChars] = 0;
-
-        Serial.println(numChars);
-        Serial.println(buffer);
-
-        myMotors.motorClientTesting(buffer);
-
-    }
-}
 void FollowBotClient::printWifiStatus() {
     // Print the SSID of the network you're attached to:
     Serial.print("SSID: ");
@@ -157,11 +89,31 @@ void FollowBotClient::printWifiStatus() {
     Serial.println(" dBm");
 }
 
-// Testing mechanics
-void FollowBotClient::testGet() {
-    client.println("GET /");
-}
+void FollowBotClient::getMove() {
+    if (client.connect(server, 5000)) { //originally 80
+        Serial.println("connected to server");
+        client.println("GET /move");
+        client.println("Host: 10.12.1.195");
+        client.println("Connection: close");
+        client.println(); 
 
-void FollowBotClient::testGetMove() {
-    client.println("GET /move");
+        String direction;
+        while (true) {
+            const int SIZE = 20;
+            char buffer[SIZE];
+            int numChars = client.read(reinterpret_cast<uint8_t*>(buffer), SIZE);
+            buffer[numChars] = 0;
+
+            Serial.println(numChars);
+            Serial.println(buffer);
+            
+            if(numChars > 0) {
+                direction = buffer;
+                break;
+            }       
+        }
+
+        followBotManager.setDirection(direction);
+        client.stop();
+    }
 }

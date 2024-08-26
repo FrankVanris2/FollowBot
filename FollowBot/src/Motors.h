@@ -5,6 +5,7 @@
 */
 
 #pragma once
+#include "Arduino.h"
 
 class Motors {
 public:
@@ -12,28 +13,18 @@ public:
     Motors();
 
     void motorSetup();
-
     void motorLoop();
 
-    
-    // Testing purposes
-    void motorClientTesting(char* movement);
-
 private:
+    void adjustDirection();
 
-    //Important movements
     void motorForwards();
-
     void motorBackwards();
-
     void motorLeft();
-    
     void motorRight();
-
     void motorStop();
     
-    int input;
-    unsigned long lastInputTime;
+    String mCurrentDirection;
 };
 
 extern Motors myMotors;

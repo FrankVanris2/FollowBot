@@ -6,10 +6,9 @@
 
 #pragma once
 
-enum MotorControl {
-    MOTOR_FORWARD = 'w',
-    MOTOR_BACKWARD = 's',
-    MOTOR_LEFT = 'a',
-    MOTOR_RIGHT = 'd',
-    MOTOR_RELEASE = 'q',
-};
+const String MOTOR_FORWARD = "Forward";
+const String MOTOR_BACKWARD = "Backward";
+const String MOTOR_LEFT = "Left";
+const String MOTOR_RIGHT = "Right";
+const String MOTOR_STOP = "Stop";
+

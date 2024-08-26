@@ -11,28 +11,16 @@ public:
     FollowBotClient();
 
     void followBotClient_Setup();
-
     void followBotClient_Loop();
-
-    
 
 private:
 
     void printWifiStatus();
 
-    //Testing purposes
-    void test_read_response();
-
-    void test_read_robotMovement();
-
-    void testGet();
-
-    void testGetMove();
+    void getMove();
     
-    int keyIndex;
-    int status;
-    unsigned long interval;
-    unsigned long previousMillis;
+    unsigned long mPreviousMillis;
+    int mConnectionStatus;
 };
 
 extern FollowBotClient followBotClient;
