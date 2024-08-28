@@ -12,3 +12,11 @@ const String MOTOR_LEFT = "Left";
 const String MOTOR_RIGHT = "Right";
 const String MOTOR_STOP = "Stop";
 
+
+enum MotorStates {
+    FORWARDS,
+    BACKWARDS,
+    LEFT,
+    RIGHT,
+    STOP,
+};

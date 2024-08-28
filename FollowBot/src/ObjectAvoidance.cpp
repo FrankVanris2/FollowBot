@@ -6,51 +6,68 @@
 
 #include "ObjectAvoidance.h"
 #include "Motors.h"
+#include "MotorControlStates.h"
 #include "Arduino.h"
 
-const int TRIG_PIN = 9;
-const int ECHO_PIN = 10;
+//Sensor 1
+const int TRIG_PIN1 = 9;
+const int ECHO_PIN1 = 10;
 
+//Sensor 2
+const int TRIG_PIN2 = 11;
+const int ECHO_PIN2 = 12;
+
+
+// Setting state
+MotorStates motorState = STOP;
 
 // Universal Object
 ObjectAvoidance objectAvoidance;
 
 // Constructor
-ObjectAvoidance::ObjectAvoidance(): duration(0.0), distance(0.0) {}
+ObjectAvoidance::ObjectAvoidance(): duration1(0.0), distance1(0.0), duration2(0.0), distance2(0.0) {}
 
 
 void ObjectAvoidance::objectAvoidance_Setup() {
-    pinMode(TRIG_PIN, OUTPUT);
-
-    pinMode(ECHO_PIN, INPUT);
+    pinMode(TRIG_PIN1, OUTPUT);
+    pinMode(ECHO_PIN1, INPUT);
+    pinMode(TRIG_PIN2, OUTPUT);
+    pinMode(ECHO_PIN2, INPUT);
 }
 
 void ObjectAvoidance::objectAvoidance_Loop() {
-    digitalWrite(TRIG_PIN, LOW);
-
+    // Sensor 1
+    digitalWrite(TRIG_PIN1, LOW);
     delayMicroseconds(2);
-
-    digitalWrite(TRIG_PIN, HIGH);
-
+    digitalWrite(TRIG_PIN1, HIGH);
     delayMicroseconds(10);
+    digitalWrite(TRIG_PIN1, LOW);
+    duration1 = pulseIn(ECHO_PIN1, HIGH);
+    distance1 = (duration1 * .0343) / 2;
+    Serial.print("Distance1: ");
+    Serial.println(distance1);
 
-    digitalWrite(TRIG_PIN, LOW);
+    // Sensor 2
+    digitalWrite(TRIG_PIN2, LOW);
+    delayMicroseconds(2);
+    digitalWrite(TRIG_PIN2, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(TRIG_PIN2, LOW);
+    duration2 = pulseIn(ECHO_PIN2, HIGH);
+    distance2 = (duration2 * .0343) / 2;
+    Serial.print("Distance2: ");
+    Serial.println(distance2);
 
-    duration = pulseIn(ECHO_PIN, HIGH);
-
-    distance = (duration * .0343) / 2;
-
-    Serial.print("Distance: ");
-
-    Serial.println(distance);
-
-    if(distance < 10) {     
+    if(distance1 < 10 && motorState != BACKWARDS) {          
         myMotors.motorBackwards();
-    } else {
+        motorState = BACKWARDS;
+    } else if (distance2 < 10 && motorState != FORWARDS) {
+        myMotors.motorForwards();
+        motorState = FORWARDS;
+    } else if (distance1 >= 10 && distance2 >= 10 && motorState != STOP) {
         myMotors.motorStop();
+        motorState = STOP;
     }
-
-    
     
     delay(100);
 }

@@ -9,6 +9,7 @@
 #include "MotorControlStates.h"
 #include "Motors.h"
 #include "ObjectAvoidance.h"
+#include "TemperatureReader.h"
 #include "FollowBotClient.h"
 //universal object
 FollowBotManager followBotManager;
@@ -22,12 +23,15 @@ FollowBotManager::FollowBotManager(): mDirection(MOTOR_STOP) {
 void FollowBotManager::followBotSetup() {
     myMotors.motorSetup();
     // followBotClient.followBotClient_Setup();
+    temperatureReader.temperatureReader_Setup();
     objectAvoidance.objectAvoidance_Setup();
 }
 
 //the loop that will store the many objects that will loop in the main
 void FollowBotManager::followBotLoop() {
     // followBotClient.followBotClient_Loop();
-    // myMotors.motorLoop();
     objectAvoidance.objectAvoidance_Loop();
+    temperatureReader.temperatureReader_Loop();
+    // myMotors.motorLoop();
+    
 }
