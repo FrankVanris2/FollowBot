@@ -8,7 +8,8 @@
     "watch": "webpack --watch",
     "clean": "clean-windows",
     "start": "run-server",
-    "startdebug": "run-server --debug"
+    "startdebug": "run-server --debug",
+    "startlinux": "run-server.bat"
   },
   "keywords": [],
   "author": "Frank Vanris",
