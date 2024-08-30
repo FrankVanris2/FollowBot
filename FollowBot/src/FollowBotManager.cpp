@@ -11,6 +11,7 @@
 #include "ObjectAvoidance.h"
 #include "TemperatureReader.h"
 #include "FollowBotClient.h"
+#include "IrisClassifier.h"
 //universal object
 FollowBotManager followBotManager;
 
@@ -24,14 +25,25 @@ void FollowBotManager::followBotSetup() {
     myMotors.motorSetup();
     // followBotClient.followBotClient_Setup();
     temperatureReader.temperatureReader_Setup();
-    objectAvoidance.objectAvoidance_Setup();
+    // objectAvoidance.objectAvoidance_Setup();
 }
 
 //the loop that will store the many objects that will loop in the main
 void FollowBotManager::followBotLoop() {
     // followBotClient.followBotClient_Loop();
+
+    //Avoiding Obstacles
     objectAvoidance.objectAvoidance_Loop();
+    
+    //obtaining the Temperature
     temperatureReader.temperatureReader_Loop();
     // myMotors.motorLoop();
+
+    //Learning Model Testing
+    /*
+    float input[4] = {5.1, 3.5, 1.4, 0.2};
+    Serial.print("Prediction: ");
+    Serial.println(irisClassifier.predict(input));
+    */
     
 }
