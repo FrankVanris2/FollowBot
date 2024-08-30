@@ -16,7 +16,7 @@ public:
     void objectAvoidance_Loop();
 
 private:
-    float duration1, distance1, duration2, distance2;
+    float duration1, duration2;
 
 };
 

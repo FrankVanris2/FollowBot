@@ -18,6 +18,10 @@ const int TRIG_PIN2 = 11;
 const int ECHO_PIN2 = 12;
 
 
+
+//Distances:
+float distance1, distance2;
+
 // Setting state
 MotorStates motorState = STOP;
 
@@ -25,7 +29,7 @@ MotorStates motorState = STOP;
 ObjectAvoidance objectAvoidance;
 
 // Constructor
-ObjectAvoidance::ObjectAvoidance(): duration1(0.0), distance1(0.0), duration2(0.0), distance2(0.0) {}
+ObjectAvoidance::ObjectAvoidance(): duration1(0.0), duration2(0.0) {}
 
 
 void ObjectAvoidance::objectAvoidance_Setup() {
