@@ -7,9 +7,10 @@
     "build": "webpack",
     "watch": "webpack --watch",
     "clean": "clean-windows",
+    "cleanlinux": "./clean-linux.sh",
     "start": "run-server",
     "startdebug": "run-server --debug",
-    "startlinux": "run-server.bat"
+    "startlinux": "./run-server.sh"
   },
   "keywords": [],
   "author": "Frank Vanris",
