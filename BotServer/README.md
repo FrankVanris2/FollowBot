@@ -1,8 +1,15 @@
-# Install
+
+#note to run you have to be in the BotServer 
+
+# Install()
 
 pip install Flask
+pip install -U flask-cors
 
-npm i
+npm i // say it not supported we probbblay should have 
+better version 
+npm i -g npm
+npm install @mui/icons-material
 
 # Build
 
