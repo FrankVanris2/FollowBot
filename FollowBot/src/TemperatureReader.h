@@ -15,7 +15,6 @@ public:
     void temperatureReader_Loop();
 
 private:
-    unsigned long interval;
     unsigned long previousMillis;
 };
 

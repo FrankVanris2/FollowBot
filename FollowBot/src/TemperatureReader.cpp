@@ -6,10 +6,13 @@
 
 #include "TemperatureReader.h"
 #include "FollowBotClient.h"
+#include "FollowBotManager.h"
 #include "DHT.h"
 
 #define DHTPIN 13
 #define DHTTYPE DHT11
+
+const int TEN_SECONDS = 10000;
 
 // Universal object
 TemperatureReader temperatureReader;
@@ -18,7 +21,7 @@ TemperatureReader temperatureReader;
 DHT dht(DHTPIN, DHTTYPE);
 
 // Constructor
-TemperatureReader::TemperatureReader(): interval(10000), previousMillis(0)  {}
+TemperatureReader::TemperatureReader(): previousMillis(0)  {}
 
 // Temperature Setup
 void TemperatureReader::temperatureReader_Setup() {
@@ -28,34 +31,29 @@ void TemperatureReader::temperatureReader_Setup() {
 
 // Temperature Loop
 void TemperatureReader::temperatureReader_Loop() {
-    if ((unsigned long) (millis() - previousMillis) >= interval) {
+    if ((unsigned long) (millis() - previousMillis) >= TEN_SECONDS) {
         previousMillis = millis();
 
         // Every Second I read the dht11 sensor
-
-        float h = dht.readHumidity();
-        float t = dht.readTemperature();
+        float hum = dht.readHumidity();
+        float tmp = dht.readTemperature();
 
         //Check if any reads fails and exit early
-        if(isnan(h) || isnan(t)) {
+        if(isnan(hum) || isnan(tmp)) {
             Serial.println(F("Failed to read from DHT sensor!"));
             return;
         }
 
         //Compute heat index in Celcius
-        float hic = dht.computeHeatIndex(t, h, false);
+        float hic = dht.computeHeatIndex(tmp, hum, false);
 
-        Serial.print(F("Humidity: "));
-        Serial.print(h);
-        Serial.print(F("% Temperature: "));
-        Serial.print(t);
-        Serial.print(F("°C "));
+        Serial.print(F("Temperature: "));
+        Serial.print(tmp);
+        Serial.print(F("°C"));
+        Serial.println();
         Serial.print(F("Heat index: "));
         Serial.print(hic);
         Serial.print(F("°C "));
         Serial.println();
-
-        // Sending temperature to server
-        followBotClient.sendTemp(t);
     }
 }

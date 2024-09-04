@@ -11,6 +11,7 @@
 #include "FollowBot_Secrets.h"
 #include "FollowBotManager.h"
 #include "MotorControlStates.h"
+#include "ArduinoJson.h"
 
 // Universal Object
 FollowBotClient followBotClient;
@@ -20,7 +21,11 @@ char ssid[] = SECRET_SSID;
 char pass[] = SECRET_PASS;
 
 // Interval
-const int INTERVAL = 1000;
+const int ONE_SECOND = 1000;
+
+
+//My Json creator
+ StaticJsonDocument<200> robotInformationJson;
 
 // If you don't want to use DNS (and reduce your sketch size)
 // use the numeric IP instead of the name for the server:
@@ -68,17 +73,18 @@ void FollowBotClient::followBotClient_Setup() {
 void FollowBotClient::followBotClient_Loop() {
     //Movement will run for at most 10 seconds until stopping
 
-    if(mCountMoves > 10) {
+    /*if(mCountMoves > 10) {
         while(true) {
             myMotors.motorStop();
         }
-    }
+    }*/
     unsigned long currentMillis = millis();   
 
-    if((unsigned long) (currentMillis - mPreviousMillis) >= INTERVAL) {
+    if((unsigned long) (currentMillis - mPreviousMillis) >= ONE_SECOND) {
         mPreviousMillis = currentMillis;
-        mCountMoves++;
-        getMove();
+        //mCountMoves++;
+        infoExchange();
+
     }  
     
 }
@@ -100,11 +106,24 @@ void FollowBotClient::printWifiStatus() {
     Serial.println(" dBm");
 }
 
-void FollowBotClient::getMove() {
+void FollowBotClient::infoExchange() {
     if (client.connect(server, 80)) { //originally 80
+        const OutputData& outputData = followBotManager.getOutputData();
+        
+        //Adding given components to json object
+        robotInformationJson["temperature"] = outputData.mTemperature;
+        robotInformationJson["heatIndex"] = outputData.mHeatIndex;
+        String outputDataStr;
+        serializeJson(robotInformationJson, outputDataStr);
+
         Serial.println("connected to server");
-        client.println("GET /move");
+        client.println("POST /temp HTTP/1.1");
         client.println("Host: 3.145.197.165");
+        client.println("Content-Type: application/json");
+        client.print("Content-Length: ");
+        client.println(outputDataStr.length());
+        client.println();
+        client.println(outputDataStr);
         client.println("Connection: close");
         client.println(); 
 
@@ -126,24 +145,5 @@ void FollowBotClient::getMove() {
 
         followBotManager.setDirection(direction);
         client.stop();
-    }
-}
-
-void FollowBotClient::sendTemp(float temperature) {
-    if (client.connect(server, 80)) {
-        Serial.println("connected to server");
-        client.println("POST /temp HTTP/1.1");
-        client.println("Host: 3.145.197.165");
-        client.println("Content-Type: application/x-www-form-urlencoded");
-        client.print("Content-Length: ");
-        client.println(String("temperature=" + String(temperature)).length());
-        client.println();
-        client.print("tempearture=");
-        client.println(temperature);
-        client.println("Connection: close");
-        client.println();
-        client.stop();
-    } else {
-        Serial.println("connection failed");
     }
 }

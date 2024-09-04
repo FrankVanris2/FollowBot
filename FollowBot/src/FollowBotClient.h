@@ -19,7 +19,7 @@ private:
 
     void printWifiStatus();
 
-    void getMove();
+    void infoExchange();
  
     unsigned long mPreviousMillis;
     int mCountMoves;

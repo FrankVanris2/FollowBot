@@ -23,23 +23,9 @@ def getImageFiles(filename):
     with open('./images/' + filename, mode='rb') as file:
         return file.read()
 
-@app.get("/move")
-def getMove():
-    # List of testing movements the robot will conduct
-    movementList = ['Forward', 'Backward', 'Left', 'Right', 'Stop']
-
-    # Selecting random item from list
-    selected_item = random.choice(movementList)
-
-    return selected_item
-
-@app.post("/temp")
+@app.post("/exchangeInfo")
 def postTemp():
-    temperature = request.form.get('tempearture')
-    if temperature:
-        print(f"Received temperature: {temperature}°C")
-        return "Temperature received", 200
-    else:
-        return "No temperature data", 400
+    robotData = request.json()
+    return handleRobotData(robotData)
     
 
