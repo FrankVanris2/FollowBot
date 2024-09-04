@@ -23,23 +23,23 @@ FollowBotManager::FollowBotManager(): mDirection(MOTOR_STOP) {
 //the setup that will store the many objects that will set in the main
 void FollowBotManager::followBotSetup() {
     myMotors.motorSetup();
-    // followBotClient.followBotClient_Setup();
+    followBotClient.followBotClient_Setup();
     temperatureReader.temperatureReader_Setup();
-    objectAvoidance.objectAvoidance_Setup();
+    //objectAvoidance.objectAvoidance_Setup();
 }
 
 //the loop that will store the many objects that will loop in the main
 void FollowBotManager::followBotLoop() {
-    // followBotClient.followBotClient_Loop();
+    followBotClient.followBotClient_Loop();
 
     //Avoiding Obstacles
-    objectAvoidance.objectAvoidance_Loop();
+    //objectAvoidance.objectAvoidance_Loop();
     
     //obtaining the Temperature
     temperatureReader.temperatureReader_Loop();
 
     // For motor movement
-    // myMotors.motorLoop();
+    myMotors.motorLoop();
 
     //Learning Model Testing
     /*

@@ -17,14 +17,14 @@ FollowBotClient followBotClient;
 
 //sensitive information
 char ssid[] = SECRET_SSID;
-// char pass[] = SECRET_PASS;
+char pass[] = SECRET_PASS;
 
 // Interval
 const int INTERVAL = 1000;
 
 // If you don't want to use DNS (and reduce your sketch size)
 // use the numeric IP instead of the name for the server:
-IPAddress server(10, 12, 1, 195); // numeric IP for Google (no DNS)
+IPAddress server(3, 145, 197, 165); // numeric IP for Google (no DNS)
 //IPAddress server(10, 0, 0, 245); // numeric IP for Google (no DNS)
 // char server[] = "www.google.com";       // Name address for Google (using DNS)
 
@@ -56,7 +56,7 @@ void FollowBotClient::followBotClient_Setup() {
         Serial.print("Attempting to connect to SSID: ");
         Serial.println(ssid);
         // Connect to WPA/WPA2 network. Change this line if using open or WEP network:
-        mConnectionStatus = WiFi.begin(ssid); //pass for huis
+        mConnectionStatus = WiFi.begin(ssid, pass); //pass for huis
 
         // wait 1 seconds for connection:
         delay(1000);
@@ -101,10 +101,10 @@ void FollowBotClient::printWifiStatus() {
 }
 
 void FollowBotClient::getMove() {
-    if (client.connect(server, 5000)) { //originally 80
+    if (client.connect(server, 80)) { //originally 80
         Serial.println("connected to server");
         client.println("GET /move");
-        client.println("Host: 10.12.1.195");
+        client.println("Host: 3.145.197.165");
         client.println("Connection: close");
         client.println(); 
 
@@ -126,5 +126,24 @@ void FollowBotClient::getMove() {
 
         followBotManager.setDirection(direction);
         client.stop();
+    }
+}
+
+void FollowBotClient::sendTemp(float temperature) {
+    if (client.connect(server, 80)) {
+        Serial.println("connected to server");
+        client.println("POST /temp HTTP/1.1");
+        client.println("Host: 3.145.197.165");
+        client.println("Content-Type: application/x-www-form-urlencoded");
+        client.print("Content-Length: ");
+        client.println(String("temperature=" + String(temperature)).length());
+        client.println();
+        client.print("tempearture=");
+        client.println(temperature);
+        client.println("Connection: close");
+        client.println();
+        client.stop();
+    } else {
+        Serial.println("connection failed");
     }
 }

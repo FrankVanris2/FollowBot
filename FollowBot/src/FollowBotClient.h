@@ -13,12 +13,14 @@ public:
     void followBotClient_Setup();
     void followBotClient_Loop();
 
+    void sendTemp(float temperature);
+
 private:
 
     void printWifiStatus();
 
     void getMove();
-    
+ 
     unsigned long mPreviousMillis;
     int mCountMoves;
     int mConnectionStatus;

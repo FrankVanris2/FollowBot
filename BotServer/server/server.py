@@ -33,3 +33,13 @@ def getMove():
 
     return selected_item
 
+@app.post("/temp")
+def postTemp():
+    temperature = request.form.get('tempearture')
+    if temperature:
+        print(f"Received temperature: {temperature}°C")
+        return "Temperature received", 200
+    else:
+        return "No temperature data", 400
+    
+

@@ -5,6 +5,7 @@
 */
 
 #include "TemperatureReader.h"
+#include "FollowBotClient.h"
 #include "DHT.h"
 
 #define DHTPIN 13
@@ -32,10 +33,7 @@ void TemperatureReader::temperatureReader_Loop() {
 
         // Every Second I read the dht11 sensor
 
-        // Read humidity
         float h = dht.readHumidity();
-
-        // Read temperature in Celsius
         float t = dht.readTemperature();
 
         //Check if any reads fails and exit early
@@ -52,9 +50,12 @@ void TemperatureReader::temperatureReader_Loop() {
         Serial.print(F("% Temperature: "));
         Serial.print(t);
         Serial.print(F("°C "));
-        Serial.print(F("°F  Heat index: "));
+        Serial.print(F("Heat index: "));
         Serial.print(hic);
         Serial.print(F("°C "));
         Serial.println();
+
+        // Sending temperature to server
+        followBotClient.sendTemp(t);
     }
 }
