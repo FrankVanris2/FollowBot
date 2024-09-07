@@ -22,6 +22,7 @@ char pass[] = SECRET_PASS;
 
 // Interval
 const int ONE_SECOND = 1000;
+const int SIXTY_SECONDS = 60000;
 
 
 //My Json creator
@@ -29,8 +30,8 @@ const int ONE_SECOND = 1000;
 
 // If you don't want to use DNS (and reduce your sketch size)
 // use the numeric IP instead of the name for the server:
-IPAddress server(3, 145, 197, 165); // numeric IP for Google (no DNS)
-//IPAddress server(10, 0, 0, 245); // numeric IP for Google (no DNS)
+//IPAddress server(3, 145, 197, 165); // numeric IP for Google (no DNS)
+IPAddress server(10, 0, 0, 245); // numeric IP for Google (no DNS)
 // char server[] = "www.google.com";       // Name address for Google (using DNS)
 
 // Initializing the Ethernet client library
@@ -57,7 +58,8 @@ void FollowBotClient::followBotClient_Setup() {
     }
 
     // Attempt to connect to WiFi network;
-    while(mConnectionStatus != WL_CONNECTED) {
+    unsigned long startAttemptTime = millis();
+    while(mConnectionStatus != WL_CONNECTED && millis() - startAttemptTime < SIXTY_SECONDS) {
         Serial.print("Attempting to connect to SSID: ");
         Serial.println(ssid);
         // Connect to WPA/WPA2 network. Change this line if using open or WEP network:
@@ -67,26 +69,24 @@ void FollowBotClient::followBotClient_Setup() {
         delay(1000);
     }
 
-    printWifiStatus(); 
+    if(mConnectionStatus = WL_CONNECTED) {
+        printWifiStatus();
+    } else {
+        Serial.println("Failed to connect to Wifi");
+    }
+     
 }
 
 void FollowBotClient::followBotClient_Loop() {
-    //Movement will run for at most 10 seconds until stopping
-
-    /*if(mCountMoves > 10) {
-        while(true) {
-            myMotors.motorStop();
-        }
-    }*/
     unsigned long currentMillis = millis();   
 
     if((unsigned long) (currentMillis - mPreviousMillis) >= ONE_SECOND) {
-        mPreviousMillis = currentMillis;
-        //mCountMoves++;
-        infoExchange();
-
+        mPreviousMillis = currentMillis;         
+        getMove();  
     }  
-    
+    if(followBotManager.getDirtyFlag() != false) {
+        postRobotInfo();
+    }
 }
 
 void FollowBotClient::printWifiStatus() {
@@ -106,10 +106,11 @@ void FollowBotClient::printWifiStatus() {
     Serial.println(" dBm");
 }
 
-void FollowBotClient::infoExchange() {
-    if (client.connect(server, 80)) { //originally 80
+void FollowBotClient::postRobotInfo() {
+    if(client.connect(server, 5000)) { // Originally 80
+        // If information is obtained post information
         const OutputData& outputData = followBotManager.getOutputData();
-        
+            
         //Adding given components to json object
         robotInformationJson["temperature"] = outputData.mTemperature;
         robotInformationJson["heatIndex"] = outputData.mHeatIndex;
@@ -117,8 +118,8 @@ void FollowBotClient::infoExchange() {
         serializeJson(robotInformationJson, outputDataStr);
 
         Serial.println("connected to server");
-        client.println("POST /temp HTTP/1.1");
-        client.println("Host: 3.145.197.165");
+        client.println("POST /api/robotinfo HTTP/1.1");
+        client.println("Host: 10.0.0.245"); // main server is 3.145.197.165
         client.println("Content-Type: application/json");
         client.print("Content-Length: ");
         client.println(outputDataStr.length());
@@ -127,23 +128,55 @@ void FollowBotClient::infoExchange() {
         client.println("Connection: close");
         client.println(); 
 
+        client.stop();
+    }
+}
+
+void FollowBotClient::getMove() {
+    if(client.connect(server, 5000)) { // Originally 80
+        //else get the information to make the robot move
+        Serial.println("connected to server");
+        client.println("GET /api/getmove HTTP/1.1");
+        client.println("Host: 10.0.0.245");
+        client.println("Connection: close");
+        client.println();
+
         String direction;
+
+        const int SIZE = 1024;
+        char buffer[SIZE];
         while (true) {
-            const int SIZE = 20;
-            char buffer[SIZE];
+            
             int numChars = client.read(reinterpret_cast<uint8_t*>(buffer), SIZE);
             buffer[numChars] = 0;
 
+            Serial.print("Number of chars: ");
             Serial.println(numChars);
+            Serial.print("Direction: ");
             Serial.println(buffer);
             
             if(numChars > 0) {
-                direction = buffer;
+                char* bufPtr;
+                for (bufPtr = buffer; *(bufPtr + 3); ++bufPtr) {
+                    //if (isprint(*bufPtr)) Serial.print(*bufPtr);
+                    //char buf[5];
+                    //Serial.print(" ");
+                    //Serial.print(itoa(*bufPtr, buf, 16));
+                    //Serial.print(", ");
+                    if (*bufPtr == 0x0d && *(bufPtr + 1) == 0x0a && *(bufPtr + 2) == 0x0d && *(bufPtr + 3) == 0x0a) {
+                        bufPtr += 4;
+                        break;
+                    } 
+                }
+    
+                direction = bufPtr;
                 break;
             }       
-        }
-
-        followBotManager.setDirection(direction);
+        } 
         client.stop();
+        Serial.print("Direction: ");
+        Serial.println(direction);
+        followBotManager.setDirection(direction);
+        
     }
 }

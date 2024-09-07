@@ -55,5 +55,6 @@ void TemperatureReader::temperatureReader_Loop() {
         Serial.print(hic);
         Serial.print(F("°C "));
         Serial.println();
+        followBotManager.setTemperatureParams(tmp, hic);
     }
 }

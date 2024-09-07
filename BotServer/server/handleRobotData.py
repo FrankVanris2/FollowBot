@@ -3,10 +3,12 @@ By: Frank Vanris
 Date: 9/4/2024
 Desc: Handles the robot data
 '''
+import random
 
 def handleRobotData(robotData):
     print(f"here is the robot data: {robotData} ")
-
+    
+def getDirection():
     movementList = ['Forward', 'Backward', 'Left', 'Right', 'Stop']
 
     # Selecting random item from list

@@ -22,4 +22,14 @@ M3 Screws: $4.99
 Arduino Rev4 Wifi: $27.50
 * https://store-usa.arduino.cc/products/uno-r4-wifi?gad_source=1&gclid=Cj0KCQjwzva1BhD3ARIsADQuPnUe2QQbA0fWsK1f4miBPJ3SgAhI6EdM5A6ZmWw8PeZ75cRRGwPQ5DMaAoTVEALw_wcB
 
-<h3> Total Cost + Tax: $65.60 </h3>
+USB to USB C Adapater: $5.99
+* https://www.amazon.com/dp/B0BJ8YQ2LM?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1
+
+USB C to quick wire cable connector: $7.99
+* https://www.amazon.com/dp/B0CLH7FR8V?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1
+
+Battery Pack 10400mAh: $13.99
+* https://www.amazon.com/dp/B0B7XNNJJB?ref=ppx_yo2ov_dt_b_fed_asin_title
+
+
+<h3> Total Cost + Tax: $110.73 </h3>

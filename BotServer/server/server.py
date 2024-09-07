@@ -1,4 +1,5 @@
-from flask import Flask
+from flask import Flask, request, jsonify
+from handleRobotData import handleRobotData, getDirection
 import random
 
 app = Flask(__name__)
@@ -23,9 +24,15 @@ def getImageFiles(filename):
     with open('./images/' + filename, mode='rb') as file:
         return file.read()
 
-@app.post("/exchangeInfo")
-def postTemp():
-    robotData = request.json()
-    return handleRobotData(robotData)
+
+@app.get("/api/getmove")
+def getMove():
+    return getDirection()
+
+@app.post("/api/robotinfo")
+def postRobotInfo():
+    robotData = request.get_json()
+    response_data = handleRobotData(robotData)
+    return jsonify(response_data)
     
 
