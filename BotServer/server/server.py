@@ -1,8 +1,6 @@
 from flask import Flask, request, send_file, jsonify, abort
 from flask_cors import CORS
-from flask import Flask, jsonify
 from handleRobotData import handleRobotData, getDirection
-
 import random
 import os
 
