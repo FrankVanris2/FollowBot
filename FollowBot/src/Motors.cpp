@@ -43,6 +43,8 @@ void Motors::motorSetup() {
 void Motors::motorLoop() {  
     String dir = followBotManager.getDirection();
     if(dir != mCurrentDirection) {
+        Serial.print("Motor Direction: ");
+        Serial.println(dir);
         mCurrentDirection = dir;
         adjustDirection();
     }

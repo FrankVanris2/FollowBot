@@ -1,5 +1,8 @@
-from flask import Flask, send_file, jsonify, abort
+from flask import Flask, request, send_file, jsonify, abort
 from flask_cors import CORS
+from flask import Flask, jsonify
+from handleRobotData import handleRobotData, getDirection
+
 import random
 import os
 
@@ -45,9 +48,15 @@ def get_move():
     selected_item = random.choice(movement_list)
     return jsonify({'movement': selected_item})
 
-@app.post("/exchangeInfo")
-def postTemp():
-    robotData = request.json()
-    return handleRobotData(robotData)
+
+@app.get("/api/getmove")
+def getMove():
+    return getDirection()
+
+@app.post("/api/robotinfo")
+def postRobotInfo():
+    robotData = request.get_json()
+    response_data = handleRobotData(robotData)
+    return jsonify(response_data)
     
 

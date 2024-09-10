@@ -31,8 +31,10 @@ public:
         return mOutputData.mTemperature;
     }
 
-    void setTemperature(float temp) {
+    void setTemperatureParams(float temp, float heatIndex) {
+        mIsDirty = true;
         mOutputData.mTemperature = temp;
+        mOutputData.mHeatIndex = heatIndex;
     }
 
     //heat index getters and setters
@@ -40,17 +42,20 @@ public:
         return mOutputData.mHeatIndex;
     }
 
-    void setHeatIndex(float heatIndex) {
-        mOutputData.mHeatIndex = heatIndex;
-    }
-
     const OutputData& getOutputData() const {
+        mIsDirty = false;
         return mOutputData;
     }
+
+    bool getDirtyFlag() const {
+        return mIsDirty;
+    }
+    
 
 private:
     String mDirection; 
     OutputData mOutputData;
+    mutable bool mIsDirty;
 
 };
 

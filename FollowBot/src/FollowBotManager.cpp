@@ -15,7 +15,7 @@
 //universal object
 FollowBotManager followBotManager;
 
-FollowBotManager::FollowBotManager(): mDirection(MOTOR_STOP) {
+FollowBotManager::FollowBotManager(): mDirection(MOTOR_STOP), mIsDirty(false) {
     
 }
 
