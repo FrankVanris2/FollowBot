@@ -31,72 +31,77 @@ const App = () => {
   };
 
   return (
-    <div>
-      <Stack direction="column" alignItems="center" spacing={2}>
-  {/* Arrow buttons */}
-  <Stack direction="row" spacing={2} alignItems="center">
-    <Stack direction="column" alignItems="center" spacing={2}>
+    <>
+      <MoveAroundButtons 
+        handleMouseDown={handleMouseDown}
+        handleMouseUp={handleMouseUp}
+        handleButtonClick={handleButtonClick}
+      />
+      <DirectionList presses={presses} />
+    </>
+  );
+};
+
+
+const MoveAroundButtons = ({ handleMouseDown, handleMouseUp, handleButtonClick }) => (
+  <Stack direction="column" alignItems="center" spacing={2}>
+    <Button 
+      variant="contained" 
+      color="primary" 
+      onMouseDown={() => handleMouseDown('up')}
+      onMouseUp={() => handleMouseUp('up')}
+    >
+      <ArrowUpwardIcon fontSize="large" />
+    </Button>
+
+    <Stack direction="row" spacing={2} justifyContent="center">
       <Button 
         variant="contained" 
         color="primary" 
-        onMouseDown={() => handleMouseDown('up')}
-        onMouseUp={() => handleMouseUp('up')}
+        onMouseDown={() => handleMouseDown('left')}
+        onMouseUp={() => handleMouseUp('left')}
       >
-        <ArrowUpwardIcon fontSize="large" />
+        <ArrowBackIcon fontSize="large" />
       </Button>
-      <Stack direction="row" spacing={2}>
-        <Button 
-          variant="contained" 
-          color="primary" 
-          onMouseDown={() => handleMouseDown('left')}
-          onMouseUp={() => handleMouseUp('left')}
-        >
-          <ArrowBackIcon fontSize="large" />
-        </Button>
-        <Button 
-          variant="contained" 
-          color="primary" 
-          onMouseDown={() => handleMouseDown('down')}
-          onMouseUp={() => handleMouseUp('down')}
-        >
-          <ArrowDownwardIcon fontSize="large" />
-        </Button>
-        <Button 
-          variant="contained" 
-          color="primary" 
-          onMouseDown={() => handleMouseDown('right')}
-          onMouseUp={() => handleMouseUp('right')}
-        >
-          <ArrowForwardIcon fontSize="large" />
-        </Button>
-      </Stack>
-    </Stack>
-
-    {/* Stop button placed to the right */}
-    <Stack direction="row" spacing={2} alignItems="center">
       <Button 
         variant="contained" 
-        color="secondary" 
-        onClick={() => handleButtonClick('stop')}
+        color="primary" 
+        onMouseDown={() => handleMouseDown('down')}
+        onMouseUp={() => handleMouseUp('down')}
       >
-        <StopIcon fontSize="large" />
+        <ArrowDownwardIcon fontSize="large" />
       </Button>
-      <span>Stop the machine</span>
+      <Button 
+        variant="contained" 
+        color="primary" 
+        onMouseDown={() => handleMouseDown('right')}
+        onMouseUp={() => handleMouseUp('right')}
+      >
+        <ArrowForwardIcon fontSize="large" />
+      </Button>
     </Stack>
-  </Stack>
-</Stack>
 
-      
-      <div>
-        <h3>Button Presses:</h3>
-        <ul>
-          {presses.map((press, index) => (
-            <li key={index}>{press}</li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  );
-};
+    <Button 
+      variant="contained" 
+      color="secondary" 
+      onClick={() => handleButtonClick('stop')}
+    >
+      <StopIcon fontSize="large" />
+    </Button>
+    <span>Stop the machine</span>
+  </Stack>
+);
+
+const DirectionList = ({ presses }) => (
+  <div>
+    <h3>Button Presses:</h3>
+    <ul>
+      {presses.map((press, index) => (
+        <li key={index}>{press}</li>
+      ))}
+    </ul>
+  </div>
+);
+
 
 export default App;

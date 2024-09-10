@@ -41,7 +41,6 @@ def get_image_files(filename):
 
 @app.get("/move")
 def get_move():
-    # will add Stop again in future
     movement_list = ['Forward', 'Backward', 'Left', 'Right','Stop']
     selected_item = random.choice(movement_list)
     return jsonify({'movement': selected_item})
