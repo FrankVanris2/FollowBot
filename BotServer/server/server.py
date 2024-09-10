@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify
 from handleRobotData import handleRobotData, getDirection
-import random
 
 app = Flask(__name__)
 
