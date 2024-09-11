@@ -31,5 +31,12 @@ USB C to quick wire cable connector: $7.99
 Battery Pack 10400mAh: $13.99
 * https://www.amazon.com/dp/B0B7XNNJJB?ref=ppx_yo2ov_dt_b_fed_asin_title
 
+Infrared Sensors IR: $7.70
+* https://www.amazon.com/gp/product/B0B74QJV8H/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1
 
-<h3> Total Cost + Tax: $110.73 </h3>
+
+Mecanum Wheel 48mm Omni Directional Electric: $15.79
+* https://www.amazon.com/gp/product/B0B6GLYLHZ/ref=ppx_yo_dt_b_asin_title_o01_s00?ie=UTF8&psc=1
+
+
+<h3> Total Cost + Tax: $134.22 </h3>
