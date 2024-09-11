@@ -1,6 +1,6 @@
 from flask import Flask, request, send_file, jsonify, abort
 from flask_cors import CORS
-from handleRobotData import handleRobotData, getDirection
+from handleRobotData import handleRobotData, getDirection, handleMovementData
 import os
 
 app = Flask(__name__)
@@ -44,14 +44,19 @@ def get_image_files(filename):
 def getMove():
     return getDirection()
 
-
 @app.post("/api/robotinfo")
 def postRobotInfo():
     robotData = request.get_json()
-    response_data = handleRobotData(robotData)
-    return jsonify(response_data)
+    handleRobotData(robotData)
+    return "OK"
 
 #post info for website->server->robot
+@app.post("/api/postmovement") 
+def postMovementInfo():
+    movementInfoData = request.get_json()
+    handleMovementData(movementInfoData)
+    return "OK"
+
 
     
 

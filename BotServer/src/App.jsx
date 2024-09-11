@@ -24,10 +24,22 @@ const App = () => {
     handleButtonClick(direction);
   };
 
-  const handleButtonClick = (direction) => {
+  const handleButtonClick = async (direction) => {
     setPresses(prevPresses => [...prevPresses, direction]);
     // debugging feature, remove when we are pushing final product    o
     console.log(`Button pressed: ${direction}`);
+    try {
+      await fetch('/api/postmovement', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+          },
+        body: JSON.stringify({direction}),
+        })
+      }
+    catch (exc) {
+      console.error('Exception:', exc);
+      }
   };
 
   return (
@@ -48,8 +60,8 @@ const MoveAroundButtons = ({ handleMouseDown, handleMouseUp, handleButtonClick }
     <Button 
       variant="contained" 
       color="primary" 
-      onMouseDown={() => handleMouseDown('up')}
-      onMouseUp={() => handleMouseUp('up')}
+      onMouseDown={() => handleMouseDown('forward')}
+      onMouseUp={() => handleMouseUp('forward')}
     >
       <ArrowUpwardIcon fontSize="large" />
     </Button>
@@ -66,8 +78,8 @@ const MoveAroundButtons = ({ handleMouseDown, handleMouseUp, handleButtonClick }
       <Button 
         variant="contained" 
         color="primary" 
-        onMouseDown={() => handleMouseDown('down')}
-        onMouseUp={() => handleMouseUp('down')}
+        onMouseDown={() => handleMouseDown('backward')}
+        onMouseUp={() => handleMouseUp('backward')}
       >
         <ArrowDownwardIcon fontSize="large" />
       </Button>
