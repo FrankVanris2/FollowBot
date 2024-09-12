@@ -21,6 +21,7 @@ char ssid[] = SECRET_SSID;
 //char pass[] = SECRET_PASS;
 
 // Interval
+const int THIRD_SECOND = 300;
 const int HALF_SECOND = 500;
 const int ONE_SECOND = 1000;
 const int SIXTY_SECONDS = 60000;
@@ -81,10 +82,12 @@ void FollowBotClient::followBotClient_Setup() {
 void FollowBotClient::followBotClient_Loop() {
     unsigned long currentMillis = millis();   
 
-    if((unsigned long) (currentMillis - mPreviousMillis) >= HALF_SECOND) {
+    /*if((unsigned long) (currentMillis - mPreviousMillis) >= THIRD_SECOND) {
         mPreviousMillis = currentMillis;         
         getMove();  
-    }  
+    }  */
+
+    getMove();
     if(followBotManager.getDirtyFlag() != false) {
         postRobotInfo();
     }

@@ -15,8 +15,31 @@ public:
     void objectAvoidance_Setup();
     void objectAvoidance_Loop();
 
+
+    //setting the distance;
+    void setDistance1(float distance1) {
+        mDistance1 = distance1;
+        
+    }
+
+    void setDistance2(float distance2) {
+        mDistance2 = distance2;
+    }
+
+    //getting the distance;
+    float getDistance1() const {
+        return mDistance1;
+    }
+
+    float getDistance2() const {
+        return mDistance2;
+    }
+
+
+
 private:
     float duration1, duration2;
+    float mDistance1, mDistance2;
 
 };
 

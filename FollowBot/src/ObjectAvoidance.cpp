@@ -62,16 +62,9 @@ void ObjectAvoidance::objectAvoidance_Loop() {
     Serial.print("Distance2: ");
     Serial.println(distance2);
 
-    if(distance1 < 10 && motorState != BACKWARDS) {          
-        myMotors.motorBackwards();
-        motorState = BACKWARDS;
-    } else if (distance2 < 10 && motorState != FORWARDS) {
-        myMotors.motorForwards();
-        motorState = FORWARDS;
-    } else if (distance1 >= 10 && distance2 >= 10 && motorState != STOP) {
-        myMotors.motorStop();
-        motorState = STOP;
-    }
+    //setting the distance
+    setDistance1(distance1);
+    setDistance2(distance2);
     
     delay(100);
 }

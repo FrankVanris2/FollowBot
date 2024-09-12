@@ -25,7 +25,7 @@ void FollowBotManager::followBotSetup() {
     myMotors.motorSetup();
     followBotClient.followBotClient_Setup();
     temperatureReader.temperatureReader_Setup();
-    //objectAvoidance.objectAvoidance_Setup();
+    objectAvoidance.objectAvoidance_Setup();
 }
 
 //the loop that will store the many objects that will loop in the main
@@ -33,7 +33,7 @@ void FollowBotManager::followBotLoop() {
     followBotClient.followBotClient_Loop();
 
     //Avoiding Obstacles
-    //objectAvoidance.objectAvoidance_Loop();
+    objectAvoidance.objectAvoidance_Loop();
     
     //obtaining the Temperature
     temperatureReader.temperatureReader_Loop();

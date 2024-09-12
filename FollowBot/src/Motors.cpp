@@ -6,11 +6,16 @@
 */
 #include "Arduino.h"
 #include "Motors.h"
+#include "ObjectAvoidance.h"
 #include "Wire.h"
 #include "MotorControlStates.h"
 #include "Adafruit_MotorShield.h"
 #include "FollowBotManager.h"
 
+
+const int MAX_SPEED = 255;
+const int MED_SPEED = 200;
+const int LOW_SPEED = 150;
 
 // Universal Object
 Motors myMotors;
@@ -32,10 +37,10 @@ Motors::Motors(): mCurrentDirection(MOTOR_STOP) {
 void Motors::motorSetup() {
     motorShield.begin();
     //setting speeds of all motors to high
-    motor1->setSpeed(255);
-    motor2->setSpeed(255);
-    motor3->setSpeed(255);
-    motor4->setSpeed(255);
+    motor1->setSpeed(MED_SPEED);
+    motor2->setSpeed(MED_SPEED);
+    motor3->setSpeed(MED_SPEED);
+    motor4->setSpeed(MED_SPEED);
 }
 
 
@@ -52,20 +57,23 @@ void Motors::motorLoop() {
 
 //testing client, (very important)
 void Motors::adjustDirection() {
-    
-    if (mCurrentDirection == MOTOR_FORWARD) {
-        motorForwards();
-    } else if (mCurrentDirection == MOTOR_BACKWARD) {
-        motorBackwards();
-    } else if (mCurrentDirection == MOTOR_LEFT) {
-        motorLeft();
-    } else if (mCurrentDirection == MOTOR_RIGHT) {
-        motorRight();
-    } else if (mCurrentDirection == MOTOR_STOP) {
+
+    if (objectAvoidance.getDistance1() < 10 || objectAvoidance.getDistance2() < 20) {
         motorStop();
+    } else {
+        if (mCurrentDirection == MOTOR_FORWARD && objectAvoidance.getDistance1() >= 20) {
+            motorForwards();
+        } else if (mCurrentDirection == MOTOR_BACKWARD && objectAvoidance.getDistance2() >= 20) {
+            motorBackwards();
+        } else if (mCurrentDirection == MOTOR_LEFT) {
+            motorLeft();
+        } else if (mCurrentDirection == MOTOR_RIGHT) {
+            motorRight();
+        } else if (mCurrentDirection == MOTOR_STOP) {
+            motorStop();
+        }
     }
     
-
 }
 
 // Forward motion with the motors
