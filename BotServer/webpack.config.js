@@ -53,6 +53,7 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         { from: 'index.html', to: '.' },
+        { from: 'crazyface.png', to: './images' },
         { from: 'server/*', to: '[name][ext]' },
       ],
     }),

@@ -21,6 +21,7 @@ char ssid[] = SECRET_SSID;
 //char pass[] = SECRET_PASS;
 
 // Interval
+const int HALF_SECOND = 500;
 const int ONE_SECOND = 1000;
 const int SIXTY_SECONDS = 60000;
 
@@ -31,7 +32,7 @@ const int SIXTY_SECONDS = 60000;
 // If you don't want to use DNS (and reduce your sketch size)
 // use the numeric IP instead of the name for the server:
 //IPAddress server(3, 145, 197, 165); // numeric IP for Google (no DNS)
-IPAddress server(10, 12, 1, 221); // numeric IP for Google (no DNS)
+IPAddress server(10, 12, 2, 90); // numeric IP for Google (no DNS)
 // char server[] = "www.google.com";       // Name address for Google (using DNS)
 
 // Initializing the Ethernet client library
@@ -80,7 +81,7 @@ void FollowBotClient::followBotClient_Setup() {
 void FollowBotClient::followBotClient_Loop() {
     unsigned long currentMillis = millis();   
 
-    if((unsigned long) (currentMillis - mPreviousMillis) >= ONE_SECOND) {
+    if((unsigned long) (currentMillis - mPreviousMillis) >= HALF_SECOND) {
         mPreviousMillis = currentMillis;         
         getMove();  
     }  
@@ -119,7 +120,7 @@ void FollowBotClient::postRobotInfo() {
 
         Serial.println("connected to server");
         client.println("POST /api/robotinfo HTTP/1.1");
-        client.println("Host: 10.12.1.221"); // main server is 3.145.197.165
+        client.println("Host: 10.12.2.90"); // main server is 3.145.197.165
         client.println("Content-Type: application/json");
         client.print("Content-Length: ");
         client.println(outputDataStr.length());
@@ -137,7 +138,7 @@ void FollowBotClient::getMove() {
         //else get the information to make the robot move
         Serial.println("connected to server");
         client.println("GET /api/getmove HTTP/1.1");
-        client.println("Host: 10.12.1.221");
+        client.println("Host: 10.12.2.90");
         client.println("Connection: close");
         client.println();
 

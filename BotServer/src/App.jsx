@@ -60,8 +60,8 @@ const MoveAroundButtons = ({ handleMouseDown, handleMouseUp, handleButtonClick }
     <Button 
       variant="contained" 
       color="primary" 
-      onMouseDown={() => handleMouseDown('forward')}
-      onMouseUp={() => handleMouseUp('forward')}
+      onMouseDown={() => handleMouseDown('Forward')}
+      onMouseUp={() => handleMouseUp('Forward')}
     >
       <ArrowUpwardIcon fontSize="large" />
     </Button>
@@ -70,24 +70,24 @@ const MoveAroundButtons = ({ handleMouseDown, handleMouseUp, handleButtonClick }
       <Button 
         variant="contained" 
         color="primary" 
-        onMouseDown={() => handleMouseDown('left')}
-        onMouseUp={() => handleMouseUp('left')}
+        onMouseDown={() => handleMouseDown('Left')}
+        onMouseUp={() => handleMouseUp('Left')}
       >
         <ArrowBackIcon fontSize="large" />
       </Button>
       <Button 
         variant="contained" 
         color="primary" 
-        onMouseDown={() => handleMouseDown('backward')}
-        onMouseUp={() => handleMouseUp('backward')}
+        onMouseDown={() => handleMouseDown('Backward')}
+        onMouseUp={() => handleMouseUp('Backward')}
       >
         <ArrowDownwardIcon fontSize="large" />
       </Button>
       <Button 
         variant="contained" 
         color="primary" 
-        onMouseDown={() => handleMouseDown('right')}
-        onMouseUp={() => handleMouseUp('right')}
+        onMouseDown={() => handleMouseDown('Right')}
+        onMouseUp={() => handleMouseUp('Right')}
       >
         <ArrowForwardIcon fontSize="large" />
       </Button>
@@ -96,7 +96,7 @@ const MoveAroundButtons = ({ handleMouseDown, handleMouseUp, handleButtonClick }
     <Button 
       variant="contained" 
       color="secondary" 
-      onClick={() => handleButtonClick('stop')}
+      onClick={() => handleButtonClick('Stop')}
     >
       <StopIcon fontSize="large" />
     </Button>

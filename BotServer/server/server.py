@@ -18,7 +18,7 @@ def get_index_html():
 # dont get the why we need this function 
 def get_favicon():
     try:
-        return send_file('./src/crazyface.png', mimetype='image/png')
+        return send_file('./images/crazyface.png', mimetype='image/png')
     except FileNotFoundError:
         abort(404, description="Favicon not found")
 
