@@ -18,12 +18,10 @@ FollowBotClient followBotClient;
 
 //sensitive information
 char ssid[] = SECRET_SSID;
-//char pass[] = SECRET_PASS;
+char pass[] = SECRET_PASS;
 
 // Interval
-const int THIRD_SECOND = 300;
-const int HALF_SECOND = 500;
-const int ONE_SECOND = 1000;
+const int TENTH_SECOND = 100;
 const int SIXTY_SECONDS = 60000;
 
 
@@ -32,8 +30,8 @@ const int SIXTY_SECONDS = 60000;
 
 // If you don't want to use DNS (and reduce your sketch size)
 // use the numeric IP instead of the name for the server:
-//IPAddress server(3, 145, 197, 165); // numeric IP for Google (no DNS)
-IPAddress server(10, 12, 2, 90); // numeric IP for Google (no DNS)
+IPAddress server(3, 145, 197, 165); // numeric IP for Google (no DNS)
+//IPAddress server(10, 0, 0, 245); // numeric IP for Google (no DNS)
 // char server[] = "www.google.com";       // Name address for Google (using DNS)
 
 // Initializing the Ethernet client library
@@ -53,7 +51,7 @@ void FollowBotClient::followBotClient_Setup() {
     if(firmVersion < WIFI_FIRMWARE_LATEST_VERSION) {
         Serial.println("Please upgrade the firmware");
     }
-
+    Serial.println("Client Setup");
     // check for the WiFi module:
     if (WiFi.status() == WL_NO_MODULE) {
         Serial.println("Communication with WiFi module failed!");  
@@ -65,7 +63,7 @@ void FollowBotClient::followBotClient_Setup() {
         Serial.print("Attempting to connect to SSID: ");
         Serial.println(ssid);
         // Connect to WPA/WPA2 network. Change this line if using open or WEP network:
-        mConnectionStatus = WiFi.begin(ssid); //pass for huis
+        mConnectionStatus = WiFi.begin(ssid, pass); //pass for huis
 
         // wait 1 seconds for connection:
         delay(1000);
@@ -82,12 +80,10 @@ void FollowBotClient::followBotClient_Setup() {
 void FollowBotClient::followBotClient_Loop() {
     unsigned long currentMillis = millis();   
 
-    /*if((unsigned long) (currentMillis - mPreviousMillis) >= THIRD_SECOND) {
+    if((unsigned long) (currentMillis - mPreviousMillis) >= TENTH_SECOND) {
         mPreviousMillis = currentMillis;         
         getMove();  
-    }  */
-
-    getMove();
+    }  
     if(followBotManager.getDirtyFlag() != false) {
         postRobotInfo();
     }
@@ -111,7 +107,8 @@ void FollowBotClient::printWifiStatus() {
 }
 
 void FollowBotClient::postRobotInfo() {
-    if(client.connect(server, 5000)) { // Originally 80
+    Serial.println("Post Robot Info");
+    if(client.connect(server, 80)) { // Originally 80
         // If information is obtained post information
         const OutputData& outputData = followBotManager.getOutputData();
             
@@ -123,7 +120,7 @@ void FollowBotClient::postRobotInfo() {
 
         Serial.println("connected to server");
         client.println("POST /api/robotinfo HTTP/1.1");
-        client.println("Host: 10.12.2.90"); // main server is 3.145.197.165
+        client.println("Host: 3.145.197.165"); // main server is 3.145.197.165
         client.println("Content-Type: application/json");
         client.print("Content-Length: ");
         client.println(outputDataStr.length());
@@ -137,11 +134,11 @@ void FollowBotClient::postRobotInfo() {
 }
 
 void FollowBotClient::getMove() {
-    if(client.connect(server, 5000)) { // Originally 80
+    if(client.connect(server, 80)) { // Originally 80
         //else get the information to make the robot move
         Serial.println("connected to server");
         client.println("GET /api/getmove HTTP/1.1");
-        client.println("Host: 10.12.2.90");
+        client.println("Host: 3.145.197.165");
         client.println("Connection: close");
         client.println();
 
@@ -154,11 +151,6 @@ void FollowBotClient::getMove() {
             int numChars = client.read(reinterpret_cast<uint8_t*>(buffer), SIZE);
             buffer[numChars] = 0;
 
-            Serial.print("Number of chars: ");
-            Serial.println(numChars);
-            Serial.print("Direction: ");
-            Serial.println(buffer);
-            
             if(numChars > 0) {
                 char* bufPtr;
                 for (bufPtr = buffer; *(bufPtr + 3); ++bufPtr) {

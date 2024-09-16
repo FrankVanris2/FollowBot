@@ -25,7 +25,7 @@ TemperatureReader::TemperatureReader(): previousMillis(0)  {}
 
 // Temperature Setup
 void TemperatureReader::temperatureReader_Setup() {
-    Serial.println("Testing DHT");
+    Serial.println("Temperature Reader Setup");
     dht.begin();
 }
 

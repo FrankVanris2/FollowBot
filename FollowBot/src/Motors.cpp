@@ -35,6 +35,7 @@ Motors::Motors(): mCurrentDirection(MOTOR_STOP) {
 
 //where I initialize my motors
 void Motors::motorSetup() {
+    Serial.println("Motor Setup");
     motorShield.begin();
     //setting speeds of all motors to high
     motor1->setSpeed(MED_SPEED);
@@ -58,22 +59,17 @@ void Motors::motorLoop() {
 //testing client, (very important)
 void Motors::adjustDirection() {
 
-    if (objectAvoidance.getDistance1() < 10 || objectAvoidance.getDistance2() < 20) {
+    if (mCurrentDirection == MOTOR_FORWARD) {
+        motorForwards();
+    } else if (mCurrentDirection == MOTOR_BACKWARD) {
+        motorBackwards();
+    } else if (mCurrentDirection == MOTOR_LEFT) {
+        motorLeft();
+    } else if (mCurrentDirection == MOTOR_RIGHT) {
+        motorRight();
+    } else if (mCurrentDirection == MOTOR_STOP) {
         motorStop();
-    } else {
-        if (mCurrentDirection == MOTOR_FORWARD && objectAvoidance.getDistance1() >= 20) {
-            motorForwards();
-        } else if (mCurrentDirection == MOTOR_BACKWARD && objectAvoidance.getDistance2() >= 20) {
-            motorBackwards();
-        } else if (mCurrentDirection == MOTOR_LEFT) {
-            motorLeft();
-        } else if (mCurrentDirection == MOTOR_RIGHT) {
-            motorRight();
-        } else if (mCurrentDirection == MOTOR_STOP) {
-            motorStop();
-        }
     }
-    
 }
 
 // Forward motion with the motors
