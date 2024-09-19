@@ -6,16 +6,16 @@ Desc: Using an LSD screen to allow the user to input their ssid and pass for the
 
 #pragma once
 
-class LSDScreen {
+class LCDScreen {
 public:
 
-    LSDScreen();
+    LCDScreen();
 
-    void myLSDScreen_Setup();
+    void myLCDScreen_Setup();
 
-    void myLSDScreen_Loop();
+    void myLCDScreen_Loop();
 
 private:
 };
 
-extern LSDScreen myLSDScreen;
+extern LCDScreen myLCDScreen;
