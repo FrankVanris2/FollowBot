@@ -11,7 +11,6 @@
 #include "ObjectAvoidance.h"
 #include "TemperatureReader.h"
 #include "FollowBotClient.h"
-#include "FollowBotCaptivePortal.h"
 #include "IrisClassifier.h"
 //universal object
 FollowBotManager followBotManager;
@@ -25,7 +24,6 @@ FollowBotManager::FollowBotManager(): mDirection(MOTOR_STOP), mIsDirty(false) {
 void FollowBotManager::followBotSetup() {
     myMotors.motorSetup();
     followBotClient.followBotClient_Setup();
-    captivePortal.captivePortal_Setup();
     temperatureReader.temperatureReader_Setup();
     objectAvoidance.objectAvoidance_Setup();
     Serial.println("Finished Setup");
@@ -34,7 +32,6 @@ void FollowBotManager::followBotSetup() {
 //the loop that will store the many objects that will loop in the main
 void FollowBotManager::followBotLoop() {
     followBotClient.followBotClient_Loop();
-    captivePortal.captivePortal_Setup();
 
     //Avoiding Obstacles
     objectAvoidance.objectAvoidance_Loop();

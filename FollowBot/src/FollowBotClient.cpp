@@ -47,7 +47,7 @@ void FollowBotClient::followBotClient_Setup() {
         ; // wait for serial port to connect. Needed for native USB port only
     }
 
-    String firmVersion = WiFi.firmwareVersion();
+    String firmVersion = WiFi.firmwareVersion(); 
     if(firmVersion < WIFI_FIRMWARE_LATEST_VERSION) {
         Serial.println("Please upgrade the firmware");
     }
@@ -69,7 +69,7 @@ void FollowBotClient::followBotClient_Setup() {
         delay(1000);
     }
 
-    if(mConnectionStatus = WL_CONNECTED) {
+    if(mConnectionStatus == WL_CONNECTED) {
         printWifiStatus();
     } else {
         Serial.println("Failed to connect to Wifi");
