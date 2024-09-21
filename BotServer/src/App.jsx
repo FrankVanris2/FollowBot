@@ -10,6 +10,9 @@ import StopIcon from '@mui/icons-material/Stop';
 
 const App = () => {
   const [presses, setPresses] = useState([]);
+  // will be changed when the code connects 
+  const [temperature, setTemperature] = useState(null);
+  const [heatIndex, setHeatIndex] = useState(null);
   const holdThreshold = 5000; // 5 seconds
   const holdTimer = useRef(null);
 
@@ -50,6 +53,12 @@ const App = () => {
         handleButtonClick={handleButtonClick}
       />
       <DirectionList presses={presses} />
+       {/* Display temperature and heat index */}
+       <div>
+        <h3>Temperature and Heat Index</h3>
+        <p>Temperature: {temperature !== null ? `${temperature}°C` : 'N/A'}</p>
+        <p>Heat Index: {heatIndex !== null ? `${heatIndex}°C` : 'N/A'}</p>
+      </div>
     </>
   );
 };
