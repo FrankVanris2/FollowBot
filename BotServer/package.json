@@ -28,12 +28,12 @@
     "react-router-dom": "6.15.0",
     "styled-components": "6.0.7",
     "webpack": "5.88.2",
-    "webpack-cli": "5.1.4"
+    "webpack-cli": "^5.1.4"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
-    "@mui/icons-material": "^6.0.2",
+    "@mui/icons-material": "^6.1.1",
     "@mui/material": "^6.0.1",
     "file-loader": "^6.2.0"
   }
