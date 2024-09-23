@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef , useEffect} from 'react';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 
@@ -7,6 +7,8 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import StopIcon from '@mui/icons-material/Stop';
+import axios from 'axios';
+
 
 const App = () => {
   const [presses, setPresses] = useState([]);
@@ -15,6 +17,28 @@ const App = () => {
   const [heatIndex, setHeatIndex] = useState(null);
   const holdThreshold = 5000; // 5 seconds
   const holdTimer = useRef(null);
+
+
+
+  useEffect(() => {
+    const fetchTemperatureData = async () => {
+      try {
+        // i dont like this solution
+        const response = await axios.get('http://localhost:3000/exchangeInfo');
+        const { temperature, heat_index } = response.data;
+        setTemperature(temperature);
+        setHeatIndex(heat_index);
+      } 
+      catch (err) 
+      {
+        console.error('Error fetching temperature data:', err);
+      }
+    };
+    
+    fetchTemperatureData();
+  }, []);
+
+
 
   const handleMouseDown = (direction) => {
     holdTimer.current = setTimeout(() => {
@@ -123,6 +147,9 @@ const DirectionList = ({ presses }) => (
     </ul>
   </div>
 );
+
+
+
 
 
 export default App;
