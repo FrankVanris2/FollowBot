@@ -1,155 +1,25 @@
-import React, { useState, useRef , useEffect} from 'react';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
+import './App.css'
+import  {hashRouter as Routes,Route} from 'react-router-dom'
+import {Home, home} from './Pages/home'
+import {page1} from './Pages/page1'
+import {page2} from './Pages/page2'
+import {page3} from './Pages/page3'
+import { Layout } from './Components/Layout'
+function App(){
 
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import StopIcon from '@mui/icons-material/Stop';
-import axios from 'axios';
+  return(
+    <Router>
+      <Routes>
+          <Route element={<Layout/>}>
+            <Route path="/" element={Home}/>
+            <Route path="/page1" element={page1}/>
+            <Route path="/page2" element={page2}/>
+            <Route path="/page3" element={page3}/>
+          </Route>
+      </Routes>
+    </Router>
+  )
 
+}
+export default App
 
-const App = () => {
-  const [presses, setPresses] = useState([]);
-  // will be changed when the code connects 
-  const [temperature, setTemperature] = useState(null);
-  const [heatIndex, setHeatIndex] = useState(null);
-  const holdThreshold = 5000; // 5 seconds
-  const holdTimer = useRef(null);
-
-
-
-  useEffect(() => {
-    const fetchTemperatureData = async () => {
-      try {
-        // i dont like this solution
-        const response = await axios.get('http://localhost:3000/exchangeInfo');
-        const { temperature, heat_index } = response.data;
-        setTemperature(temperature);
-        setHeatIndex(heat_index);
-      } 
-      catch (err) 
-      {
-        console.error('Error fetching temperature data:', err);
-      }
-    };
-    
-    fetchTemperatureData();
-  }, []);
-
-
-
-  const handleMouseDown = (direction) => {
-    holdTimer.current = setTimeout(() => {
-      handleButtonClick(direction);
-    }, holdThreshold);
-  };
-
-  const handleMouseUp = (direction) => {
-    clearTimeout(holdTimer.current);
-    handleButtonClick(direction);
-  };
-
-  const handleButtonClick = async (direction) => {
-    setPresses(prevPresses => [...prevPresses, direction]);
-    // debugging feature, remove when we are pushing final product    o
-    console.log(`Button pressed: ${direction}`);
-    try {
-      await fetch('/api/postmovement', {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json",
-          },
-        body: JSON.stringify({direction}),
-        })
-      }
-    catch (exc) {
-      console.error('Exception:', exc);
-      }
-  };
-
-  return (
-    <>
-      <MoveAroundButtons 
-        handleMouseDown={handleMouseDown}
-        handleMouseUp={handleMouseUp}
-        handleButtonClick={handleButtonClick}
-      />
-      <DirectionList presses={presses} />
-       {/* Display temperature and heat index */}
-       <div>
-        <h3>Temperature and Heat Index</h3>
-        <p>Temperature: {temperature !== null ? `${temperature}°C` : 'N/A'}</p>
-        <p>Heat Index: {heatIndex !== null ? `${heatIndex}°C` : 'N/A'}</p>
-      </div>
-    </>
-  );
-};
-
-
-const MoveAroundButtons = ({ handleMouseDown, handleMouseUp, handleButtonClick }) => (
-  <Stack direction="column" alignItems="center" spacing={2}>
-    <Button 
-      variant="contained" 
-      color="primary" 
-      onMouseDown={() => handleMouseDown('Forward')}
-      onMouseUp={() => handleMouseUp('Forward')}
-    >
-      <ArrowUpwardIcon fontSize="large" />
-    </Button>
-
-    <Stack direction="row" spacing={2} justifyContent="center">
-      <Button 
-        variant="contained" 
-        color="primary" 
-        onMouseDown={() => handleMouseDown('Left')}
-        onMouseUp={() => handleMouseUp('Left')}
-      >
-        <ArrowBackIcon fontSize="large" />
-      </Button>
-      <Button 
-        variant="contained" 
-        color="primary" 
-        onMouseDown={() => handleMouseDown('Backward')}
-        onMouseUp={() => handleMouseUp('Backward')}
-      >
-        <ArrowDownwardIcon fontSize="large" />
-      </Button>
-      <Button 
-        variant="contained" 
-        color="primary" 
-        onMouseDown={() => handleMouseDown('Right')}
-        onMouseUp={() => handleMouseUp('Right')}
-      >
-        <ArrowForwardIcon fontSize="large" />
-      </Button>
-    </Stack>
-
-    <Button 
-      variant="contained" 
-      color="secondary" 
-      onClick={() => handleButtonClick('Stop')}
-    >
-      <StopIcon fontSize="large" />
-    </Button>
-    <span>Stop the machine</span>
-  </Stack>
-);
-
-const DirectionList = ({ presses }) => (
-  <div>
-    <h3>Button Presses:</h3>
-    <ul>
-      {presses.map((press, index) => (
-        <li key={index}>{press}</li>
-      ))}
-    </ul>
-  </div>
-);
-
-
-
-
-
-export default App;
