@@ -58,8 +58,8 @@ void ObjectAvoidance::checkDistance() {
     digitalWrite(TRIG_PIN1, LOW);
     float duration1 = pulseIn(ECHO_PIN1, HIGH);
     mDistance1 = (duration1 * .0343) / 2;
-    Serial.print("Distance1: ");
-    Serial.println(mDistance1);
+    //Serial.print("Distance1: ");
+    //Serial.println(mDistance1);
 
     // Sensor 2
     digitalWrite(TRIG_PIN2, LOW);
@@ -69,7 +69,7 @@ void ObjectAvoidance::checkDistance() {
     digitalWrite(TRIG_PIN2, LOW);
     float duration2 = pulseIn(ECHO_PIN2, HIGH);
     mDistance2 = (duration2 * .0343) / 2;
-    Serial.print("Distance2: ");
-    Serial.println(mDistance2);
+    //Serial.print("Distance2: ");
+    //Serial.println(mDistance2);
 
 }

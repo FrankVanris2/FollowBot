@@ -47,14 +47,14 @@ void TemperatureReader::temperatureReader_Loop() {
         //Compute heat index in Celcius
         float hic = dht.computeHeatIndex(tmp, hum, false);
 
-        Serial.print(F("Temperature: "));
+        /*Serial.print(F("Temperature: "));
         Serial.print(tmp);
         Serial.print(F("°C"));
         Serial.println();
         Serial.print(F("Heat index: "));
         Serial.print(hic);
         Serial.print(F("°C "));
-        Serial.println();
+        Serial.println();*/
         followBotManager.setTemperatureParams(tmp, hic);
     }
 }

@@ -18,13 +18,13 @@ public:
     void followBotSetup();
     void followBotLoop();
 
-    const String& getDirection() const {
+    /*const String& getDirection() const {
         return mDirection;
     }
 
     void setDirection(const String& direction) {
         mDirection = direction;
-    } 
+    } */
 
     //temperature getters and setters
     float getTemperature() const {
@@ -53,7 +53,7 @@ public:
     
 
 private:
-    String mDirection; 
+    //String mDirection; 
     OutputData mOutputData;
     mutable bool mIsDirty;
 

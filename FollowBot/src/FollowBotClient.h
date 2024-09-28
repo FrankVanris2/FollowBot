@@ -4,7 +4,7 @@
 * Desc: Creating a Robot client that will interface with the server which will pass information down to the website and the mobile app*/
 
 #pragma once
-
+#include "Arduino.h"
 class FollowBotClient {
 public:
 
@@ -12,6 +12,10 @@ public:
 
     void followBotClient_Setup();
     void followBotClient_Loop();
+
+    long getRSSI() {
+        return mRSSI;
+    }
 
 private:
 
@@ -23,6 +27,8 @@ private:
     unsigned long mPreviousMillis;
     int mCountMoves;
     int mConnectionStatus;
+    long mRSSI;
+    String mIPAddress;
 };
 
 extern FollowBotClient followBotClient;

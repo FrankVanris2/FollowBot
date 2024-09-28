@@ -1,4 +1,4 @@
-from flask import Flask, request, send_file, jsonify, abort
+from flask import Flask, request, send_file, jsonify, abort, make_response
 from flask_cors import CORS
 from handleRobotData import handleRobotData, getDirection, handleMovementData
 import os
@@ -42,7 +42,12 @@ def get_image_files(filename):
 
 @app.get("/api/getmove")
 def getMove():
-    return getDirection()
+    dir = getDirection()
+    print(dir)
+    #response = make_response(dir)
+    #response.content_type = 'text/plain'
+    #return response
+    return dir
 
 @app.post("/api/robotinfo")
 def postRobotInfo():

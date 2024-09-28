@@ -11,12 +11,12 @@
 #include "ObjectAvoidance.h"
 #include "TemperatureReader.h"
 #include "FollowBotClient.h"
-#include "IrisClassifier.h"
+#include "FollowMechanics.h"
 //universal object
 FollowBotManager followBotManager;
 
-FollowBotManager::FollowBotManager(): mDirection(MOTOR_STOP), mIsDirty(false) {
-    
+FollowBotManager::FollowBotManager(): mIsDirty(false) {
+    //mDirection(MOTOR_STOP)
 }
 
 
@@ -32,26 +32,21 @@ void FollowBotManager::followBotSetup() {
 //the loop that will store the many objects that will loop in the main
 void FollowBotManager::followBotLoop() {
     followBotClient.followBotClient_Loop();
+    
 
     //Avoiding Obstacles
     objectAvoidance.objectAvoidance_Loop();
     
-    if(objectAvoidance.getDistance1() <= 20 || objectAvoidance.getDistance2() <= 20) {
-        myMotors.motorStop();
-    }
+    //if(objectAvoidance.getDistance1() <= 20 || objectAvoidance.getDistance2() <= 20) {
+        //myMotors.motorStop();
+    //}
     
     //obtaining the Temperature
     temperatureReader.temperatureReader_Loop();
 
+    followMechanics.followMechanics_Loop();
 
     // For motor movement
     myMotors.motorLoop();
-
-    //Learning Model Testing
-    /*
-    float input[4] = {5.1, 3.5, 1.4, 0.2};
-    Serial.print("Prediction: ");
-    Serial.println(irisClassifier.predict(input));
-    */
-    
+ 
 }
