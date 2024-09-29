@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 
@@ -10,8 +10,44 @@ import StopIcon from '@mui/icons-material/Stop';
 
 const App = () => {
   const [presses, setPresses] = useState([]);
+  const [temperature, setTemperature] = useState(null);
+  const [heatIndex, setHeatIndex] = useState(null);
   const holdThreshold = 5000; // 5 seconds
   const holdTimer = useRef(null);
+
+  useEffect(() => {
+    const fetchTemperature = async () => {
+      try {
+        const response = await fetch('/api/getTempInfo');
+        const data = await response.json();
+        console.log(data);
+        if (data.temperature) {
+          setTemperature(data.temperature);
+        }
+      } catch (error) {
+        console.error('Error fetching temperature data:', error);
+      }
+    };
+
+    fetchTemperature();
+  }, []);
+
+  useEffect(() => {
+    const fetchHeatIndex = async () => {
+      try {
+        const response = await fetch('/api/getHeatIdxInfo');
+        const data = await response.json();
+        console.log(data);
+        if (data.heatIndex) {
+          setHeatIndex(data.heatIndex);
+        }
+      } catch (error) {
+        console.error('Error fetching heat index data:', error);
+      }
+    };
+
+    fetchHeatIndex();
+  }, []);
 
   const handleMouseDown = (direction) => {
     holdTimer.current = setTimeout(() => {
@@ -50,6 +86,8 @@ const App = () => {
         handleButtonClick={handleButtonClick}
       />
       <DirectionList presses={presses} />
+      <TemperatureDisplay temperature={temperature} />
+      <HeatIndexDisplay heatIndex={heatIndex} />
     </>
   );
 };
@@ -115,5 +153,18 @@ const DirectionList = ({ presses }) => (
   </div>
 );
 
+const TemperatureDisplay = ({ temperature}) => (
+  <div>
+    <h3>Temperature:</h3>
+    {temperature !== null ? <p>{temperature}°C</p> : <p>Loading...</p>}
+  </div>
+);
+
+const HeatIndexDisplay = ({heatIndex}) => (
+  <div>
+    <h3>Heat Index:</h3>
+    {heatIndex !== null ? <p>{heatIndex}°C</p> : <p>Loading...</p>}
+  </div>
+);
 
 export default App;

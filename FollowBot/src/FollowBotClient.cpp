@@ -18,7 +18,7 @@ FollowBotClient followBotClient;
 
 //sensitive information
 char ssid[] = SECRET_SSID;
-//char pass[] = SECRET_PASS;
+char pass[] = SECRET_PASS;
 
 // Interval
 const int TENTH_SECOND = 100;
@@ -32,7 +32,7 @@ const int SIXTY_SECONDS = 60000;
 // If you don't want to use DNS (and reduce your sketch size)
 // use the numeric IP instead of the name for the server:
 //IPAddress server(3, 145, 197, 165); // numeric IP for Google (no DNS)
-IPAddress server(10, 12, 83, 58); // numeric IP for Google (no DNS)
+IPAddress server(10, 0, 0, 245); // numeric IP for Google (no DNS)
 const int PORT = 5000;
 // char server[] = "www.google.com";       // Name address for Google (using DNS)
 
@@ -65,7 +65,7 @@ void FollowBotClient::followBotClient_Setup() {
         Serial.print("Attempting to connect to SSID: ");
         Serial.println(ssid);
         // Connect to WPA/WPA2 network. Change this line if using open or WEP network:
-        mConnectionStatus = WiFi.begin(ssid); //pass for huis
+        mConnectionStatus = WiFi.begin(ssid, pass); //pass for huis
 
         // non-blocking delay:
         delay(100);

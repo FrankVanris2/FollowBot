@@ -6,6 +6,11 @@ import os
 app = Flask(__name__)
 CORS(app)  # Enable CORS
 
+
+#Global data variables needed
+temperature_data = None #Global variable to store temperature data
+heatIndex_data = None #Global variable to store heat index data
+
 @app.get("/")
 def get_index_html():
     try:
@@ -49,10 +54,27 @@ def getMove():
     #return response
     return dir
 
+@app.get("/api/getTempInfo")
+def getTemperatureInfo():
+    if temperature_data is not None:
+        return jsonify({"temperature": temperature_data})
+    
+
+@app.get("/api/getHeatIdxInfo")
+def getHeatIdxInfo():
+    if heatIndex_data is not None:
+        return jsonify({"heatIndex": heatIndex_data})
+
 @app.post("/api/robotinfo")
 def postRobotInfo():
+    global temperature_data
+    global heatIndex_data
+
     robotData = request.get_json()
     handleRobotData(robotData)
+    temperature_data = robotData.get('temperature')
+    heatIndex_data = robotData.get('heatIndex')
+
     return "OK"
 
 #post info for website->server->robot
@@ -61,6 +83,8 @@ def postMovementInfo():
     movementInfoData = request.get_json()
     handleMovementData(movementInfoData)
     return "OK"
+
+
 
 
     
