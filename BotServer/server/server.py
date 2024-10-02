@@ -11,6 +11,7 @@ CORS(app)  # Enable CORS
 temperature_data = None #Global variable to store temperature data
 heatIndex_data = None #Global variable to store heat index data
 
+
 @app.get("/")
 def get_index_html():
     try:
@@ -64,6 +65,8 @@ def getTemperatureInfo():
 def getHeatIdxInfo():
     if heatIndex_data is not None:
         return jsonify({"heatIndex": heatIndex_data})
+
+
 
 @app.post("/api/robotinfo")
 def postRobotInfo():
