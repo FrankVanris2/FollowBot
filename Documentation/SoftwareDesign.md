@@ -4,7 +4,7 @@ Follow Bot</h1>
 
 <h2> Version 1.0 approved<br>
 <br>
-Prepared by Frank Vanris, Igor Janotti<br><br>
+Prepared by Frank Vanris, Igor Janotti, Trong Duong, Joseph Hoang<br><br>
 Bellevue College<br><br>
 7/10/2024<br><br></h2>
 
@@ -16,7 +16,7 @@ Bellevue College<br><br>
 This software/hardware design document describes the architecture and system design of the Follow Bot robot as well as it's software, and how reliable and usable it will be for the user.<br><br>
 
 <h3> 1.2 Scope <br> </h3>
-The Goal for this robot is for the user to be able to use it wherever they go while storing their belongings in a safe and reliable place.<br><br>
+The Goal for this robot is for the user to be able to use it wherever they go while storing their belongings in a safe and reliable place. As well as map it to specific locations in order to bring items from place to place.<br><br>
 
 <h3> 1.3 Overview <br></h3>
 The main gist of this document is to explain and express how the design for this software/hardware will be handled and to explain how the user will be able to use our software and hardware efficiently and reliably.<br><br>
@@ -75,34 +75,39 @@ Here are the given sources that were used to rely information for this document:
 ### App
 
 #### Goal
-The goal of the app is to control and have the robot follow the user autonomously while avoiding obstacles. The mobile app should also send live data on battery life, location, weight, and temperature.
+The goal is to have the app update you on specific features that the robot contains such as battery, weight, temperature, distance, and much more. With the app you will be able to map the robot to a specific location. Or call the robot to come to your specific location. There are many applications that the app will bring, and much more to come after.
 
 #### Requirements
 
 - **Light and Dark Mode**  
   The app should support both light and dark themes for user interface customization.
 
-- **Robot Follow Feature**  
-  The app will allow the robot to follow the phone, potentially using GPS or similar technology.
+- **FollowBot Mapping Feature**  
+  The app will allow the FollowBot to go to a specific location, or traverse to your location.
 
-- **Robot Status Updates**  
-  The app will update the robot's status every 30 seconds. The update will include:
+- **FollowBot Status Updates**  
+  The app will update the FollowBot's status every 30 seconds. The update will include:
   - Power level
   - Temperature
-  - Weight of the robot
+  - Weight of the FollowBot
   - Information on any movement issues related to the weight
+  - Distance between the user and the FollowBot when it comes to following mechanics.
 
 - **Distance Notifications**  
-  The app will send notifications if the robot gets too far away from the phone.
+  The app will send notifications if the FollowBot gets too far away from the user.
+
+**Damage Notifications**
+ Notifications for any possible damages that occurred on the FollowBot. Such as movement control changes, Temperature unresponsive changes, weight unresponsive changes, and power unresponsive changes. As well as network unresponsive changes.
+
 
 - **Controller Functionality**  
-  The app will act as a controller for the robots, using the touchscreen. 
+  The app will act as a controller for the FollowBots, using the touchscreen. 
   - Optionally, a game controller can be used if the touchscreen is not functional.
 
 ### Website
 
 #### Goal
-The goal of the website is to inform the users about what the robot does and send queries back to the owners of the website.
+The goal of the website is to inform the users about what the FollowBot does and send queries back to the owners of the website. It will contain as well demo features that the user will be able to try out with their FollowBot. And the website will contain a forums page in order for users alike to ask questions that are related to FollowBot
 
 #### Requirements
 
@@ -115,7 +120,7 @@ The goal of the website is to inform the users about what the robot does and sen
 - **Pages**  
   The website will contain four main pages:
   
-  1. **Robot**  
+  1. **FollowBot**  
      - This page will include text and an embedded video from YouTube.
   
   2. **App**  
@@ -129,15 +134,17 @@ The goal of the website is to inform the users about what the robot does and sen
      - A private section for owners will be available to download and delete messages.
      - Consider using a database to store and manage feedback submissions.
 
+  5. 
+
 ### Robotic Overview
 
 #### Goal
-The goal of the robot is for it to carry up to 50 lbs of your belongings and follow you while maneuvering through different obstacles along the way.
+The goal of the FollowBot is for it to carry up to 50 lbs of your belongings and follow you while maneuvering through different obstacles along the way.
 
-We will be experimenting with different kinds of motors, sensors, and modules to determine the best way for the robot to follow the user while maneuvering through obstacles quickly. We also aim to create a device that keeps costs to a minimum.
+We will be experimenting with different kinds of motors, sensors, and modules to determine the best way for the FollowBot to follow the user while maneuvering through obstacles quickly. We also aim to create a device that keeps costs to a minimum.
 
 #### Weight Carrying and Following
-The user will be able to place various belongings within the device, such as food, electronics, books, sports items, clothing, and more. The robot will track the user based on the phone's position and its current position via the GPS module installed within the robot.
+The user will be able to place various belongings within the device, such as food, electronics, books, sports items, clothing, and more. The FollowBot will be able to track the user based on it's 
 
 #### Sensors
 The robot will use multiple sensors to avoid and move away from obstacles. Forms of avoidance will include lidar sensors, computer vision, and echo locative tracking. The choice of sensors will be decided as a team based on their accuracy in avoiding obstacles quickly.
