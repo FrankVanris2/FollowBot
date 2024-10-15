@@ -10,15 +10,15 @@ b. Using documentation and instructions within the ROS2 site: https://docs.ros.o
 c. Conducting ssh practices in order to code from a seperate device to the Raspberry PI.  
 d. Produce and design the website for finalization for our product.
 
-__2. Creating scripts based on specific parameters and tasks the robot will conduct/Website finalization:__    
+__2. Creating scripts based on specific parameters and tasks the Followbot will conduct/Website finalization:__    
 a. C++ scripts to conduct movement and locative tasks.  
-b. Constructing an application within a mobile device to instruct the user what the robot is currently doing.  
+b. Constructing an application within a mobile device to instruct the user what the Followbot is currently doing.  
 c. Include a form of networking between both devices.  
 d. Finalize and tweak the website to our specifications.
 
 
-__3. Construct the design of the robot and build the robot:__  
-a. Use fusion360 to create the design of the robot or CAD as another platform to use.  
+__3. Construct the design of the Followbot and build the Followbot:__  
+a. Use fusion360 to create the design of the Followbot or CAD as another platform to use.  
 b. obtaining the specified hardware and parts that is needed to construct the first prototype.  
 c. finalize the design of the prototype.  
 

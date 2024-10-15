@@ -96,7 +96,7 @@ To exit an environment properly ALWAYS do ctrl + C
 
 <h1> Important for using TurtleSim </h1>
 
-Turtlesim is a visual platform that is used for testing purposes when you want to see visually what will happen with your robot. The issue though when using turtlesim is that it requires you to have a pre installed GUI that can be used between your current machine and your ubuntu machine running on your Raspberry pi. Thus meaning you need to make sure you have a gui installed. Follow these instructions on this site in order to gain the prerequisites for setting up the turtlesim correctly:
+Turtlesim is a visual platform that is used for testing purposes when you want to see visually what will happen with your Followbot. The issue though when using turtlesim is that it requires you to have a pre installed GUI that can be used between your current machine and your ubuntu machine running on your Raspberry pi. Thus meaning you need to make sure you have a gui installed. Follow these instructions on this site in order to gain the prerequisites for setting up the turtlesim correctly:
 https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Introducing-Turtlesim/Introducing-Turtlesim.html
 
 If you reached this point in the tutorial, and obtained the error instead of the screen then this is where I tell you in how to fix the issue:
@@ -230,7 +230,7 @@ https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Act
 
 <h2>RQT Console</h2>
 
-This will be very useful and handy to know whether there is an issue with our robot:
+This will be very useful and handy to know whether there is an issue with our Followbot:
 
 ```
 #Command to open the console:
