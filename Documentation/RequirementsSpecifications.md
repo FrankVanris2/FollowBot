@@ -155,6 +155,8 @@ The top right corner will display a battery life indicator, while the top left c
 
 The mobile app will also be able to send the user notifications based on whether the health of the robot is stable, if the robot is able to track the user, or if certain components of the robot are outdated and in need of repair.
 
+The mobile app will consist of a mapping feature where you will be able to map your robot to a specific location or direct it back to your location if it's at another place.
+
 Another notable feature that will be implemented through the app is the ability to control the robot. This will be meant for correcting it's position towards the user, playing with the robot, or just for testing purposes.
 
 **3.2 Functional Requirements**<br>
@@ -174,7 +176,8 @@ Another notable feature that will be implemented through the app is the ability 
 2. **Efficiency**: The robot should make optimal use of system resources such as memory, disk space, and processing power. The mobile app and website should load quickly and respond to user input without delay.<br><br>
 3. **Usability**: The robot, mobile app, and website should be user-friendly and intuitive. Users should be able to understand and use the system without extensive training or technical knowledge.<br><br>
 4. **Maintainability**: The software should be designed in a way that allows for easy updates and modifications. The code should be well-documented and follow best practices for readability and maintainability.<br><br>
-5. **Machine Learning**: Creating a learning model to identify specific objects for object avoidance and path-finding.
+5. **Machine Learning**: Creating a learning model to identify specific objects for object avoidance and path-finding.<br><br>
+6. **Mapping**: Using Google maps or BC map for pathfinding with FollowBot in order for it to go from location to locaiton.<br><br>
 6. **Portability**: The mobile app should be compatible with various operating systems (iOS, Android) and the website should be accessible from different browsers (Chrome, Firefox, Safari, Edge).<br><br>
 7. **Scalability**: The system should be able to handle an increasing number of tasks effectively. It should be designed to scale up or down based on demand.<br><br>
 8. **Security**: The system should protect against unauthorized access and data breaches. User data should be encrypted and the system should comply with relevant privacy regulations.<br><br>
@@ -193,7 +196,7 @@ Another notable feature that will be implemented through the app is the ability 
 | Req. 3: polishing/refining the robot, mobile app, & website | Q3  |  Frank, Igor, Trong, Joseph  |   
 | Req. 4: Bug fixing, Security fixing, and polishing the robot, mobile app, & website | Q4  | Frank, Igor, Trong, Joseph |
 
-| User Stories | Millstone | Assigned to: |
+| none-backlog User Stories | Millstone | Assigned to: |
 | --- | --- | --- |
 | A user will be allowed to click tabs in the website in order to seek information about the robot and how it performs and works. | M1  | Igor |   
 | The user will be allowed to find the website via a google search in order to seek information about the robot | M2 | Igor |
@@ -205,6 +208,12 @@ Another notable feature that will be implemented through the app is the ability 
 | The Mobile App will constantly update to retrieve information from the robot about it's battery life, temperature, and weight | M8  | Frank |
 | The battery life will be able to last for more than 4 hours | M9 | Frank |
 | A developer will be able to test their code on a virtual robot when the actual robot is not around for testing | m10 | Frank |
+| The user will be able to map the robot from location to location if needed | m11 | Joseph |
+| A user will be able to direct the robot from another location to  their position via the mapping tool on the mobile app | m12 | Joseph |
+| A developer will store the maps in a database for easy access and easy control for when FollowBot is in different locations | m13 | Joseph |
+| The Developer will allow the robot to follow the user by using forms of computer vision | m14 | Trong |
+| A user will be able to keep FollowBot near them at all times. Especially when there are obstacles along the way | m15 | Trong |
+| A developer will use a camera in order for FollowBot to visualize and see us with Computer Vision | m15 | Trong |
 
 
 
