@@ -154,6 +154,9 @@ If the user does not currently have an account, they will need to create one and
 The top right corner will display a battery life indicator, while the top left corner will show the robot’s internal temperature. Positioned centrally at the bottom, just below the 3D model, an indicator will display the robot’s current carrying capacity, informing users of the weight the Followbot is presently carrying. Keep noted that this is all real time data.
 
 The mobile app will also be able to send the user notifications based on whether the health of the Followbot is stable, if the Followbot is able to track the user, or if certain components of the Followbot are outdated and in need of repair.
+The mobile app will also be able to send the user notifications based on whether the health of the robot is stable, if the robot is able to track the user, or if certain components of the robot are outdated and in need of repair.
+
+The mobile app will consist of a mapping feature where you will be able to map your robot to a specific location or direct it back to your location if it's at another place.
 
 Another notable feature that will be implemented through the app is the ability to control the Followbot. This will be meant for correcting it's position towards the user, playing with the Followbot, or just for testing purposes.
 
@@ -174,7 +177,8 @@ Another notable feature that will be implemented through the app is the ability 
 2. **Efficiency**: The Followbot should make optimal use of system resources such as memory, disk space, and processing power. The mobile app and website should load quickly and respond to user input without delay.<br><br>
 3. **Usability**: The Followbot, mobile app, and website should be user-friendly and intuitive. Users should be able to understand and use the system without extensive training or technical knowledge.<br><br>
 4. **Maintainability**: The software should be designed in a way that allows for easy updates and modifications. The code should be well-documented and follow best practices for readability and maintainability.<br><br>
-5. **Machine Learning**: Creating a learning model to identify specific objects for object avoidance and path-finding.
+5. **Machine Learning**: Creating a learning model to identify specific objects for object avoidance and path-finding.<br><br>
+6. **Mapping**: Using Google maps or BC map for pathfinding with FollowBot in order for it to go from location to locaiton.<br><br>
 6. **Portability**: The mobile app should be compatible with various operating systems (iOS, Android) and the website should be accessible from different browsers (Chrome, Firefox, Safari, Edge).<br><br>
 7. **Scalability**: The system should be able to handle an increasing number of tasks effectively. It should be designed to scale up or down based on demand.<br><br>
 8. **Security**: The system should protect against unauthorized access and data breaches. User data should be encrypted and the system should comply with relevant privacy regulations.<br><br>
@@ -193,7 +197,7 @@ Another notable feature that will be implemented through the app is the ability 
 | Req. 3: polishing/refining the Followbot, mobile app, & website | Q3  |  Frank, Igor, Trong, Joseph  |   
 | Req. 4: Bug fixing, Security fixing, and polishing the Followbot, mobile app, & website | Q4  | Frank, Igor, Trong, Joseph |
 
-| User Stories | Millstone | Assigned to: |
+| none-backlog User Stories | Millstone | Assigned to: |
 | --- | --- | --- |
 | A user will be allowed to click tabs in the website in order to seek information about the Followbot and how it performs and works. | M1  | Igor |   
 | The user will be allowed to find the website via a google search in order to seek information about the Followbot | M2 | Igor |
@@ -204,7 +208,7 @@ Another notable feature that will be implemented through the app is the ability 
 | The Followbot will follow the user always behind and stay about 1 meter away from the user, the user is allowed to move close to the Followbot without the Followbot moving away from the user. | M7 | Frank | 
 | The Mobile App will constantly update to retrieve information from the Followbot about it's battery life, temperature, and weight | M8  | Frank |
 | The battery life will be able to last for more than 4 hours | M9 | Frank |
-| A developer will be able to test their code on a virtual Followbot when the actual Followbot is not around for testing | m10 | Frank |
+| A developer will be able to test their code on a virtual robot when the actual robot is not around for testing | m10 | Frank |
 
 
 

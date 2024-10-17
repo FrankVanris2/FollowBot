@@ -16,9 +16,15 @@ b. Constructing an application within a mobile device to instruct the user what 
 c. Include a form of networking between both devices.  
 d. Finalize and tweak the website to our specifications.
 
+__3. Creating a Machine Learning algorithm in order for the robot to avoid obstacles and pathfind through obstacles.__
+a. C++ and Python scripts in order to conduct distancing between the user and the robot.
+b. Using lidar sensors, and other sensors to detect objects.
+c. Using computer vision in order to detect the user and follow the user.
+d. Using encoders to calculate the movement in the wheels.
 
-__3. Construct the design of the Followbot and build the Followbot:__  
-a. Use fusion360 to create the design of the Followbot or CAD as another platform to use.  
+
+__4. Construct the design of the robot and build the robot:__  
+a. Use fusion360 to create the design of the robot or CAD as another platform to use.  
 b. obtaining the specified hardware and parts that is needed to construct the first prototype.  
 c. finalize the design of the prototype.  
 
