@@ -26,4 +26,8 @@ void FollowMechanics::followMechanics_Loop() {
     long followRSSI = followBotClient.getRSSI();
     Serial.print("RSSI Value: ");
     Serial.println(followRSSI);
+
+    //if RSSI > -50 then robot will continue to move forward to users position.
+
+    //if RSSI < -50 then robot will stop and not continue following to users position.
 }

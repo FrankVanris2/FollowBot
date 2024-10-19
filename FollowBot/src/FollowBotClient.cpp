@@ -91,7 +91,7 @@ void FollowBotClient::followBotClient_Loop() {
     }
 
     //Getting RSSI updates
-    //mRSSI = WiFi.RSSI();
+    mRSSI = WiFi.RSSI();
     
 }
 
