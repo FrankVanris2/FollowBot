@@ -17,16 +17,13 @@ public:
     void followMechanics_Loop();
 
 private:
-
-    // Math Values
-    long mA;
-
-    int mTotal;
-
-    int mRSSIAvg;
+    unsigned long mPreviousMillisRSSI;
 
     //list for RSSI Avg
-    std::list<int> rssiList;
+    std::list<long> rssiList;
+
+    long mRSSITotal;
+    long mRSSIAvg;
 };
 
 extern FollowMechanics followMechanics;

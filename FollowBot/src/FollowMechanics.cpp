@@ -10,11 +10,14 @@ Desc: Creating follow mechanics between the user and the robot
 #include "Arduino.h"
 
 
+// Interval
+const int TENTH_SECOND = 100;
+
 // Universal Object
 FollowMechanics followMechanics;
 
 // Constructor
-FollowMechanics::FollowMechanics() {}
+FollowMechanics::FollowMechanics():  mRSSIAvg(0), mRSSITotal(0), mPreviousMillisRSSI(0) {}
 
 
 // Setup
@@ -25,27 +28,22 @@ void FollowMechanics::followMechanics_Setup() {
 // Loop 
 void FollowMechanics::followMechanics_Loop() {
     // TEST 1: I am trying to obtain the signal strength in order to obtain the distance by an average.
-    
-    long followRSSI = followBotClient.getRSSI();
-    //input rssi value to list
-    rssiList.push_front(followRSSI);
+    unsigned long currentMillisForRSSI = millis(); 
+    if ((unsigned long) (currentMillisForRSSI - mPreviousMillisRSSI) >= TENTH_SECOND) {
+        mPreviousMillisRSSI = currentMillisForRSSI;
+        //Add rssi value to list
+        long followRSSI = followBotClient.getRSSI();
+        rssiList.push_front(followRSSI);
+        mRSSITotal += followRSSI;
 
+        //if list is > 5 remove the last value 
+        if (rssiList.size() > 5) {
+            mRSSITotal -= rssiList.back();
+            rssiList.pop_back();
+        }
+        mRSSIAvg = mRSSITotal / (long) rssiList.size();
 
-    //if list size is  < to 5 sum up the total nums in the list and divide by size
-    if (rssiList.size() < 5) {
-        mTotal += followRSSI;
-        mRSSIAvg = mTotal / rssiList.size();
+        Serial.print("FollowMechanics, RSSI Avg Value: ");
+        Serial.println(mRSSIAvg);
     }
-    //if list is >= 5, sum up the total nums in the list and divide by 5
-    else {   
-        mTotal -= rssiList.back();
-        rssiList.pop_back();
-        mTotal += followRSSI;
-        mRSSIAvg = mTotal / 5; // always divide by 5 since the list should always have 5
-    }
-    
-
-
-    Serial.print("RSSI Value: ");
-    Serial.println(mRSSIAvg);
 }

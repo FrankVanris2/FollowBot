@@ -25,8 +25,7 @@ private:
     void getMove();
  
     unsigned long mPreviousMillisMove;
-    unsigned long mPreviousMillisRSSI;
-    
+
     int mCountMoves;
     int mConnectionStatus;
     long mRSSI;
