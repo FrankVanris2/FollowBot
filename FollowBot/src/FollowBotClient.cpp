@@ -42,7 +42,7 @@ const int PORT = 5000;
 WiFiClient client;
 
 // Constructor
-FollowBotClient::FollowBotClient(): mConnectionStatus(WL_IDLE_STATUS), mPreviousMillis(0), mCountMoves(0), mIPAddress(server.toString()) {}
+FollowBotClient::FollowBotClient(): mConnectionStatus(WL_IDLE_STATUS), mPreviousMillisMove(0),mPreviousMillisRSSI(0),  mCountMoves(0), mIPAddress(server.toString()) {}
 
 void FollowBotClient::followBotClient_Setup() {
     while(!Serial) {
@@ -80,19 +80,21 @@ void FollowBotClient::followBotClient_Setup() {
 }
 
 void FollowBotClient::followBotClient_Loop() {
-    unsigned long currentMillis = millis();   
-
-    if((unsigned long) (currentMillis - mPreviousMillis) >= TENTH_SECOND) {
-        mPreviousMillis = currentMillis;  
+    unsigned long currentMillisForMovement = millis();   
+    unsigned long currentMillisForRSSI = millis();
+    if((unsigned long) (currentMillisForMovement - mPreviousMillisMove) >= TENTH_SECOND) {
+        mPreviousMillisMove = currentMillisForMovement;
         getMove();  
     }  
     if(followBotManager.getDirtyFlag() != false) {
         postRobotInfo();
     }
 
-    //Getting RSSI updates
-    mRSSI = WiFi.RSSI();
-    
+    if ((unsigned long) (currentMillisForRSSI - mPreviousMillisRSSI) >= TENTH_SECOND) {
+        mPreviousMillisRSSI = currentMillisForRSSI;
+        mRSSI = WiFi.RSSI();
+    }
+  
 }
 
 void FollowBotClient::printWifiStatus() {

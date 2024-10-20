@@ -24,7 +24,9 @@ private:
     void postRobotInfo();
     void getMove();
  
-    unsigned long mPreviousMillis;
+    unsigned long mPreviousMillisMove;
+    unsigned long mPreviousMillisRSSI;
+    
     int mCountMoves;
     int mConnectionStatus;
     long mRSSI;
