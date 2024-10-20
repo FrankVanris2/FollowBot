@@ -139,9 +139,10 @@ The goal of the website is to inform the users about what the Followbot does and
 ### Robotic Overview
 
 #### Goal
-The goal of the FollowBot is for it to carry up to 50 lbs of your belongings and follow the user while avoiding obstacles. FollowBot will also be able to map to a specific location as well as meet your specific position.
+The goal of the Followbot is for it to carry up to 50 lbs of your belongings and follow the user while avoiding obstacles. FollowBot will also be able to map to a specific location as well as meet your specific position.
 
 We will be experimenting with different kinds of motors, sensors, and modules to determine the best way for the FollowBot to follow the user while maneuvering through obstacles quickly. We also aim to create a device that keeps costs to a minimum, as well as find ways to have FollowBot map between two locations..
+We will be experimenting with different kinds of motors, sensors, and modules to determine the best way for the Followbot to follow the user while maneuvering through obstacles quickly. We also aim to create a device that keeps costs to a minimum.
 
 #### Weight Carrying and Following
 The user will be able to place various belongings within the device, such as food, electronics, books, sports items, clothing, and more. The Followbot will be able to track the user based on it's 
@@ -151,6 +152,7 @@ The Followbot will use multiple sensors to avoid and move away from obstacles. F
 
 #### Mapping
 The robot will be able to map out a path to a given location through API tools such as Google Maps, BC's directed Map API, and much more.
+The Followbot will use multiple sensors to avoid and move away from obstacles. Forms of avoidance will include lidar sensors, computer vision, and echo locative tracking. The choice of sensors will be decided as a team based on their accuracy in avoiding obstacles quickly.
 
 #### Hardware
 When designing the hardware, cost will be a key consideration. Initially, hardware will be created through 3D printing and simple woodworking. Designing the hardware will be done using various design applications such as FreeCAD, Fusion360, and Blender. For electronic hardware development and wiring, the final design will be created via a PCB manufacturer.
@@ -194,8 +196,8 @@ Third demo moving circle while avoiding obsticles
 
 <h2>3. Robotic Architecture</h2>
 
-![alt text](/Images/RoboticArchitecture.png)
-*Robot Architecture*
+![alt text](RoboticArchitecture.png)
+*Followbot Architecture*
 
 ![alt text](realTime_historicalDataRetrieval.png)
 *Data Retrieval for app and learning model*
@@ -207,9 +209,13 @@ Third demo moving circle while avoiding obsticles
 
 ![alt text](/Images/SystemsArchitecture.png)
 *Interaction between website app and robot*
+![alt text](SystemsArchitecture.png)
+*Interaction between website app and Followbot*
 
 ![alt text](</Images/Authentication Process Design.png>)
 *Authentication process for robot*
+![alt text](<Authentication Process Design.png>)
+*Authentication process for Followbot*
 
 <h2>Architectural Design for both Robotic and System sides: </h2>
 
@@ -255,10 +261,11 @@ Third demo moving circle while avoiding obsticles
 
 <h4>Data Retrieval and Learning Model Architecture </h4>
 
+1. FollowBot Client:
 1. Followbot Server:
 
-    * Followbot server takes place within the ROS2 Raspberry Pi.
-    * Allows information back and forth between client nodes.
+    * Followbot client takes place in the FollowBot 
+    * A python server is used to send information back and forth between the user and the FollowBot.
 
 2. Real Time Data Retrieval:
     * A method that will be used to obtain live data from the Followbot.
@@ -278,6 +285,7 @@ Third demo moving circle while avoiding obsticles
     * Will visually show the real time data to the user when they are using the app as well as allow the user to direct itself from point A to B from a Map.
   
 5. Learning Model:
+    * Will be used to take in past data of the robot in order to find better ways to correct it's movement properly so it can easily, safely, and quickly follow you while trying to reduce battery consumption. 
     * Will be used to take in past data of the Followbot in order to find better ways to correct it's movement properly so it can easily, safely, and quickly follow you while trying to reduce battery consumption.
 <br><br>
 
@@ -292,8 +300,8 @@ Third demo moving circle while avoiding obsticles
     * This device consists of all the fundamental backends in order to connect to the Server which will connect to the website and mobile app. Mapping features will be also added as well.
 
 3. Website interaction:
-    * Backend to frontend interaction between the website and the Raspberry pi
-    * With the website you will be able to also control the Followbot itself a bit if one is near by.
+    * Backend to frontend interaction between the website server and FollowBot and vice versa.
+    * With the website you will be able to also control the Followbot itself by connecting to it if it is yours.
 
 4. Website:
     * The website will consist of reliable information about the Followbot as well as have some minor interaction with the Followbot.
@@ -318,11 +326,16 @@ Third demo moving circle while avoiding obsticles
 
 <h4> Authentication Process </h4>
 
+1. AWS Server:
 1. Followbot Server:
 
+    * The Server will take place on a AWS instance EC2.
+    * Allows information back and forth between client nodes, website, and mobile app.
     * Followbot server takes place within the ROS2 Raspberry Pi.
     * Allows information back and forth between client nodes.
 
+2. Robot Authentication Key:
+    * A 16 number/character key meant for every FolloBobot.
 2. Followbot Authentication Key:
     * A 16 number/character key meant for every Followbot.
     * Every key will be different from the last. 
@@ -333,6 +346,7 @@ Third demo moving circle while avoiding obsticles
 
 4. Authentication process:
     * the combination of the FollowBots key as well as the users password and username will allow them to be authenticated for the use of the robot and for special offers as well as access towards the guides, feedback page, and support page.
+    * the combination of the robots key as well as the users password and username will allow them to be authenticated for the use of the Followbot and for special offers as well as access towards the guides, feedback page, and support page.
 
 5. Database:
   * The database will be used to store the FollowBots keys, passwords, and usernames of users that are subscribed to the product. The database will be a way of making sure certain keys are not the same from one another as well as passwords and usernames.
@@ -454,6 +468,8 @@ Third demo moving circle while avoiding obsticles
 
 #### Data Retrieval and Learning Model Architecture
 
+1. **AWS Server**
+    - **Description**: The Robot Server operates within the AWS Instance and facilitates communication between client nodes.
 1. **Followbot Server**
     - **Description**: The Followbot Server operates within the ROS2 Raspberry Pi and facilitates communication between client nodes.
     - **Subsystem Model**:
@@ -465,6 +481,7 @@ Third demo moving circle while avoiding obsticles
       - **Methods**: `sendMessage()`, `receiveMessage()`
 
 2. **Real Time Data Retrieval**
+    - **Description**: A method used to obtain live data from the robot. The live data varies from battery life to weight gain and more.
     - **Description**: A method used to obtain live data from the Followbot. The live data varies from battery life to weight gain.
     - **Subsystem Model**:
       - **Class**: `RealTimeDataRetrieval`
@@ -539,6 +556,7 @@ Third demo moving circle while avoiding obsticles
       - **Methods**: `initializeBackend()`, `connectToWebsite()`, `connectToMobileApp()`
 
 3. **Website Interaction**
+    - **Description**: Backend to frontend interaction between the website to server to Raspberry Pi or Microcontroller. Allows control of the robot if nearby.
     - **Description**: Backend to frontend interaction between the website and the Raspberry Pi. Allows control of the Followbot if nearby.
     - **Subsystem Model**:
       - **Class**: `WebsiteInteraction`
@@ -559,7 +577,7 @@ Third demo moving circle while avoiding obsticles
       - **Methods**: `displayInfo()`, `interactWithRobot()`
 
 5. **Mobile Interaction**
-    - **Description**: Backend to frontend interaction between the mobile app and the Raspberry Pi. The mobile app has main control over the Followbot.
+    - **Description**: Backend to frontend interaction between the mobile app, server and the Raspberry Pi or Microcontroller. The mobile app has main control over the Followbot.
     - **Subsystem Model**:
       - **Class**: `MobileInteraction`
       - **Attributes**: `interactionID`, `mobileStatus`
@@ -631,6 +649,7 @@ Third demo moving circle while avoiding obsticles
       - **Methods**: `authenticateUser()`, `grantAccess()`
 
 3. **Database**
+    - **Description**: Stores FollowRobot keys, passwords, and usernames of users subscribed to the product. Ensures unique keys, passwords, and usernames.
     - **Description**: Stores Followbot keys, passwords, and usernames of users subscribed to the product. Ensures unique keys, passwords, and usernames.
     - **Subsystem Model**:
       - **Class**: `Databse`
