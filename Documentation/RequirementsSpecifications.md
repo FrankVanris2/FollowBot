@@ -98,11 +98,11 @@ In terms of project success, our primary focus will be on systematic organizatio
 **2.4 Assumptions and Dependencies**<br>
 
 
-The successful completion of this project hinges on several factors. A significant challenge could arise from changes in the hardware and software resources required for the robot’s optimal functionality. However, these potential issues are secondary to the primary challenge of maintaining the product’s price under $500. This price point will be a constant consideration throughout the development of our product, but our determination and strategic planning aim to achieve or come close to this goal.
+The successful completion of this project hinges on several factors. A significant challenge could arise from changes in the hardware and software resources required for the FollowBots’s optimal functionality. However, these potential issues are secondary to the primary challenge of maintaining the product’s price under $500. This price point will be a constant consideration throughout the development of our product, but our determination and strategic planning aim to achieve or come close to this goal.
 
 Potential changes in hardware and software could cause temporary delays in the product’s development. The procurement of necessary materials for the hardware aspect of the project could affect our timeline. Similarly, on the software side, the development of the website, app, and machine learning models may encounter delays due to software requirements, errors, and bugs. However, based on our past experiences, we are confident in our team’s ability to address these issues promptly and meet our project deadline.
 
-We plan to use reliable hardware that has proven effective in both major manufacturing environments and hobbyist builds. For the software, we will develop an API to establish a connection between the Followbot and the website/mobile app. This will allow users to visually monitor the robot’s activities, battery life, and control the device based on user input. We will also develop software that will allow mapping capabilities for the Followbot to travel to specific locations, as well as improving or using machine learning models in order for it to identify obstacles or the user that is following.
+We plan to use reliable hardware that has proven effective in both major manufacturing environments and hobbyist builds. For the software, we will develop an API to establish a connection between the Followbot and the website/mobile app. This will allow users to visually monitor the FollowBot’s activities, battery life, and control the device based on user input. We will also develop software that will allow mapping capabilities for the Followbot to travel to specific locations, as well as improving or using machine learning models in order for it to identify obstacles or the user that is following.
 <br><br>
 
 **<h1>3. Specific Requirements**</h1><br>
@@ -132,7 +132,7 @@ We plan to use reliable hardware that has proven effective in both major manufac
 
 **Homepage (Large Screen):**
 
-The homepage will prominently feature the product logo in the top left corner. The product’s name and image will be centrally displayed, serving as the focal point of the webpage. Navigation tabs at the top will provide easy access to specific product information that users are likely to seek. A summary positioned near the bottom, just below the robot’s image, will succinctly convey the product’s primary function and its global applicability to all consumers.
+The homepage will prominently feature the product logo in the top left corner. The product’s name and image will be centrally displayed, serving as the focal point of the webpage. Navigation tabs at the top will provide easy access to specific product information that users are likely to seek. A summary positioned near the bottom, just below the FollowBot’s image, will succinctly convey the product’s primary function and its global applicability to all consumers.
 
 The website’s design will reflect the product’s branding, incorporating elements such as the logo, color scheme, and visual identity. Specific elements will highlight our robotic product. The layout will be optimized for a cohesive and visually appealing user experience across various device screen sizes.
 
@@ -141,7 +141,7 @@ A section of the website will consist of discussion pages that will provide guid
 The webpage on hand will have some form of minor interaction with the Followbot. The interaction will be a form of movemental patterns. We plan on adding 2 specific interactions.
 
 1. Moving in a circle while avoiding obstacles
-2. Allowing the user to control the robots movement
+2. Allowing the user to control the FollowBots movement
 
 The user will also be allowed to sign into his account when on the website, and will be able to see their purchases as well as their discussions that they have been in or created. They will as well be notified for future updates about the product in general.
 
@@ -149,13 +149,13 @@ The user will also be allowed to sign into his account when on the website, and 
 
 The mobile app, available for free on all major mobile app stores (including Apple and Android), will provide users with vital information about the Followbot. Upon opening the app, users will be greeted with an iconic image of an animated Followbot, followed by an authentication screen.
 
-If the user does not currently have an account, they will need to create one and input their robot’s authentication key. (Every Followbot has a unique key that is different from another). Once they complete the authentication, the mobile app will present them with a 3D model of the Followbot they currently have on hand.
+If the user does not currently have an account, they will need to create one and input their FollowBot’s authentication key. (Every Followbot has a unique key that is different from another). Once they complete the authentication, the mobile app will present them with a 3D model of the Followbot they currently have on hand.
 
-The top right corner will display a battery life indicator, while the top left corner will show the robot’s internal temperature. Positioned centrally at the bottom, just below the 3D model, an indicator will display the robot’s current carrying capacity, informing users of the weight the Followbot is presently carrying. Keep noted that this is all real time data.
+The top right corner will display a battery life indicator, while the top left corner will show the FollowBot’s internal temperature. Positioned centrally at the bottom, just below the 3D model, an indicator will display the FollowBot’s current carrying capacity, informing users of the weight the Followbot is presently carrying. Keep noted that this is all real time data.
 
 The mobile app will also be able to send the user notifications based on whether the health of the Followbot is stable, if the Followbot is able to track the user, or if certain components of the Followbot are outdated and in need of repair.
 
-The mobile app will consist of a mapping feature where you will be able to map your robot to a specific location or direct it back to your location if it's at another place.
+The mobile app will consist of a mapping feature where you will be able to map your FollowBot to a specific location or direct it back to your location if it's at another place.
 
 Another notable feature that will be implemented through the app is the ability to control the Followbot. This will be meant for correcting it's position towards the user, playing with the Followbot, or just for testing purposes.
 
@@ -164,9 +164,9 @@ Another notable feature that will be implemented through the app is the ability 
 * Computer vision mechanics and learning models in order for the Followbot to identify user when following.
 * The functional requirements for this project includes a Followbot that will follow the user while avoiding obstacles and allow the user to place their belongings within it. 
 * At the same time the user will be able to control certain mechanics of the Followbot within the mobile app. 
-* The mobile app needs to send notifications to the user about the robots needs, as well as possible issues.
+* The mobile app needs to send notifications to the user about the FollowBots needs, as well as possible issues.
 
-* Store the data that is currently being taken as historical data to be used as a way to understand and learn how to incorporate a form of machine learning for the Followbot. This will give us better ways to understand battery power, battery control, as well as ways in enhancing the autonomous movement of the robots behavior.
+* Store the data that is currently being taken as historical data to be used as a way to understand and learn how to incorporate a form of machine learning for the Followbot. This will give us better ways to understand battery power, battery control, as well as ways in enhancing the autonomous movement of the FollowBots behavior.
 
 * And as a consumer that wishes to purchase the product, they will be able to visit the website that contains information about our product. And purchase our product from the site. <br>
 
@@ -207,11 +207,11 @@ Another notable feature that will be implemented through the app is the ability 
 | The Followbot will follow the user always behind and stay about 1 meter away from the user, the user is allowed to move close to the Followbot without the Followbot moving away from the user. | M7 | Frank | 
 | The Mobile App will constantly update to retrieve information from the Followbot about it's battery life, temperature, and weight | M8  | Frank |
 | The battery life will be able to last for more than 4 hours | M9 | Frank |
-| A developer will be able to test their code on a virtual robot when the actual robot is not around for testing | m10 | Frank |
-| The user will be able to map the robot from location to location if needed | m11 | Joseph |
-| A user will be able to direct the robot from another location to  their position via the mapping tool on the mobile app | m12 | Joseph |
+| A developer will be able to test their code on a virtual FollowBot when the actual FollowBot is not around for testing | m10 | Frank |
+| The user will be able to map the FollowBot from location to location if needed | m11 | Joseph |
+| A user will be able to direct the FollowBot from another location to  their position via the mapping tool on the mobile app | m12 | Joseph |
 | A developer will store the maps in a database for easy access and easy control for when FollowBot is in different locations | m13 | Joseph |
-| The Developer will allow the robot to follow the user by using forms of computer vision | m14 | Trong |
+| The Developer will allow the Folowbot to follow the user by using forms of computer vision | m14 | Trong |
 | A user will be able to keep FollowBot near them at all times. Especially when there are obstacles along the way | m15 | Trong |
 | A developer will use a camera in order for FollowBot to visualize and see us with Computer Vision | m15 | Trong |
 | A developer will be able to test their code on a virtual Followbot when the actual Followbot is not around for testing | m10 | Frank |

@@ -16,8 +16,8 @@ b. Constructing an application within a mobile device to instruct the user what 
 c. Include a form of networking between both devices.  
 d. Finalize and tweak the website to our specifications.
 
-__3. Creating a Machine Learning algorithm in order for the robot to avoid obstacles and pathfind through obstacles.__
-a. C++ and Python scripts in order to conduct distancing between the user and the robot.
+__3. Creating a Machine Learning algorithm in order for the FollowBot to avoid obstacles and pathfind through obstacles.__
+a. C++ and Python scripts in order to conduct distancing between the user and the FollowBot.
 b. Using lidar sensors, and other sensors to detect objects.
 c. Using computer vision in order to detect the user and follow the user.
 d. Using encoders to calculate the movement in the wheels.
