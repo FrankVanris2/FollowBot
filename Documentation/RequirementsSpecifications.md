@@ -185,6 +185,20 @@ Another notable feature that will be implemented through the app is the ability 
 10. **Battery Life**: The Followbot should be able to operate for a reasonable amount of time on a single charge. Power management features should be implemented to extend battery life.<br><br>
 11. **Load Capacity**: The Followbot should be able to carry up to 50 lbs of weight without impacting its performance or stability.<br><br>
 
+
+**3.4 Data Requirements:**
+
+* we will communicate between modules through buffers: `char[]`
+
+* we will communicate to applications using file types: `JSON`
+
+* `uint8_t` will be used for simple integer returns and encoding
+
+* `HashTable` for ease of retrieval from our database
+
+* our bot will capture photos to be processed by our machine learning model:  photo format i.e. `JPEG`, `PNG`
+
+
 **<h1>4. Breakdown of work/Project timeline plan**</h1><br>
 
 <br>
@@ -203,7 +217,7 @@ Another notable feature that will be implemented through the app is the ability 
 | The User will be allowed to seek the cost of such a Followbot on the website | M3 | Igor |
 | The user will be allowed to sign in to their account within the website | M4 | Igor |
 | The User will be allowed to connect their Followbot (if they have one) via the website to test it's functionality for fun and testing purposes | M5 | Frank, Igor |
-| When clicking the connect button on the app, the bluetooth will connect with any Follow bot Followbot in the area | M6 | Frank|
+| When connecting to the network I will need to use a screen thats on the robot in order to input ssid and password information.   | M6 | Frank|
 | The Followbot will follow the user always behind and stay about 1 meter away from the user, the user is allowed to move close to the Followbot without the Followbot moving away from the user. | M7 | Frank | 
 | The Mobile App will constantly update to retrieve information from the Followbot about it's battery life, temperature, and weight | M8  | Frank |
 | The battery life will be able to last for more than 4 hours | M9 | Frank |
@@ -214,7 +228,7 @@ Another notable feature that will be implemented through the app is the ability 
 | The Developer will allow the Folowbot to follow the user by using forms of computer vision | m14 | Trong |
 | A user will be able to keep FollowBot near them at all times. Especially when there are obstacles along the way | m15 | Trong |
 | A developer will use a camera in order for FollowBot to visualize and see us with Computer Vision | m15 | Trong |
-| A developer will be able to test their code on a virtual Followbot when the actual Followbot is not around for testing | m10 | Frank |
+
 
 
 
