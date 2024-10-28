@@ -194,7 +194,7 @@ Another notable feature that will be implemented through the app is the ability 
 
 * `uint8_t` will be used for simple integer returns and encoding
 
-* `HashTable` for ease of retrieval from our database
+* We will implement a data structure, such as a `HashTable`, for ease of retrieval of client data from our database
 
 * our bot will capture photos to be processed by our machine learning model:  photo format i.e. `JPEG`, `PNG`
 
