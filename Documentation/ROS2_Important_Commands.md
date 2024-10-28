@@ -298,3 +298,28 @@ colcon build --executor sequential
 ```
 This will use 1 core of your cpu to run the build which will put less load on the RAM of the 
 Raspberry pi.
+
+#Creating a Workspace
+
+* first be sure to source the ros version that you are using in the bash file.
+
+* Then make a new directory for your workspace
+
+```
+mkdir -p ~/ros2_ws_name/src
+cd ~/ros2_ws/src
+```
+
+* When it comes to the workspace that is where you will be creating your own packages. Sometimes you'll download repo's
+
+* Next in order to use your package or use another package you'll need to resolve some dependencies. It's always good practice to do this in order to see if there are any dependencies you'll need to run the package. Do the following to check, just make sure your not in the src:
+
+```
+# cd if you're still in the ``src`` directory with the ``ros_tutorials`` clone
+
+cd ..
+rosdep install -i --from-path src --rosdistro foxy -y
+```
+
+* If you already have all your dependencies, the console will return:
+`#All required rosdeps installed successfully`
