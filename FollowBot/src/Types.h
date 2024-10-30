@@ -9,4 +9,6 @@
 struct OutputData {
     float mTemperature;
     float mHeatIndex;
+    int mBattery;
+    int mDistance;
 };

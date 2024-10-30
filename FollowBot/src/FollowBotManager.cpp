@@ -37,14 +37,14 @@ FollowBotManager::FollowBotManager(): mIsDirty(false) {
 void FollowBotManager::followBotSetup() {
 
     //Testing Ros Setup code
-    nh.initNode();
-    nh.advertise(chatter);
+    //nh.initNode();
+    //nh.advertise(chatter);
 
-    /*myMotors.motorSetup();
+    myMotors.motorSetup();
     followBotClient.followBotClient_Setup();
     temperatureReader.temperatureReader_Setup();
     objectAvoidance.objectAvoidance_Setup();
-    Serial.println("Finished Setup");*/
+    //Serial.println("Finished Setup");
 
 }
 
@@ -52,23 +52,24 @@ void FollowBotManager::followBotSetup() {
 void FollowBotManager::followBotLoop() {
 
     // Testing Ros loop code
-    str_msg.data = hello;
-    chatter.publish( &str_msg );
-    nh.spinOnce();
-    delay(1000);
+    //str_msg.data = hello;
+    //chatter.publish( &str_msg );
+    //nh.spinOnce();
+    //delay(1000);
 
-    /*
+    
     followBotClient.followBotClient_Loop();
+
     //Avoiding Obstacles
-    objectAvoidance.objectAvoidance_Loop();
+    //objectAvoidance.objectAvoidance_Loop();
     //if(objectAvoidance.getDistance1() <= 20 || objectAvoidance.getDistance2() <= 20) {
         //myMotors.motorStop();
     //}
+    
     //obtaining the Temperature
     temperatureReader.temperatureReader_Loop();
     followMechanics.followMechanics_Loop();
     // For motor movement
     myMotors.motorLoop();
-    */
- 
+    
 }

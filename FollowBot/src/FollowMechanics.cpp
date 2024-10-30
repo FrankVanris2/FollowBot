@@ -6,6 +6,7 @@ Desc: Creating follow mechanics between the user and the robot
 
 #include "FollowMechanics.h"
 #include "FollowBotClient.h"
+#include "Motors.h"
 #include <list>
 #include "Arduino.h"
 
@@ -45,5 +46,13 @@ void FollowMechanics::followMechanics_Loop() {
 
         Serial.print("FollowMechanics, RSSI Avg Value: ");
         Serial.println(mRSSIAvg);
+
+        //if rssi > -50 robot will follow user
+        //d = 10 ^ (A - mRSSI) / RmRSSI;
+        
+        //if rssi < -50 robot will stop following user
+        if (mRSSIAvg < -50) {
+            myMotors.setDirection("Stop");
+        }
     }
 }

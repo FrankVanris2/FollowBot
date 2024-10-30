@@ -84,16 +84,16 @@ void FollowBotClient::followBotClient_Loop() {
     if((unsigned long) (currentMillisForMovement - mPreviousMillisMove) >= TENTH_SECOND) {
         mPreviousMillisMove = currentMillisForMovement;
         getMove();  
-        mRSSI = WiFi.RSSI();
-        Serial.println();
-        Serial.print("FollowBotClient, mRSSI = ");
-        Serial.println(mRSSI);
+        
 
     }  
     if(followBotManager.getDirtyFlag() != false) {
         postRobotInfo();
     }
-   
+    mRSSI = WiFi.RSSI();
+    Serial.println();
+    Serial.print("FollowBotClient, mRSSI = ");
+    Serial.println(mRSSI);
 }
 
 void FollowBotClient::printWifiStatus() {
