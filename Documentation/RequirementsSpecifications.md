@@ -112,19 +112,24 @@ We plan to use reliable hardware that has proven effective in both major manufac
 
 ![image](/Images/WebsiteFrontPage.png)
 
-*front page of website filled with information*
+**Home Page of website**
+* Within the Homepage of the website there are a range of tabs that the user can click on in order to read insightful information about FollowBot, it's mobile app, along with the developers that created it.
+
+
 
 ![image](/Images/AboutUsPageWebsite.png)
 
-*about us page which will contain a bio and photos of the developers*
+**About us page which will contain a bio and photos of the developers**
+* within one of the tabs, it will provide information about all the developers that worked on this project. You'll be able to scroll from top to bottom to read all about the development about FollowBot.
 
 ![image](/Images/VideoOfRobotPage.png)
 
-*video of the Followbot and app in action*
+**Video of the Followbot and app in action**
+* Within one of the tabs of the website will include a video of FollowBot in action along with it's improvements and comparisons to another device. The tab will include background information about what makes FollowBot.
 
 ![image](/Images/FeedbackPageWebsite.png)
 
-*feedback page for the user to input questions or suggestions*
+*Feedback page for the user to input questions or suggestions*
 
 ![image](/Images/MobileApp.png)
 
@@ -205,10 +210,12 @@ Another notable feature that will be implemented through the app is the ability 
 
 | Requirements | Quarters | Assigned to: |
 | --- | --- | --- |
-| Req. 1: General Documentation for the product | Q1 | Frank, Igor, Trong, Joseph|
-| Req. 2: prototyping the Followbot, mobile app, & website | Q2 | Frank, Igor, Trong, Joseph | 
-| Req. 3: polishing/refining the Followbot, mobile app, & website | Q3  |  Frank, Igor, Trong, Joseph  |   
-| Req. 4: Bug fixing, Security fixing, and polishing the Followbot, mobile app, & website | Q4  | Frank, Igor, Trong, Joseph |
+| Req. 1: General Documentation for the product and prototyping FollowBot | Q1 | Frank, Igor, Trong, Joseph|
+| Req. 2: Revising & Polishing General Documentation, Developing Website & modifying prototype with initial Following mechanics for testing purposes. And begin minor development on Mobile App. | Q2 | Frank, Igor, Trong, Joseph | 
+| Req. 3: polishing/refining the Followbot, Website & Continuing smooth development on the Mobile App. Researching and developing Machine Learning models for path-finding capabilities and object avoidance/detection.  As well as developing the Mapping system and refining the website. | Q3  |  Frank, Igor, Trong, Joseph  |   
+| Req. 4: Polishing and Refining Website/Mobile App, and improving security capabilities, Machine Learning models, mapping capabilities around Bellevue College, and polishing/improving FollowBot | Q4  | Frank, Igor, Trong, Joseph |
+| Future: We plan in the future to add facial recognition on the mobile app for easy access to their FollowBot profile page, Voice Recognition when you need to communicate with FollowBot, more polishing of the website and mobile app for better access and usage, and researching new ways to provie Open AI technology to all FollowBot devices. | Q5 | Frank, Igor, Trong, Joseph |
+
 
 | none-backlog User Stories | Millstone | Assigned to: |
 | --- | --- | --- |
