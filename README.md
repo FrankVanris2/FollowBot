@@ -8,3 +8,7 @@ This robot will consist of different phases:
 2. carrying mechanics, power efficiency. (Stage 2)
 3. pathfinding mechanics, power efficiency. (Stage 3)
 4. cost efficiency, balancing efficiency. (Stage 4)
+
+
+Hello world
+
