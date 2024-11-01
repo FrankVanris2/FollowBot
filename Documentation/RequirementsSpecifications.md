@@ -129,11 +129,21 @@ We plan to use reliable hardware that has proven effective in both major manufac
 
 ![image](/Images/FeedbackPageWebsite.png)
 
-*Feedback page for the user to input questions or suggestions*
+**Feedback page for the user to input questions or suggestions**
+
 
 ![image](/Images/MobileApp.png)
 
-*Mobile app that interfaces with the Followbot itself*
+**Mobile app that interfaces with the Followbot itself**
+
+![image](/Images/AuthenticationScreen.png)
+
+**Authentication screen within the FollowBot App**
+
+![image](/Images/mainDashboard.png)
+
+**Main Dashboard after logging in**
+
 
 **Homepage (Large Screen):**
 
