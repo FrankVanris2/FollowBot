@@ -112,38 +112,51 @@ We plan to use reliable hardware that has proven effective in both major manufac
 
 ![image](/Images/WebsiteFrontPage.png)
 
-**Home Page of website**
-* Within the Homepage of the website there are a range of tabs that the user can click on in order to read insightful information about FollowBot, it's mobile app, along with the developers that created it.
+***Home Page of website***
+* On the homepage of the website, users will find a series of tabs that provide insightful information about FollowBot, its mobile app, and the developers behind it. These tabs allow users to easily navigate and learn more about the project's various aspects.
 
 
 
 ![image](/Images/AboutUsPageWebsite.png)
 
-**About us page which will contain a bio and photos of the developers**
-* within one of the tabs, it will provide information about all the developers that worked on this project. You'll be able to scroll from top to bottom to read all about the development about FollowBot.
+***About us page which will contain a bio and photos of the developers***
+* One of the tabs will provide detailed information about all the developers who worked on this project. You can scroll from top to bottom to learn about the entire development process of FollowBot.
 
 ![image](/Images/VideoOfRobotPage.png)
 
-**Video of the Followbot and app in action**
-* Within one of the tabs of the website will include a video of FollowBot in action along with it's improvements and comparisons to another device. The tab will include background information about what makes FollowBot.
+***Video of the Followbot and app in action***
+* One of the tabs on the website will feature a video showcasing FollowBot in action, highlighting its improvements and comparing it to another device. This tab will also provide background information about what sets FollowBot apart.
 
 ![image](/Images/FeedbackPageWebsite.png)
 
-**Feedback page for the user to input questions or suggestions**
+***Feedback page for the user to input questions or suggestions***
+*  The "Feedback/Forums" tab will take you to the forums page, where users can find questions and answers about FollowBot. This section allows registered users to ask and respond to questions related to FollowBot, fostering a community of shared knowledge and support.
+
+* Users can create question requests using the top left text bubble icon. Various tags related to FollowBot’s hardware and software will be available to categorize these questions. Users can upvote or downvote questions and answers, similar to Stack Overflow or Reddit, fostering a community-driven feedback system.
 
 
 ![image](/Images/MobileApp.png)
 
-**Mobile app that interfaces with the Followbot itself**
+***Mobile app that interfaces with the Followbot itself***
+* The homepage of the mobile app will feature a welcoming screen prompting users to enter their username and password to sign in or create a FollowBot account if they don’t have one yet.
 
 ![image](/Images/AuthenticationScreen.png)
 
-**Authentication screen within the FollowBot App**
+***Authentication screen within the FollowBot App***
+* When you click the login button on the homepage, you will be directed to an authentication screen. Here, users can enter their username and password to sign in or create a new FollowBot account if they don’t already have one.
 
 ![image](/Images/mainDashboard.png)
 
-**Main Dashboard after logging in**
+***Main Dashboard after logging in***
+* Once logged into the FollowBot Mobile App, you will be greeted by the main dashboard. This screen features a 3D image of your FollowBot, along with icons displaying vital information: battery life, weight carried, current temperature, and distance between you and your FollowBot. 
 
+* In the top left corner of your screen, you'll see a gear icon representing the settings tab of the mobile app. Clicking it will present you with a variety of options, including dark mode or light mode settings and FollowBot user controls.
+
+* Near the bottom of the screen, there are three sets of buttons for the user to click. The notifications tab allows users to receive alerts from FollowBot whenever it needs assistance.
+
+* The news tab will provide users with exciting updates and news about FollowBot directly from the team.
+
+* The store tab will offer options for purchasing spare parts or upgrades that users might need in the future.
 
 **Homepage (Large Screen):**
 
@@ -221,10 +234,10 @@ Another notable feature that will be implemented through the app is the ability 
 | Requirements | Quarters | Assigned to: |
 | --- | --- | --- |
 | Req. 1: General Documentation for the product and prototyping FollowBot | Q1 | Frank, Igor, Trong, Joseph|
-| Req. 2: Revising & Polishing General Documentation, Developing Website & modifying prototype with initial Following mechanics for testing purposes. And begin minor development on Mobile App. | Q2 | Frank, Igor, Trong, Joseph | 
-| Req. 3: polishing/refining the Followbot, Website & Continuing smooth development on the Mobile App. Researching and developing Machine Learning models for path-finding capabilities and object avoidance/detection.  As well as developing the Mapping system and refining the website. | Q3  |  Frank, Igor, Trong, Joseph  |   
-| Req. 4: Polishing and Refining Website/Mobile App, and improving security capabilities, Machine Learning models, mapping capabilities around Bellevue College, and polishing/improving FollowBot | Q4  | Frank, Igor, Trong, Joseph |
-| Future: We plan in the future to add facial recognition on the mobile app for easy access to their FollowBot profile page, Voice Recognition when you need to communicate with FollowBot, more polishing of the website and mobile app for better access and usage, and researching new ways to provie Open AI technology to all FollowBot devices. | Q5 | Frank, Igor, Trong, Joseph |
+| Req. 2: Revising and polishing general documentation, developing the website, modifying the prototype with initial following mechanics for testing purposes, and beginning minor development on the mobile app. | Q2 | Frank, Igor, Trong, Joseph | 
+| Req. 3: Polishing and refining FollowBot and the website, continuing smooth development of the mobile app, and researching and developing machine learning models for pathfinding capabilities and object avoidance/detection. Also working on the mapping system and further refining the website. | Q3  |  Frank, Igor, Trong, Joseph  |   
+| Req. 4: Polishing and refining the website and mobile app, enhancing security capabilities, developing machine learning models, improving mapping capabilities around Bellevue College, and continuing to polish and improve FollowBot. | Q4  | Frank, Igor, Trong, Joseph |
+| Future: We plan to add facial recognition to the mobile app for easy access to FollowBot profile pages, implement voice recognition for seamless communication with FollowBot, further polish the website and mobile app for better user experience, and research innovative ways to integrate OpenAI technology into all FollowBot devices. | Q5 | Frank, Igor, Trong, Joseph |
 
 
 | none-backlog User Stories | Millstone | Assigned to: |
