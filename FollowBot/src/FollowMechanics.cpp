@@ -8,7 +8,6 @@ Desc: Creating follow mechanics between the user and the robot
 #include "FollowBotClient.h"
 #include "Motors.h"
 #include <list>
-#include "Arduino.h"
 
 
 // Interval
