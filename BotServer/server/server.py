@@ -50,10 +50,10 @@ def get_image_files(filename):
 def getMove():
     dir = getDirection()
     print(dir)
-    #response = make_response(dir)
-    #response.content_type = 'text/plain'
-    #return response
-    return dir
+    response = make_response(dir)
+    response.content_type = 'text/plain'
+    return response
+    #return dir
 
 @app.get("/api/getTempInfo")
 def getTemperatureInfo():

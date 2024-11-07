@@ -38,5 +38,8 @@ Infrared Sensors IR: $7.70
 Mecanum Wheel 48mm Omni Directional Electric: $15.79
 * https://www.amazon.com/gp/product/B0B6GLYLHZ/ref=ppx_yo_dt_b_asin_title_o01_s00?ie=UTF8&psc=1
 
+Raspberry Pi 4B 2GB RAM + Micro-HDMI + Official Raspberry Pi Case + Official Raspberry Pi power charger: $75.90
+* https://www.adafruit.com/product/4296
+
 
 <h3> Total Cost + Tax: $134.22 </h3>
