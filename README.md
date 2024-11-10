@@ -3,10 +3,10 @@
 
 This robot will consist of different phases:
 
-1. following mechanics, sensor intel. (Stage 1)
-2. carrying mechanics, power efficiency. (Stage 2)
-3. pathfinding mechanics, power efficiency. (Stage 3)
-4. cost efficiency, balancing efficiency. (Stage 4)
+1. Following mechanics, sensor intel. (Stage 1)
+2. Carrying mechanics, power efficiency. (Stage 2)
+3. Pathfinding mechanics, power efficiency. (Stage 3)
+4. Cost efficiency, balancing efficiency. (Stage 4)
 
 ## Table of Contents
  - [Introduction](#introduction)
@@ -22,7 +22,6 @@ This robot will consist of different phases:
 Followbot is a companion robot that follows you around. The goal for this project is to build a low cost robot that can carry you belongings for you. Currently Followbot is useful within school/city settings. Future endeavors include developing the capability for Followbot to traverse uneven terrain such as dirt of gravel
 
 ## Features
-List the key features of your project. Use bullet points for clarity.
 - Follow the user 
 - Carry up to 50 lbs
 - Companion app and website to monitor and control robot remotely
@@ -35,19 +34,67 @@ On the software side we are utilizing the Arduino Uno Rev4 in order to send and 
 In terms of project success, our primary focus will be on systematic organization and incremental prototyping. We plan to develop a prototype during the first quarter and progressively refine it. Our goal is to deliver a practical and beneficial product for any consumer seeking a Followbot to carry their belongings or allow the Followbot to go to designated places.
 
 ### Example Code:
-`python code`
+
+
 # Code snippet or example to showcase design principles
 
-Installation
+##Installation
+
 Provide instructions on how to install your project. Include any dependencies or
 prerequisites.
 
-# Installation steps
-$ git clone https://github.com/FrankVanris2/FollowBot.git
-$ cd your-repo
-$ npm install # or any other relevant command
 
-Configuration
+### Prequisites
+Flask for server stuff
+
+#### Installation steps
+
+Cloning our repo
+```sh
+$ git clone https://github.com/FrankVanris2/FollowBot.git
+```
+Installing Flask
+```sh
+pip install Flask
+pip install -U flask-cors
+```
+
+Installing npm
+```sh
+npm i -g npm
+npm install @mui/icons-material
+
+
+# Build
+npm run build
+
+# Run
+
+npm run start
+
+# In the browser use url: http://xx.xx.xx.xx:5000
+# Where xx.xx.xx.xx is shown in the server command window
+
+# Develop
+
+Two cmd windows:
+
+- First window (for javascript browser development):
+
+`npm run watch`
+
+- Second window (for python server development):
+
+`npm run startdebug`
+
+In the browser use url: http://localhost:3000/
+
+When finished adding changes please run clean:
+
+`npm run clean`
+```
+
+Further Configuration
 Explain how users can configure your project. If applicable, include details about
 configuration files.
 
