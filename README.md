@@ -14,7 +14,6 @@ This robot will consist of different phases:
  - [Design Details](#design-details)
  - [Installation](#installation)
  - [Configuration](#configuration)
- - [Usage](#usage)
  - [Contributing](#contributing)
  - [License](#license)
 
@@ -29,29 +28,22 @@ Followbot is a companion robot that follows you around. The goal for this projec
 ## Design Details
 The construction of the Followbot presents a significant challenge, given the intricate engineering required to create a device capable of carrying and autonomously following a user. The hardware components and their assembly will demand meticulous attention and precision.
 
-On the software side we are utilizing the Arduino Uno Rev4 in order to send and do important tasks for the user. We will be developing a webpage and a app with valuabe information for the user to use when needed. Mapping capabilities and path-finding algorithms will be applied to the Followbot in order to avoid obstacles while following a designated path to a specific location. Computer vision techniques will be used to allow the Followbot to follow the user if needed in order for it to carry their belongings. Sensors such as Lidar, RGB etc. will come with software that will allow us to really improve the machine learning models that we will apply.
+On the software side we are utilizing the Arduino Uno Rev4 in order to send and do important tasks for the user. We will be developing a webpage and a app with valuabe information for the user to use when needed. Mapping capabilities and path-finding algorithms will be applied to the Followbot in order to avoid obstacles while following a designated path to a specific location. Computer vision techniques will be used to allow the Followbot to follow the user if needed in order for it to carry their belongings. Sensors such as LiDAR, RGB etc. will come with software that will allow us to really improve the machine learning models that we will apply.
 
 In terms of project success, our primary focus will be on systematic organization and incremental prototyping. We plan to develop a prototype during the first quarter and progressively refine it. Our goal is to deliver a practical and beneficial product for any consumer seeking a Followbot to carry their belongings or allow the Followbot to go to designated places.
 
-### Example Code:
 
-
-# Code snippet or example to showcase design principles
-
-##Installation
-
-Provide instructions on how to install your project. Include any dependencies or
-prerequisites.
-
+## Installation
 
 ### Prequisites
 Flask for server stuff
+Platform.io for hardware stuff
 
 #### Installation steps
 
 Cloning our repo
 ```sh
-$ git clone https://github.com/FrankVanris2/FollowBot.git
+git clone https://github.com/FrankVanris2/FollowBot.git
 ```
 Installing Flask
 ```sh
@@ -74,45 +66,89 @@ npm run start
 
 # In the browser use url: http://xx.xx.xx.xx:5000
 # Where xx.xx.xx.xx is shown in the server command window
-
-# Develop
+```
+#### Develop
 
 Two cmd windows:
 
 - First window (for javascript browser development):
 
-`npm run watch`
+```sh 
+npm run watch
+```
 
 - Second window (for python server development):
 
-`npm run startdebug`
+```sh
+npm run startdebug
+```
 
 In the browser use url: http://localhost:3000/
 
 When finished adding changes please run clean:
-
-`npm run clean`
+```sh
+npm run clean
 ```
 
-Further Configuration
-Explain how users can configure your project. If applicable, include details about
-configuration files.
+ 
+### Running Unit Tests with PlatformIO
 
-Example Configuration:
-# Configuration file example
-key: value
+To ensure your unit tests and source code run correctly, follow these steps:
 
-Usage
-Provide examples and instructions on how users can use your project. Include code
-snippets or command-line examples.
-Example Usage:
-# Example command or usage
+### Configuration
 
-Contributing
-We are a small team of college students, any help is appreciated! 
+**1. Add the Native Environment for Unit Testing:** In your `platformio.ini` file, include a `[env: native]` section for running Unity tests.:
 
-License
-Copyright <2024> <Trong Duong Joeseph Hoang Igor Janotti Frank Vanris>
+```ini
+[env:native]
+platform = native
+test_framework = unity
+```
+
+**2. Ensure Your Hardware Environment is Configured:** Include  the relevant hardware environment configuration, such as `uno-r4_wifi`, in your platformio.ini` file.
+
+```ini
+[env:uno_r4_wifi] 
+platform = renesas-ra 
+board = uno_r4_wifi 
+framework = arduino 
+lib_deps = 
+    adafruit/Adafruit Motor Shield V2 Library@^1.1.3 
+    SPI adafruit/DHT sensor library@^1.4.6 
+    adafruit/Adafruit Unified Sensor@^1.1.14 
+    bblanchon/ArduinoJson@^7.1.0 
+    TFT_eSPI 
+    openagriculturefoundation/rosserial_arduino@0.0.0-alpha+sha.1834b766b0 
+    throwtheswitch/Unity@^2.6.0
+```
+
+### Running the Tests
+
+**1. Run Unit Tests:** To run your unit tests with the native environment, use the following command:
+
+```sh
+pio test -e native
+```
+
+**2. Compile and Upload Source Code:** To compile and upload your source code for the specified hardware environment, use:
+
+```sh
+pio run -e uno_r4_wifi
+```
+
+Following these instructions will help ensure your unit tests and source code are handled in the correct environments.
+
+
+## Contributing
+We are a small team of college students, any help is appreciated! You can clone the repository on GitHub and submit a pull request.
+```sh
+git clone https://github.com/FrankVanris2/FollowBot.git
+```
+
+## License
+MIT License 
+
+Copyright (c) 2024 Trong Duong, Joeseph Hoang, Igor Janotti, Frank Vanris
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files ("Followbot") to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
