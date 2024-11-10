@@ -32,7 +32,7 @@ Last Modified: 11/9/2024<br><br></h2>
 * *Developing a complex security system for the FollowBot, such as encryption or two-factor authorization.*<br>
 * *The mobile app should be cross-platform between all mobile devices*.<br>
 * *Battery life for the FollowBot should be above 8 hours of life and the device must be rechargeable.*<br>
-* *Cost of product must be at most under $500 and at best under $300.*<br>
+* *Cost of product must be at most under \$500 and at best under \$300.*<br>
 
 <br>
 
@@ -46,9 +46,9 @@ Last Modified: 11/9/2024<br><br></h2>
 Here are the given links to certain documents and websites that will guide us for making the hardware & software:<br><br>
 links:<br><br>
 **Hardware**:<br>
-* https://forum.arduino.cc/t/Followbot-following-one-specific-human/182826/6 (Followbot following questionaire)
+* https://forum.arduino.cc/t/Followbot-following-one-specific-human/182826/6 (FollowBot following questionnaire)
 * https://shorturl.at/YFixs (L293D Motor driver datasheet)
-* https://5.imimg.com/data5/PX/UK/MY-1833510/l293d-based-arduino-motor-shield.pdf (L293D based motorshield)
+* https://5.imimg.com/data5/PX/UK/MY-1833510/l293d-based-arduino-motor-shield.pdf (L293D based motor shield)
 * https://www.wevolver.com/article/sensors-in-robotics (sensory intel)
 * https://en.wikipedia.org/wiki/Lidar (Lidar sensors)
 * https://shorturl.at/MdsLB (How to choose the right battery for your robotics system?)
@@ -63,7 +63,7 @@ links:<br><br>
 
 * https://pmc.ncbi.nlm.nih.gov/articles/PMC7436166/ (SRRI)
 * https://www.swri.org/industry/industrial-robotics-automation/blog/web-based-Followbot-user-interface (webpage interface between robotics)
-* https://www.jetbrains.com/help/kotlin-multiplatform-dev/cross-platform-frameworks.html (cross platform frameworks)
+* https://www.jetbrains.com/help/kotlin-multiplatform-dev/cross-platform-frameworks.html (cross-platform frameworks)
 * https://tinyurl.com/3stbh3s6 (Security & Authentications)
 * https://daylightstrategy.com/ga4service/?gad_source=1&gclid=Cj0KCQjwzva1BhD3ARIsADQuPnU6rwu4H3Qc2IQ3Jj3uZGuMOJurd5xP66cfLx0qRI_F3QYRlXfNR4QaAn_IEALw_wcB (Google Analytics services)
 
