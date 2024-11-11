@@ -303,47 +303,11 @@ We plan to use reliable hardware that has proven effective in both major manufac
 * If the connection is successful you will be met with a friendly screen saying you are connected. You will be allowed to be go back to the login page if you wish.
 * If the connection isn't successful you will be met with a sad screen saying that you could not connect to the Network. You will be able to direct back to the login page so you can try again.
 
-***Main Dashboard after logging in***
-* Once logged into the FollowBot Mobile App, you will be greeted by the main dashboard. This screen features a 3D image of your FollowBot, along with icons displaying vital information: battery life, weight carried, current temperature, and distance between you and your FollowBot. 
+**Business Capabilities**
 
-* In the top left corner of your screen, you'll see a gear icon representing the settings tab of the mobile app. Clicking it will present you with a variety of options, including dark mode or light mode settings and FollowBot user controls.
+Businesses will be able to register as an admin for their corporation, enabling them to control multiple FollowBots. As an admin, additional authentication will be required. The (yes & no) placeholder is for us to discuss and finalize the authentication design for admins.
 
-* Near the bottom of the screen, there are three sets of buttons for the user to click. The notifications tab allows users to receive alerts from FollowBot whenever it needs assistance.
-
-* The news tab will provide users with exciting updates and news about FollowBot directly from the team.
-
-* The store tab will offer options for purchasing spare parts or upgrades that users might need in the future.
-
-**Homepage (Large Screen):**
-
-The homepage will prominently feature the product logo in the top left corner. The product’s name and image will be centrally displayed, serving as the focal point of the webpage. Navigation tabs at the top will provide easy access to specific product information that users are likely to seek. A summary positioned near the bottom, just below the FollowBot’s image, will succinctly convey the product’s primary function and its global applicability to all consumers.
-
-The website’s design will reflect the product’s branding, incorporating elements such as the logo, color scheme, and visual identity. Specific elements will highlight our robotic product. The layout will be optimized for a cohesive and visually appealing user experience across various device screen sizes.
-
-A section of the website will consist of discussion pages that will provide guides and support that will be essential for helping those who have questions or are in need of assistance with the Followbot they have on hand.
-
-The webpage on hand will have some form of minor interaction with the Followbot. The interaction will be a form of movemental patterns. We plan on adding 2 specific interactions.
-
-1. Moving in a circle while avoiding obstacles
-2. Allowing the user to control the FollowBots movement
-
-The user will also be allowed to sign into his account when on the website, and will be able to see their purchases as well as their discussions that they have been in or created. They will as well be notified for future updates about the product in general.
-
-**Mobile App:**
-
-The mobile app, available for free on all major mobile app stores (including Apple and Android), will provide users with vital information about the Followbot. Upon opening the app, users will be greeted with an iconic image of an animated Followbot, followed by an authentication screen.
-
-If the user does not currently have an account, they will need to create one and input their FollowBot’s authentication key. (Every Followbot has a unique key that is different from another). Once they complete the authentication, the mobile app will present them with a 3D model of the Followbot they currently have on hand.
-
-The top right corner will display a battery life indicator, while the top left corner will show the FollowBot’s internal temperature. Positioned centrally at the bottom, just below the 3D model, an indicator will display the FollowBot’s current carrying capacity, informing users of the weight the Followbot is presently carrying. Keep noted that this is all real time data.
-
-The mobile app will also be able to send the user notifications based on whether the health of the Followbot is stable, if the Followbot is able to track the user, or if certain components of the Followbot are outdated and in need of repair.
-
-The mobile app will consist of a mapping feature where you will be able to map your FollowBot to a specific location or direct it back to your location if it's at another place.
-
-When it comes to FollowBot Control, There will be a difference between a regular user and a admin user. A admin user will be allowed to take into control many FollowBots. A Regular user can only control one FollowBot. As an Admin you will be allowed to share FollowBot with other users who are in need for a limited amount of time.
-
-Another notable feature that will be implemented through the app is the ability to control the Followbot. This will be meant for correcting it's position towards the user, playing with the Followbot, or just for testing purposes.
+As an admin, you will have the ability to share your FollowBot with other users or students in need for a limited period. HOWEVER, due to the increased server usage for retrieving data from multiple FollowBots, admins will need to sign up for a monthly subscription to use our services when managing multiple FollowBots.
 
 **3.2 Functional Requirements**<br>
 * Mapping mechanics for the FollowBot to go to specific locations around the registered campus.
