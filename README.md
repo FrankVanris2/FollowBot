@@ -35,9 +35,8 @@ On the software side we are utilizing the Arduino Uno Rev4 in order to send and 
 
 In terms of project success, our primary focus will be on systematic organization and incremental prototyping. We plan to develop a prototype during the first quarter and progressively refine it. Our goal is to deliver a practical and beneficial product for any consumer seeking a Followbot to carry their belongings or allow the Followbot to go to designated places.
 
-### Example Code:
-`python code`
-# Code snippet or example to showcase design principles
+### Our FollowBot Architecture
+(We will not show case code snippets, we will showcase an architecture)
 
 **Important:** When it comes to FollowBot there are a number of steps you will need to do in order to start working on the project. The Below will guide you in developing and working closely with FollowBot.
 
@@ -70,32 +69,38 @@ Developing on the front-end requires to set up the server side. And it's quite e
 
 * In your command prompt go to the `BotServer` directory
 * Once in the directory you must run these pip commands:
-
   ```cmd
   pip install Flask
   pip install -U flask-cors
   ```
-* Once those two things are installed and hopefully you have npm installed you will need to do the next following commands:
 
+* Once those two things are installed and hopefully you have npm installed you will need to do the next following commands:
 ```cmd
 npm i
 npm i -g npm
 npm install @mui/icons-material
 ```
-
 * Now after these above steps you are ready to build the front-end and back-end
-
 ```cmd
 npm run build
 ```
 * After the build run the server
-
 ```cmd
 npm run start
 ```
 * In your browser be sure to use this url: `http://xx.xx.xx.xx:5000`
 * the xx.xx.xx.xx is showed in the server command window.
 
+## Robotic-end
+The robotic side of our project is the most fascinating aspect, and the setup process is relatively straightforward. However, things will change when we start migrating our software and development to a Raspberry Pi 4-5 with ROS2. You will be notified as a developer when we transition from standalone robotic development to publisher-subscriber development.
+
+The README will be updated once we have a full understanding of the migration process. For now, please follow the steps below to set up your environment correctly to run, test, and develop our programs:
+
+* If you have not already please download VSCode with the PlatformIO extension in order for you to develop on the Robotic side.
+* Within the PlatformIO homepage there are 4 side buttons that you will be allowed to click on. Please click on the `Open Project` Button
+* When you do so please go where you placed your repo and you will need to open this folder: `FollowBot->FollowBot`
+* After you do so you will see all of the files that we have made for the development of FollowBot.
+* To run it you will need to press the blue checkmark icon on the bottom of the screen
 Example Configuration:
 # Configuration file example
 key: value
