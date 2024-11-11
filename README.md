@@ -23,7 +23,8 @@ Followbot is a companion robot that follows you around. The goal for this projec
 
 ## Features
 List the key features of your project. Use bullet points for clarity.
-- Follow the user 
+- Follow the user
+- Map through different locations in Bellevue College
 - Carry up to 50 lbs
 - Companion app and website to monitor and control robot remotely
 
@@ -38,18 +39,62 @@ In terms of project success, our primary focus will be on systematic organizatio
 `python code`
 # Code snippet or example to showcase design principles
 
-Installation
-Provide instructions on how to install your project. Include any dependencies or
-prerequisites.
+**Important:** When it comes to FollowBot there are a number of steps you will need to do in order to start working on the project. The Below will guide you in developing and working closely with FollowBot.
 
 # Installation steps
-$ git clone https://github.com/FrankVanris2/FollowBot.git
-$ cd your-repo
-$ npm install # or any other relevant command
+Before you clone your repo you will need to first download vscode. The reason being is because when developing on the Robotics side There is a nice extension that is not found in any other IDE's. To make your life
+easier and for you to not try and configure PlatformIO on another IDE with hassle. I would absolutely advise you to download VSCode.
 
-Configuration
-Explain how users can configure your project. If applicable, include details about
-configuration files.
+**VSCode:** https://code.visualstudio.com/download
+
+After you have installed VSCode you will need to follow the below step to get the PlatformIO extension:
+
+* In VSCode click the extensions icon.
+* Look up **PlatformIO IDE**
+* Install it
+
+After VSCode with the PlatformIO extension has been installed we can now git clone the repo.
+
+$ git clone https://github.com/FrankVanris2/FollowBot.git
+
+If you are using GitHub Desktop your life will be a bit easier. We will mainly be using Git commands when interacting with the AWS server. 
+You are free to use git commands when using the repo for pushing, pulling, committing, etc.
+
+If you wish to make your life easier however, please download GitHub Desktop:
+https://desktop.github.com/download/
+
+# Configuration for Front-end, Back-end, and Robotic-end
+
+## Front-end & Back-end
+Developing on the front-end requires to set up the server side. And it's quite easy.
+
+* In your command prompt go to the `BotServer` directory
+* Once in the directory you must run these pip commands:
+
+  ```cmd
+  pip install Flask
+  pip install -U flask-cors
+  ```
+* Once those two things are installed and hopefully you have npm installed you will need to do the next following commands:
+
+```cmd
+npm i
+npm i -g npm
+npm install @mui/icons-material
+```
+
+* Now after these above steps you are ready to build the front-end and back-end
+
+```cmd
+npm run build
+```
+* After the build run the server
+
+```cmd
+npm run start
+```
+* In your browser be sure to use this url: `http://xx.xx.xx.xx:5000`
+* the xx.xx.xx.xx is showed in the server command window.
 
 Example Configuration:
 # Configuration file example
