@@ -13,8 +13,7 @@ This robot will consist of different phases:
  - [Features](#features)
  - [Design Details](#design-details)
  - [Installation](#installation)
- - [Configuration](#configuration)
- - [Usage](#usage)
+ - [Configuration & Usage](#configuration--usage)
  - [Contributing](#contributing)
  - [License](#license)
 
@@ -40,7 +39,9 @@ In terms of project success, our primary focus will be on systematic organizatio
 
 **Important:** When it comes to FollowBot there are a number of steps you will need to do in order to start working on the project. The Below will guide you in developing and working closely with FollowBot.
 
-# Installation steps
+# Installation
+
+## Installation Steps
 Before you clone your repo you will need to first download vscode. The reason being is because when developing on the Robotics side There is a nice extension that is not found in any other IDE's. To make your life
 easier and for you to not try and configure PlatformIO on another IDE with hassle. I would absolutely advise you to download VSCode.
 
@@ -49,8 +50,16 @@ easier and for you to not try and configure PlatformIO on another IDE with hassl
 After you have installed VSCode you will need to follow the below step to get the PlatformIO extension:
 
 * In VSCode click the extensions icon.
+
+![image](/Images/readMe_images/Extensions.png)
+
 * Look up **PlatformIO IDE**
+
+![image](/Images/readMe_images/PlatformIO.png)
+
 * Install it
+
+![image](/Images/readMe_images/Install.png)
 
 After VSCode with the PlatformIO extension has been installed we can now git clone the repo.
 
@@ -62,7 +71,7 @@ You are free to use git commands when using the repo for pushing, pulling, commi
 If you wish to make your life easier however, please download GitHub Desktop:
 https://desktop.github.com/download/
 
-# Configuration for Front-end, Back-end, and Robotic-end
+# Configuration & Usage
 
 ## Front-end & Back-end
 Developing on the front-end requires to set up the server side. And it's quite easy.
@@ -98,20 +107,41 @@ The README will be updated once we have a full understanding of the migration pr
 
 * If you have not already please download VSCode with the PlatformIO extension in order for you to develop on the Robotic side.
 * Within the PlatformIO homepage there are 4 side buttons that you will be allowed to click on. Please click on the `Open Project` Button
+
+![image](/Images/readMe_images/OpenProj.png)
+
 * When you do so please go where you placed your repo and you will need to open this folder: `FollowBot->FollowBot`
+
+![image](/Images/readMe_images/DirProject.png)
+
 * After you do so you will see all of the files that we have made for the development of FollowBot.
 * To run it you will need to press the blue checkmark icon on the bottom of the screen
-Example Configuration:
-# Configuration file example
-key: value
 
-Usage
-Provide examples and instructions on how users can use your project. Include code
-snippets or command-line examples.
-Example Usage:
-# Example command or usage
+![image](/Images/readMe_images/Compile.png)
 
-Contributing
+* To push and build the code on the Arduino board or any Microcontroller that is applicable press the arrow icon on the bottom of the screen
+
+![image](/Images/readMe_images/push_build.png)
+
+* When you are programming on the device, sometimes you will want to print something to the Serial port. Click the plug icon to open the Serial Monitor.
+
+![image](/Images/readMe_images/SerialMonitor.png)
+
+* When you need to input PlatformIO specific commands, you will need to open the IO terminal. The icon is a small cmd screen.
+
+![image](/Images/readMe_images/IOMonitor.png)
+
+
+**ROS2 With Raspberry Pi**
+
+*Currently in the works for Migration, steps in usage will be added later.*
+
+## Other Documentation:
+
+Within the Repo there is a directory called `Documentation` Most of the documentation is around the requirements and the design of our Project. But there is specific docs that I recommend you guys reading up on. Please read the `RunningUnitTestsPlatformIO` documentation, `JestUnitTesting` Documentation, And for future references the `ROS2_Important_Commands` Documentation.
+
+## Contributing
+
 We are a small team of college students, any help is appreciated! 
 
 License
