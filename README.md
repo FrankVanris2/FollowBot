@@ -3,10 +3,10 @@
 
 This robot will consist of different phases:
 
-1. following mechanics, sensor intel. (Stage 1)
-2. carrying mechanics, power efficiency. (Stage 2)
-3. pathfinding mechanics, power efficiency. (Stage 3)
-4. cost efficiency, balancing efficiency. (Stage 4)
+1. Following mechanics, sensor intel. (Stage 1)
+2. Carrying mechanics, power efficiency. (Stage 2)
+3. Pathfinding mechanics, power efficiency. (Stage 3)
+4. Cost efficiency, balancing efficiency. (Stage 4)
 
 ## Table of Contents
  - [Introduction](#introduction)
@@ -14,7 +14,6 @@ This robot will consist of different phases:
  - [Design Details](#design-details)
  - [Installation](#installation)
  - [Configuration](#configuration)
- - [Usage](#usage)
  - [Contributing](#contributing)
  - [License](#license)
 
@@ -22,100 +21,116 @@ This robot will consist of different phases:
 Followbot is a companion robot that follows you around. The goal for this project is to build a low cost robot that can carry you belongings for you. Currently Followbot is useful within school/city settings. Future endeavors include developing the capability for Followbot to traverse uneven terrain such as dirt of gravel
 
 ## Features
-List the key features of your project. Use bullet points for clarity.
-- Follow the user
-- Map through different locations in Bellevue College
 - Carry up to 50 lbs
 - Companion app and website to monitor and control robot remotely
 
 ## Design Details
 The construction of the Followbot presents a significant challenge, given the intricate engineering required to create a device capable of carrying and autonomously following a user. The hardware components and their assembly will demand meticulous attention and precision.
 
-On the software side we are utilizing the Arduino Uno Rev4 in order to send and do important tasks for the user. We will be developing a webpage and a app with valuabe information for the user to use when needed. Mapping capabilities and path-finding algorithms will be applied to the Followbot in order to avoid obstacles while following a designated path to a specific location. Computer vision techniques will be used to allow the Followbot to follow the user if needed in order for it to carry their belongings. Sensors such as Lidar, RGB etc. will come with software that will allow us to really improve the machine learning models that we will apply.
+On the software side we are utilizing the Arduino Uno Rev4 in order to send and do important tasks for the user. We will be developing a webpage and a app with valuabe information for the user to use when needed. Mapping capabilities and path-finding algorithms will be applied to the Followbot in order to avoid obstacles while following a designated path to a specific location. Computer vision techniques will be used to allow the Followbot to follow the user if needed in order for it to carry their belongings. Sensors such as LiDAR, RGB etc. will come with software that will allow us to really improve the machine learning models that we will apply.
 
 In terms of project success, our primary focus will be on systematic organization and incremental prototyping. We plan to develop a prototype during the first quarter and progressively refine it. Our goal is to deliver a practical and beneficial product for any consumer seeking a Followbot to carry their belongings or allow the Followbot to go to designated places.
 
-### Our FollowBot Architecture
-(We will not show case code snippets, we will showcase an architecture)
 
-**Important:** When it comes to FollowBot there are a number of steps you will need to do in order to start working on the project. The Below will guide you in developing and working closely with FollowBot.
 
-# Installation steps
-Before you clone your repo you will need to first download vscode. The reason being is because when developing on the Robotics side There is a nice extension that is not found in any other IDE's. To make your life
-easier and for you to not try and configure PlatformIO on another IDE with hassle. I would absolutely advise you to download VSCode.
-
-**VSCode:** https://code.visualstudio.com/download
-
-After you have installed VSCode you will need to follow the below step to get the PlatformIO extension:
-
-* In VSCode click the extensions icon.
-* Look up **PlatformIO IDE**
-* Install it
-
-After VSCode with the PlatformIO extension has been installed we can now git clone the repo.
-
-$ git clone https://github.com/FrankVanris2/FollowBot.git
-
-If you are using GitHub Desktop your life will be a bit easier. We will mainly be using Git commands when interacting with the AWS server. 
-You are free to use git commands when using the repo for pushing, pulling, committing, etc.
-
-If you wish to make your life easier however, please download GitHub Desktop:
-https://desktop.github.com/download/
-
-# Configuration for Front-end, Back-end, and Robotic-end
-
-## Front-end & Back-end
-Developing on the front-end requires to set up the server side. And it's quite easy.
-
-* In your command prompt go to the `BotServer` directory
-* Once in the directory you must run these pip commands:
-  ```cmd
-  pip install Flask
-  pip install -U flask-cors
-  ```
-
-* Once those two things are installed and hopefully you have npm installed you will need to do the next following commands:
-```cmd
-npm i
+Installing npm
+```sh
 npm i -g npm
 npm install @mui/icons-material
-```
-* Now after these above steps you are ready to build the front-end and back-end
-```cmd
+
+
+# Build
 npm run build
-```
-* After the build run the server
-```cmd
+
+# Run
+
 npm run start
+
+# In the browser use url: http://xx.xx.xx.xx:5000
+# Where xx.xx.xx.xx is shown in the server command window
 ```
-* In your browser be sure to use this url: `http://xx.xx.xx.xx:5000`
-* the xx.xx.xx.xx is showed in the server command window.
+#### Develop
 
-## Robotic-end
-The robotic side of our project is the most fascinating aspect, and the setup process is relatively straightforward. However, things will change when we start migrating our software and development to a Raspberry Pi 4-5 with ROS2. You will be notified as a developer when we transition from standalone robotic development to publisher-subscriber development.
+Two cmd windows:
 
-The README will be updated once we have a full understanding of the migration process. For now, please follow the steps below to set up your environment correctly to run, test, and develop our programs:
+- First window (for javascript browser development):
 
-* If you have not already please download VSCode with the PlatformIO extension in order for you to develop on the Robotic side.
-* Within the PlatformIO homepage there are 4 side buttons that you will be allowed to click on. Please click on the `Open Project` Button
-* When you do so please go where you placed your repo and you will need to open this folder: `FollowBot->FollowBot`
-* After you do so you will see all of the files that we have made for the development of FollowBot.
-* To run it you will need to press the blue checkmark icon on the bottom of the screen
-Example Configuration:
-# Configuration file example
-key: value
+```sh 
+npm run watch
+```
 
-Usage
-Provide examples and instructions on how users can use your project. Include code
-snippets or command-line examples.
-Example Usage:
-# Example command or usage
+- Second window (for python server development):
 
-Contributing
-We are a small team of college students, any help is appreciated! 
+```sh
+npm run startdebug
+```
 
-License
-Copyright <2024> <Trong Duong Joeseph Hoang Igor Janotti Frank Vanris>
+In the browser use url: http://localhost:3000/
+
+When finished adding changes please run clean:
+```sh
+npm run clean
+```
+
+ 
+### Running Unit Tests with PlatformIO
+
+To ensure your unit tests and source code run correctly, follow these steps:
+
+### Configuration
+
+**1. Add the Native Environment for Unit Testing:** In your `platformio.ini` file, include a `[env: native]` section for running Unity tests.:
+
+```ini
+[env:native]
+platform = native
+test_framework = unity
+```
+
+**2. Ensure Your Hardware Environment is Configured:** Include  the relevant hardware environment configuration, such as `uno-r4_wifi`, in your platformio.ini` file.
+
+```ini
+[env:uno_r4_wifi] 
+platform = renesas-ra 
+board = uno_r4_wifi 
+framework = arduino 
+lib_deps = 
+    adafruit/Adafruit Motor Shield V2 Library@^1.1.3 
+    SPI adafruit/DHT sensor library@^1.4.6 
+    adafruit/Adafruit Unified Sensor@^1.1.14 
+    bblanchon/ArduinoJson@^7.1.0 
+    TFT_eSPI 
+    openagriculturefoundation/rosserial_arduino@0.0.0-alpha+sha.1834b766b0 
+    throwtheswitch/Unity@^2.6.0
+```
+
+### Running the Tests
+
+**1. Run Unit Tests:** To run your unit tests with the native environment, use the following command:
+
+```sh
+pio test -e native
+```
+
+**2. Compile and Upload Source Code:** To compile and upload your source code for the specified hardware environment, use:
+
+```sh
+pio run -e uno_r4_wifi
+```
+
+Following these instructions will help ensure your unit tests and source code are handled in the correct environments.
+
+
+## Contributing
+We are a small team of college students, any help is appreciated! You can clone the repository on GitHub and submit a pull request.
+```sh
+git clone https://github.com/FrankVanris2/FollowBot.git
+```
+
+## License
+MIT License 
+
+Copyright (c) 2024 Trong Duong, Joeseph Hoang, Igor Janotti, Frank Vanris
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files ("Followbot") to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
