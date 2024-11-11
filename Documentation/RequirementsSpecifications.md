@@ -116,154 +116,154 @@ We plan to use reliable hardware that has proven effective in both major manufac
 <h3> Website UI </h3>
 
 
-![image](/Images/HomeScreen.png)
+![image](/Images/website/HomeScreen.png)
 
 ***Home Screen of website***
 * On the homepage of the website, users will find a series of tabs that provide insightful information about FollowBot, its mobile app, and the developers behind it. These tabs allow users to easily navigate and learn more about the project's various aspects.
 
 <br>
 
-![image](/Images/AboutUsPageScreen.png)
+![image](/Images/website/AboutUsPageScreen.png)
 
 ***About us page which will contain a bio and photos of the developers***
 * One of the tabs will provide detailed information about all the developers who worked on this project. You can scroll from top to bottom to learn about the entire development process of FollowBot.
 
 <br>
 
-![image](/Images/AboutMobileAppScreen.png)
+![image](/Images/website/AboutMobileAppScreen.png)
 
 ***The About Mobile App page explains how the mobile app interacts with FollowBot***
 * A Tab that contains insightful information about the mobile app
 <br>
 
-![image](/Images/AboutFollowBotScreen.png)
+![image](/Images/website/AboutFollowBotScreen.png)
 
 ***The About FollowBot page***
 * It contains information on everything about FollowBot such as it's specs and it's purpose.
 <br>
 
-![image](/Images/NewsScreen.png)
+![image](/Images/website/NewsScreen.png)
 
 ***The News page***
 * It will contain updates in what the team has been working on 
 <br>
 
-![image](/Images/NewsArticleScreen.png)
+![image](/Images/website/NewsArticleScreen.png)
 
 ***News Article page***
 * When clicking on a news article you will be brought to another page where you can read the news.
 <br>
 
-![image](/Images/ForumsScreen.png)
+![image](/Images/website/ForumsScreen.png)
 
 ***Forums page***
 * When clicking on the Forums Tab you will see a lot of posts and categories of posts that you can click on to obtain answers to questions that you may have had.
 * The Forums page will also allow you to upvote or downvote posts as well as reply to posts if you have an account.
 <br>
 
-![image](/Images/LoginScreen.png)
+![image](/Images/website/LoginScreen.png)
 
 ***Login screen***
 * When clicking the login button you will be met with a slide in screen where you will need to input your username and password.
 * If you do not have an account you will be able to sign up.
 <br>
 
-![image](/Images/SignUpScreen.png)
+![image](/Images/website/SignUpScreen.png)
 
 ***Sign Up page***
 * When you click on the sign up option you'll be met with another page where you'll need to input your first/last name, your username, and your password.
 * Once you do that you'll need to click next.
 <br>
 
-![image](/Images/FollowBotKeySignUpScreen.png)
+![image](/Images/website/FollowBotKeySignUpScreen.png)
 
 ***Sign Up Private Key Page***
 * When you click next you will be met with another page to input your FollowBots Private Key if you have one. If you do not have one you can click Finish and you will have your account set up without any FollowBot on your account.
 * If you have more than one FollowBot you can input as many private keys as you like.
 <br>
 
-![image](/Images/UserLoggedInScreen.png)
+![image](/Images/website/UserLoggedInScreen.png)
 
 ***Logged In Screen***
 * When you are logged in you will be brought back to the homepage where you will see that you are signed in.
 * When clicking your name you will be met with a drop down bar of certain mini tabs that you can click on ranging from your posts to you logging out.
 <br>
 
-![image](/Images/UserProfileScreen.png)
+![image](/Images/website/UserProfileScreen.png)
 
 ***User Profile Page***
 * When clicking on the User profile Icon, you will be brought to your user profile where you can check your everything that is related to your FollowBot (If you have one).
 <br>
 
-![image](/Images/AnalyticsScreen.png)
+![image](/Images/website/AnalyticsScreen.png)
 
 ***Analytics Page***
 * When you click on the analytics button, you will be met with everything analytics wise to your FollowBot.
 <br>
 
-![image](/Images/ControlsScreen.png)
+![image](/Images/website/ControlsScreen.png)
 
 ***Controls Page***
 * When you click on the Robotic Controls button, you will be met with a screen where you can Control your FollowBot if you are connected to it, as well as receive a live feed of what the FollowBot is visually seeing.
 <br>
 
-![image](/Images/MappingScreen.png)
+![image](/Images/website/MappingScreen.png)
 
 ***Mapping Page***
 * When you click on the Mapping button, you will be met with a screen of the Bellevue College campus. The Mapping System will locate FollowBot and See if it is directly in BC. If it is you will be allowed to map your FollowBot to any specific location on BC if safe to do so.
 <br>
 
-![image](/Images/MyAccountScreen.png)
+![image](/Images/website/MyAccountScreen.png)
 
 ***My Account page***
 * When you click on the my account screen you will be met with a list of buttons you can click from, as well as see the FollowBots that are accessable through your account.
 <br>
 
-![image](/Images/SignalScreen.png)
+![image](/Images/website/SignalScreen.png)
 
 ***Signal page***
 * When you have FollowBot Around, you will be able to check the signal to see if you are connected to any of your FollowBots. 
 * Developer: (For testing purposes) we will print out the private key just to see it's able to retrieve that information. Will be applicable and useful to see if we can have multiple FollowBots interact with one another without any interference
 <br>
 
-![image](/Images/LiveFeedScreen.png)
+![image](/Images/website/LiveFeedScreen.png)
 
 ***Live Feed page***
 * The Live Feed page will allow the user to see visually what FollowBot is seeing when going to a specific location.
 <br>
 
-![image](/Images/MyPostsScreen.png)
+![image](/Images/website/MyPostsScreen.png)
 
 ***My Posts page***
 * This page will contain your posts and your replies that you have made to other peoples posts or yourself for clarifications.
 <br>
 
-![image](/Images/SettingsScreen.png)
+![image](/Images/website/SettingsScreen.png)
 
 ***Settings page***
 * This page will include your basic commands to change the look of your environment as well as prevent or allow notifications to your phone or email. Along with it you will be able to Delete your Data or export it into a csv.
 * Rules will also be mentioned where you can read up on what you can and can't do with FollowBot.
 <br>
 
-![image](/Images/DarkModeScreen.png)
+![image](/Images/website/DarkModeScreen.png)
 
 ***Darkmode screen***
 * When you click the lightmode/darkmode icon in settings you will be able to change the color format of the website. 
 <br>
 
-![image](/Images/PrivacyAndDataScreen.png)
+![image](/Images/website/PrivacyAndDataScreen.png)
 
 ***Privacy & Data page***
 * When clicking the privacy & data icon you will be met with another page where you can either delete all of your data OR export your data into a csv.
 <br>
 
-![image](/Images/RulesScreen.png)
+![image](/Images/website/RulesScreen.png)
 
 ***Rules page***
 * When you click on the rules button you'll be met with the rules page where you'll read everything that you can and can't do with FollowBot.
 <br>
 
-![image](/Images/AddFollowBotScreen.png)
+![image](/Images/website/AddFollowBotScreen.png)
 
 ***Add FollowBot Page***
 * When you click on the Add FollowBot Icon, you will be met with another page where you can add one or more FollowBots into your account.
@@ -272,17 +272,26 @@ We plan to use reliable hardware that has proven effective in both major manufac
 
 <h3> Mobile App UI </h3>
 
-![image](/Images/MobileApp.png)
+![image](/Images/mobileapp/signin.png)
 
-***Mobile app that interfaces with the Followbot itself***
-* The homepage of the mobile app will feature a welcoming screen prompting users to enter their username and password to sign in or create a FollowBot account if they don’t have one yet.
+***Landing page for the mobile app***
+* The mobile app is intended for users that own or have been assigned a FollowBot. When using the app for the first time, the user will be prompted to register an account alongside an access key. Otherwise, the user may log in and have access to subsequent features.
 
-![image](/Images/AuthenticationScreen.png)
+![image](/Images/mobileapp/features.png)
 
-***Authentication screen within the FollowBot App***
-* When you click the login button on the homepage, you will be directed to an authentication screen. Here, users can enter their username and password to sign in or create a new FollowBot account if they don’t already have one.
+***Features that are accessible with a registered FollowBot***
+* Once logged in, the user will be met with this dashboard (1).
+* The mobile app will display the bot's battery life and distance from the device.
+* (2) a mobile mapping interface, allowing for track their bot in real time and directing it to a registered location.
+* (3) manual motor control
+* (4) news about the FollowBot, including software updates and scheduled maintenance.
+* (5) notifications pertaining to their bot such as activity and status.
 
-![image](/Images/mainDashboard.png)
+![image](/Images/mobileapp/settings.png)
+***User settings***
+* clicking the settings button on the feature dashboard will bring you to this page (6).
+* (7) privacy & data: information about our data collection done by the FollowBot with the available option of opting out.
+* (8) guideline of rules: what you can and can (should) not do with the FollowBot. 
 
 ***Main Dashboard after logging in***
 * Once logged into the FollowBot Mobile App, you will be greeted by the main dashboard. This screen features a 3D image of your FollowBot, along with icons displaying vital information: battery life, weight carried, current temperature, and distance between you and your FollowBot. 
@@ -327,10 +336,10 @@ When it comes to FollowBot Control, There will be a difference between a regular
 Another notable feature that will be implemented through the app is the ability to control the Followbot. This will be meant for correcting it's position towards the user, playing with the Followbot, or just for testing purposes.
 
 **3.2 Functional Requirements**<br>
-* Mapping mechanics for the Followbot to go to specific locations around Bellevue College.
-* Computer vision mechanics and learning models in order for the Followbot to identify user when following.
-* The functional requirements for this project includes a Followbot that will follow the user while avoiding obstacles and allow the user to place their belongings within it. 
-* At the same time the user will be able to control certain mechanics of the Followbot within the mobile app. 
+* Mapping mechanics for the FollowBot to go to specific locations around the registered campus.
+* Computer vision mechanics and learning models in order for the FollowBot to identify user when following.
+* The functional requirements for this project includes a FollowBot that will follow the user while avoiding obstacles and allow the user to place their belongings within it. 
+* At the same time the user will be able to control certain mechanics of the FollowBot within the mobile app. 
 * The mobile app needs to send notifications to the user about the FollowBots needs, as well as possible issues.
 
 * Store the data that is currently being taken as historical data to be used as a way to understand and learn how to incorporate a form of machine learning for the Followbot. This will give us better ways to understand battery power, battery control, as well as ways in enhancing the autonomous movement of the FollowBots behavior.
@@ -378,25 +387,32 @@ Another notable feature that will be implemented through the app is the ability 
 | Req. 4: Polishing and refining the website and mobile app, enhancing security capabilities, developing machine learning models, improving mapping capabilities around Bellevue College, and continuing to polish and improve FollowBot. | Q4  | Frank, Igor, Trong, Joseph |
 | Future: We plan to add facial recognition to the mobile app for easy access to FollowBot profile pages, implement voice recognition for seamless communication with FollowBot, further polish the website and mobile app for better user experience, and research innovative ways to integrate OpenAI technology into all FollowBot devices. | Q5 | Frank, Igor, Trong, Joseph |
 
+<h3> Complete timeline: </h3>
 
-| none-backlog User Stories | Millstone | Assigned to: |
+![image](/Images/Timeline1.png)
+![image](/Images/Timeline2.png)
+![image](/Images/Timeline3.png)
+![image](/Images/Timeline4.png)
+
+
+| Essential-Backlog User Stories | Milestone | Assigned to: |
 | --- | --- | --- |
-| A user will be allowed to click tabs in the website in order to seek information about the Followbot and how it performs and works. | M1  | Igor |   
-| The user will be allowed to find the website via a google search in order to seek information about the Followbot | M2 | Igor |
-| The User will be allowed to seek the cost of such a Followbot on the website | M3 | Igor |
-| The user will be allowed to sign in to their account within the website | M4 | Igor |
-| The User will be allowed to connect their Followbot (if they have one) via the website to test it's functionality for fun and testing purposes | M5 | Frank, Igor |
-| When connecting to the network I will need to use a screen thats on the robot in order to input ssid and password information.   | M6 | Frank|
-| The Followbot will follow the user always behind and stay about 1 meter away from the user, the user is allowed to move close to the Followbot without the Followbot moving away from the user. | M7 | Frank | 
-| The Mobile App will constantly update to retrieve information from the Followbot about it's battery life, temperature, and weight | M8  | Frank |
-| The battery life will be able to last for more than 4 hours | M9 | Frank |
-| A developer will be able to test their code on a virtual FollowBot when the actual FollowBot is not around for testing | m10 | Frank |
-| The user will be able to map the FollowBot from location to location if needed | m11 | Joseph |
-| A user will be able to direct the FollowBot from another location to  their position via the mapping tool on the mobile app | m12 | Joseph |
-| A developer will store the maps in a database for easy access and easy control for when FollowBot is in different locations | m13 | Joseph |
-| The Developer will allow the Folowbot to follow the user by using forms of computer vision | m14 | Trong |
-| A user will be able to keep FollowBot near them at all times. Especially when there are obstacles along the way | m15 | Trong |
-| A developer will use a camera in order for FollowBot to visualize and see us with Computer Vision | m15 | Trong |
+| A user will be able to click tabs on the website to seek information about the FollowBot, how it performs, and how it works. | M1 | Igor |
+| The user can register a personal account and link it to their FollowBot. | M2 | Igor |
+| The user can connect their FollowBot via the website to test its functionality for testing purposes. | M3 | … |
+| The user can register and log in to connect their bot to the network via a supplemental screen module on the physical bot. | M4 | Frank |
+| The FollowBot will stay one meter behind the user. | M5 | … | 
+| The FollowBot will recognize simple voice commands (i.e., “Stop”, “Go to…”) and respond appropriately. | M6 | … | 
+| The user can access the application regardless of platform. | M7 | … | 
+| The application will constantly update to retrieve information from the FollowBot about its battery life, temperature, and weight. | M8 | Frank |
+| The battery life will be able to last for more than 4 hours. | M9 | Frank |
+| The user will be able to map the FollowBot from location to location. | M10 | Joseph |
+| The user will be able to request a FollowBot from another location to their position via a mapping tool. | M11 | Joseph |
+| The FollowBot will rely on computer vision to identify a target user. | M12 | Trong, Joseph |
+| The FollowBot will use computer vision for object detection and take appropriate actions for obstacles. | M13 | Trong |
+| The FollowBot, in the event of getting stuck, will attempt to self-correct. If it fails, the bot will notify the user and allow manual control. | M14 | … |
+| Restricted administrator privileges will allow access to historical data which may be integrated to improve functionalities. | M15 | … |
+| The user can be confident in the security of their data, relying on the robust database, authentications, and opting out of data collection. | M16 | … |
 
 
 
