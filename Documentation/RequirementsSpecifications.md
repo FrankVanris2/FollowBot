@@ -301,19 +301,21 @@ To support the machine learning model and enable seamless data flow between the 
 * (7) privacy & data: information about our data collection done by the FollowBot with the available option of opting out.
 * (8) guideline of rules: what you can and can (should) not do with the FollowBot. 
 
-***Main Dashboard after logging in***
-* Once logged into the FollowBot Mobile App, you will be greeted by the main dashboard. This screen features a 3D image of your FollowBot, along with icons displaying vital information: battery life, weight carried, current temperature, and distance between you and your FollowBot. 
 
-* In the top left corner of your screen, you'll see a gear icon representing the settings tab of the mobile app. Clicking it will present you with a variety of options, including dark mode or light mode settings and FollowBot user controls.
+<h3> Robotic UI Interface </h3>
 
-* Near the bottom of the screen, there are three sets of buttons for the user to click. The notifications tab allows users to receive alerts from FollowBot whenever it needs assistance.
+![image](/Images/SPI%20TFT%20RoboticInterface.png)
 
-* The news tab will provide users with exciting updates and news about FollowBot directly from the team.
+***Login Screen, Connection Successful Screen & Connection Unsuccessful Screen***
+* When it comes to connecting to a network, the robotic interface on the standalone device will allow us to input our ssid and password for a network.
+* If the connection is successful you will be met with a friendly screen saying you are connected. You will be allowed to be go back to the login page if you wish.
+* If the connection isn't successful you will be met with a sad screen saying that you could not connect to the Network. You will be able to direct back to the login page so you can try again.
 
-* The store tab will offer options for purchasing spare parts or upgrades that users might need in the future.
+**Business Capabilities**
 
-**Homepage (Large Screen):**
+Businesses will be able to register as an admin for their corporation, enabling them to control multiple FollowBots. As an admin, additional authentication will be required. The (yes & no) placeholder is for us to discuss and finalize the authentication design for admins.
 
+<<<<<<< HEAD
 The homepage will prominently feature the product logo in the top left corner. The product’s name and image will be centrally displayed, serving as the focal point of the webpage. Navigation tabs at the top will provide easy access to specific product information that users are likely to seek. A summary positioned near the bottom, just below the FollowBot’s image, will succinctly convey the product’s primary function and its global applicability to all consumers.
 
 The website’s design will reflect the product’s branding, incorporating elements such as the logo, color scheme, and visual identity. Specific elements will highlight our robotic product. The layout will be optimized for a cohesive and visually appealing user experience across various device screen sizes.
@@ -342,6 +344,9 @@ The mobile app will consist of a mapping feature where you will be able to map y
 When it comes to FollowBot Control, There will be a difference between a regular user and a admin user. A admin user will be allowed to take into control many FollowBots. A Regular user can only control one FollowBot. As an Admin you will be allowed to share FollowBot with other users who are in need for a limited amount of time.
 
 Another notable feature that will be implemented through the app is the ability to control the Followbot. This will be meant for correcting it's position towards the user, playing with the Followbot, or just for testing purposes.
+=======
+As an admin, you will have the ability to share your FollowBot with other users or students in need for a limited period. HOWEVER, due to the increased server usage for retrieving data from multiple FollowBots, admins will need to sign up for a monthly subscription to use our services when managing multiple FollowBots.
+>>>>>>> 43f5fa92ccef3116efd204eecf5f940743929260
 
 **3.2 Functional Requirements**<br>
 * The user will be able to place their belongings within the FollowBot without affecting the further functionalities.
