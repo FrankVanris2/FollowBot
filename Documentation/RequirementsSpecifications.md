@@ -293,6 +293,16 @@ We plan to use reliable hardware that has proven effective in both major manufac
 * (7) privacy & data: information about our data collection done by the FollowBot with the available option of opting out.
 * (8) guideline of rules: what you can and can (should) not do with the FollowBot. 
 
+
+<h3> Robotic UI Interface </h3>
+
+![image](/Images/SPI%20TFT%20RoboticInterface.png)
+
+***Login Screen, Connection Successful Screen & Connection Unsuccessful Screen***
+* When it comes to connecting to a network, the robotic interface on the standalone device will allow us to input our ssid and password for a network.
+* If the connection is successful you will be met with a friendly screen saying you are connected. You will be allowed to be go back to the login page if you wish.
+* If the connection isn't successful you will be met with a sad screen saying that you could not connect to the Network. You will be able to direct back to the login page so you can try again.
+
 ***Main Dashboard after logging in***
 * Once logged into the FollowBot Mobile App, you will be greeted by the main dashboard. This screen features a 3D image of your FollowBot, along with icons displaying vital information: battery life, weight carried, current temperature, and distance between you and your FollowBot. 
 
