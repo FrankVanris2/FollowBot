@@ -13,7 +13,7 @@ This robot will consist of different phases:
  - [Features](#features)
  - [Design Details](#design-details)
  - [Installation](#installation)
- - [Configuration](#configuration)
+ - [Configuration & Usage](#configuration--usage)
  - [Contributing](#contributing)
  - [License](#license)
 
@@ -31,95 +31,96 @@ On the software side we are utilizing the Arduino Uno Rev4 in order to send and 
 
 In terms of project success, our primary focus will be on systematic organization and incremental prototyping. We plan to develop a prototype during the first quarter and progressively refine it. Our goal is to deliver a practical and beneficial product for any consumer seeking a Followbot to carry their belongings or allow the Followbot to go to designated places.
 
+# Installation
+
+## Installation Steps
+Before you clone your repo you will need to first download vscode. The reason being is because when developing on the Robotics side There is a nice extension that is not found in any other IDE's. To make your life
+easier and for you to not try and configure PlatformIO on another IDE with hassle. I would absolutely advise you to download VSCode.
+
+* In VSCode click the extensions icon.
+
+![image](/Images/readMe_images/Extensions.png)
+
+* Look up **PlatformIO IDE**
+
+![image](/Images/readMe_images/PlatformIO.png)
+
+* Install it
+
+![image](/Images/readMe_images/Install.png)
+
+After VSCode with the PlatformIO extension has been installed we can now git clone the repo.
 
 
-Installing npm
-```sh
+# Configuration & Usage
+
+## Front-end & Back-end
+Developing on the front-end requires to set up the server side. And it's quite easy.
+
+* In your command prompt go to the `BotServer` directory
+* Once in the directory you must run these pip commands:
+  ```cmd
+  pip install Flask
+  pip install -U flask-cors
+  ```
+
+* Once those two things are installed and hopefully you have npm installed you will need to do the next following commands:
+```cmd
+npm i
 npm i -g npm
 npm install @mui/icons-material
-
-
-# Build
+```
+* Now after these above steps you are ready to build the front-end and back-end
+```cmd
 npm run build
-
-# Run
-
+```
+* After the build run the server
+```cmd
 npm run start
-
-# In the browser use url: http://xx.xx.xx.xx:5000
-# Where xx.xx.xx.xx is shown in the server command window
 ```
-#### Develop
+* In your browser be sure to use this url: `http://xx.xx.xx.xx:5000`
+* the xx.xx.xx.xx is showed in the server command window.
 
-Two cmd windows:
 
-- First window (for javascript browser development):
+## Robotic-end
+The robotic side of our project is the most fascinating aspect, and the setup process is relatively straightforward. However, things will change when we start migrating our software and development to a Raspberry Pi 4-5 with ROS2. You will be notified as a developer when we transition from standalone robotic development to publisher-subscriber development.
 
-```sh 
-npm run watch
-```
+The README will be updated once we have a full understanding of the migration process. For now, please follow the steps below to set up your environment correctly to run, test, and develop our programs:
 
-- Second window (for python server development):
+* If you have not already please download VSCode with the PlatformIO extension in order for you to develop on the Robotic side.
+* Within the PlatformIO homepage there are 4 side buttons that you will be allowed to click on. Please click on the `Open Project` Button
 
-```sh
-npm run startdebug
-```
+![image](/Images/readMe_images/OpenProj.png)
 
-In the browser use url: http://localhost:3000/
+* When you do so please go where you placed your repo and you will need to open this folder: `FollowBot->FollowBot`
 
-When finished adding changes please run clean:
-```sh
-npm run clean
-```
+![image](/Images/readMe_images/DirProject.png)
 
- 
-### Running Unit Tests with PlatformIO
+* After you do so you will see all of the files that we have made for the development of FollowBot.
+* To run it you will need to press the blue checkmark icon on the bottom of the screen
 
-To ensure your unit tests and source code run correctly, follow these steps:
+![image](/Images/readMe_images/Compile.png)
 
-### Configuration
+* To push and build the code on the Arduino board or any Microcontroller that is applicable press the arrow icon on the bottom of the screen
 
-**1. Add the Native Environment for Unit Testing:** In your `platformio.ini` file, include a `[env: native]` section for running Unity tests.:
+![image](/Images/readMe_images/push_build.png)
 
-```ini
-[env:native]
-platform = native
-test_framework = unity
-```
+* When you are programming on the device, sometimes you will want to print something to the Serial port. Click the plug icon to open the Serial Monitor.
 
-**2. Ensure Your Hardware Environment is Configured:** Include  the relevant hardware environment configuration, such as `uno-r4_wifi`, in your platformio.ini` file.
+![image](/Images/readMe_images/SerialMonitor.png)
 
-```ini
-[env:uno_r4_wifi] 
-platform = renesas-ra 
-board = uno_r4_wifi 
-framework = arduino 
-lib_deps = 
-    adafruit/Adafruit Motor Shield V2 Library@^1.1.3 
-    SPI adafruit/DHT sensor library@^1.4.6 
-    adafruit/Adafruit Unified Sensor@^1.1.14 
-    bblanchon/ArduinoJson@^7.1.0 
-    TFT_eSPI 
-    openagriculturefoundation/rosserial_arduino@0.0.0-alpha+sha.1834b766b0 
-    throwtheswitch/Unity@^2.6.0
-```
+* When you need to input PlatformIO specific commands, you will need to open the IO terminal. The icon is a small cmd screen.
 
-### Running the Tests
+![image](/Images/readMe_images/IOMonitor.png)
 
-**1. Run Unit Tests:** To run your unit tests with the native environment, use the following command:
 
-```sh
-pio test -e native
-```
+**ROS2 With Raspberry Pi**
 
-**2. Compile and Upload Source Code:** To compile and upload your source code for the specified hardware environment, use:
+*Currently in the works for Migration, steps in usage will be added later.*
 
-```sh
-pio run -e uno_r4_wifi
-```
+## Other Documentation:
 
-Following these instructions will help ensure your unit tests and source code are handled in the correct environments.
-
+Within the Repo there is a directory called `Documentation` Most of the documentation is around the requirements and the design of our Project. But there is specific docs that I recommend you guys reading up on. Please read the `RunningUnitTestsPlatformIO` documentation, `JestUnitTesting` Documentation, And for future references the `ROS2_Important_Commands` Documentation.
 
 ## Contributing
 We are a small team of college students, any help is appreciated! You can clone the repository on GitHub and submit a pull request.
