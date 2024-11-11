@@ -272,17 +272,26 @@ We plan to use reliable hardware that has proven effective in both major manufac
 
 <h3> Mobile App UI </h3>
 
-![image](/Images/MobileApp.png)
+![image](/Images/mobileapp/signin.png)
 
-***Mobile app that interfaces with the Followbot itself***
-* The homepage of the mobile app will feature a welcoming screen prompting users to enter their username and password to sign in or create a FollowBot account if they don’t have one yet.
+***Landing page for the mobile app***
+* The mobile app is intended for users that own or have been assigned a FollowBot. When using the app for the first time, the user will be prompted to register an account alongside an access key. Otherwise, the user may log in and have access to subsequent features.
 
-![image](/Images/AuthenticationScreen.png)
+![image](/Images/mobileapp/features.png)
 
-***Authentication screen within the FollowBot App***
-* When you click the login button on the homepage, you will be directed to an authentication screen. Here, users can enter their username and password to sign in or create a new FollowBot account if they don’t already have one.
+***Features that are accessible with a registered FollowBot***
+* Once logged in, the user will be met with this dashboard (1).
+* The mobile app will display the bot's battery life and distance from the device.
+* (2) a mobile mapping interface, allowing for track their bot in real time and directing it to a registered location.
+* (3) manual motor control
+* (4) news about the FollowBot, including software updates and scheduled maintenance.
+* (5) notifications pertaining to their bot such as activity and status.
 
-![image](/Images/mainDashboard.png)
+![image](/Images/mobileapp/settings.png)
+***User settings***
+* clicking the settings button on the feature dashboard will bring you to this page (6).
+* (7) privacy & data: information about our data collection done by the FollowBot with the available option of opting out.
+* (8) guideline of rules: what you can and can (should) not do with the FollowBot. 
 
 ***Main Dashboard after logging in***
 * Once logged into the FollowBot Mobile App, you will be greeted by the main dashboard. This screen features a 3D image of your FollowBot, along with icons displaying vital information: battery life, weight carried, current temperature, and distance between you and your FollowBot. 
@@ -327,10 +336,10 @@ When it comes to FollowBot Control, There will be a difference between a regular
 Another notable feature that will be implemented through the app is the ability to control the Followbot. This will be meant for correcting it's position towards the user, playing with the Followbot, or just for testing purposes.
 
 **3.2 Functional Requirements**<br>
-* Mapping mechanics for the Followbot to go to specific locations around Bellevue College.
-* Computer vision mechanics and learning models in order for the Followbot to identify user when following.
-* The functional requirements for this project includes a Followbot that will follow the user while avoiding obstacles and allow the user to place their belongings within it. 
-* At the same time the user will be able to control certain mechanics of the Followbot within the mobile app. 
+* Mapping mechanics for the FollowBot to go to specific locations around the registered campus.
+* Computer vision mechanics and learning models in order for the FollowBot to identify user when following.
+* The functional requirements for this project includes a FollowBot that will follow the user while avoiding obstacles and allow the user to place their belongings within it. 
+* At the same time the user will be able to control certain mechanics of the FollowBot within the mobile app. 
 * The mobile app needs to send notifications to the user about the FollowBots needs, as well as possible issues.
 
 * Store the data that is currently being taken as historical data to be used as a way to understand and learn how to incorporate a form of machine learning for the Followbot. This will give us better ways to understand battery power, battery control, as well as ways in enhancing the autonomous movement of the FollowBots behavior.
