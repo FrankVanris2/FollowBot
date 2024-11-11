@@ -21,7 +21,6 @@ This robot will consist of different phases:
 Followbot is a companion robot that follows you around. The goal for this project is to build a low cost robot that can carry you belongings for you. Currently Followbot is useful within school/city settings. Future endeavors include developing the capability for Followbot to traverse uneven terrain such as dirt of gravel
 
 ## Features
-- Follow the user 
 - Carry up to 50 lbs
 - Companion app and website to monitor and control robot remotely
 
@@ -33,23 +32,6 @@ On the software side we are utilizing the Arduino Uno Rev4 in order to send and 
 In terms of project success, our primary focus will be on systematic organization and incremental prototyping. We plan to develop a prototype during the first quarter and progressively refine it. Our goal is to deliver a practical and beneficial product for any consumer seeking a Followbot to carry their belongings or allow the Followbot to go to designated places.
 
 
-## Installation
-
-### Prequisites
-Flask for server stuff
-Platform.io for hardware stuff
-
-#### Installation steps
-
-Cloning our repo
-```sh
-git clone https://github.com/FrankVanris2/FollowBot.git
-```
-Installing Flask
-```sh
-pip install Flask
-pip install -U flask-cors
-```
 
 Installing npm
 ```sh
