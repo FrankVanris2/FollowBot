@@ -162,11 +162,10 @@ To support the machine learning model and enable seamless data flow between the 
 * When clicking on a news article you will be brought to another page where you can read the news.
 <br>
 
-![image](/Images/website/ForumsScreen.png)
+![image](/Images/website/FeedBackScreen.png)
 
-***Forums page***
-* When clicking on the Forums Tab you will see a lot of posts and categories of posts that you can click on to obtain answers to questions that you may have had.
-* The Forums page will also allow you to upvote or down-vote posts as well as reply to posts if you have an account.
+***Feedback page***
+* When you click on the Feedback page there will be a area where you can send feedback to the team of FollowBot. You can as well ask questions if needed.
 <br>
 
 ![image](/Images/website/LoginScreen.png)
@@ -221,7 +220,7 @@ To support the machine learning model and enable seamless data flow between the 
 * When you click on the Mapping button, you will be met with a screen of the Bellevue College campus. The Mapping System will locate FollowBot and See if it is directly in BC. If it is you will be allowed to map your FollowBot to any specific location on BC if safe to do so.
 <br>
 
-![image](/Images/website/MyAccountScreen.png)
+![image](/Images/website/MyAccountsScreen.png)
 
 ***My Account page***
 * When you click on the my account screen you will be met with a list of buttons you can click from, as well as see the FollowBots that are accessable through your account.
@@ -238,12 +237,6 @@ To support the machine learning model and enable seamless data flow between the 
 
 ***Live Feed page***
 * The Live Feed page will allow the user to see visually what FollowBot is seeing when going to a specific location.
-<br>
-
-![image](/Images/website/MyPostsScreen.png)
-
-***My Posts page***
-* This page will contain your posts and your replies that you have made to other peoples posts or yourself for clarifications.
 <br>
 
 ![image](/Images/website/SettingsScreen.png)
