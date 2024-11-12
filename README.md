@@ -73,7 +73,6 @@ Developing on the front-end requires to set up the server side. And it's quite e
 ```cmd
 npm i
 npm i -g npm
-npm install @mui/icons-material
 ```
 * Now after these above steps you are ready to build the front-end and back-end
 ```cmd
