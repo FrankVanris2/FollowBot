@@ -279,6 +279,49 @@ To support the machine learning model and enable seamless data flow between the 
 * We will be adding an Admin feature later on which will prevent a user from adding more FollowBots unless they are a admin.
 <br>
 
+<h3> WebApp </h3>
+![image](/Images/webapp/Logging%20In%20Process.png)
+
+***Webpage but on mobile***
+* When opening up the webpage on the phone, everything will be formatted to fit the screen. The login process will stay the same.
+* The sign up process although not depicted will also stay the same.
+<br>
+
+![image](/Images/webapp/BetweenDifferentTabs.png)
+
+***Webapp tabs on mobile***
+* When you click on each tab, you will see all the relevant information specific to that tab.
+* Stating again, each of the tabs and information has been reformatted to fit on the mobile device.
+<br>
+
+![image](/Images/webapp/SettingsFunctionality.png)
+
+***Settings functionality of web on mobile***
+* The settings functionality is replicated on mobile. And as shown it is made to fit the screen.
+<br>
+
+![image](/Images/webapp/User%20ProfileP1.png)
+
+***User Profile***
+* When you login, you will be able to get on your user profiler and use all of the given functionalities that it offers.
+
+![image](/Images/webapp/User%20ProfileP2.png)
+
+***More from the User Profile***
+
+![image](/Images/webapp/User%20ProfileP3.png)
+
+***Again more from the User Profile***
+<br>
+
+![image](/Images/webapp/AddingFollowBots.png)
+
+***Adding FollowBots on mobile***
+
+* As a user you will be able to add more FollowBots through your account via this screen.
+* Again it is made to fit your mobile device.
+<br><br>
+
 <h3> Mobile App UI </h3>
 
 ![image](/Images/mobileapp/signin.png)
