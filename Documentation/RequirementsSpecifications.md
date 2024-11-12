@@ -7,8 +7,16 @@ FollowBot</h1>
 Prepared by Frank Vanris, Igor Janotti, Trong Duong, Joseph Hoang<br><br>
 Bellevue College<br><br>
 Last Modified: 11/11/2024<br><br></h2>
+<br><br>
 
-<h2> 1. Introduction </h2><br><br>
+# Table Of Contents
+- [Introduction](#1-introduction)
+- [Overall Description](#2-overall-description)
+- [Specific Requirements](#3-specific-requirements)
+- [Breakdown of work/Project timeline plan](#4-breakdown-of-workproject-timeline-plan)
+
+<br><br>
+# 1. Introduction <br><br>
 
 **1.1 Problem statement**<br><br>
 *To give the disabled access to a device that will map their location in order to follow and warn them of obstacles in the way. To provide individuals with a FollowBot that can carry their belongings, while weighing the benefits against the costs.*<br><br>
@@ -70,7 +78,7 @@ links:<br><br>
 * https://tinyurl.com/3stbh3s6 (Security & Authentications)
 * https://daylightstrategy.com/ga4service/?gad_source=1&gclid=Cj0KCQjwzva1BhD3ARIsADQuPnU6rwu4H3Qc2IQ3Jj3uZGuMOJurd5xP66cfLx0qRI_F3QYRlXfNR4QaAn_IEALw_wcB (Google Analytics services)
 
-**<h1>2. Overall Description**</h1><br>
+# 2. Overall Description <br>
 **2.1 Compete analysis**<br>
 
 | Top Competitor | Strengths | Weaknesses | Opportunities | Threats |
@@ -117,7 +125,7 @@ We plan to use reliable hardware that has proven effective in both major manufac
 
 To support the machine learning model and enable seamless data flow between the FollowBot, its application interface, and storage solutions, we will utilize Amazon Web Services (AWS) and MongoDB. Leveraging AWS as our primary cloud infrastructure will enable reliable and scalable resources for data processing, model training, and storage. This will allow better ability to manage and update the machine learning model while relieving some stress to the physical bot. MongoDB will be used to store the data collected by the FollowBot, including user credentials, historical data, and any image data required for model training. MongoDB flexibility in adjusting data structures will offer an ideal solution to handling structured and unstructured data.  
 
-**<h1>3. Specific Requirements**</h1><br>
+# 3. Specific Requirements <br>
 
 **<h2>3.1 User Interfaces</h2>**<br>
 
@@ -351,7 +359,7 @@ As an admin, you will have the ability to share your FollowBot with other users 
 * our bot will capture photos to be processed by our machine learning model:  photo format i.e. `JPEG`, `PNG`
 
 
-**<h1>4. Breakdown of work/Project timeline plan**</h1><br>
+# 4. Breakdown of work/Project timeline plan <br>
 
 <br>
 
