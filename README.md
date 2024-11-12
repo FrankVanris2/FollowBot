@@ -22,6 +22,8 @@ Followbot is a companion robot that follows you around. The goal for this projec
 
 ## Features
 - Carry up to 50 lbs
+-  Mapping capabilities to traverse from one point to another
+-  Following mechanics
 - Companion app and website to monitor and control robot remotely
 
 ## Design Details
