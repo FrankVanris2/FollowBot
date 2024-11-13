@@ -4,7 +4,7 @@
 Jest is a delightful JavaScript testing framework with a focus on simplicity. It works seamlessly with projects using React.
 
 ## Installation
-To start using Jest in your React project, you need to install it along with Babel for transpiling your tests. If you are using Create React App, Jest is already included.
+We've already installed Jest into our project, but JUST in case...To start using Jest in FollowBot, you need to install it along with Babel for transpiling your tests. If you are using Create React App, Jest is already included.
 
 ### Install Jest and Babel
 Run the following command to install Jest and Babel:
@@ -59,7 +59,6 @@ Now let's create a test file for `SumComponent` using Jest and React Testing Lib
 // SumComponent.test.jsx
 import React from 'react';
 import { render } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
 import SumComponent from '../src/SumComponent';
 
 describe('SumComponent', () => {
