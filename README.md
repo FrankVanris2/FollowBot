@@ -128,6 +128,7 @@ Within the Repo there is a directory called `Documentation` Most of the document
 
 - [Running Unit Test PlatformIO](https://github.com/FrankVanris2/FollowBot/blob/main/Documentation/RunningUnitTestsPlatformIO.md)
 - [ROS2 Important Commands](https://github.com/FrankVanris2/FollowBot/blob/main/Documentation/ROS2_Important_Commands.md)
+- [Jest Unit Testing Document](https://github.com/FrankVanris2/FollowBot/blob/main/Documentation/JestUnitTesting.md)
 ## Contributing
 We are a small team of college students, any help is appreciated! You can clone the repository on GitHub and submit a pull request.
 ```sh
