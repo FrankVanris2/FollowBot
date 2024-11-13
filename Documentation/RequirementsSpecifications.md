@@ -418,8 +418,8 @@ As an admin, you will have the ability to share your FollowBot with other users 
 
 ![image](/Images/Timeline1.png)
 ![image](/Images/Timeline2.png)
-![image](/Images/Timeline3.png)
-![image](/Images/Timeline4.png)
+![image](/Images/Timeline3revised.png)
+
 
 
 | Essential-Backlog User Stories | Milestone | Assigned to: |
