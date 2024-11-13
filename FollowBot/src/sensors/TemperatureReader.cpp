@@ -5,7 +5,7 @@
 */
 
 #include "TemperatureReader.h"
-#include "FollowBotClient.h"
+#include "followbot_client/FollowBotClient.h"
 #include "FollowBotManager.h"
 #include "DHT.h"
 

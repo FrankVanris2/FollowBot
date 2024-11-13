@@ -6,12 +6,12 @@
 */
 
 #include "FollowBotManager.h"
-#include "MotorControlStates.h"
-#include "Motors.h"
-#include "ObjectAvoidance.h"
-#include "TemperatureReader.h"
-#include "FollowBotClient.h"
-#include "FollowMechanics.h"
+#include "states&types/MotorControlStates.h"
+#include "motors/Motors.h"
+#include "objectavoidance&detection/ObjectAvoidance.h"
+#include "sensors/TemperatureReader.h"
+#include "followbot_client/FollowBotClient.h"
+#include "following_mechanics/FollowMechanics.h"
 
 //testing currently
 #include <ros.h>

@@ -5,8 +5,8 @@ Desc: Creating follow mechanics between the user and the robot
 */
 
 #include "FollowMechanics.h"
-#include "FollowBotClient.h"
-#include "Motors.h"
+#include "followbot_client/FollowBotClient.h"
+#include "motors/Motors.h"
 #include <list>
 
 
@@ -58,7 +58,7 @@ void FollowMechanics::followMechanics_Loop() {
         //d = 10 ^ (A - mRSSI) / RmRSSI;
         //-50 came from checking iPhone hotspot 1m away
 
-        unsigned d = 10 ^ (-50 - mRSSIAvg) / 10 * 1.8;
+        unsigned d = static_cast<unsigned>(pow(10, (-50 - mRSSIAvg) / 10.0) * 1.8);
         if (mRSSIAvg > -50) {
             myMotors.setDirection("MOTOR_FORWARD");
         }

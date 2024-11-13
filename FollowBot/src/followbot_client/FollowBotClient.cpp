@@ -6,11 +6,11 @@
 */
 
 #include "FollowBotClient.h"
-#include "Motors.h"
+#include "motors/Motors.h"
 #include "WiFiS3.h"
-#include "FollowBot_Secrets.h"
+#include "secrets/FollowBot_Secrets.h"
 #include "FollowBotManager.h"
-#include "DataStates.h"
+#include "states&types/DataStates.h"
 #include "ArduinoJson.h"
 
 // Universal Object
