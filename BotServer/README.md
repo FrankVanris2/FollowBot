@@ -6,7 +6,7 @@
 pip install Flask
 pip install -U flask-cors
 
-npm i // say it not supported we probbblay should have 
+npm i 
 better version 
 npm i -g npm
 npm install @mui/icons-material
