@@ -6,7 +6,7 @@
 
 #pragma once
 #include "Arduino.h"
-#include "MotorControlStates.h"
+#include "states&types/MotorControlStates.h"
 
 class Motors {
 public:

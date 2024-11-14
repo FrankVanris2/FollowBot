@@ -5,8 +5,8 @@
 */
 
 #include "ObjectAvoidance.h"
-#include "Motors.h"
-#include "MotorControlStates.h"
+#include "motors/Motors.h"
+#include "states&types/MotorControlStates.h"
 #include "Arduino.h"
 
 //delays

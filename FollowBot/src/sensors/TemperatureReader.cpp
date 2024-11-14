@@ -5,8 +5,8 @@
 */
 
 #include "TemperatureReader.h"
-#include "FollowBotClient.h"
-#include "FollowBotManager.h"
+#include "followbot_client/FollowBotClient.h"
+#include "followbot_manager/FollowBotManager.h"
 #include "DHT.h"
 
 #define DHTPIN 13
