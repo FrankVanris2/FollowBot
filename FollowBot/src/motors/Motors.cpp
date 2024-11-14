@@ -10,7 +10,7 @@
 #include "Wire.h"
 #include "states&types/MotorControlStates.h"
 #include "Adafruit_MotorShield.h"
-#include "FollowBotManager.h"
+#include "followbot_manager/FollowBotManager.h"
 
 
 const int MAX_SPEED = 255;

@@ -9,7 +9,7 @@
 #include "motors/Motors.h"
 #include "WiFiS3.h"
 #include "secrets/FollowBot_Secrets.h"
-#include "FollowBotManager.h"
+#include "followbot_manager/FollowBotManager.h"
 #include "states&types/DataStates.h"
 #include "ArduinoJson.h"
 
