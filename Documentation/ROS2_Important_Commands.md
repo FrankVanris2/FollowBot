@@ -18,12 +18,12 @@ Doing this will then give you a prompt for the password to the pi, the password 
 <h2>Sourcing the setup files: </h2>  
 
 ```
-source /opt/ros/foxy/setup.bash
+source /opt/ros/jazzy/setup.bash
 ```
 
 **(optional/necessary)** adding to sheet startup script: (Note: if need to remove, locate startup script file)
 ```
-echo "source /opt/ros/foxy/setup.bash" >> ~/.bashrc
+echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc
 ```
 
 <h2> Check environment variables </h2>
@@ -37,7 +37,7 @@ When doing this you should see the following:
 ```
 ROS_VERSION=2
 ROS_PYTHON_VERSION=3
-ROS_DISTRO=foxy
+ROS_DISTRO=jazzy
 ```
 
 
@@ -97,7 +97,7 @@ To exit an environment properly ALWAYS do ctrl + C
 <h1> Important for using TurtleSim </h1>
 
 Turtlesim is a visual platform that is used for testing purposes when you want to see visually what will happen with your Followbot. The issue though when using turtlesim is that it requires you to have a pre installed GUI that can be used between your current machine and your ubuntu machine running on your Raspberry pi. Thus meaning you need to make sure you have a gui installed. Follow these instructions on this site in order to gain the prerequisites for setting up the turtlesim correctly:
-https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Introducing-Turtlesim/Introducing-Turtlesim.html
+https://docs.ros.org/en/jazzy/Tutorials/Beginner-CLI-Tools/Introducing-Turtlesim/Introducing-Turtlesim.html
 
 If you reached this point in the tutorial, and obtained the error instead of the screen then this is where I tell you in how to fix the issue:
 
@@ -119,7 +119,7 @@ after accomplishing this you will then need to go into your ubuntu machine, when
 export DISPLAY=YOUR_IP_ADDRESS_ON_CURRENT_MACHINE:0
 
 #Example
-export Display=10.0.0.245:0  #No spaces
+export DISPLAY=10.0.0.245:0  #No spaces
 ```
 
 once you have accomplished this save the file and exit it, restart your environment by closing out and reopening the command prompt and sshing again. 
@@ -225,7 +225,7 @@ Actions are quite easy to learn and I believe it's best to read the whole tutori
 
 Actions are one of the communication types in ROS 2 and are intended for long running tasks. They consist of three parts: a goal, feedback, and a result.
 
-https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Actions/Understanding-ROS2-Actions.html
+https://docs.ros.org/en/jazzy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Actions/Understanding-ROS2-Actions.html
 
 
 <h2>RQT Console</h2>
@@ -318,7 +318,7 @@ cd ~/ros2_ws/src
 # cd if you're still in the ``src`` directory with the ``ros_tutorials`` clone
 
 cd ..
-rosdep install -i --from-path src --rosdistro foxy -y
+rosdep install -i --from-path src --rosdistro jazzy -y
 ```
 
 * If you already have all your dependencies, the console will return:
