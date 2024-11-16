@@ -323,3 +323,66 @@ rosdep install -i --from-path src --rosdistro jazzy -y
 
 * If you already have all your dependencies, the console will return:
 `#All required rosdeps installed successfully`
+
+## Creating a workspace and packages
+
+To create a workspace be sure it has a source. Do this command:
+
+```bash
+mkdir -p ~/your_workspace/src
+cd ~/your_workspace/src
+```
+
+When in your own workspace, creating packages will be essential. Especially when making publisher-subscriber architecture.
+Here is a command you can do in Cmake AND Python:
+
+`CMake`
+```bash
+ros2 pkg create --build-type ament_cmake --license Apache-2.0 <package_name>
+```
+
+`Python`
+```bash
+ros2 pkg create --build-type ament_python --license Apache-2.0 <package_name>
+```
+
+Packages in workspaces should look similar to this:
+
+```
+workspace_folder/
+    src/
+      cpp_package_1/
+          CMakeLists.txt
+          include/cpp_package_1/
+          package.xml
+          src/
+
+      py_package_1/
+          package.xml
+          resource/py_package_1
+          setup.cfg
+          setup.py
+          py_package_1/
+      ...
+      cpp_package_n/
+          CMakeLists.txt
+          include/cpp_package_n/
+          package.xml
+          src/
+```
+
+## Building Packages
+
+When it comes to building packages you need to ensure that all your dependencies are taken care of.
+Be sure to do this command, it will ensure you if you need to download other dependencies or not:
+
+```bash
+rosdep install -i --from-path src --rosdistro jazzy -y
+```
+
+To Build a package make sure you are in your root directory. After you migrate to your
+root directory input this:
+
+```bash
+ colcon build --packages-select cpp_pubsub
+ ```
