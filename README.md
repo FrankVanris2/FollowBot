@@ -87,10 +87,11 @@ npm run start
 
 
 ## Robotic-end
-The robotic side of our project is the most fascinating aspect, and the setup process is relatively straightforward. However, things will change when we start migrating our software and development to a Raspberry Pi 4-5 with ROS2. You will be notified as a developer when we transition from standalone robotic development to publisher-subscriber development.
+The robotic side of this project will involve the integration and communication between an Arduino board and a Raspberry Pi running ROS2. The Arduino board will facilitate motor and sensory communication by allowing messages to be sent back and forth, enabling various applications supported by the Raspberry Pi with ROS2. Utilizing ROS2, we can develop learning models and employ computer vision technologies to enhance the accuracy of our mapping, following mechanics, voice recognition, path-finding, and user recognition. The required steps in order to begin development on the robotic side of this project is found in the link below. It will direct you to another Repository that will connect back as always to our master repository:
 
-The README will be updated once we have a full understanding of the migration process. For now, please follow the steps below to set up your environment correctly to run, test, and develop our programs:
+[ROS2 Development for FollowBot](https://github.com/FrankVanris2/ROS2_FollowBot)
 
+**For Arduino Development**:
 * If you have not already please download VSCode with the PlatformIO extension in order for you to develop on the Robotic side.
 * Within the PlatformIO homepage there are 4 side buttons that you will be allowed to click on. Please click on the `Open Project` Button
 
