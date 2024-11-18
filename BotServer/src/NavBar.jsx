@@ -10,12 +10,12 @@ export default function Navbar(){
                 FollowBot
             </Link>
             <ul>
-                <CustomLink to="/AboutFollowBot">AboutFollowBot</CustomLink>
-                <CustomLink to="/AboutAppPage">AboutAppPage</CustomLink>
-                <CustomLink to="/AboutUsPage">AboutUsPage</CustomLink>
-                <CustomLink to="/FeedbackPage">FeedbackPage</CustomLink>
-                <CustomLink to="/NewsArticlePage">NewsArticlePage</CustomLink>  
-                <CustomLink to="/HomePage">HomePage</CustomLink>  
+                <CustomLink to="/AboutFollowBotPage">AboutFollowBot</CustomLink>
+                <CustomLink to="/AboutAppPage">AboutApp</CustomLink>
+                <CustomLink to="/AboutUsPage">AboutUs</CustomLink>
+                <CustomLink to="/FeedbackPage">Feedback</CustomLink>
+                <CustomLink to="/NewsArticlePage">NewsArticle</CustomLink>  
+                <CustomLink to="/HomePage">Home</CustomLink>  
             </ul>
     
         </nav>

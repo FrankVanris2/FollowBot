@@ -1,3 +1,7 @@
-export default function AboutFollowBotPage(){
-    return <h1>About FollowBot</h1>
-}
+import React from 'react';
+
+const AboutFollowBotPage = () => {
+    return <h1>About FollowBot Ap</h1>;
+};
+
+export default AboutFollowBotPage;
