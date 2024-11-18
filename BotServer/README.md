@@ -1,15 +1,15 @@
 
-#note to run you have to be in the BotServer 
+#note to run you have to be in the BotServer folder for it to run if not it wont find path when bulding it 
 
 # Install()
 
 pip install Flask
 pip install -U flask-cors
+npm install --save-dev style-loader css-loader
 
-npm i 
-better version 
-npm i -g npm
-npm install @mui/icons-material
+
+npm i better version npm i -g npm
+npm install @mui/icons-material // only revalant for FollowBot ccntroller
 
 # Build
 
