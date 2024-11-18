@@ -87,10 +87,11 @@ npm run start
 
 
 ## Robotic-end
-The robotic side of our project is the most fascinating aspect, and the setup process is relatively straightforward. However, things will change when we start migrating our software and development to a Raspberry Pi 4-5 with ROS2. You will be notified as a developer when we transition from standalone robotic development to publisher-subscriber development.
+The robotic side of this project will involve the integration and communication between an Arduino board and a Raspberry Pi running ROS2. The Arduino board will facilitate motor and sensory communication by allowing messages to be sent back and forth, enabling various applications supported by the Raspberry Pi with ROS2. Utilizing ROS2, we can develop learning models and employ computer vision technologies to enhance the accuracy of our mapping, following mechanics, voice recognition, path-finding, and user recognition. The required steps in order to begin development on the robotic side of this project is found in the link below. It will direct you to another Repository that will connect back as always to our master repository:
 
-The README will be updated once we have a full understanding of the migration process. For now, please follow the steps below to set up your environment correctly to run, test, and develop our programs:
+[ROS2 Development for FollowBot](https://github.com/FrankVanris2/ROS2_FollowBot)
 
+**For Arduino Development**:
 * If you have not already please download VSCode with the PlatformIO extension in order for you to develop on the Robotic side.
 * Within the PlatformIO homepage there are 4 side buttons that you will be allowed to click on. Please click on the `Open Project` Button
 
@@ -127,7 +128,6 @@ The README will be updated once we have a full understanding of the migration pr
 Within the Repo there is a directory called `Documentation` Most of the documentation is around the requirements and the design of our Project. But there is specific docs that I recommend you guys reading up on. Please read the `RunningUnitTestsPlatformIO` documentation, `JestUnitTesting` Documentation, And for future references the `ROS2_Important_Commands` Documentation.
 
 - [Running Unit Test PlatformIO](https://github.com/FrankVanris2/FollowBot/blob/main/Documentation/RunningUnitTestsPlatformIO.md)
-- [ROS2 Important Commands](https://github.com/FrankVanris2/FollowBot/blob/main/Documentation/ROS2_Important_Commands.md)
 - [Jest Unit Testing Document](https://github.com/FrankVanris2/FollowBot/blob/main/Documentation/JestUnitTesting.md)
 ## Contributing
 We are a small team of college students, any help is appreciated! You can clone the repository on GitHub and submit a pull request.
