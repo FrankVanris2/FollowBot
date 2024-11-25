@@ -118,11 +118,6 @@ The robotic side of this project will involve the integration and communication 
 
 ![image](/Images/readMe_images/IOMonitor.png)
 
-
-**ROS2 With Raspberry Pi**
-
-*Currently in the works for Migration, steps in usage will be added later.*
-
 ## Other Documentation:
 
 Within the Repo there is a directory called `Documentation` Most of the documentation is around the requirements and the design of our Project. But there is specific docs that I recommend you guys reading up on. Please read the `RunningUnitTestsPlatformIO` documentation, `JestUnitTesting` Documentation, And for future references the `ROS2_Important_Commands` Documentation.
