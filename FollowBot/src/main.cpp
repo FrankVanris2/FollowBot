@@ -12,12 +12,9 @@
 void setup() {
   Serial.begin(9600);
   followBotManager.followBotSetup();
-  // put your setup code here, to run once:
 }
 
 //testing purposes (Currently)
 void loop() {
   followBotManager.followBotLoop();
-  
-  // put your main code here, to run repeatedly:
 }

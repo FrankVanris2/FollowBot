@@ -12,6 +12,7 @@
 #include "sensors/TemperatureReader.h"
 #include "followbot_client/FollowBotClient.h"
 #include "following_mechanics/FollowMechanics.h"
+#include "ROS2_Testing/ros2Testing.h"
 
 //testing currently
 #include <ros.h>
@@ -35,11 +36,6 @@ FollowBotManager::FollowBotManager(): mIsDirty(false) {
 
 //the setup that will store the many objects that will set in the main
 void FollowBotManager::followBotSetup() {
-
-    //Testing Ros Setup code
-    //nh.initNode();
-    //nh.advertise(chatter);
-
     myMotors.motorSetup();
     followBotClient.followBotClient_Setup();
     temperatureReader.temperatureReader_Setup();
@@ -51,13 +47,9 @@ void FollowBotManager::followBotSetup() {
 //the loop that will store the many objects that will loop in the main
 void FollowBotManager::followBotLoop() {
 
-    // Testing Ros loop code
-    //str_msg.data = hello;
-    //chatter.publish( &str_msg );
-    //nh.spinOnce();
-    //delay(1000);
+    //ROS2 Testing:
+    //ros2_TestingObj.ros2_loop();
 
-    
     followBotClient.followBotClient_Loop();
 
     //Avoiding Obstacles
