@@ -37,7 +37,7 @@ void FollowMechanics::followMechanics_Loop() {
         mRSSITotal += followRSSI;
 
         //if list is > 5 remove the last value 
-        if (rssiList.size() > 5) {
+        if (rssiList.size() > 30) {
             mRSSITotal -= rssiList.back();
             rssiList.pop_back();
         }
