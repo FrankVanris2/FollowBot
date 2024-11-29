@@ -59,6 +59,7 @@ void FollowMechanics::followMechanics_Loop() {
         //-50 came from checking iPhone hotspot 1m away
 
         unsigned d = static_cast<unsigned>(pow(10, (-50 - mRSSIAvg) / 10.0) * 1.8);
+        
         if (mRSSIAvg > -50) {
             myMotors.setDirection("MOTOR_FORWARD");
         }

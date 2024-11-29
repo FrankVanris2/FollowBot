@@ -23,12 +23,15 @@ private:
 
     void postRobotInfo();
     void getMove();
+
+    void checkServerConnection();
  
     unsigned long mPreviousMillisMove;
 
     int mCountMoves;
     int mConnectionStatus;
     long mRSSI;
+    bool mServerConnected;
     String mIPAddress;
 };
 

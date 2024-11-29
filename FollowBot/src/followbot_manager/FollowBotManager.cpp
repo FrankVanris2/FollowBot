@@ -60,8 +60,9 @@ void FollowBotManager::followBotLoop() {
     
     //obtaining the Temperature
     temperatureReader.temperatureReader_Loop();
-    followMechanics.followMechanics_Loop();
+    
     // For motor movement
     myMotors.motorLoop();
+    followMechanics.followMechanics_Loop();
     
 }

@@ -42,7 +42,8 @@ const int PORT = 5000;
 WiFiClient client;
 
 // Constructor
-FollowBotClient::FollowBotClient(): mConnectionStatus(WL_IDLE_STATUS), mPreviousMillisMove(0), mCountMoves(0), mIPAddress(server.toString()), mRSSI(0) {}
+FollowBotClient::FollowBotClient(): mConnectionStatus(WL_IDLE_STATUS), mPreviousMillisMove(0), mCountMoves(0), 
+mIPAddress(server.toString()), mRSSI(0), mServerConnected(false) {}
 
 void FollowBotClient::followBotClient_Setup() {
     while(!Serial) {
@@ -83,17 +84,33 @@ void FollowBotClient::followBotClient_Loop() {
     unsigned long currentMillisForMovement = millis();   
     if((unsigned long) (currentMillisForMovement - mPreviousMillisMove) >= TENTH_SECOND) {
         mPreviousMillisMove = currentMillisForMovement;
-        getMove();  
+        if(mConnectionStatus == WL_CONNECTED) {
+            if(mServerConnected) {
+                getMove();  
+
+                if(followBotManager.getDirtyFlag() != false) {
+                    postRobotInfo();
+                }
+
+            } else {
+                // Check server connection status in the background
+                checkServerConnection();
+            }
+        }
+        
         
 
     }  
-    if(followBotManager.getDirtyFlag() != false) {
-        postRobotInfo();
-    }
+    
+
     mRSSI = WiFi.RSSI();
-    Serial.println();
     Serial.print("FollowBotClient, mRSSI = ");
     Serial.println(mRSSI);
+
+    // Check WiFi connection status periodically
+    if(WiFi.status() != WL_CONNECTED) {
+        mConnectionStatus = WL_DISCONNECTED;
+    }
 }
 
 void FollowBotClient::printWifiStatus() {
@@ -144,7 +161,9 @@ void FollowBotClient::postRobotInfo() {
 }
 
 void FollowBotClient::getMove() {
-    if(client.connect(server, PORT)) { 
+    if(!client.connect(server, PORT)) {
+        return;
+    } else if(client.connect(server, PORT)) { 
         
         //else get the information to make the robot move
         Serial.println("connected to server");
@@ -207,10 +226,24 @@ void FollowBotClient::getMove() {
             
             direction = buffer + bodyIdx;  
         } 
-
+    
         client.stop();
         Serial.print("Direction: ");
         Serial.println(direction);
-        myMotors.setDirection(direction);    
+        myMotors.setDirection(direction);   
+    }    
+}
+
+void FollowBotClient::checkServerConnection() {
+    unsigned long startAttemptTime = millis();
+    mServerConnected = false;
+
+    while(millis() - startAttemptTime < 100) {
+        if(client.connect(server, PORT)) {
+            mServerConnected = true;
+            client.stop();
+            break;
+        }
     }
+    // If the loop exists without connecting, mServerConnected remains false   
 }
