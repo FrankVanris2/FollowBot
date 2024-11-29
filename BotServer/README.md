@@ -15,7 +15,7 @@ npm install @mui/icons-material // only revalant for FollowBot ccntroller
 
 npm run build
 
-# Run
+# Run V
 
 npm run start
 
@@ -29,15 +29,23 @@ Two cmd windows:
 
 - First window (for javascript browser development):
 
-`npm run watch`
+`npm run watch` // this command is not working does not allow me to see change as i go 
 
 - Second window (for python server development):
 
-`npm run startdebug`
+`npm run startdebug` 
 
 In the browser use url: http://localhost:3000/
 
 When finished adding changes please run clean:
 
 `npm run clean`
+
+
+
+# fast way  to debug web 
+
+npm run build
+npm run start
+npm run watch
 
