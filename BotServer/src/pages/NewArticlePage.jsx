@@ -15,7 +15,7 @@ const NewsArticlePage = () => {
             const response = await axios.get("https://newsapi.org/v2/everything", {
                 params: {
                     q: topic,
-                    apiKEY: "6e1c548a0ead49b8a35c3769df65a410" // hide this somehow
+                    apiKey: "6e1c548a0ead49b8a35c3769df65a410" // hide this somehow
                 },
             });
             setArticles(response.data.articles);
