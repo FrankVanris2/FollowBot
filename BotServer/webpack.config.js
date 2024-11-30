@@ -1,6 +1,8 @@
 "use strict";
 const CopyPlugin = require("copy-webpack-plugin");
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const path = require('path');
 
 module.exports = {
   mode: 'development',
@@ -10,7 +12,8 @@ module.exports = {
     extensions: ['.js', '.jsx'],
   },
   output: {
-    filename: "main.min.js"
+    filename: "main.min.js",
+    path: path.resolve(__dirname, 'dist'),
   },
 
   devtool: 'source-map',
@@ -54,15 +57,16 @@ module.exports = {
   },
 
   plugins: [
+    new CleanWebpackPlugin(),
     new CopyPlugin({
       patterns: [
-        { from: 'index.html', to: '.' },
-        { from: 'crazyface.png', to: './images' },
-        { from: 'server/*', to: '[name][ext]' },
+        { from: 'public/index.html', to: '.' },
+        { from: 'public/crazyface.png', to: 'images' },
+        { from: 'server/*', to: 'server/[name][ext]' },
       ],
     }),
     new BrowserSyncPlugin({
-      serveStatic: ['dist'],
+      files: ['dist/**/*'],
       proxy: 'http://127.0.0.1:5000/',
       open: false,
     }),
