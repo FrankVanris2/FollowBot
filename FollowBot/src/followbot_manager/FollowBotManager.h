@@ -16,6 +16,7 @@ public:
     FollowBotManager();
 
     void followBotSetup();
+    
     void followBotLoop();
 
     /*const String& getDirection() const {
@@ -32,6 +33,7 @@ public:
     }
 
     void setTemperatureParams(float temp, float heatIndex) {
+        Serial.println("FollowBotManager.setTemperatureParams()");
         mIsDirty = true;
         mOutputData.mTemperature = temp;
         mOutputData.mHeatIndex = heatIndex;
@@ -51,12 +53,10 @@ public:
         return mIsDirty;
     }
     
-
 private:
     //String mDirection; 
     OutputData mOutputData;
     mutable bool mIsDirty;
-
 };
 
 extern FollowBotManager followBotManager;

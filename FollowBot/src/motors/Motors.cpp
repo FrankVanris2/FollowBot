@@ -11,6 +11,7 @@
 #include "states&types/MotorControlStates.h"
 #include "Adafruit_MotorShield.h"
 #include "followbot_manager/FollowBotManager.h"
+#include "Arduino_FreeRTOS.h"
 
 
 const int MAX_SPEED = 255;
@@ -43,18 +44,25 @@ void Motors::motorSetup() {
     motor2->setSpeed(MED_SPEED);
     motor3->setSpeed(MED_SPEED);
     motor4->setSpeed(MED_SPEED);
+
 }
 
 
 
 void Motors::motorLoop() {  
-    //String dir = followBotManager.getDirection();
+    //testing purposes
+    Serial.print("New Direction: ");
+    Serial.println(mNewDirection);
+
+    Serial.print("Current Direction: ");
+    Serial.println(mCurrentDirection);
+    
     if(mNewDirection != mCurrentDirection) {
         Serial.print("Motor Direction: ");
         Serial.println(mNewDirection);
         mCurrentDirection = mNewDirection;
         adjustDirection();
-    }
+    } 
 }
 
 //testing client, (very important)
