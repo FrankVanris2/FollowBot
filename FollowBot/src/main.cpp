@@ -7,7 +7,6 @@ void setup() {
   while (!Serial) {
     ; 
   }
-  
   followBotManager.followBotSetup();
 }
 

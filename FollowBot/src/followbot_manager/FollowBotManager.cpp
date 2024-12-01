@@ -13,7 +13,6 @@
 #include "followbot_client/FollowBotClient.h"
 #include "following_mechanics/FollowMechanics.h"
 //#include "ROS2_Testing/ros2Testing.h"
-#include "Arduino_FreeRTOS.h"
 
 
 //universal object
@@ -31,13 +30,13 @@ void FollowBotManager::followBotSetup() {
     followBotClient.followBotClient_Setup();
     temperatureReader.temperatureReader_Setup();
     //objectAvoidance.objectAvoidance_Setup();
-    //Serial.println("Finished Setup");
 
 }
 
 void FollowBotManager::followBotLoop() {
     //ROS2 Testing:
     //ros2_TestingObj.ros2_loop();
+    
     temperatureReader.temperatureReader_Loop();
     followBotClient.followBotClient_Loop();
     followMechanics.followMechanics_Loop();

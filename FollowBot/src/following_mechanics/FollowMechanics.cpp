@@ -42,7 +42,7 @@ void FollowMechanics::followMechanics_Averaging() {
         rssiList.push_front(followRSSI);
         mRSSITotal += followRSSI;
 
-        //if list is > 5 remove the last value 
+        //if list is > 30 remove the last value 
         if (rssiList.size() > 30) {
             mRSSITotal -= rssiList.back();
             rssiList.pop_back();

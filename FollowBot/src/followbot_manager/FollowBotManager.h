@@ -18,15 +18,7 @@ public:
     void followBotSetup();
     
     void followBotLoop();
-
-    /*const String& getDirection() const {
-        return mDirection;
-    }
-
-    void setDirection(const String& direction) {
-        mDirection = direction;
-    } */
-
+    
     //temperature getters and setters
     float getTemperature() const {
         return mOutputData.mTemperature;
