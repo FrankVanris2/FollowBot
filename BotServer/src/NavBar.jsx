@@ -10,7 +10,7 @@ export default function Navbar(){
                 FollowBot
             </Link>
             <ul>
-                <CustomLink to="/AboutFollowBotPage">About FollowBot Ap</CustomLink>
+                <CustomLink to="/AboutFollowBotPage">AboutFollowBot</CustomLink>
                 <CustomLink to="/AboutAppPage">AboutApp</CustomLink>
                 <CustomLink to="/AboutUsPage">AboutUs</CustomLink>
                 <CustomLink to="/FeedbackPage">Feedback</CustomLink>
