@@ -1,4 +1,4 @@
-from db_resource import dynamodb
+from .db_resource import dynamodb
 
 class BaseModel:
     def __init__(self, table_name):
