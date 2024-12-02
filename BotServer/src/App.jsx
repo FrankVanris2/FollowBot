@@ -9,7 +9,6 @@ import AboutUsPage from './pages/AboutUsPage';
 import FeedbackPage from './pages/FeedbackPage';
 import NewsArticlePage from './pages/NewArticlepage';
 import HomePage from './pages/HomePage';
-import PrivacyAndDataPage from "./pages/PrivacyAndDataPage";
 //import { Home } from '@mui/icons-material';
 
 
