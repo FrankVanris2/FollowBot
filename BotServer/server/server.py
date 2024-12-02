@@ -6,10 +6,11 @@ from handleRobotData import handleRobotData, getDirection, handleMovementData
 
 import os
 
-#from db_server import user_model
+from db_server.user_model import UserModel
 import uuid
 import hashlib
 
+user_model = UserModel()
 app = Flask(__name__)
 
 CORS(app)  # Enable CORS
