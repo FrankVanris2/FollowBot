@@ -1,7 +1,6 @@
 import React from 'react';
 // import image folders 
 import placeholder1 from "./res/placeholder1.png" ;
-import { LinkedIn } from '@mui/icons-material';
 
 const AboutUsPage = () => {
     const teamMembers = [
@@ -127,7 +126,7 @@ const AboutUsPage = () => {
                         <div style={titleStyle}>{member.title}</div>
                         <div style={descriptionStyle}>{member.description}</div>
                         <a
-                            href={member.linkedIn}
+                            href={member.LinkedIn}
                             style={linkedInStyle}
                             target="_blank"
                             rel="noopener noreferrer"

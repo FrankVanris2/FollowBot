@@ -9,6 +9,7 @@
     "clean": "clean-windows",
     "cleanlinux": "./clean-linux.sh",
     "start": "run-server",
+    "startTest": "webpack serve --mode development",
     "startdebug": "run-server --debug",
     "startlinux": "./run-server.sh",
     "test": "jest"
@@ -37,7 +38,7 @@
     "style-loader": "^4.0.0",
     "styled-components": "6.0.7",
     "ts-loader": "^9.5.1",
-    "webpack": "^5.88.2",
+    "webpack": "^5.96.1",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.1.0"
   },
@@ -46,6 +47,8 @@
     "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^6.1.9",
     "@mui/material": "^6.0.1",
-    "axios": "^1.7.7"
+    "axios": "^1.7.7",
+    "clean-webpack-plugin": "^4.0.0",
+    "react-native": "^0.76.3"
   }
 }
