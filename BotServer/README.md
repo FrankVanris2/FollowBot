@@ -9,7 +9,7 @@ npm install --save-dev style-loader css-loader
 
 
 npm i better version npm i -g npm
-npm install @mui/icons-material // only revalant for FollowBot ccntroller
+npm install @mui/icons-material // only revalant for FollowBot controller
 
 # Build
 

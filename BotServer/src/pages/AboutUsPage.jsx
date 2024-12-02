@@ -1,6 +1,7 @@
 import React from 'react';
 // import image folders 
 import placeholder1 from "./res/placeholder1.png" ;
+import "../styles/AboutUsStyle.css";
 
 const AboutUsPage = () => {
     const teamMembers = [
@@ -30,80 +31,6 @@ const AboutUsPage = () => {
         }
     ];
 
-    const containerStyle = {
-        width: "90%",
-        margin: "0 auto",
-        textAlign: "center",
-        fontFamily: "'Arial', sans-serif",
-        backgroundColor: "#f4f4f4",
-        padding: "20px",
-        borderRadius: "10px",
-    };
-
-    const headingStyle = {
-        fontSize: "2em",
-        fontWeight: "bold",
-        marginBottom: "10px",
-    };
-
-    const subheadingStyle = {
-        fontSize: "1.2em",
-        color: "#555",
-        marginBottom: "30px",
-    };
-
-    const gridStyle = {
-        display: "flex",
-        justifyContent: "space-around",
-        alignItems: "center",
-        flexWrap: "wrap",
-        gap: "20px",
-    };
-
-    const profileStyle = {
-        width: "220px",
-        textAlign: "center",
-        backgroundColor: "#fff",
-        padding: "15px",
-        borderRadius: "8px",
-        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-    };
-
-    const imageStyle = {
-        width: "100px",
-        height: "100px",
-        borderRadius: "50%",
-        objectFit: "cover",
-        marginBottom: "10px",
-    };
-
-    const nameStyle = {
-        fontSize: "1.2em",
-        fontWeight: "bold",
-        marginBottom: "5px",
-    };
-
-    const titleStyle = {
-        fontSize: "1em",
-        color: "#666",
-        fontStyle: "italic",
-        marginBottom: "10px",
-    };
-
-    const descriptionStyle = {
-        fontSize: "0.9em",
-        color: "#333",
-        marginBottom: "10px",
-    };
-
-    const linkedInStyle = {
-        display: "inline-block",
-        textDecoration: "none",
-        color: "#0077B5",
-        fontWeight: "bold",
-        fontSize: "0.9em",
-        marginTop: "10px",
-    };
 
     return (
         <div style={containerStyle}>

@@ -5,3 +5,5 @@ const AboutFollowBotPage = () => {
 };
 
 export default AboutFollowBotPage;
+
+

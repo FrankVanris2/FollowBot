@@ -1,0 +1,105 @@
+/* AboutAppPage.css */
+
+.about-app-page {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
+  }
+  
+  .about-app-page .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 15px 30px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  .about-app-page .logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #343a40;
+  }
+  
+  .about-app-page .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .about-app-page .nav-links li {
+    cursor: pointer;
+    font-size: 1rem;
+    color: #495057;
+    transition: color 0.3s ease;
+  }
+  
+  .about-app-page .nav-links li:hover {
+    color: #007bff;
+  }
+  
+  .about-app-page .auth {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .about-app-page .country {
+    font-size: 1rem;
+    color: #495057;
+  }
+  
+  .about-app-page .login-btn {
+    padding: 8px 15px;
+    border: none;
+    background-color: #007bff;
+    color: #ffffff;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .about-app-page .login-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .about-app-page .content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 40px 20px;
+  }
+  
+  .about-app-page .mobile-app-info {
+    max-width: 45%;
+    padding: 20px;
+  }
+  
+  .about-app-page .mobile-app-info h1 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: #343a40;
+  }
+  
+  .about-app-page .mobile-app-info p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #495057;
+  }
+  
+  .about-app-page .mobile-preview {
+    text-align: center;
+  }
+  
+  .about-app-page .phone-image {
+    width: 200px;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+  }
+  

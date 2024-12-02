@@ -1,0 +1,32 @@
+
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.heading {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.subheading {
+    font-size: 1.2em;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.grid {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
