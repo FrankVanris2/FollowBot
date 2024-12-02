@@ -1,21 +1,24 @@
 from flask import Flask, request, send_file, jsonify, abort, make_response
 from flask_cors import CORS
 
-from BotServer.db_server.views import user_model
+
 from handleRobotData import handleRobotData, getDirection, handleMovementData
+
 import os
 
-from BotServer.db_server.user_model import UserModel
+#from db_server import user_model
 import uuid
 import hashlib
 
 app = Flask(__name__)
-user_model = UserModel() # noqa
+
 CORS(app)  # Enable CORS
+
 
 #Global data variables needed
 temperature_data = None #Global variable to store temperature data
 heatIndex_data = None #Global variable to store heat index data
+
 
 @app.post("/api/signup")
 def register_user():
@@ -57,36 +60,33 @@ def register_user():
 @app.get("/")
 def get_index_html():
     try:
-        with open('./index.html', encoding='utf-8') as file:
+        with open('../index.html', encoding='utf-8') as file:
             return file.read()
     except FileNotFoundError:
         abort(404, description="File not found")
-
 
 @app.get("/favicon.ico")
 # dont get the why we need this function 
 def get_favicon():
     try:
-        return send_file('./images/crazyface.png', mimetype='image/png')
+        return send_file('../images/crazyface.png', mimetype='image/png')
     except FileNotFoundError:
         abort(404, description="Favicon not found")
-
 
 @app.get("/<filename>")
 def get_text_files(filename):
     try:
-        with open('./' + filename, encoding='utf-8') as file:
+        with open('../' + filename, encoding='utf-8') as file:
             return file.read()
     except FileNotFoundError:
         abort(404, description="File not found")
     except UnicodeDecodeError:
         abort(500, description="Error decoding file")
 
-
 @app.get("/images/<filename>")
 def get_image_files(filename):
     try:
-        return send_file(os.path.join('./images/', filename), mimetype='image/jpeg')
+        return send_file(os.path.join('../images/', filename), mimetype='image/jpeg')
     except FileNotFoundError:
         abort(404, description="Image file not found")
 
@@ -100,7 +100,6 @@ def getMove():
     return response
     #return dir
 
-
 @app.get("/api/getTempInfo")
 def getTemperatureInfo():
     if temperature_data is not None:
@@ -111,6 +110,7 @@ def getTemperatureInfo():
 def getHeatIdxInfo():
     if heatIndex_data is not None:
         return jsonify({"heatIndex": heatIndex_data})
+
 
 
 @app.post("/api/robotinfo")
@@ -124,7 +124,6 @@ def postRobotInfo():
     heatIndex_data = robotData.get('heatIndex')
 
     return "OK"
-
 
 #post info for website->server->robot
 @app.post("/api/postmovement") 
