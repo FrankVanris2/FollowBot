@@ -5,7 +5,8 @@ import TemperatureDisplay from '../components/TemperatureDisplay'; // Temperatur
 import HeatIndexDisplay from '../components/HeatIndexDisplay'; // Heat Index Display component
 import DirectionList from '../components/DirectionList'; // List of directions
 import api from '../services/api'; // API service
-import cameradisconnected from './res/cameradisconnected.png'; // Ensure the correct path to the image
+import cameradisconnected from './res/cameradisconnected.jpg'; // Ensure the correct path to the image
+import { Header, Container, ImageWrapper, Image, LiveFeedText, ButtonWrapper, InfoWrapper, TemperatureWrapper } from './FollowBotControlsPage.style';
 
 const FollowBotControlsPage = () => {
     const [presses, setPresses] = useState([]);
@@ -66,42 +67,36 @@ const FollowBotControlsPage = () => {
 
     return (
         <div>
-            <h1>Move Controls</h1>
-            <div style={containerStyle}>
-                <MoveAroundButtons 
-                    handleMouseDown={handleMouseDown}
-                    handleMouseUp={handleMouseUp}
-                    handleButtonClick={handleButtonClick}
-                />
-                <img 
-                    style={imageStyle}
-                    src={cameradisconnected}
-                    alt="Camera disconnected"
-                    className="camera-disconnected-img"
-                />
-                <DirectionList presses={presses} />
-                <h2>Current Temperature</h2>
-                <TemperatureDisplay temperature={temperature} />
-                <h2>Heat Index</h2>
-                <HeatIndexDisplay heatIndex={heatIndex} />
-            </div>
+            <Header>FollowBot Controls (Demo)</Header>
+            <Container>
+                <ButtonWrapper>
+                    <MoveAroundButtons 
+                        handleMouseDown={handleMouseDown}
+                        handleMouseUp={handleMouseUp}
+                        handleButtonClick={handleButtonClick}
+                    />
+                    <DirectionList presses={presses} />
+                </ButtonWrapper>
+                <ImageWrapper>
+                    <LiveFeedText>Live Feed</LiveFeedText>
+                    <Image 
+                        src={cameradisconnected}
+                        alt="Camera disconnected"
+                    />
+                </ImageWrapper>
+                <TemperatureWrapper>
+                    <h2>Current Temperature</h2>
+                    <TemperatureDisplay temperature={temperature} />
+                    <h2>Heat Index</h2>
+                    <HeatIndexDisplay heatIndex={heatIndex} />
+                </TemperatureWrapper>
+            </Container>
         </div>
     );
 };
 
-/* Styling for the image */
-const imageStyle = {
-    marginLeft: '15px',
-    width: '600px',
-    height: '400px'
-};
-
-const containerStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: '15px',
-};
-
 export default FollowBotControlsPage;
+
+
+
 

@@ -1,11 +1,24 @@
 import styled, { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
-  body {
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    overflow: auto;
-  }
+
+@font-face {
+font-family: Roboto-Regular;
+src: url('../fonts/Roboto-Regular.ttf') format('truetype'); //Ensure the path is correct
+font-weight: normal;
+font-style: normal;
+}
+
+
+body {
+  font-family: Roboto-Regular;
+  font-size: 14px;
+  overflow: auto;
+}
+
+
+
+  
 `;
 
 export const HelloWorld = styled.div`

@@ -2,27 +2,31 @@
 import React from 'react';
 import { Link, useMatch,useResolvedPath } from "react-router-dom"
 import AccountMenu from './components/Login';
+import {Header} from './NavBar.style';
+
 export default function Navbar(){
-    const path = window.location.pathname
     return (
-        <nav className="nav">
-            <Link to="/" className="site-title">
-                FollowBot
-            </Link>
-            <ul>
-                <CustomLink to="/AboutFollowBotPage">AboutFollowBot</CustomLink>
-                <CustomLink to="/AboutAppPage">AboutApp</CustomLink>
-                <CustomLink to="/AboutUsPage">AboutUs</CustomLink>
-                <CustomLink to="/FeedbackPage">Feedback</CustomLink>
-                <CustomLink to="/NewsArticlePage">NewsArticle</CustomLink>  
-                <CustomLink to="/FollowBotControlsPage">FollowBotControls</CustomLink>
-                <CustomLink to="/HomePage">Home</CustomLink>
-                <AccountMenu/>
-            </ul>
-    
-        </nav>
-    )
+        <>
+            <Header>Carry With Me </Header>
+            <nav className="nav">
+                <Link to="/" className="site-title">
+                    FollowBot
+                </Link>
+                <ul>
+                    <CustomLink to="/AboutFollowBotPage">AboutFollowBot</CustomLink>
+                    <CustomLink to="/AboutAppPage">AboutApp</CustomLink>
+                    <CustomLink to="/AboutUsPage">AboutUs</CustomLink>
+                    <CustomLink to="/FeedbackPage">Feedback</CustomLink>
+                    <CustomLink to="/NewsArticlePage">NewsArticle</CustomLink>  
+                    <CustomLink to="/FollowBotControlsPage">FollowBotControls</CustomLink>
+                    <CustomLink to="/HomePage">Home</CustomLink>
+                    <AccountMenu/>
+                </ul>
+            </nav>
+        </>
+    );
 }
+
 function CustomLink({to,children, ...props}){
     const resolvedPath = useResolvedPath(to)
     const isActive = useMatch({path: resolvedPath.pathname, end:true})

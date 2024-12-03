@@ -10,12 +10,13 @@ import FeedbackPage from './pages/FeedbackPage';
 import NewsArticlePage from './pages/NewArticlepage';
 import FollowBotControlsPage from './pages/FollowBotControlsPage';
 import HomePage from './pages/HomePage';
-//import { Home } from '@mui/icons-material';
+import { GlobalStyle } from './App.style.jsx'; // Import the global style
 
 
 function App(){
     return(
         <BrowserRouter>
+            <GlobalStyle />
             <Navbar />
             <div className="container">
                 <Routes>

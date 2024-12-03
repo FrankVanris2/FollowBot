@@ -102,12 +102,21 @@ def get_main_min_js():
 def get_main_min_js_map():
     return get_text_file("main.min.js.map")
 
+
+@app.get("/fonts/<filename>")
+def get_fonts(filename):
+    try:
+        return send_file(os.path.join('../fonts/', filename), mimetype='font/ttf')
+    except FileNotFoundError:
+        abort(404, description="font file not found")
+
 @app.get("/images/<filename>")
 def get_image_files(filename):
     try:
         return send_file(os.path.join('../images/', filename), mimetype='image/jpeg')
     except FileNotFoundError:
         abort(404, description="Image file not found")
+
 
 
 @app.get("/api/getmove")
