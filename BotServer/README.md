@@ -9,6 +9,7 @@ npm install --save-dev style-loader css-loader
 
 
 npm i better version npm i -g npm
+pip install boto3
 npm install @mui/icons-material // only revalant for FollowBot controller
 
 # Build
@@ -47,5 +48,5 @@ When finished adding changes please run clean:
 
 npm run build
 npm run start
-npm run watch
+
 

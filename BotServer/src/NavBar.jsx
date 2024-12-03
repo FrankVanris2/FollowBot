@@ -1,7 +1,7 @@
 //import { PriceChangeOutlined } from "@mui/icons-material"
 import React from 'react';
 import { Link, useMatch,useResolvedPath } from "react-router-dom"
-import AccountMenu from './components/Login.jsx';
+import AccountMenu from './components/Login';
 export default function Navbar(){
     const path = window.location.pathname
     return (
