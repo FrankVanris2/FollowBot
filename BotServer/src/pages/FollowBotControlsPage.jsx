@@ -8,17 +8,15 @@ import HeatIndexDisplay from '../components/HeatIndexDisplay';     // Heat Index
 
 const FollowBotControlsPage = () => {
     return (
-        <Router>
-            <div>
-                <Navigation />
-                <h1>Move Controls</h1>
-                <MoveAroundButtons />
-                <h2>Current Temperature</h2>
-                <TemperatureDisplay />
-                <h2>Heat Index</h2>
-                <HeatIndexDisplay /> {/* Include the Heat Index Display if applicable */}
-            </div>
-        </Router>
+        <div>
+            <Navigation />
+            <h1>Move Controls</h1>
+            <MoveAroundButtons />
+            <h2>Current Temperature</h2>
+            <TemperatureDisplay />
+            <h2>Heat Index</h2>
+            <HeatIndexDisplay /> {/* Include the Heat Index Display if applicable */}
+        </div>
     );
 };
 
