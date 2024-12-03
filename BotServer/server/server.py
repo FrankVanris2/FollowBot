@@ -1,6 +1,6 @@
 from flask import Flask, request, send_file, jsonify, abort, make_response
 from flask_cors import CORS
-
+import logging
 
 from handleRobotData import handleRobotData, getDirection, handleMovementData
 
@@ -15,6 +15,8 @@ app = Flask(__name__)
 
 CORS(app)  # Enable CORS
 
+   
+app.logger.setLevel(logging.INFO) # Set to the desired level
 
 #Global data variables needed
 temperature_data = None #Global variable to store temperature data
@@ -57,14 +59,18 @@ def register_user():
         print(f"Error in sign up: {e}")
         return jsonify({'error': 'An unexpected error occurred'}), 500
 
-
-@app.get("/")
 def get_index_html():
     try:
         with open('../index.html', encoding='utf-8') as file:
             return file.read()
     except FileNotFoundError:
         abort(404, description="File not found")
+
+
+# Default page
+@app.get("/")
+def get_default_page():
+    return get_index_html()
 
 @app.get("/favicon.ico")
 # dont get the why we need this function 
@@ -74,8 +80,12 @@ def get_favicon():
     except FileNotFoundError:
         abort(404, description="Favicon not found")
 
-@app.get("/<filename>")
-def get_text_files(filename):
+# Subpath pages
+@app.get("/<subpage>")
+def get_subpages(subpage):
+    return get_index_html()
+
+def get_text_file(filename):
     try:
         with open('../' + filename, encoding='utf-8') as file:
             return file.read()
@@ -84,12 +94,29 @@ def get_text_files(filename):
     except UnicodeDecodeError:
         abort(500, description="Error decoding file")
 
+@app.get("/main.min.js")
+def get_main_min_js():
+    return get_text_file("main.min.js")
+
+@app.get("/main.min.js.map")
+def get_main_min_js_map():
+    return get_text_file("main.min.js.map")
+
+
+@app.get("/fonts/<filename>")
+def get_fonts(filename):
+    try:
+        return send_file(os.path.join('../fonts/', filename), mimetype='font/ttf')
+    except FileNotFoundError:
+        abort(404, description="font file not found")
+
 @app.get("/images/<filename>")
 def get_image_files(filename):
     try:
         return send_file(os.path.join('../images/', filename), mimetype='image/jpeg')
     except FileNotFoundError:
         abort(404, description="Image file not found")
+
 
 
 @app.get("/api/getmove")

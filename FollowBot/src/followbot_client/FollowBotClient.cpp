@@ -42,7 +42,9 @@ WiFiClient client;
 
 // Constructor
 FollowBotClient::FollowBotClient(): mWifiConnectionStatus(WL_IDLE_STATUS), mPreviousMillisMove(0), mCountMoves(0), 
-mIPAddress(server.toString()), mRSSI(0), lastServerCheck(0), mServerNotConnected(0) {}
+mIPAddress(server.toString()), mRSSI(0), lastServerCheck(0), mServerNotConnected(0) {
+    client.setConnectionTimeout(15000);
+}
 
 void FollowBotClient::followBotClient_Setup() {
 

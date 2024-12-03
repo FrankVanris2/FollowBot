@@ -58,7 +58,7 @@ void Motors::motorLoop() {
     Serial.println(mCurrentDirection);
     
     if(mNewDirection != mCurrentDirection) {
-        Serial.print("Motor Direction: ");
+        Serial.print("Updated Motor Direction: ");
         Serial.println(mNewDirection);
         mCurrentDirection = mNewDirection;
         adjustDirection();
