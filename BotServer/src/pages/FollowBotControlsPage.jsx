@@ -1,14 +1,19 @@
 // src/pages/MoveControlsPage.js
+<<<<<<< Updated upstream
 import React from 'react';
 import { BrowserRouter as Router, Route} from 'react-router-dom';
 import MoveAroundButtons from '../components/MoveAroundButtons'; // Move Around Buttons component
 import TemperatureDisplay from '../components/TemperatureDisplay'; // Temperature Display component
 import HeatIndexDisplay from '../components/HeatIndexDisplay';     // Heat Index Display component (if applicable)
 import cameradisconnected from './res/cameradisconnected.jpg';
+=======
+
+>>>>>>> Stashed changes
 const FollowBotControlsPage = () => {
     return (
         <div>
             <h1>Move Controls</h1>
+<<<<<<< Updated upstream
             <div style={containerStyle}>
             <MoveAroundButtons/>
             <img style={imageStyle}
@@ -17,6 +22,7 @@ const FollowBotControlsPage = () => {
                  className="camera-disconnected-img"
             />
             </div>
+=======
         </div>
     );
 };
