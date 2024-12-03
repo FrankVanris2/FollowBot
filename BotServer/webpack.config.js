@@ -64,6 +64,7 @@ module.exports = {
         { from: 'public/crazyface.png', to: 'images' },
         { from: 'server/*', to: 'server/[name][ext]' },
         { from: 'server/db_server/*', to: 'server/db_server/[name][ext]'},
+        { from: 'fonts/*', to: 'fonts/[name][ext]'},
       ],
     }),
     new BrowserSyncPlugin({

@@ -110,6 +110,7 @@ export default function AccountMenu() {
                             label="Username"
                             value={username}
                             onChange={handleUsernameChange}
+                            onKeyDown = {evt => evt.stopPropagation()}
                             variant="outlined"
                             margin="normal"
                             size="small"
@@ -119,6 +120,7 @@ export default function AccountMenu() {
                             type="password"
                             value={password}
                             onChange={handlePasswordChange}
+                            onKeyDown = {evt => evt.stopPropagation()}
                             variant="outlined"
                             margin="normal"
                             size="small"
