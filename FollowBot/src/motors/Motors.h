@@ -17,9 +17,6 @@ public:
     void motorLoop();
 
     void setDirection(String dir) {
-        /*if (dir == MOTOR_FORWARD || dir == MOTOR_BACKWARD || dir == MOTOR_LEFT || dir == MOTOR_RIGHT || dir == MOTOR_STOP) {
-            mNewDirection = dir;
-        }  */
        mNewDirection = dir;   
     }
 
@@ -48,6 +45,7 @@ private:
     void motorLeft();
     void motorRight();
     void motorStop();
+
 
     void adjustDirection();
 

@@ -1,23 +1,17 @@
-#include <Arduino.h>
+#include "Arduino.h"
 #include "followbot_manager/FollowBotManager.h"
 
-
-/*
-* By: Frank Vanris
-* Date: 8/8/2024
-* Desc: main will consist of the main loop and setup
-*/
-
-//testing purposes (Currently)
 void setup() {
   Serial.begin(9600);
+  // Wait for serial port to connect. Needed for native USB
+  while (!Serial) {
+    ; 
+  }
   followBotManager.followBotSetup();
-  // put your setup code here, to run once:
 }
 
-//testing purposes (Currently)
 void loop() {
   followBotManager.followBotLoop();
-  
-  // put your main code here, to run repeatedly:
 }
+
+

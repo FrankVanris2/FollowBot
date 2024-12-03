@@ -30,13 +30,13 @@ const AboutAppPage = () => {
             download the FollowBotApp from the app store.
           </p>
         </div>
-        <div className="mobile-preview">
+        {/* <div className="mobile-preview">
           <img
             src="phone-placeholder.png"
             alt="FollowBot App Preview"
             className="phone-image"
           />
-        </div>
+        </div>  */}
       </main>
     </div>
   );

@@ -7,7 +7,6 @@
 #include "Arduino.h"
 class FollowBotClient {
 public:
-
     FollowBotClient();
 
     void followBotClient_Setup();
@@ -17,17 +16,21 @@ public:
         return mRSSI;
     }
 
+    void checkRSSI();
+    
 private:
-
     void printWifiStatus();
+    bool postRobotInfo();
+    bool getMove();
 
-    void postRobotInfo();
-    void getMove();
+    
  
     unsigned long mPreviousMillisMove;
+    unsigned long lastServerCheck;
 
     int mCountMoves;
-    int mConnectionStatus;
+    int mWifiConnectionStatus;
+    int mServerNotConnected;
     long mRSSI;
     String mIPAddress;
 };

@@ -16,8 +16,10 @@ public:
     void followMechanics_Setup();
     void followMechanics_Loop();
 
+    void followMechanics_Averaging();
+
 private:
-    unsigned long mPreviousMillisRSSI;
+    unsigned long previousMillis;
 
     //list for RSSI Avg
     std::list<long> rssiList;
