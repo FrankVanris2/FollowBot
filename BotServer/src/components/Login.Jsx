@@ -20,7 +20,6 @@ import Button from '@mui/material/Button';
  *ToDo:
     - send login form to database
     - change the dropdown menu after user is logged in
-    -
 */
 export default function AccountMenu() {
     const [anchorEl, setAnchorEl] = React.useState(null);
