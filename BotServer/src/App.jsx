@@ -8,6 +8,7 @@ import AboutFollowBotPage from './pages/AboutFollowBotPage';
 import AboutUsPage from './pages/AboutUsPage';
 import FeedbackPage from './pages/FeedbackPage';
 import NewsArticlePage from './pages/NewArticlepage';
+import FollowBotControlsPage from './pages/FollowBotControlsPage';
 import HomePage from './pages/HomePage';
 //import { Home } from '@mui/icons-material';
 
@@ -24,6 +25,7 @@ function App(){
                     <Route path="/AboutUsPage" element={<AboutUsPage />} />
                     <Route path="/FeedbackPage" element={<FeedbackPage />} />
                     <Route path="/NewsArticlePage" element={<NewsArticlePage />} />
+                    <Route path="/FollowBotControlsPage" element={<FollowBotControlsPage />} />
                     <Route path="/HomePage" element={<HomePage />} />
                 </Routes>
              </div>

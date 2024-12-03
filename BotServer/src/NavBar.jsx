@@ -15,6 +15,7 @@ export default function Navbar(){
                 <CustomLink to="/AboutUsPage">AboutUs</CustomLink>
                 <CustomLink to="/FeedbackPage">Feedback</CustomLink>
                 <CustomLink to="/NewsArticlePage">NewsArticle</CustomLink>  
+                <CustomLink to="/FollowBotControlsPage">FollowBotControls</CustomLink>
                 <CustomLink to="/HomePage">Home</CustomLink>
                 <AccountMenu/>
             </ul>
