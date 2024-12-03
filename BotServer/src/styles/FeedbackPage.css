@@ -1,0 +1,134 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+  }
+  
+  /* Navbar Styles */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #444;
+    color: #fff;
+    padding: 10px 20px;
+  }
+  
+  .navbar .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .navbar .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar .nav-links li {
+    cursor: pointer;
+    color: #fff;
+  }
+  
+  .navbar .nav-links li:hover {
+    text-decoration: underline;
+  }
+  
+  .navbar .auth {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .navbar .country {
+    font-size: 0.9rem;
+  }
+  
+  .navbar .login-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .navbar .login-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Feedback Section */
+  .feedback-section {
+    padding: 20px;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    margin: 20px;
+  }
+  
+  .feedback-section h1 {
+    font-size: 1.8rem;
+    color: #222;
+    margin-bottom: 10px;
+  }
+  
+  .feedback-section p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+  
+  /* Feedback Form */
+  .feedback-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .feedback-form label {
+    margin: 10px 0 5px;
+    font-weight: bold;
+  }
+  
+  .feedback-form input,
+  .feedback-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .feedback-form .submit-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .feedback-form .submit-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .navbar {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .navbar .nav-links {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .navbar .auth {
+      margin-top: 10px;
+    }
+  }
+  
