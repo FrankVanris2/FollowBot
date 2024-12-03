@@ -1,6 +1,6 @@
 
 import React from 'react';
-import {Routes,Route} from "react-router-dom"
+import {Routes,Route, BrowserRouter} from "react-router-dom"
 //import MoveControlsPage from './pages/MoveControlsPage'; // Import the new Move Controls Page
 import Navbar from './NavBar';
 import AboutAppPage from './pages/AboutAppPage';
@@ -15,7 +15,7 @@ import HomePage from './pages/HomePage';
 
 function App(){
     return(
-        <>
+        <BrowserRouter>
             <Navbar />
             <div className="container">
                 <Routes>
@@ -29,7 +29,7 @@ function App(){
                     <Route path="/HomePage" element={<HomePage />} />
                 </Routes>
              </div>
-        </>
+        </BrowserRouter>
     )
 }
 
