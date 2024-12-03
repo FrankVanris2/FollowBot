@@ -1,33 +1,39 @@
 import React from 'react';
-import placeholder1 from './res/placeholder1.png';
+
+// import image folders 
+import Joseph from "./res/placeholder1.png";
+import Igor from "./res/IgorJanotti.png";
+import Frank from "./res/FrankVanris.png";
+import Trong from "./res/TrongDuong.png";
 import '../styles/AboutUsStyle.css';
+
 
 const AboutUsPage = () => {
     const teamMembers = [
         {
-            name: 'Igor',
-            photo: placeholder1,
-            description: 'Placeholder description for Igor',
-            LinkedIn: 'https://www.linkedin.com/in/igor-janotti-1613ba193/'
+            name: "Igor",
+            photo: Igor,
+            description: "Warhammer Annihilator",
+            LinkedIn:  "https://www.linkedin.com/in/igor-janotti-1613ba193/"
         },
         {
-            name: 'Frank',
-            photo: placeholder1,
-            description: 'Placeholder description for Frank',
-            LinkedIn: 'http://linkedin.com/in/frankcvanris'
+            name: "Frank",
+            photo: Frank,
+            description: "He's Embedded in the System",
+            LinkedIn: "http://linkedin.com/in/frankcvanris"
         },
         {
-            name: 'Trong',
-            photo: placeholder1,
-            description: 'Placeholder description for Trong',
-            LinkedIn: 'http://linkedin.com/in/frankcvanris'
+            name: "Trong",
+            photo: Trong,
+            description: "Vim Enthusiast",
+            LinkedIn: "http://linkedin.com/in/frankcvanris"
         },
         {
-            name: 'Joseph',
-            photo: placeholder1,
-            description: 'Placeholder description for Joseph',
-            LinkedIn: 'http://linkedin.com/in/frankcvanris'
-        }
+            name: "Joseph",
+            photo: Joseph,
+            description: "Hopelessly in love with FollowBot",
+            LinkedIn: "http://linkedin.com/in/frankcvanris"
+        },   
     ];
 
     return (
