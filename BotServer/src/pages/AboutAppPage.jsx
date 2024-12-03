@@ -4,23 +4,7 @@ import "../styles/AboutAppPage.css";
 const AboutAppPage = () => {
   return (
     <div className="about-app-page">
-      <header className="navbar">
-        <div className="logo">Carry With Me</div>
-        <nav>
-          <ul className="nav-links">
-            <li>FollowBot</li>
-            <li>About Mobile App</li>
-            <li>About Us</li>
-            <li>Feedback</li>
-            <li>News</li>
-          </ul>
-        </nav>
-        <div className="auth">
-          <span className="country">US</span>
-          <button className="login-btn">Login</button>
-        </div>
-      </header>
-
+      
       <main className="content">
         <div className="mobile-app-info">
           <h1>Mobile App</h1>
