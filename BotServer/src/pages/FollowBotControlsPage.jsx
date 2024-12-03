@@ -56,7 +56,7 @@ const FollowBotControlsPage = () => {
     };
 
     const handleButtonClick = async (direction) => {
-        setPresses(prevPresses => [...prevPresses, direction]);
+        setPresses(prevPresses => [direction]);
         console.log(`Button pressed: ${direction}`);
         try {
             await api.postMovement(direction);

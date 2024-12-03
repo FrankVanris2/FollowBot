@@ -1,31 +1,34 @@
 import React from 'react';
 // import image folders 
-import placeholder1 from "./res/placeholder1.png" ;
+import Joseph from "./res/placeholder1.png";
+import Igor from "./res/IgorJanotti.png";
+import Frank from "./res/FrankVanris.png";
+import Trong from "./res/TrongDuong.png";
 
 const AboutUsPage = () => {
     const teamMembers = [
         {
             name: "Igor",
-            photo: placeholder1,
-            description: "placeholder",
+            photo: Igor,
+            description: "Warhammer Annihilator",
             LinkedIn:  "https://www.linkedin.com/in/igor-janotti-1613ba193/"
         },
         {
             name: "Frank",
-            photo: placeholder1,
-            description: "placeholder",
+            photo: Frank,
+            description: "He's Embedded in the System",
             LinkedIn: "http://linkedin.com/in/frankcvanris"
         },
         {
             name: "Trong",
-            photo: placeholder1,
-            description: "placeholder",
+            photo: Trong,
+            description: "Vim Enthusiast",
             LinkedIn: "http://linkedin.com/in/frankcvanris"
         },
         {
             name: "Joseph",
-            photo: placeholder1,
-            description: "placeholder",
+            photo: Joseph,
+            description: "Hopelessly in love with FollowBot",
             LinkedIn: "http://linkedin.com/in/frankcvanris"
         }
     ];
