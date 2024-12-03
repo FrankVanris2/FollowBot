@@ -26,7 +26,6 @@ const MoveAroundButtons = ({ handleMouseDown, handleMouseUp, handleButtonClick }
     <Button variant="contained" color="secondary" onClick={() => handleButtonClick('Stop')}>
       <StopIcon fontSize="large" />
     </Button>
-    <span>Stop the machine</span>
   </Stack>
 );
 
