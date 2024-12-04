@@ -3,16 +3,24 @@ import React from 'react';
 import { Link, useMatch,useResolvedPath } from "react-router-dom"
 import AccountMenu from './components/Login';
 import {Header} from './NavBar.style';
+import Logo from './pages/res/logo.png';
 
 export default function Navbar(){
     return (
-        <>
-            <Header>Carry With Me </Header>
+        <>  
+
+            
+            <Header style={{ display: "flex", flexDirection: "row" }}>
+            <img src={Logo} alt="Logo" />
+            <div style={{width:'100%', display: "flex", alignItems: "center", justifyContent: "center", fontWeight: "bolder"  }}>
+                CARRY WITH ME
+            </div>
+            </Header>
             <nav className="nav">
                 <Link to="/" className="site-title">
                     FollowBot
                 </Link>
-                <ul>
+                <ul style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"center"}}>
                     <CustomLink to="/AboutFollowBotPage">AboutFollowBot</CustomLink>
                     <CustomLink to="/AboutAppPage">AboutApp</CustomLink>
                     <CustomLink to="/AboutUsPage">AboutUs</CustomLink>

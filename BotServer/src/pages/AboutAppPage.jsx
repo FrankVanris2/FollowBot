@@ -1,29 +1,26 @@
 import React from "react";
-import "../styles/AboutAppPage.css";
+import { AboutAppPageContainer, Content, MobileAppInfo, MobileAppInfoHeading, MobileAppInfoText } from "./AboutAppPage.style";
+import mobileImage from "./res/phoneImage.png";
 
 const AboutAppPage = () => {
   return (
-    <div className="about-app-page">
-      
-      <main className="content">
-        <div className="mobile-app-info">
-          <h1>Mobile App</h1>
-          <p>
+    <AboutAppPageContainer>
+      <Content>
+        <MobileAppInfo>
+          <MobileAppInfoHeading>Mobile App</MobileAppInfoHeading>
+          <MobileAppInfoText>
             When you purchase a FollowBot, a mobile app is included. To access
             the full range of features and commands for your FollowBot,
             download the FollowBotApp from the app store.
-          </p>
+          </MobileAppInfoText>
+        </MobileAppInfo>
+        <div>
+          <img src={mobileImage}/>
         </div>
-        {/* <div className="mobile-preview">
-          <img
-            src="phone-placeholder.png"
-            alt="FollowBot App Preview"
-            className="phone-image"
-          />
-        </div>  */}
-      </main>
-    </div>
+      </Content>
+    </AboutAppPageContainer>
   );
 };
 
 export default AboutAppPage;
+

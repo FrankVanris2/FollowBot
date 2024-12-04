@@ -61,7 +61,7 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         { from: 'public/index.html', to: '.' },
-        { from: 'public/crazyface.png', to: 'images' },
+        { from: 'public/logo.png', to: 'images' },
         { from: 'server/*', to: 'server/[name][ext]' },
         { from: 'server/db_server/*', to: 'server/db_server/[name][ext]'},
         { from: 'fonts/*', to: 'fonts/[name][ext]'},
