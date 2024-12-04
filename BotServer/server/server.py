@@ -72,11 +72,11 @@ def get_index_html():
 def get_default_page():
     return get_index_html()
 
-@app.get("/favicon.ico")
+@app.get("/logo.png")
 # dont get the why we need this function 
 def get_favicon():
     try:
-        return send_file('../images/crazyface.png', mimetype='image/png')
+        return send_file('../images/logo.png', mimetype='image/png')
     except FileNotFoundError:
         abort(404, description="Favicon not found")
 
