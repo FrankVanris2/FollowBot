@@ -7,7 +7,7 @@ import AboutAppPage from './pages/AboutAppPage';
 import AboutFollowBotPage from './pages/AboutFollowBotPage';
 import AboutUsPage from './pages/AboutUsPage';
 import FeedbackPage from './pages/FeedbackPage';
-import NewsArticlePage from './pages/NewArticlepage';
+import NewsArticlePage from './pages/NewArticlePage';
 import FollowBotControlsPage from './pages/FollowBotControlsPage';
 import HomePage from './pages/HomePage';
 import { GlobalStyle } from './App.style.jsx'; // Import the global style

@@ -34,8 +34,8 @@ const int MAX_SERVER_NOT_CONNECTED = 3;
 
 // Server IP address
 //IPAddress server(3, 145, 197, 165); // numeric IP for Google (no DNS)
-IPAddress server(10, 0, 0, 245); // numeric IP for Google (no DNS)
-const int PORT = 5000;
+IPAddress server(3, 131, 97, 5); // numeric IP for Google (no DNS)
+const int PORT = 80;
 
 // WiFi client
 WiFiClient client;
