@@ -9,3 +9,9 @@ export const Header = styled.h1`
     font-size: 50px
 `;
 
+export const LinkItem = styled.li`
+    &:hover {
+        color: lightSlateGray;
+    }
+`;
+

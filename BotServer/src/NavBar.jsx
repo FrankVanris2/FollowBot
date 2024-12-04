@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link, useMatch,useResolvedPath } from "react-router-dom"
 import AccountMenu from './components/Login';
-import {Header} from './NavBar.style';
+import {Header, LinkItem} from './NavBar.style';
 import Logo from './pages/res/logo.png';
 
 export default function Navbar(){
@@ -21,12 +21,12 @@ export default function Navbar(){
                     FollowBot
                 </Link>
                 <ul style={{display:"flex", flexDirection:"row", alignItems:"center", justifyContent:"center"}}>
-                    <CustomLink to="/AboutFollowBotPage">AboutFollowBot</CustomLink>
-                    <CustomLink to="/AboutAppPage">AboutApp</CustomLink>
-                    <CustomLink to="/AboutUsPage">AboutUs</CustomLink>
+                    <CustomLink to="/AboutFollowBotPage">About FollowBot</CustomLink>
+                    <CustomLink to="/AboutAppPage">About App</CustomLink>
+                    <CustomLink to="/AboutUsPage">About Us</CustomLink>
                     <CustomLink to="/FeedbackPage">Feedback</CustomLink>
-                    <CustomLink to="/NewsArticlePage">NewsArticle</CustomLink>  
-                    <CustomLink to="/FollowBotControlsPage">FollowBotControls</CustomLink>
+                    <CustomLink to="/NewsArticlePage">News Article</CustomLink>  
+                    <CustomLink to="/FollowBotControlsPage">FollowBot Controls</CustomLink>
                     <CustomLink to="/HomePage">Home</CustomLink>
                     <AccountMenu/>
                 </ul>
@@ -39,11 +39,11 @@ function CustomLink({to,children, ...props}){
     const resolvedPath = useResolvedPath(to)
     const isActive = useMatch({path: resolvedPath.pathname, end:true})
     return(
-        <li className={isActive? "active" : ""}>
+        <LinkItem className={isActive? "active" : ""}>
             <Link to={to} {...props}>
                 {children}
             </Link> 
-        </li>
+        </LinkItem>
     );
 
 }

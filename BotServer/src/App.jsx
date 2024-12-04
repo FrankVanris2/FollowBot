@@ -18,18 +18,16 @@ function App(){
         <BrowserRouter>
             <GlobalStyle />
             <Navbar />
-            <div className="container">
-                <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/AboutAppPage" element={<AboutAppPage />} />
-                    <Route path="/AboutFollowBotPage" element={<AboutFollowBotPage />} />
-                    <Route path="/AboutUsPage" element={<AboutUsPage />} />
-                    <Route path="/FeedbackPage" element={<FeedbackPage />} />
-                    <Route path="/NewsArticlePage" element={<NewsArticlePage />} />
-                    <Route path="/FollowBotControlsPage" element={<FollowBotControlsPage />} />
-                    <Route path="/HomePage" element={<HomePage />} />
-                </Routes>
-             </div>
+            <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/AboutAppPage" element={<AboutAppPage />} />
+                <Route path="/AboutFollowBotPage" element={<AboutFollowBotPage />} />
+                <Route path="/AboutUsPage" element={<AboutUsPage />} />
+                <Route path="/FeedbackPage" element={<FeedbackPage />} />
+                <Route path="/NewsArticlePage" element={<NewsArticlePage />} />
+                <Route path="/FollowBotControlsPage" element={<FollowBotControlsPage />} />
+                <Route path="/HomePage" element={<HomePage />} />
+            </Routes>
         </BrowserRouter>
     )
 }
