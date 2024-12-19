@@ -9,7 +9,7 @@
 #include "followbot_manager/FollowBotManager.h"
 #include "DHT.h"
 
-#define DHTPIN 13
+#define DHTPIN 6
 #define DHTTYPE DHT11
 
 const int TEN_SECONDS = 10000;
