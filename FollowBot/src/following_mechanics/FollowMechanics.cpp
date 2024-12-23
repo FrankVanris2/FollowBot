@@ -67,6 +67,7 @@ void FollowMechanics::followMechanics_Algorithm() {
     //including hysteresis functionality to prevent lag or delay
     const int DISTANCE_THRESHOLD_LOWER = 90; // 0.9 meters
     const int DISTANCE_THRESHOLD_UPPER = 110; // 1.1 meters
+    
 
     // use the distance sensors as a reference to the robot's distance from the user
     if(distance1 < distance2 && distance1 < distance3) {
