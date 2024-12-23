@@ -1,6 +1,6 @@
 
 import React from 'react';
-import {Routes,Route, BrowserRouter} from "react-router-dom"
+import { Routes, Route, BrowserRouter } from "react-router-dom"
 //import MoveControlsPage from './pages/MoveControlsPage'; // Import the new Move Controls Page
 import Navbar from './NavBar';
 import AboutAppPage from './pages/AboutAppPage';
@@ -10,7 +10,8 @@ import FeedbackPage from './pages/FeedbackPage';
 import NewsArticlePage from './pages/NewArticlePage';
 import FollowBotControlsPage from './pages/FollowBotControlsPage';
 import HomePage from './pages/HomePage';
-import { GlobalStyle } from './App.style.jsx'; // Import the global style
+import SignupPage from "./pages/SignupPage"; // Import the global style
+import { GlobalStyle } from './App.style.jsx';
 
 
 function App(){
@@ -20,22 +21,16 @@ function App(){
             <Navbar />
             <Routes>
                 <Route path="/" element={<HomePage />} />
-                <Route path="/AboutAppPage" element={<AboutAppPage />} />
-                <Route path="/AboutFollowBotPage" element={<AboutFollowBotPage />} />
-                <Route path="/AboutUsPage" element={<AboutUsPage />} />
-                <Route path="/FeedbackPage" element={<FeedbackPage />} />
-                <Route path="/NewsArticlePage" element={<NewsArticlePage />} />
-                <Route path="/FollowBotControlsPage" element={<FollowBotControlsPage />} />
-                <Route path="/HomePage" element={<HomePage />} />
+                <Route path="/about-app" element={<AboutAppPage />} />
+                <Route path="/about-followbot" element={<AboutFollowBotPage />} />
+                <Route path="/about-us" element={<AboutUsPage />} />
+                <Route path="/feedback" element={<FeedbackPage />} />
+                <Route path="/news-articles" element={<NewsArticlePage />} />
+                <Route path="/followbot-controls" element={<FollowBotControlsPage />} />
+                <Route path="/signup" element={<SignupPage />} />
             </Routes>
         </BrowserRouter>
     )
 }
 
-/*const App = () => {
-    return (
-        <MoveControlsPage /> // Render the Move Controls Page
-    );
-};
-*/
 export default App;
