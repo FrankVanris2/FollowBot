@@ -1,8 +1,8 @@
 import React from 'react';
-import Joseph from "./res/placeholder1.png";
-import Igor from "./res/IgorJanotti.png";
-import Frank from "./res/FrankVanris.png";
-import Trong from "./res/TrongDuong.png";
+import Joseph from "../res/Norman.png";
+import Igor from "../res/IgorJanotti.png";
+import Frank from "../res/FrankVanris.png";
+import Trong from "../res/TrongDuong.png";
 import { Container, Heading, Subheading, Grid, Profile, ProfileImage, ProfileName, ProfileDescription, ProfileLinkedIn } from './AboutUsPage.style';
 
 const AboutUsPage = () => {

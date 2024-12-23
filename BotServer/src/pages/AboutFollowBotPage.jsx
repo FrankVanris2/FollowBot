@@ -5,7 +5,7 @@ import {
   FollowBotImage, 
   CenterTitle 
 } from "./AboutFollowBotPage.style";
-import Prototype from "./res/FollowBotPrototype.png";
+import Prototype from "../res/FollowBotPrototype.png";
 
 const AboutFollowBotPage = () => {
   return (

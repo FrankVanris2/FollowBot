@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
@@ -6,44 +7,58 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
-import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
-/*
- *This is the login component that will be displayed in the navbar
- *the dropdown menu needs to change after user is logged in
- *ToDo:
-    - send login form to database
-    - change the dropdown menu after user is logged in
-*/
-export default function AccountMenu() {
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [username, setUsername] = React.useState('');
-    const [password, setPassword] = React.useState('');
+/**
+ TODO: send login form to database
+ TODO: change the dropdown menu after user is logged in
+ */
+
+const LoginForm = ({username, password, handleUsernameChange, handlePasswordChange, handleSubmit}) => {
+    return (
+        <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column' }}>
+            <TextField
+                label="Username"
+                value={username}
+                onChange={handleUsernameChange}
+                onKeyDown={(evt) => evt.stopPropagation()}
+                variant="outlined"
+                margin="normal"
+                size="small"
+            />
+            <TextField
+                label="Password"
+                value={password}
+                onChange={handlePasswordChange}
+                onKeyDown={(evt) => evt.stopPropagation()}
+                variant="outlined"
+                margin="normal"
+                size="small"
+            />
+            <Button type="submit" variant="contained" color="primary" size="small">Login</Button>
+        </Box>
+    )
+}
+
+
+const AccountMenu = () => {
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const open = Boolean(anchorEl);
 
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
+    const handleClick = (event) => { setAnchorEl(event.currentTarget); };
+    const handleClose = () => { setAnchorEl(null); };
 
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+    const handleUsernameChange = (event) => { setUsername(event.target.value); };
+    const handlePasswordChange = (event) => { setPassword(event.target.value); };
 
-    const handleUsernameChange = (event) => {
-        setUsername(event.target.value);
-    };
-
-    const handlePasswordChange = (event) => {
-        setPassword(event.target.value);
-    };
-
-    //this is sending out in clear text rn
+    // TODO: authentication
     const handleSubmit = (event) => {
         event.preventDefault();
         // Send the username and password to the login database
@@ -51,6 +66,30 @@ export default function AccountMenu() {
         //setLoginInfo(`Username: ${username}, Password: ${password}`);
         console.log('Username:', username);
         console.log('Password:', password);
+    };
+
+    const navigate = useNavigate();
+    const handleSignupRedirect = () => {
+        navigate('/signup')
+    }
+
+    const menuProps = {
+        elevation: 0,
+        sx: {
+            mt: 1.5,
+            '&:before': {
+                content: '""',
+                display: 'block',
+                position: 'absolute',
+                top: 0,
+                right: 14,
+                width: 10,
+                height: 10,
+                bgcolor: 'background.paper',
+                transform: 'translateY(-50%) rotate(45deg)',
+                zIndex: 0,
+            },
+        },
     };
 
     return (
@@ -74,62 +113,25 @@ export default function AccountMenu() {
                 open={open}
                 onClose={handleClose}
                 disableAutoFocusItem
-                PaperProps={{
-                    elevation: 0,
-                    sx: {
-                        overflow: 'visible',
-                        filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                        mt: 1.5,
-                        '& .MuiAvatar-root': {
-                            width: 32,
-                            height: 32,
-                            ml: -0.5,
-                            mr: 1,
-                        },
-                        '&:before': {
-                            content: '""',
-                            display: 'block',
-                            position: 'absolute',
-                            top: 0,
-                            right: 14,
-                            width: 10,
-                            height: 10,
-                            bgcolor: 'background.paper',
-                            transform: 'translateY(-50%) rotate(45deg)',
-                            zIndex: 0,
-                        },
-                    },
-                }}
+                PaperProps={menuProps}
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
                 <MenuItem>
-                    <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column'}}>
-                        <TextField
-                            label="Username"
-                            value={username}
-                            onChange={handleUsernameChange}
-                            onKeyDown = {evt => evt.stopPropagation()}
-                            variant="outlined"
-                            margin="normal"
-                            size="small"
-                        />
-                        <TextField
-                            label="Password"
-                            type="password"
-                            value={password}
-                            onChange={handlePasswordChange}
-                            onKeyDown = {evt => evt.stopPropagation()}
-                            variant="outlined"
-                            margin="normal"
-                            size="small"
-                        />
-                        <Button type="submit" variant="contained" color="primary" size="small">
-                            Login
-                        </Button>
-                    </Box>
+                    <LoginForm
+                        username={username}
+                        password={password}
+                        handleUsernameChange={handleUsernameChange}
+                        handlePasswordChange={handlePasswordChange}
+                        handleSubmit={handleSubmit}
+                    />
                 </MenuItem>
                 <Divider />
+
+
+                <MenuItem onClick={handleSignupRedirect}>Sign Up</MenuItem>
+
+                {/* TODO: IF SIGNED IN */}
                 <MenuItem>
                     <ListItemIcon>
                         <PersonAdd fontSize="small" />
@@ -148,7 +150,11 @@ export default function AccountMenu() {
                     </ListItemIcon>
                     Logout
                 </MenuItem>
+                {/* TODO: IF SIGNED IN */}
+
             </Menu>
         </React.Fragment>
     );
 }
+
+export default AccountMenu

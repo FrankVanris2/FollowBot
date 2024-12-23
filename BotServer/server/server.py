@@ -15,12 +15,10 @@ app = Flask(__name__)
 
 CORS(app)  # Enable CORS
 
-   
 app.logger.setLevel(logging.INFO) # Set to the desired level
 
-#Global data variables needed
-temperature_data = None #Global variable to store temperature data
-heatIndex_data = None #Global variable to store heat index data
+temperature_data = None   # Global variable to store temperature data
+heatIndex_data = None     # Global variable to store heat index data
 
 
 @app.post("/api/signup")
@@ -35,6 +33,7 @@ def register_user():
         password = data.get('password')
         phone_number = data.get('phone_number')
         business_id = data.get('business_id')
+        privacy_consent = data.get('privacy_consent')
 
         if not username or not email or not password:
             return jsonify({'error': 'Missing required fields'}), 400
@@ -48,7 +47,8 @@ def register_user():
             password=hashed_password,
             email=email,
             phone_number=phone_number,
-            business_id=business_id
+            business_id=business_id,
+            privacy_consent=privacy_consent
         )
 
         if response is None:
@@ -58,6 +58,13 @@ def register_user():
     except Exception as e:
         print(f"Error in sign up: {e}")
         return jsonify({'error': 'An unexpected error occurred'}), 500
+
+
+# TODO: authentication
+@app.get("")
+def authenticate_user():
+    return None
+
 
 def get_index_html():
     try:

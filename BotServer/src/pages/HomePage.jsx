@@ -15,7 +15,7 @@ import {
     VideoDescription
 } from './HomePage.style'; // Import styled-components
 
-import prototype from './res/FollowBotPrototype.png';
+import prototype from '../res/FollowBotPrototype.png';
 
 import { Link } from 'react-router-dom';
 
