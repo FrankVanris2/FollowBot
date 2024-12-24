@@ -71,7 +71,7 @@ void FollowMechanics::followMechanics_Algorithm() {
 
     // use the distance sensors as a reference to the robot's distance from the user
     if(distance1 < distance2 && distance1 < distance3) {
-        myMotors.setDirection(MOTOR_LEFT);
+        myMotors.setDirection(MOTOR_LEFT); // might chang to right in order to avoid obstacles
     } else if(distance2 < distance1 && distance2 < distance3) {
         
         //if the user is to close the robot will stop at 1 meter distance 
@@ -82,7 +82,14 @@ void FollowMechanics::followMechanics_Algorithm() {
         }
 
     } else if(distance3 < distance2 && distance3 < distance1) {
-        myMotors.setDirection(MOTOR_RIGHT);
+        myMotors.setDirection(MOTOR_RIGHT); // might change to left in order to avoid obstacles
+    } else {
+        // If no obstacles, rely more on the RSSI signal
+        if (mRSSIAvg < -70) {
+            myMotors.setDirection(MOTOR_FORWARD);
+        } else if (mRSSIAvg >= -60) {
+            myMotors.setDirection(MOTOR_STOP);
+        }
     }
  
 }
