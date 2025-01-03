@@ -62,11 +62,14 @@ After VSCode with the PlatformIO extension has been installed we can now git clo
 ## Front-end & Back-end
 Developing on the front-end requires to set up the server side. And it's quite easy.
 
+Firstly, we run our server with Node.js. Follow instructions [here](https://nodejs.org/en/download) to install.
+
 * In your command prompt go to the `BotServer` directory
 * Once in the directory you must run these pip commands:
   ```cmd
   pip install Flask
   pip install -U flask-cors
+  pip install boto3
   ```
 
 * Once those two things are installed and hopefully you have npm installed you will need to do the next following commands:
@@ -78,10 +81,16 @@ npm i -g npm
 ```cmd
 npm run build
 ```
-* After the build run the server
+* After the build, run the server
 ```cmd
 npm run start
 ```
+
+* Run this to render changes to the server for testing
+```cmd
+npm run watch
+```
+
 * In your browser be sure to use this url: `http://xx.xx.xx.xx:5000`
 * the xx.xx.xx.xx is showed in the server command window.
 
