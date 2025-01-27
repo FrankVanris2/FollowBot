@@ -3,7 +3,15 @@ from botocore.exceptions import ClientError
 
 class FollowBotModel(BaseModel):
     def __init__(self):
-        super().__init__('FollowBots')
+        super().__init__(
+            table_name='FollowBots',
+            key_schema=[
+                {'AttributeName': 'bot_id', 'KeyType': 'HASH'}
+            ],
+            attribute_definitions=[
+                {'AttributeName': 'bot_id', 'AttributeType': 'S'}
+            ]
+        )
 
     def create_follow_bot(self, bot_id, functional_key, logs, business_id=None, assigned_user_id=None):
         try:

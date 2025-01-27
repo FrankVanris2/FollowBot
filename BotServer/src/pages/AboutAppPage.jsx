@@ -1,6 +1,6 @@
 import React from "react";
 import { AboutAppPageContainer, Content, MobileAppInfo, MobileAppInfoHeading, MobileAppInfoText } from "./AboutAppPage.style";
-import mobileImage from "./res/phoneImage.png";
+import mobileImage from "../res/phoneImage.png";
 
 const AboutAppPage = () => {
   return (

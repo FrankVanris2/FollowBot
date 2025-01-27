@@ -4,8 +4,8 @@ AWS_DYNAMODB = {
     'default': {
         'ENGINE': 'django_dynamodb_engine',
         'NAME': 'database_name',
-        'AWS_ACCESS_KEY_ID': 'access_key_id',
-        'AWS_SECRET_ACCESS_KEY': 'secret_access_key',
-        'AWS_REGION': 'region',
+        'AWS_ACCESS_KEY_ID': 'dummy',
+        'AWS_SECRET_ACCESS_KEY': 'dummy',
+        'AWS_REGION': 'us-east-2',
     }
 }
