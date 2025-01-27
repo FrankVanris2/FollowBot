@@ -3,7 +3,15 @@ from botocore.exceptions import ClientError
 
 class UserModel(BaseModel):
     def __init__(self):
-        super().__init__('Users')
+        super().__init__(
+            table_name = 'Users',
+            key_schema=[
+                {'AttributeName': 'user_id', 'KeyType': 'HASH'}
+            ],
+            attribute_definitions=[
+                {'AttributeName': 'user_id', 'AttributeType': 'S'}
+            ]
+        )
 
     def create_user(self, user_id, username, password, email, phone_number=None, business_id=None, privacy_consent=False):
         try:

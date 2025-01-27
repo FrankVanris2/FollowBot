@@ -24,7 +24,7 @@ const Signup = () => {
     const handleSubmit = async (event) => {
         event.preventDefault(); // stops default form submission
         try {
-            const response = api.postSignUp(formData);
+            const response = await api.postSignUp(formData);
 
             if (response.error) {
                 setResponseMessage(`Error: ${response.error}`);

@@ -61,9 +61,9 @@ def register_user():
 
 
 # TODO: authentication
-@app.get("")
-def authenticate_user():
-    return None
+# @app.get("/")
+# def authenticate_user():
+#     return None
 
 
 def get_index_html():
