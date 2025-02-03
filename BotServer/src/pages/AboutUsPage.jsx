@@ -20,7 +20,7 @@ const AboutUsPage = () => {
             name: 'Trong',
             photo: placeholder1,
             description: 'Placeholder description for Trong',
-            LinkedIn: 'http://linkedin.com/in/frankcvanris'
+            LinkedIn: 'https://www.linkedin.com/in/trongduong/'
         },
         {
             name: 'Joseph',

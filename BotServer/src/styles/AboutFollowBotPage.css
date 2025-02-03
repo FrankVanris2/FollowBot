@@ -1,113 +1,144 @@
 /* General Styles */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f9;
-    color: #333;
-  }
-  
-  /* Navbar Styles */
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f9;
+  color: #333;
+}
+
+/* Skip to main content link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #000;
+  color: #fff;
+  padding: 8px;
+  z-index: 1000;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Navbar Styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #444;
+  color: #fff;
+  padding: 10px 20px;
+}
+
+.navbar .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.navbar .nav-links {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar .nav-links li {
+  cursor: pointer;
+  color: #fff;
+}
+
+.navbar .nav-links li:hover {
+  text-decoration: underline;
+}
+
+.navbar .auth {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar .country {
+  font-size: 0.9rem;
+}
+
+.navbar .login-btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.navbar .login-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Main Content Styles */
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px; /* Space between sections */
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Section Styles */
+.follow-bot-info,
+.mobile-app-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between elements inside sections */
+}
+
+h1,
+h2 {
+  color: #222;
+  margin: 0; /* Remove default margin */
+}
+
+p {
+  line-height: 1.6;
+  margin: 0; /* Remove default margin */
+}
+
+/* Image Placeholder Styles (if needed in the future) */
+.image-preview {
+  display: flex;
+  justify-content: center; /* Center the image horizontally */
+  align-items: center; /* Center the image vertically */
+  margin: 20px 0;
+}
+
+.image-preview .bot-image {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #444;
-    color: #fff;
-    padding: 10px 20px;
+    flex-direction: column;
+    align-items: flex-start;
   }
-  
-  .navbar .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-  
+
   .navbar .nav-links {
-    list-style: none;
-    display: flex;
-    gap: 15px;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .navbar .nav-links li {
-    cursor: pointer;
-    color: #fff;
-  }
-  
-  .navbar .nav-links li:hover {
-    text-decoration: underline;
-  }
-  
-  .navbar .auth {
-    display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 10px;
   }
-  
-  .navbar .country {
-    font-size: 0.9rem;
+
+  .navbar .auth {
+    margin-top: 10px;
   }
-  
-  .navbar .login-btn {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .navbar .login-btn:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Main Content Styles */
+
   .content {
-    padding: 20px;
+    padding: 10px; /* Reduce padding on smaller screens */
   }
-  
-  /* Section Styles */
-  .follow-bot-info,
-  .mobile-app-info {
-    margin-bottom: 30px;
-  }
-  
-  h1,
-  h2 {
-    color: #222;
-  }
-  
-  p {
-    line-height: 1.6;
-  }
-  
-  /* Image Placeholder Styles (if needed in the future) */
-  .image-preview {
-    text-align: center;
-    margin: 20px 0;
-  }
-  
-  .image-preview .bot-image {
-    width: 100%;
-    max-width: 400px;
-    height: auto;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .navbar {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    .navbar .nav-links {
-      flex-direction: column;
-      gap: 10px;
-    }
-  
-    .navbar .auth {
-      margin-top: 10px;
-    }
-  }
-  
+}

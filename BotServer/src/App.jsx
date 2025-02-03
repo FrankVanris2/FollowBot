@@ -1,7 +1,5 @@
-
 import React from 'react';
-import {Routes,Route, BrowserRouter} from "react-router-dom"
-//import MoveControlsPage from './pages/MoveControlsPage'; // Import the new Move Controls Page
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import Navbar from './NavBar';
 import AboutAppPage from './pages/AboutAppPage';
 import AboutFollowBotPage from './pages/AboutFollowBotPage';
@@ -10,34 +8,29 @@ import FeedbackPage from './pages/FeedbackPage';
 import NewsArticlePage from './pages/NewArticlepage';
 import FollowBotControlsPage from './pages/FollowBotControlsPage';
 import HomePage from './pages/HomePage';
+import NotFoundPage from './pages/NotFoundPage'; // Add a 404 page
 import { GlobalStyle } from './App.style.jsx'; // Import the global style
+import Layout from './components/Layout'; // Import the Layout component
 
-
-function App(){
-    return(
-        <BrowserRouter>
-            <GlobalStyle />
-            <Navbar />
-            <div className="container">
-                <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/AboutAppPage" element={<AboutAppPage />} />
-                    <Route path="/AboutFollowBotPage" element={<AboutFollowBotPage />} />
-                    <Route path="/AboutUsPage" element={<AboutUsPage />} />
-                    <Route path="/FeedbackPage" element={<FeedbackPage />} />
-                    <Route path="/NewsArticlePage" element={<NewsArticlePage />} />
-                    <Route path="/FollowBotControlsPage" element={<FollowBotControlsPage />} />
-                    <Route path="/HomePage" element={<HomePage />} />
-                </Routes>
-             </div>
-        </BrowserRouter>
-    )
+function App() {
+  return (
+    <BrowserRouter>
+      <GlobalStyle />
+      <Navbar />
+      <div className="container">
+        <Routes>
+          <Route path="/" element={<Layout><HomePage /></Layout>} />
+          <Route path="/AboutAppPage" element={<Layout><AboutAppPage /></Layout>} />
+          <Route path="/AboutFollowBotPage" element={<Layout><AboutFollowBotPage /></Layout>} />
+          <Route path="/AboutUsPage" element={<Layout><AboutUsPage /></Layout>} />
+          <Route path="/FeedbackPage" element={<Layout><FeedbackPage /></Layout>} />
+          <Route path="/NewsArticlePage" element={<Layout><NewsArticlePage /></Layout>} />
+          <Route path="/FollowBotControlsPage" element={<Layout><FollowBotControlsPage /></Layout>} />
+          <Route path="*" element={<Layout><NotFoundPage /></Layout>} /> {/* 404 Page */}
+        </Routes>
+      </div>
+    </BrowserRouter>
+  );
 }
 
-/*const App = () => {
-    return (
-        <MoveControlsPage /> // Render the Move Controls Page
-    );
-};
-*/
 export default App;

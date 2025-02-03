@@ -1,6 +1,7 @@
 import React from "react";
 import "../styles/AboutFollowBotPage.css";
 
+
 const AboutFollowBotPage = () => {
   return (
     <div className="about-follow-bot-page">

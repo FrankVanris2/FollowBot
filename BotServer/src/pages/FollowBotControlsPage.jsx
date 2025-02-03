@@ -6,7 +6,7 @@ import HeatIndexDisplay from '../components/HeatIndexDisplay'; // Heat Index Dis
 import DirectionList from '../components/DirectionList'; // List of directions
 import api from '../services/api'; // API service
 import cameradisconnected from './res/cameradisconnected.jpg'; // Ensure the correct path to the image
-import { Header, Container, ImageWrapper, Image, LiveFeedText, ButtonWrapper, InfoWrapper, TemperatureWrapper } from './FollowBotControlsPage.style';
+import { Header, Container, ImageWrapper, Image, LiveFeedText, ButtonWrapper, InfoWrapper, TemperatureWrapper } from '../styles/FollowBotControlsPage.style';
 
 const FollowBotControlsPage = () => {
     const [presses, setPresses] = useState([]);
