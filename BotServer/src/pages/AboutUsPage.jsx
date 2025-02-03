@@ -20,10 +20,10 @@ const AboutUsPage = () => {
             LinkedIn: "http://linkedin.com/in/frankcvanris"
         },
         {
-            name: "Trong",
-            photo: Trong,
-            description: "Vim Enthusiast",
-            LinkedIn: "http://linkedin.com/in/frankcvanris"
+            name: 'Trong',
+            photo: placeholder1,
+            description: 'Placeholder description for Trong',
+            LinkedIn: 'https://www.linkedin.com/in/trongduong/'
         },
         {
             name: "Joseph",

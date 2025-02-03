@@ -7,6 +7,7 @@ import {
 } from "./AboutFollowBotPage.style";
 import Prototype from "../res/FollowBotPrototype.png";
 
+
 const AboutFollowBotPage = () => {
   return (
     <AboutFollowBotContainer>
