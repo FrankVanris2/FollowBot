@@ -1,5 +1,8 @@
 import React from "react";
-import "../styles/AboutFollowBotPage.css";
+import '../styles/AboutFollowBotPageStyle.css'; 
+
+
+
 
 
 const AboutFollowBotPage = () => {

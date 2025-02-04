@@ -1,5 +1,6 @@
 import React from "react";
-import "../styles/AboutAppPage.css";
+import '../styles/AboutAppPageStyle.css';
+
 
 const AboutAppPage = () => {
   return (

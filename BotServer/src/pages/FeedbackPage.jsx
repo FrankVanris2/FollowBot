@@ -1,5 +1,6 @@
 import React from "react";
-import "../styles/FeedbackPage.css";
+import '../styles/FeedbackPageStyle.css';
+
 
 const FeedbackPage = () => {
   return (
