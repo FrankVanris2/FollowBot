@@ -1,11 +1,8 @@
 import React from "react";
-import { 
-  AboutFollowBotContainer, 
-  AboutFollowBotPart, 
-  FollowBotImage, 
-  CenterTitle 
-} from "./AboutFollowBotPage.style";
-import Prototype from "../res/FollowBotPrototype.png";
+import '../styles/AboutFollowBotPageStyle.css'; 
+
+
+
 
 
 const AboutFollowBotPage = () => {
