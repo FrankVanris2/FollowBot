@@ -55,8 +55,8 @@ void FollowMechanics::followMechanics_Averaging() {
         mRSSIAvg = mRSSITotal / (long) rssiList.size();
 
 
-        Serial.print("FollowMechanics, RSSI Avg Value: ");
-        Serial.println(mRSSIAvg);
+        //Serial.print("FollowMechanics, RSSI Avg Value: ");
+        //Serial.println(mRSSIAvg);
 }
 
 void FollowMechanics::followMechanics_Algorithm() {
@@ -64,33 +64,24 @@ void FollowMechanics::followMechanics_Algorithm() {
     int distance2 = objectDetection.getDistance2();
     int distance3 = objectDetection.getDistance3();
 
-    //including hysteresis functionality to prevent lag or delay
-    const int DISTANCE_THRESHOLD_LOWER = 90; // 0.9 meters
-    const int DISTANCE_THRESHOLD_UPPER = 110; // 1.1 meters
-    
 
-    // use the distance sensors as a reference to the robot's distance from the user
-    if(distance1 < distance2 && distance1 < distance3) {
-        myMotors.setDirection(MOTOR_LEFT); // might chang to right in order to avoid obstacles
+    if (distance2 < 100) {
+        Serial.println("Stopping");
+        myMotors.setDirection(MOTOR_STOP);
+    } else if(distance1 < distance2 && distance1 < distance3) {
+        Serial.println("Going Left");
+        myMotors.setDirection(MOTOR_LEFT);
     } else if(distance2 < distance1 && distance2 < distance3) {
-        
-        //if the user is to close the robot will stop at 1 meter distance 
-        if(distance2 < DISTANCE_THRESHOLD_LOWER && mRSSIAvg < -60) {
-            myMotors.setDirection(MOTOR_STOP);
-        } else if (distance2 > DISTANCE_THRESHOLD_UPPER || mRSSIAvg >= -60) {
-            myMotors.setDirection(MOTOR_FORWARD);
-        }
-
-    } else if(distance3 < distance2 && distance3 < distance1) {
-        myMotors.setDirection(MOTOR_RIGHT); // might change to left in order to avoid obstacles
+        Serial.println("Going Forward");
+        myMotors.setDirection(MOTOR_FORWARD);
+    } else if(distance3 < distance1 && distance3 < distance2) {
+        Serial.println("Going Right");
+        myMotors.setDirection(MOTOR_RIGHT);
     } else {
-        // If no obstacles, rely more on the RSSI signal
-        if (mRSSIAvg < -70) {
-            myMotors.setDirection(MOTOR_FORWARD);
-        } else if (mRSSIAvg >= -60) {
-            myMotors.setDirection(MOTOR_STOP);
-        }
+        Serial.println("Stopping");
+        myMotors.setDirection(MOTOR_STOP);
     }
+    
  
 }
 

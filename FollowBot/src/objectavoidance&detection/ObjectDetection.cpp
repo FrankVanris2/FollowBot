@@ -1,4 +1,4 @@
-/*
+ /*
 * By: Frank Vanris
 * Date: 12/05/2024
 * Desc: Creating a setup for object detection in order to get the basic following mechanics down
@@ -24,6 +24,10 @@ const int ECHO_PIN2 = 12;
 //Sensor 3
 const int TRIG_PIN3 = 8;
 const int ECHO_PIN3 = 7;
+
+
+//Constructor
+ObjectDetection::ObjectDetection(): mDistance1(0.0), mDistance2(0.0), mDistance3(0.0), mPreviousMillis(0) {}
 
 void ObjectDetection::objectDetection_Setup() {
     Serial.println("Object Detection Setup");
@@ -72,12 +76,12 @@ void ObjectDetection::checkDistance() {
     setDistance2((duration2 * .0343) / 2);
 
     // Sensor Right
-    digitalWrite(TRIG_PIN2, LOW);
+    digitalWrite(TRIG_PIN3, LOW);
     delayMicroseconds(2);
-    digitalWrite(TRIG_PIN2, HIGH);
+    digitalWrite(TRIG_PIN3, HIGH);
     delayMicroseconds(10);
-    digitalWrite(TRIG_PIN2, LOW);
-    float duration3 = pulseIn(ECHO_PIN2, HIGH);
+    digitalWrite(TRIG_PIN3, LOW);
+    float duration3 = pulseIn(ECHO_PIN3, HIGH);
     setDistance3((duration3 * .0343) / 2);
 }
 

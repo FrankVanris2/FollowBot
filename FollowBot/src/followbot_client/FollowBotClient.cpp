@@ -80,7 +80,6 @@ void FollowBotClient::followBotClient_Setup() {
 void FollowBotClient::followBotClient_Loop() {
     int intervalTime = mServerNotConnected < MAX_SERVER_NOT_CONNECTED ? TENTH_SECOND : TEN_SECONDS;
     
-
     if((unsigned long) (millis() - mPreviousMillisMove) >= intervalTime) {
         mPreviousMillisMove = millis();
 
@@ -94,11 +93,18 @@ void FollowBotClient::followBotClient_Loop() {
         }
 
         if(mWifiConnectionStatus == WL_CONNECTED) {
+            Serial.print("mServerNotConnected: ");
+            Serial.println(mServerNotConnected);
             if (!getMove()) return;
             if(followBotManager.getDirtyFlag()) {
                 if (!postRobotInfo()) return;
             }
         }
+
+        // During extended intervals, continuously print RSSI
+        /*if(mServerNotConnected >= MAX_SERVER_NOT_CONNECTED) {
+            checkRSSI();
+        }*/
     }  
 }
 
@@ -239,6 +245,6 @@ bool FollowBotClient::getMove() {
 void FollowBotClient::checkRSSI() {
     // The RSSI check is now handled by the FreeRTOS task
     mRSSI = WiFi.RSSI();
-    Serial.print("FollowBotClient, mRSSI = ");
-    Serial.println(mRSSI);
+    //Serial.print("FollowBotClient, mRSSI = ");
+    //Serial.println(mRSSI);
 }
