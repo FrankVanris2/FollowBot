@@ -24,9 +24,13 @@ public:
         return mDistance2;
     }
 
+    float getDistance3() const {
+        return mDistance3;
+    }
+
 private:
     unsigned long mPreviousMillis;
-    float mDistance1, mDistance2;
+    float mDistance1, mDistance2, mDistance3;
     
     void checkDistance();
 

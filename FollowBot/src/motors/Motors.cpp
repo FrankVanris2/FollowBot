@@ -51,15 +51,15 @@ void Motors::motorSetup() {
 
 void Motors::motorLoop() {  
     //testing purposes
-    Serial.print("New Direction: ");
-    Serial.println(mNewDirection);
+    //Serial.print("New Direction: ");
+    //Serial.println(mNewDirection);
 
-    Serial.print("Current Direction: ");
-    Serial.println(mCurrentDirection);
+    //Serial.print("Current Direction: ");
+    //Serial.println(mCurrentDirection);
     
     if(mNewDirection != mCurrentDirection) {
-        Serial.print("Updated Motor Direction: ");
-        Serial.println(mNewDirection);
+        //Serial.print("Updated Motor Direction: ");
+        //Serial.println(mNewDirection);
         mCurrentDirection = mNewDirection;
         adjustDirection();
     } 

@@ -11,7 +11,9 @@
 //#include "objectavoidance&detection/ObjectAvoidance.h"
 #include "sensors/TemperatureReader.h"
 #include "followbot_client/FollowBotClient.h"
+#include "objectavoidance&detection/ObjectDetection.h"
 #include "following_mechanics/FollowMechanics.h"
+#include "followbot_ui/FollowBotLCD.h"
 //#include "ROS2_Testing/ros2Testing.h"
 
 
@@ -28,8 +30,10 @@ FollowBotManager::FollowBotManager(): mIsDirty(false) {
 void FollowBotManager::followBotSetup() {
     myMotors.motorSetup();
     followBotClient.followBotClient_Setup();
-    temperatureReader.temperatureReader_Setup();
+    //temperatureReader.temperatureReader_Setup();
     //objectAvoidance.objectAvoidance_Setup();
+    objectDetection.objectDetection_Setup();
+    followMechanics.followMechanics_Setup();
 
 }
 
@@ -37,9 +41,11 @@ void FollowBotManager::followBotLoop() {
     //ROS2 Testing:
     //ros2_TestingObj.ros2_loop();
     
-    temperatureReader.temperatureReader_Loop();
+    //temperatureReader.temperatureReader_Loop();
     followBotClient.followBotClient_Loop();
+    objectDetection.objectDetection_Loop();
     followMechanics.followMechanics_Loop();
+
 }
 
 

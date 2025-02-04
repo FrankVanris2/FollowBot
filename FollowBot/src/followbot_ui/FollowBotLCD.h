@@ -11,6 +11,9 @@ public:
 
     LCDScreen();
 
+    //testing
+    void printHello();
+
     void myLCDScreen_Setup();
 
     void myLCDScreen_Loop();
