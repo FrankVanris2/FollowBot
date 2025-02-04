@@ -9,9 +9,9 @@ import AboutUsPage from './pages/AboutUsPage';
 import FeedbackPage from './pages/FeedbackPage';
 import NewsArticlePage from './pages/NewArticlePage';
 import FollowBotControlsPage from './pages/FollowBotControlsPage';
+import MappingPage from './pages/MappingPage'
 import HomePage from './pages/HomePage';
 import { GlobalStyle } from './App.style.jsx'; // Import the global style
-
 
 function App(){
     return(
@@ -20,22 +20,15 @@ function App(){
             <Navbar />
             <Routes>
                 <Route path="/" element={<HomePage />} />
-                <Route path="/AboutAppPage" element={<AboutAppPage />} />
-                <Route path="/AboutFollowBotPage" element={<AboutFollowBotPage />} />
-                <Route path="/AboutUsPage" element={<AboutUsPage />} />
-                <Route path="/FeedbackPage" element={<FeedbackPage />} />
-                <Route path="/NewsArticlePage" element={<NewsArticlePage />} />
-                <Route path="/FollowBotControlsPage" element={<FollowBotControlsPage />} />
-                <Route path="/HomePage" element={<HomePage />} />
+                <Route path="/about-app" element={<AboutAppPage />} />
+                <Route path="/about-followbot" element={<AboutFollowBotPage />} />
+                <Route path="/about-us" element={<AboutUsPage />} />
+                <Route path="/feedback" element={<FeedbackPage />} />
+                <Route path="/news-articles" element={<NewsArticlePage />} />
+                <Route path="/followbot-controls" element={<FollowBotControlsPage />} />
+                <Route path="/mapping" element={<MappingPage />} />
             </Routes>
         </BrowserRouter>
     )
 }
-
-/*const App = () => {
-    return (
-        <MoveControlsPage /> // Render the Move Controls Page
-    );
-};
-*/
 export default App;

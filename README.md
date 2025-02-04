@@ -71,8 +71,13 @@ Firstly, we run our server with Node.js. Follow instructions [here](https://node
   pip install -U flask-cors
   pip install boto3
   ```
+  
+* If you are working on the front-end map integration, install these npm packages:
+```
+npm install react-leaflet@4 leaflet
+```
 
-* Once those two things are installed and hopefully you have npm installed you will need to do the next following commands:
+* Once those packages are installed alongside npm, you will need to do the next following commands:
 ```cmd
 npm i
 npm i -g npm

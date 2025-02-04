@@ -1,5 +1,5 @@
 import React from 'react';
-import Joseph from "./res/placeholder1.png";
+import Joseph from "./res/Norman.png";
 import Igor from "./res/IgorJanotti.png";
 import Frank from "./res/FrankVanris.png";
 import Trong from "./res/TrongDuong.png";
@@ -29,7 +29,7 @@ const AboutUsPage = () => {
             name: "Joseph",
             photo: Joseph,
             description: "Hopelessly in love with FollowBot",
-            LinkedIn: "http://linkedin.com/in/frankcvanris"
+            LinkedIn: "https://www.linkedin.com/in/joseph-hoang-4709a6271/"
         },
     ];
 

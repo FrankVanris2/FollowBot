@@ -1,4 +1,4 @@
-from flask import Flask, request, send_file, jsonify, abort, make_response
+from flask import Flask, request, send_file, send_from_directory, jsonify, abort, make_response
 from flask_cors import CORS
 import logging
 
@@ -22,6 +22,10 @@ app.logger.setLevel(logging.INFO) # Set to the desired level
 temperature_data = None #Global variable to store temperature data
 heatIndex_data = None #Global variable to store heat index data
 
+MAPS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'dist', 'maps')
+@app.route('/maps/<path:filename>')
+def serve_maps(filename):
+    return send_from_directory('MAPS_DIR', filename)
 
 @app.post("/api/signup")
 def register_user():
