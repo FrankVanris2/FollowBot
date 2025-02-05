@@ -34,7 +34,7 @@ On the hardware side we are utilizing the Arduino Uno Rev4 in order to send and 
 In terms of project success, our primary focus will be on systematic organization and incremental prototyping. We plan to develop a prototype during the first quarter and progressively refine it. Our goal is to deliver a practical and beneficial product for any consumer seeking a Followbot to carry their belongings or allow the Followbot to go to designated places.
 
 ### High Level Design Architecture
-![image](/Images/High_Level_Design_Architecture.png)
+![image](/Images/High_Level_Design_Architecture1.png)
 
 # Installation
 
