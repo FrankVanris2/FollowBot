@@ -49,13 +49,14 @@ LCDScreen::LCDScreen() {}
 
 // Setup
 void LCDScreen::myLCDScreen_Setup() {
-    tft.begin(0x7796);
+    tft.begin(8000000);
  
 
   
   tft.setRotation(3);
   tft.startWrite();
-  tft.fillScreen(ST7796S_BLUE);
+  tft.fillScreen(ST7796S_YELLOW);
+  tft.drawRect(100, 100, 200, 200 , ST7796S_RED);
   tft.endWrite();
   Serial.println("Setup complete");
   
@@ -63,5 +64,10 @@ void LCDScreen::myLCDScreen_Setup() {
 
 // Loop
 void LCDScreen::myLCDScreen_Loop() {
-
+  tft.fillScreen(ST7796S_BLUE);
+  delay(1000);
+  tft.fillScreen(ST7796S_RED);
+  delay(1000);
+  tft.fillScreen(ST7796S_GREEN);
+  delay(1000);
 }
