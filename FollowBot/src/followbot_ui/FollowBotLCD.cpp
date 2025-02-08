@@ -22,28 +22,43 @@ LCDScreen myLCDScreen;
 
 Adafruit_ST7796S_kbv tft = Adafruit_ST7796S_kbv(TFT_CS, TFT_DC, TFT_RST);
 
-#define DOUT 3 /* Data out pin (T_DO) of touch screen */
-#define DIN 4 /* Data in pin (T_DIN) of touch screen */
+#define DOUT A0 /* Data out pin (T_DO) of touch screen */ //3
+#define DIN A2 /* Data in pin (T_DIN) of touch screen */ //4
 #define DCS 5 /* Chip select pin (T_CS) of touch screen */
 #define DCLK 6 /* Clock pin (T_CLK) of touch screen */
 
+#define HMIN 0
+#define HMAX 3840
+#define VMIN 0
+#define VMAX 3840
+#define XYSWAP 1 // 0 or 1
+
+#define HRES 480 /* Default screen resolution for X axis */
+#define VRES 320 /* Default screen resolution for Y axis */
 
 
+//#include <TFT_Touch.h>
 
+#define TEXT_SIZE 2
 
 
 // Constructor
 LCDScreen::LCDScreen() {}
 
 
-// Testing purposes
-void LCDScreen::printHello() {
-
-}
 
 // Setup
 void LCDScreen::myLCDScreen_Setup() {
+    tft.begin(0x7796);
+ 
 
+  
+  tft.setRotation(3);
+  tft.startWrite();
+  tft.fillScreen(ST7796S_BLUE);
+  tft.endWrite();
+  Serial.println("Setup complete");
+  
 }
 
 // Loop
