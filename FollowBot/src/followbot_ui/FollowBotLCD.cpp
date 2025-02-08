@@ -5,19 +5,31 @@ Desc: Using an LSD screen to ask user for ssid and password so that robot can co
 */
 
 #include "FollowBotLCD.h"
+#include "SPI.h"
+#include "Adafruit_GFX.h"
+#include "Adafruit_ST7796S_kbv.h"
 #include "Arduino.h"
-#include <TFT_eSPI.h>
-
-#define BUTTON_X 60
-#define BUTTON_Y 100
-#define BUTTON_W 100
-#define BUTTON_H 50
-#define BUTTON_TEXT "Press Me"
 
 // Universal object
 LCDScreen myLCDScreen;
 
-TFT_eSPI tft = TFT_eSPI(); // creating an instance of the library
+#define TFT_CS        10
+#define TFT_DC         9
+#define TFT_RST        8
+#define TFT_SDA       11
+#define TFT_CLK       13
+#define TFT_MISO      12
+
+Adafruit_ST7796S_kbv tft = Adafruit_ST7796S_kbv(TFT_CS, TFT_DC, TFT_RST);
+
+#define DOUT 3 /* Data out pin (T_DO) of touch screen */
+#define DIN 4 /* Data in pin (T_DIN) of touch screen */
+#define DCS 5 /* Chip select pin (T_CS) of touch screen */
+#define DCLK 6 /* Clock pin (T_CLK) of touch screen */
+
+
+
+
 
 
 // Constructor
@@ -26,37 +38,15 @@ LCDScreen::LCDScreen() {}
 
 // Testing purposes
 void LCDScreen::printHello() {
-    Serial.println("initializing TFT");
-    tft.init();
-    //tft.setRotation(1);
-    tft.fillScreen(TFT_BLACK);
-    //tft.setTextColor(TFT_WHITE);
-    //tft.drawString("Hello World", 10, 10, 2);
+
 }
 
 // Setup
 void LCDScreen::myLCDScreen_Setup() {
-    tft.init();
-    tft.setRotation(1); // Set the rotation if needed
-    tft.fillScreen(TFT_BLACK); // Clear the screen
 
-    // Draw the button
-    tft.fillRect(BUTTON_X, BUTTON_Y, BUTTON_W, BUTTON_H, TFT_BLUE);
-    tft.setTextColor(TFT_WHITE);
-    tft.drawString(BUTTON_TEXT, BUTTON_X + 10, BUTTON_Y + 15, 2);
 }
 
 // Loop
 void LCDScreen::myLCDScreen_Loop() {
-    uint16_t x, y;
-    if (tft.getTouch(&x, &y)) {
-        if (x > BUTTON_X && x < BUTTON_X + BUTTON_W && y > BUTTON_Y && y < BUTTON_Y + BUTTON_H) {
-            // Button pressed
-            tft.fillRect(BUTTON_X, BUTTON_Y, BUTTON_W, BUTTON_H, TFT_RED);
-            tft.drawString("Pressed", BUTTON_X + 10, BUTTON_Y + 15, 2);
-            delay(500); // Debounce delay
-            tft.fillRect(BUTTON_X, BUTTON_Y, BUTTON_W, BUTTON_H, TFT_BLUE);
-            tft.drawString(BUTTON_TEXT, BUTTON_X + 10, BUTTON_Y + 15, 2);
-        }
-    }
+
 }

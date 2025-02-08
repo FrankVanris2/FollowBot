@@ -14,16 +14,16 @@ ObjectDetection objectDetection;
 const int TENTH_SECOND = 100;
 
 //Sensor 1
-const int TRIG_PIN1 = 9;
-const int ECHO_PIN1 = 10;
+const int TRIG_PIN1 = A0;
+const int ECHO_PIN1 = A1;
 
 //Sensor 2
-const int TRIG_PIN2 = 11;
-const int ECHO_PIN2 = 12;
+const int TRIG_PIN2 = A2;
+const int ECHO_PIN2 = A3;
 
 //Sensor 3
-const int TRIG_PIN3 = 8;
-const int ECHO_PIN3 = 7;
+const int TRIG_PIN3 = A4;
+const int ECHO_PIN3 = A5;
 
 
 //Constructor

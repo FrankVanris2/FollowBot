@@ -6,6 +6,7 @@ Desc: Tests the Motors.cpp
 
 #include "unity.h"
 #include <string>
+#include <iostream>
 
 const uint16_t MED_SPEED = 200;
 
@@ -81,18 +82,20 @@ int numMotors = 4;
 Adafruit_MotorShieldImpl motorShieldImpl;
 MotorDirection motorDirectionImpl;
 
+Adafruit_DCMotor* motor1 = motorShieldImpl.getMotor(1);
+Adafruit_DCMotor* motor2 = motorShieldImpl.getMotor(2);
+Adafruit_DCMotor* motor3 = motorShieldImpl.getMotor(3);
+Adafruit_DCMotor* motor4 = motorShieldImpl.getMotor(4);
 
 void setUp(void) {
     // Set up code here (if needed)
-    Adafruit_DCMotor* motor1 = motorShieldImpl.getMotor(1);
-    Adafruit_DCMotor* motor2 = motorShieldImpl.getMotor(2);
-    Adafruit_DCMotor* motor3 = motorShieldImpl.getMotor(3);
-    Adafruit_DCMotor* motor4 = motorShieldImpl.getMotor(4);
+    
 
     motor1->setSpeed(MED_SPEED);
     motor2->setSpeed(MED_SPEED);
     motor3->setSpeed(MED_SPEED);
     motor4->setSpeed(MED_SPEED);
+
 }
 
 void tearDown(void) {
@@ -104,7 +107,10 @@ void testMotors(void) {
     TEST_ASSERT_EQUAL(motorShieldImpl.getMotor(2)->getSpeed(), MED_SPEED);
     TEST_ASSERT_EQUAL(motorShieldImpl.getMotor(3)->getSpeed(), MED_SPEED);
     TEST_ASSERT_EQUAL(motorShieldImpl.getMotor(4)->getSpeed(), MED_SPEED);
-    TEST_ASSERT_EQUAL(motorShieldImpl.getMotor(5), NULL);
+
+    motor4->setSpeed(100);
+    TEST_ASSERT_EQUAL(motorShieldImpl.getMotor(4)->getSpeed(), 100);
+    
     
 }
 

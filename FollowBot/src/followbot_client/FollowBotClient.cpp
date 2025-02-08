@@ -86,7 +86,7 @@ void FollowBotClient::followBotClient_Loop() {
         // Check WiFi connection status 
         if(WiFi.status() != WL_CONNECTED) {
             mWifiConnectionStatus = WL_DISCONNECTED;
-            Serial.println("FollowBotClient, Wifi disconnected");
+            //Serial.println("FollowBotClient, Wifi disconnected");
         } else {
             mWifiConnectionStatus = WL_CONNECTED;
             Serial.println("FollowBotClient, Wifi connected");
