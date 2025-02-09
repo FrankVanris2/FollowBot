@@ -46,7 +46,7 @@ void FollowBotManager::followBotLoop() {
     //followBotClient.followBotClient_Loop();
     //objectDetection.objectDetection_Loop();
     //followMechanics.followMechanics_Loop();
-    //myLCDScreen.myLCDScreen_Loop();
+    myLCDScreen.myLCDScreen_Loop();
 
 }
 

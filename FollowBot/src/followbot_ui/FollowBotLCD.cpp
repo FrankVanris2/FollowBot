@@ -10,6 +10,8 @@ Desc: Using an LSD screen to ask user for ssid and password so that robot can co
 #include "Adafruit_ST7796S_kbv.h"
 #include "Arduino.h"
 
+
+const uint16_t ARDUINO_R4_WIFI_FREQUENCY = 39000000; // 39 MHz
 // Universal object
 LCDScreen myLCDScreen;
 
@@ -49,13 +51,11 @@ LCDScreen::LCDScreen() {}
 
 // Setup
 void LCDScreen::myLCDScreen_Setup() {
-    tft.begin(8000000);
+    tft.begin(ARDUINO_R4_WIFI_FREQUENCY);
  
-
-  
   tft.setRotation(3);
   tft.startWrite();
-  tft.fillScreen(ST7796S_YELLOW);
+  tft.fillScreen(ST7796S_WHITE);
   tft.drawRect(100, 100, 200, 200 , ST7796S_RED);
   tft.endWrite();
   Serial.println("Setup complete");
@@ -64,10 +64,8 @@ void LCDScreen::myLCDScreen_Setup() {
 
 // Loop
 void LCDScreen::myLCDScreen_Loop() {
-  tft.fillScreen(ST7796S_BLUE);
+  tft.fillScreen(ST7796S_WHITE);
   delay(1000);
-  tft.fillScreen(ST7796S_RED);
-  delay(1000);
-  tft.fillScreen(ST7796S_GREEN);
+  tft.fillScreen(ST7796S_BLACK);
   delay(1000);
 }
