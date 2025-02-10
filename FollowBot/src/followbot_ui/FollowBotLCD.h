@@ -11,12 +11,17 @@ public:
 
     LCDScreen();
 
-    //testing
-    void printHello();
 
     void myLCDScreen_Setup();
 
     void myLCDScreen_Loop();
+
+    // Important commands
+    void drawInputFields(int x, int y, int width, int height, const char* label);
+
+    void touch_calibrate();
+
+    
 
 private:
 };
