@@ -5,6 +5,7 @@ Desc: Using an LSD screen to allow the user to input their ssid and pass for the
 */
 
 #pragma once
+#include <array>
 
 class LCDScreen {
 public:
@@ -19,11 +20,15 @@ public:
     // Important commands
     void drawInputFields(int x, int y, int width, int height, const char* label);
 
-    void touch_calibrate();
+    std::array<int, 2> centerText(int x, int y, int width, int height);
+      
 
     
 
 private:
+
+    unsigned int X_RAW, Y_RAW;
+    int X_Coord, Y_Coord;
 };
 
 extern LCDScreen myLCDScreen;
