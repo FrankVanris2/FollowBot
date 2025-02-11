@@ -17,6 +17,8 @@ public:
 
     void myLCDScreen_Loop();
 
+    void touch_calibrate();
+
      
 
 private:

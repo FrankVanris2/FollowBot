@@ -7,12 +7,9 @@ Desc: Using an LSD screen to ask user for ssid and password so that robot can co
 #include "FollowBotLCD.h"
 #include "SPI.h"
 #include "Arduino.h"
-#include "Display_Setup.h"
-#include "Adafruit_ST7796S_kbv.h"
+//#include "Adafruit_ST7796S_kbv.h"
 #include "Adafruit_GFX.h"
-#include "TFT_Touch.h"
-#include "followbot_ui/Button.h"
-
+#include "TFT_eSPI.h"
 
 #define TEXT_SIZE 2
 
@@ -25,45 +22,95 @@ LCDScreen myLCDScreen;
 // Constructor
 LCDScreen::LCDScreen() {}
 
-
-Adafruit_ST7796S_kbv tft = Adafruit_ST7796S_kbv(TFT_CS, TFT_DC, TFT_RST);
-TFT_Touch touch = TFT_Touch(DCS, DCLK, DIN, DOUT);
-
-
+TFT_eSPI tft = TFT_eSPI();
 
 
 
 // Setup
 void LCDScreen::myLCDScreen_Setup() {
-  tft.begin(SPI_FREQUENCY);
-  tft.setRotation(3);
-  tft.fillScreen(ST7796S_WHITE);
+  // Initialise the TFT screen
+  tft.begin();
 
-  touch.setCal(HMIN, HMAX, VMIN, VMAX, HRES, VRES, XYSWAP);
-  touch.setRotation(3);
-  
-  button.drawButton(140, 120, 200, 40, "SSID");
-  button.drawButton(140, 180, 200, 40, "Password");
+  // Set the rotation to the orientation you wish to use in your project before calibration
+  // (the touch coordinates returned then correspond to that rotation only)
+  tft.setRotation(3);
+
+  // Calibrate the touch screen and retrieve the scaling factors
+  touch_calibrate();
+
+/*
+  // Replace above line with the code sent to Serial Monitor
+  // once calibration is complete, e.g.:
+  uint16_t calData[5] = { 286, 3534, 283, 3600, 6 };
+  tft.setTouch(calData);
+*/
+
+  // Clear the screen
+  tft.fillScreen(TFT_RED);
 
 }
 
 // Loop
 void LCDScreen::myLCDScreen_Loop() {
-  if (touch.Pressed()) {
-    X_Coord = touch.X();
-    Y_Coord = touch.Y(); 
+  uint16_t x = 0, y = 0; // To store the touch coordinates
 
-    //Check if the touch is within the button area
-    if (X_Coord > 140 && X_Coord < 340 && Y_Coord > 120 && Y_Coord < 160) {
-      // inputting ssid information through a text prompt
-      Serial.println("SSID Button Pressed");
-    }
-    if (X_Coord > 140 && X_Coord < 340 && Y_Coord > 180 && Y_Coord < 220) {
-      // inputting passsword information through a text prompt
-      Serial.println("Password Button Pressed");
-    }
+  // Pressed will be set true is there is a valid touch on the screen
+  bool pressed = tft.getTouch(&x, &y);
+
+  // Draw a white spot at the detected coordinates
+  if (pressed) {
+    tft.fillCircle(x, y, 2, TFT_WHITE);
+    //Serial.print("x,y = ");
+    //Serial.print(x);
+    //Serial.print(",");
+    //Serial.println(y);
   }
 }
+
+void LCDScreen::touch_calibrate()
+{
+  uint16_t calData[5];
+  uint8_t calDataOK = 0;
+
+  // Calibrate
+  tft.fillScreen(TFT_BLACK);
+  tft.setCursor(20, 0);
+  tft.setTextFont(2);
+  tft.setTextSize(1);
+  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+
+  tft.println("Touch corners as indicated");
+
+  tft.setTextFont(1);
+  tft.println();
+
+  tft.calibrateTouch(calData, TFT_MAGENTA, TFT_BLACK, 15);
+
+  Serial.println(); Serial.println();
+  Serial.println("// Use this calibration code in setup():");
+  Serial.print("  uint16_t calData[5] = ");
+  Serial.print("{ ");
+
+  for (uint8_t i = 0; i < 5; i++)
+  {
+    Serial.print(calData[i]);
+    if (i < 4) Serial.print(", ");
+  }
+
+  Serial.println(" };");
+  Serial.print("  tft.setTouch(calData);");
+  Serial.println(); Serial.println();
+
+  tft.fillScreen(TFT_BLACK);
+  
+  tft.setTextColor(TFT_GREEN, TFT_BLACK);
+  tft.println("Calibration complete!");
+  tft.println("Calibration code sent to Serial port.");
+
+  delay(4000);
+}
+
+
 
 
 
