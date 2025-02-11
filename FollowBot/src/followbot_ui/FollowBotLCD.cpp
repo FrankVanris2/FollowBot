@@ -11,6 +11,7 @@ Desc: Using an LSD screen to ask user for ssid and password so that robot can co
 #include "Adafruit_ST7796S_kbv.h"
 #include "Adafruit_GFX.h"
 #include "TFT_Touch.h"
+#include "followbot_ui/Button.h"
 
 
 #define TEXT_SIZE 2
@@ -41,8 +42,8 @@ void LCDScreen::myLCDScreen_Setup() {
   touch.setCal(HMIN, HMAX, VMIN, VMAX, HRES, VRES, XYSWAP);
   touch.setRotation(3);
   
-  drawInputFields(140, 120, 200, 40, "SSID");
-  drawInputFields(140, 180, 200, 40, "Password");
+  button.drawButton(140, 120, 200, 40, "SSID");
+  button.drawButton(140, 180, 200, 40, "Password");
 
 }
 
@@ -50,7 +51,7 @@ void LCDScreen::myLCDScreen_Setup() {
 void LCDScreen::myLCDScreen_Loop() {
   if (touch.Pressed()) {
     X_Coord = touch.X();
-    Y_Coord = touch.Y();
+    Y_Coord = touch.Y(); 
 
     //Check if the touch is within the button area
     if (X_Coord > 140 && X_Coord < 340 && Y_Coord > 120 && Y_Coord < 160) {
@@ -64,21 +65,7 @@ void LCDScreen::myLCDScreen_Loop() {
   }
 }
 
-void LCDScreen::drawInputFields(int x, int y, int width, int height, const char* label) {
-  tft.fillRect(x, y, width, height, ST7796S_BLACK);
 
-  tft.setTextSize(3);
-  tft.setTextColor(ST7796S_WHITE);
-  std::array<int, 2> text_centered = centerText(x, y, width, height);
-  tft.setCursor(text_centered[0], text_centered[1]);
-  tft.print(label);
-}
 
-std::array<int, 2> LCDScreen::centerText(int x, int y, int width, int height) {
-  int16_t x1, y1;
-  uint16_t w, h;
-  tft.getTextBounds("SSID", 0, 0, &x1, &y1, &w, &h);
 
-  return std::array<int, 2>({x + (width - w) / 2, y + (height - h) / 2});
-}
 

@@ -17,13 +17,7 @@ public:
 
     void myLCDScreen_Loop();
 
-    // Important commands
-    void drawInputFields(int x, int y, int width, int height, const char* label);
-
-    std::array<int, 2> centerText(int x, int y, int width, int height);
-      
-
-    
+     
 
 private:
 
