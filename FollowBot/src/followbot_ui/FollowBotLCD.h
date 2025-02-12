@@ -5,26 +5,21 @@ Desc: Using an LSD screen to allow the user to input their ssid and pass for the
 */
 
 #pragma once
-#include <array>
+#include "TFT_eSPI.h"
+#include "TFT_eWidget.h"
+#include "Button.h"
+
+
 
 class LCDScreen {
 public:
 
     LCDScreen();
-
-
     void myLCDScreen_Setup();
-
     void myLCDScreen_Loop();
 
-    void touch_calibrate();
-
-     
-
 private:
-
-    unsigned int X_RAW, Y_RAW;
-    int X_Coord, Y_Coord;
+    TFT_eSPI tft;    
 };
 
 extern LCDScreen myLCDScreen;
