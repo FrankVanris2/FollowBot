@@ -31,38 +31,37 @@ Adafruit_DCMotor *motor3 = motorShield.getMotor(3);
 Adafruit_DCMotor *motor4 = motorShield.getMotor(4);
 
 // My constructor
-Motors::Motors(): mCurrentDirection(MOTOR_STOP) {
-
-}
+Motors::Motors(): mCurrentDirection(MOTOR_STOP) {}
 
 //where I initialize my motors
 void Motors::motorSetup() {
     Serial.println("Motor Setup");
-    motorShield.begin();
-    //setting speeds of all motors to high
-    motor1->setSpeed(MED_SPEED);
-    motor2->setSpeed(MED_SPEED);
-    motor3->setSpeed(MED_SPEED);
-    motor4->setSpeed(MED_SPEED);
 
+    if (!motorShield.begin()) {         // create with the default frequency 1.6KHz
+        // if (!motorShield.begin(1000)) {  // OR with a different frequency, say 1KHz
+        Serial.println("Could not find Motor Shield. Check wiring.");
+        while (1);
+    }
+    Serial.println("Motor Shield found.");
+    
+    //setting speeds of all motors to high
+    motor1->setSpeed(MAX_SPEED);
+    motor2->setSpeed(MAX_SPEED);
+    motor3->setSpeed(MAX_SPEED);
+    motor4->setSpeed(MAX_SPEED);
 }
 
 
 
 void Motors::motorLoop() {  
-    //testing purposes
-    //Serial.print("New Direction: ");
-    //Serial.println(mNewDirection);
-
-    //Serial.print("Current Direction: ");
-    //Serial.println(mCurrentDirection);
     
-    if(mNewDirection != mCurrentDirection) {
+    
+   if(mNewDirection != mCurrentDirection) {
         //Serial.print("Updated Motor Direction: ");
         //Serial.println(mNewDirection);
-        mCurrentDirection = mNewDirection;
-        adjustDirection();
-    } 
+       mCurrentDirection = mNewDirection;
+       adjustDirection();
+   } 
 }
 
 //testing client, (very important)
@@ -80,6 +79,8 @@ void Motors::adjustDirection() {
         motorStop();
     }
 }
+
+
 
 // Forward motion with the motors
 void Motors::motorForwards() {

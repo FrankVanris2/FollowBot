@@ -8,7 +8,7 @@ Desc: Creating a button class which allows you as a developer to create buttons 
 
 
 
-#include "Arduino.h";
+#include "Arduino.h"
 
 class TFT_eSPI;
 

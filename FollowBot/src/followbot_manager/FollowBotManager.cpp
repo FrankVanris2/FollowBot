@@ -28,13 +28,15 @@ FollowBotManager::FollowBotManager(): mIsDirty(false) {
 
 //the setup that will store the many objects that will set in the main
 void FollowBotManager::followBotSetup() {
-    //myMotors.motorSetup();
+    
+    //myLCDScreen.myLCDScreen_Setup();
+    myMotors.motorSetup();
     //followBotClient.followBotClient_Setup();
     //temperatureReader.temperatureReader_Setup();
     //objectAvoidance.objectAvoidance_Setup();
-    //objectDetection.objectDetection_Setup();
-    //followMechanics.followMechanics_Setup();
-    myLCDScreen.myLCDScreen_Setup();
+    objectDetection.objectDetection_Setup();
+    followMechanics.followMechanics_Setup();
+    
 
 }
 
@@ -42,11 +44,13 @@ void FollowBotManager::followBotLoop() {
     //ROS2 Testing:
     //ros2_TestingObj.ros2_loop();
     
+    //myLCDScreen.myLCDScreen_Loop();
+    
     //temperatureReader.temperatureReader_Loop();
     //followBotClient.followBotClient_Loop();
-    //objectDetection.objectDetection_Loop();
-    //followMechanics.followMechanics_Loop();
-    myLCDScreen.myLCDScreen_Loop();
+    objectDetection.objectDetection_Loop();
+    followMechanics.followMechanics_Loop();
+    
 
 }
 

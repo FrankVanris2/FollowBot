@@ -32,8 +32,8 @@ void FollowMechanics::followMechanics_Loop() {
     if ((unsigned long) (millis() - previousMillis) >= TENTH_SECOND) {
         previousMillis = millis();
 
-        followBotClient.checkRSSI();
-        followMechanics.followMechanics_Averaging();
+        //followBotClient.checkRSSI();
+        //followMechanics.followMechanics_Averaging();
 
         myMotors.motorLoop();
         followMechanics_Algorithm();

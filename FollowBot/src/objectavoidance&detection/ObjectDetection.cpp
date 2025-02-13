@@ -22,8 +22,8 @@ const int TRIG_PIN2 = A2;
 const int ECHO_PIN2 = A3;
 
 //Sensor 3
-const int TRIG_PIN3 = A4;
-const int ECHO_PIN3 = A5;
+const int TRIG_PIN3 = 4;
+const int ECHO_PIN3 = 3;
 
 
 //Constructor
