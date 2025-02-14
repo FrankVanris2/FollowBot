@@ -5,16 +5,12 @@ Desc: Making button making easy for the user
 */
 
 #include "Button.h"
-
 #include "TFT_eSPI.h"
 
 Button::Button(TFT_eSPI& tft, int x, int y, int w, int h,  const String& label, int radius) : 
 mTFT(tft), mX(x), mY(y), 
 mW(w), mH(h), mLabel(label), 
 mRadius(radius), mLastTimeClicked(0) {}
-
-
-
 
 void Button::drawButton(){
 
@@ -34,7 +30,6 @@ void Button::drawButton(){
     mTFT.setCursor(cursorX, cursorY);
     mTFT.print(mLabel);
 }
-
 
 bool Button::touchScreenEvent(int x, int y) {
     unsigned int currentTime = millis();

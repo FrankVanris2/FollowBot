@@ -11,29 +11,17 @@ Desc: Using an LSD screen to ask user for ssid and password so that robot can co
 #include "MainFrame.h"
 #include "ConnectionFrame.h"
 
-
-#define TEXT_SIZE 2
-
-
 // Universal object
 LCDScreen myLCDScreen;
-
-// Constructor
-LCDScreen::LCDScreen() {}
 
 // Setup
 void LCDScreen::myLCDScreen_Setup() {
   mainFrame.setup(tft);
-  //connectionFrame.setup(tft);
-  //disconnectionFrame.setup(tft);
+  connectionFrame.setup(tft);
 
-
-  // Initialise the TFT screen
   tft.begin();
   tft.setRotation(3);
-  
-  mainFrame.drawScreen();
-  //setFrame(enum);
+  setCurrentFrame(MAIN_SCREEN);
 
 }
 
@@ -43,17 +31,26 @@ void LCDScreen::myLCDScreen_Loop() {
   bool pressed = tft.getTouch(&x, &y);
 
   if (pressed) {
-    mainFrame.touchScreenEvent(x, y);
+    mCurrentFrame->touchScreenEvent(x, y);
+    
   }
 }
 
+void LCDScreen::setCurrentFrame(ScreenFrames newFrame) {
+  Serial.print("LCDScreen::setCurrentFrame, newFrame: ");
+  Serial.println(newFrame);
 
+  switch (newFrame) {
+    case MAIN_SCREEN: mCurrentFrame = &mainFrame; break;
+    case SSID_SCREEN: break;
+    case PASSWORD_SCREEN: break;
+    case CONNECTED_SCREEN: mCurrentFrame = &connectionFrame; break;
+    case DISCONNECTED_SCREEN: break;
+    default:
+      Serial.print('LCDScreen::setCurrentFrame(), unknown Frame: ');
+      Serial.println(newFrame);
+      return;
+  }
 
-
-
-
-
-
-
-
-
+  mCurrentFrame->drawScreen();
+}

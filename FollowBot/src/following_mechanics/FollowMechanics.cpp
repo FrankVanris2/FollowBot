@@ -66,19 +66,19 @@ void FollowMechanics::followMechanics_Algorithm() {
 
 
     if (distance2 < 100) {
-        Serial.println("Stopping");
+        //Serial.println("Stopping");
         myMotors.setDirection(MOTOR_STOP);
     } else if(distance1 < distance2 && distance1 < distance3) {
-        Serial.println("Going Left");
+        //Serial.println("Going Left");
         myMotors.setDirection(MOTOR_LEFT);
     } else if(distance2 < distance1 && distance2 < distance3) {
-        Serial.println("Going Forward");
+        //Serial.println("Going Forward");
         myMotors.setDirection(MOTOR_FORWARD);
     } else if(distance3 < distance1 && distance3 < distance2) {
-        Serial.println("Going Right");
+        //Serial.println("Going Right");
         myMotors.setDirection(MOTOR_RIGHT);
     } else {
-        Serial.println("Stopping");
+        //Serial.println("Stopping");
         myMotors.setDirection(MOTOR_STOP);
     }
     

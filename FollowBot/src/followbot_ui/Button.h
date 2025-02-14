@@ -5,9 +5,6 @@ Desc: Creating a button class which allows you as a developer to create buttons 
 */
 
 #pragma once
-
-
-
 #include "Arduino.h"
 
 class TFT_eSPI;

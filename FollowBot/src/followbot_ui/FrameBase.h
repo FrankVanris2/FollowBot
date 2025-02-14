@@ -28,5 +28,4 @@ protected:
 
 private:
     TFT_eSPI* tft;
-
 };

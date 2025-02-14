@@ -8,18 +8,28 @@ Desc: Using an LSD screen to allow the user to input their ssid and pass for the
 #include "TFT_eSPI.h"
 #include "TFT_eWidget.h"
 #include "Button.h"
+#include "ScreenState.h"
 
 
+class FrameBase;
 
 class LCDScreen {
 public:
-
-    LCDScreen();
     void myLCDScreen_Setup();
     void myLCDScreen_Loop();
+    void setCurrentFrame(ScreenFrames newFrame);
+
+    int16_t getWidth() {
+        return 480;
+    }
+
+    int16_t getHeight() {
+        return 320;
+    }
 
 private:
-    TFT_eSPI tft;    
+    TFT_eSPI tft; 
+    FrameBase* mCurrentFrame; 
 };
 
 extern LCDScreen myLCDScreen;

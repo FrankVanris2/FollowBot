@@ -8,12 +8,10 @@ Desc: The main frame where everything is projected with options
 
 #include "FrameBase.h"
 
-
 class TFT_eSPI;
 class Button;
 
 class MainFrame : public FrameBase {
-
 public:
     
     void setup(TFT_eSPI&  tft);

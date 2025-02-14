@@ -9,17 +9,21 @@ on the screen
 #include "FrameBase.h"
 
 class TFT_eSPI;
+class Button;
+class Text;
 
 class ConnectionFrame : public FrameBase {
 public:
-    ConnectionFrame();
-
     void setup(TFT_eSPI& tft);
 
     virtual void drawScreen();
 
-    virtual void touchScreenEvent();
+    virtual void touchScreenEvent(int x, int y);
         
 private:
+    Button *btnBack;
+    Text *connectionStatusText;
 
 };
+
+extern ConnectionFrame connectionFrame;
