@@ -9,15 +9,12 @@ Desc: Using an LSD screen to ask user for ssid and password so that robot can co
 #include "Arduino.h"
 #include "Adafruit_GFX.h"
 #include "MainFrame.h"
-#include "ConnectionFrame.h"
-
 // Universal object
 LCDScreen myLCDScreen;
 
 // Setup
 void LCDScreen::myLCDScreen_Setup() {
   mainFrame.setup(tft);
-  connectionFrame.setup(tft);
 
   tft.begin();
   tft.setRotation(3);
@@ -44,13 +41,11 @@ void LCDScreen::setCurrentFrame(ScreenFrames newFrame) {
     case MAIN_SCREEN: mCurrentFrame = &mainFrame; break;
     case SSID_SCREEN: break;
     case PASSWORD_SCREEN: break;
-    case CONNECTED_SCREEN: mCurrentFrame = &connectionFrame; break;
-    case DISCONNECTED_SCREEN: break;
     default:
       Serial.print('LCDScreen::setCurrentFrame(), unknown Frame: ');
       Serial.println(newFrame);
       return;
   }
 
-  mCurrentFrame->drawScreen();
+  mCurrentFrame->draw();
 }

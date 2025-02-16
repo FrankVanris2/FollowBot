@@ -6,21 +6,22 @@ Desc: Creating a button class which allows you as a developer to create buttons 
 
 #pragma once
 #include "Arduino.h"
+#include "UIComponent.h"
 
 class TFT_eSPI;
 
-class Button {
+class Button : public UIComponent {
 public:
     Button(TFT_eSPI& tft, int x, int y, int w, int h,  const String& label, int radius = 0);
+    Button(const Button& original);
+    Button& operator=(const Button& rhs);
 
-    void drawButton();
-
-    bool touchScreenEvent(int x, int y);
+    virtual void draw();
+    virtual bool touchScreenEvent(int x, int y);
 
 private:
     const int TEXT_SIZE = 2;
 
-    TFT_eSPI& mTFT; 
     int mX;
     int mY;
     int mW;

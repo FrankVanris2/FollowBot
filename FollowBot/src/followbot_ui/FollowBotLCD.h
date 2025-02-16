@@ -11,7 +11,7 @@ Desc: Using an LSD screen to allow the user to input their ssid and pass for the
 #include "ScreenState.h"
 
 
-class FrameBase;
+class UIComponent;
 
 class LCDScreen {
 public:
@@ -29,7 +29,7 @@ public:
 
 private:
     TFT_eSPI tft; 
-    FrameBase* mCurrentFrame; 
+    UIComponent* mCurrentFrame; 
 };
 
 extern LCDScreen myLCDScreen;

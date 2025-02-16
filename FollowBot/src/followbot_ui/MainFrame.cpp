@@ -16,32 +16,40 @@ MainFrame mainFrame;
 void MainFrame::setup(TFT_eSPI& tft) {
     setTFT(tft);
 
-    btnSSID = new Button(tft, 140, 80, 200, 50, "SSID", 10);
-    btnPassword = new Button(tft, 140, 160, 200, 50, "Password", 10);
-    btnConnect = new Button(tft, 180, 240, 120, 40, "Connect", 10);
+    comps[BUTTON_SSID] = new Button(tft, 140, 80, 200, 50, "SSID", 10);
+    comps[BUTTON_PASSWORD] = new Button(tft, 140, 160, 200, 50, "Password", 10);
+    comps[BUTTON_CONNECT] = new Button(tft, 180, 240, 120, 40, "Connect", 10);
 }
 
-void MainFrame::drawScreen() {
+void MainFrame::draw() {
     getTFT().fillScreen(TFT_WHITE);
-    btnSSID->drawButton();
-    btnPassword->drawButton();
-    btnConnect->drawButton();
+    for (auto& it: comps) {
+        it.second->draw();
+    }
 }
 
-void MainFrame::touchScreenEvent(int x, int y) {
-    if (btnSSID->touchScreenEvent(x, y)) {
-        Serial.println("SSID button pressed");
-        return;
+bool MainFrame::touchScreenEvent(int x, int y) {
+    FrameComponents selected = NO_UI_COMPONENT;
+
+    for (auto& it: comps) {
+        if(it.second->touchScreenEvent(x, y)) {
+            selected = it.first;
+            break;
+        }    
     }
 
-    if (btnPassword->touchScreenEvent(x, y)) {
-        Serial.println("Password button pressed");
-        return;
-    }
+    switch(selected) {
+        case BUTTON_SSID: 
+            Serial.println("SSID button pressed"); 
+            return true;
 
-    if (btnConnect->touchScreenEvent(x, y)) {
-        Serial.println("Connect button pressed");
-        myLCDScreen.setCurrentFrame(CONNECTED_SCREEN);
-        return;
+        case BUTTON_PASSWORD: 
+            Serial.println("Password button pressed"); 
+            return true;
+
+        case BUTTON_CONNECT: 
+            Serial.println("Connect button pressed"); 
+            return true;
     }
+    return false;
 }

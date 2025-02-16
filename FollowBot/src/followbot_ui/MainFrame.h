@@ -6,26 +6,32 @@ Desc: The main frame where everything is projected with options
 
 #pragma once
 
-#include "FrameBase.h"
+#include "UIComponent.h"
+#include "unordered_map"
 
 class TFT_eSPI;
-class Button;
 
-class MainFrame : public FrameBase {
+class MainFrame : public UIComponent {
 public:
-    
+
     void setup(TFT_eSPI&  tft);
 
+    virtual void draw();
+    virtual bool touchScreenEvent(int x, int y);
 
-    void drawScreen();
-
-    void touchScreenEvent(int x, int y);
+    
 
 private:
 
-    Button *btnSSID;
-    Button *btnPassword;
-    Button *btnConnect;
+    enum FrameComponents {
+        BUTTON_SSID,
+        BUTTON_PASSWORD,
+        BUTTON_CONNECT,
+        NO_UI_COMPONENT,
+        NUM_COMPONENTS
+    };
+
+    std::unordered_map<FrameComponents, UIComponent*> comps;
 };
 
 extern MainFrame mainFrame;

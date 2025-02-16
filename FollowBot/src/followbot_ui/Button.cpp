@@ -8,27 +8,53 @@ Desc: Making button making easy for the user
 #include "TFT_eSPI.h"
 
 Button::Button(TFT_eSPI& tft, int x, int y, int w, int h,  const String& label, int radius) : 
-mTFT(tft), mX(x), mY(y), 
+mX(x), mY(y), 
 mW(w), mH(h), mLabel(label), 
-mRadius(radius), mLastTimeClicked(0) {}
+mRadius(radius), mLastTimeClicked(0) {
+    setTFT(tft);
+}
 
-void Button::drawButton(){
+Button::Button(const Button& original) : 
+mX(original.mX), mY(original.mY), 
+mW(original.mW), mH(original.mH), mLabel(original.mLabel), 
+mRadius(original.mRadius), mLastTimeClicked(original.mLastTimeClicked)
+{
+    setTFT(original.getTFT());
+}
+
+Button& Button::operator=(const Button& rhs) {
+    if(this == &rhs) {
+        return *this;
+    }
+
+    mX = rhs.mX; 
+    mY = rhs.mY;
+    mW = rhs.mW; 
+    mH = rhs.mH;
+    mLabel = rhs.mLabel; 
+    mRadius = rhs.mRadius; 
+    mLastTimeClicked = rhs.mLastTimeClicked;
+
+    return *this;
+}
+
+void Button::draw(){
 
     if (mRadius == 0) {
-        mTFT.fillRect(mX, mY, mW, mH, TFT_BLACK);
+        getTFT().fillRect(mX, mY, mW, mH, TFT_BLACK);
     } else {
-        mTFT.fillRoundRect(mX, mY, mW, mH, mRadius, TFT_BLACK);
+        getTFT().fillRoundRect(mX, mY, mW, mH, mRadius, TFT_BLACK);
     }
     
-    mTFT.setTextColor(TFT_WHITE);
-    mTFT.setTextSize(TEXT_SIZE);
+    getTFT().setTextColor(TFT_WHITE);
+    getTFT().setTextSize(TEXT_SIZE);
 
     //Calculate text size manually
     int16_t cursorX = mX + (mW - mLabel.length() * 6 * TEXT_SIZE) / 2;
     int16_t cursorY = mY + (mH - 8 * TEXT_SIZE) / 2;
     
-    mTFT.setCursor(cursorX, cursorY);
-    mTFT.print(mLabel);
+    getTFT().setCursor(cursorX, cursorY);
+    getTFT().print(mLabel);
 }
 
 bool Button::touchScreenEvent(int x, int y) {

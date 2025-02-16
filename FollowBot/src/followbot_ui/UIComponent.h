@@ -9,13 +9,13 @@ Desc: Creating an abstract class for drawing the screen
 //Abstract Base class for all frames
 class TFT_eSPI;
 
-class FrameBase {
+class UIComponent {
 public:
 
     // Pure virtual function
-    virtual void drawScreen() = 0;
+    virtual void draw() = 0;
 
-    virtual void touchScreenEvent(int x, int y) = 0;
+    virtual bool touchScreenEvent(int x, int y) = 0;
 
 protected:
     TFT_eSPI&  getTFT() const { 
