@@ -27,8 +27,7 @@ private:
         BUTTON_SSID,
         BUTTON_PASSWORD,
         BUTTON_CONNECT,
-        NO_UI_COMPONENT,
-        NUM_COMPONENTS
+        NO_UI_COMPONENT
     };
 
     std::unordered_map<FrameComponents, UIComponent*> comps;

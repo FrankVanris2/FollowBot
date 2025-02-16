@@ -6,19 +6,28 @@ Desc: Creating a Text class for the User to input text onto the screen at variou
 
 #pragma once
 #include "Arduino.h"
+#include "UIComponent.h"
 
 class TFT_eSPI;
 
-class Text {
+class Text : public UIComponent {
 public:
     Text(TFT_eSPI& tft, int x, int y, const String& text, int text_size, int text_color);
 
-    void drawText();
+    virtual void draw();
 
     void drawCenteredText(int screenWidth, int screenHeight);
 
+protected:
+    int getX() {
+        return mX;
+    }
+    int getY() {
+        return mY;
+    }
+    
+
 private:
-    TFT_eSPI& mTFT;
     int mX;
     int mY;
     String mText;

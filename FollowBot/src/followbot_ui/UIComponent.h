@@ -15,7 +15,9 @@ public:
     // Pure virtual function
     virtual void draw() = 0;
 
-    virtual bool touchScreenEvent(int x, int y) = 0;
+    virtual bool touchScreenEvent(int x, int y) {
+        return false;
+    } 
 
 protected:
     TFT_eSPI&  getTFT() const { 

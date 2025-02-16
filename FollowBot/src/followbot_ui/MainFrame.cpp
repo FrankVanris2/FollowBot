@@ -41,6 +41,7 @@ bool MainFrame::touchScreenEvent(int x, int y) {
     switch(selected) {
         case BUTTON_SSID: 
             Serial.println("SSID button pressed"); 
+            myLCDScreen.setCurrentFrame(SSID_SCREEN);
             return true;
 
         case BUTTON_PASSWORD: 
