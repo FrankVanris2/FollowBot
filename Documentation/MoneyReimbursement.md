@@ -42,4 +42,20 @@ Raspberry Pi 4B 2GB RAM + Micro-HDMI + Official Raspberry Pi Case + Official Ras
 * https://www.adafruit.com/product/4296
 
 
-<h3> Total Cost + Tax: $134.22 </h3>
+Motors with Encoders: $14.88 
+* https://tinyurl.com/48wfdm87
+
+
+Gyroscope: $6.99
+* https://tinyurl.com/2yp4y88m
+
+Cheap Camera: $35.99
+* https://tinyurl.com/yd8knfjm
+
+Raspberry Pi 5: $72.99
+* https://tinyurl.com/y4cyc9cp 
+
+NVME drive for the Pi: $12.90
+* https://tinyurl.com/3h4cp4h5 
+
+<h3> Total Cost + Tax: $344.02 </h3>
