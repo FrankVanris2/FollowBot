@@ -10,6 +10,9 @@ Desc: Using an LSD screen to ask user for ssid and password so that robot can co
 #include "Adafruit_GFX.h"
 #include "MainFrame.h"
 #include "SSIDFrame.h"
+#include "Keyboard.h"
+
+
 // Universal object
 LCDScreen myLCDScreen;
 
@@ -17,6 +20,7 @@ LCDScreen myLCDScreen;
 void LCDScreen::myLCDScreen_Setup() {
   mainFrame.setup(tft);
   ssidFrame.setup(tft);
+  keyboard.setup(tft);
 
   tft.begin();
   tft.setRotation(3);
@@ -30,6 +34,13 @@ void LCDScreen::myLCDScreen_Loop() {
   bool pressed = tft.getTouch(&x, &y);
 
   if (pressed) {
+    x = SCREEN_WIDTH - x;
+    Serial.println();
+    Serial.print("Pressed: ("); 
+    Serial.print(x);
+    Serial.print(", ");
+    Serial.print(y);
+    Serial.println(")");
     mCurrentFrame->touchScreenEvent(x, y);
     
   }
@@ -43,6 +54,7 @@ void LCDScreen::setCurrentFrame(ScreenFrames newFrame) {
     case MAIN_SCREEN: mCurrentFrame = &mainFrame; break;
     case SSID_SCREEN: mCurrentFrame = &ssidFrame; break;
     case PASSWORD_SCREEN: break;
+    case KEYBOARD_SCREEN: mCurrentFrame = &keyboard; break;
     default:
       Serial.print('LCDScreen::setCurrentFrame(), unknown Frame: ');
       Serial.println(newFrame);

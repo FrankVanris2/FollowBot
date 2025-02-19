@@ -26,7 +26,6 @@ public:
 
     virtual bool touchScreenEvent(int x, int y);
 
- 
 };
 
 extern MainFrame mainFrame;

@@ -5,29 +5,26 @@ Desc: Creating an SSID Frame that will allow the user to input their SSID inform
 */
 
 #pragma once
-#include "UIComponent.h"
+
 #include <unordered_map>
+#include "FrameBase.h"
 
 class TFT_eSPI;
 
-class SSIDFrame : public UIComponent {
+enum SSIDFrameComponents {
+    BACK_BUTTON,
+    SSID_TEXT,
+    SSID_INPUT_BOX, 
+    NO_UI_COMPONENT
+};
+
+class SSIDFrame : public FrameBase<SSIDFrameComponents> {
 public:
-    void setup(TFT_eSPI& tft);
+    virtual void setup(TFT_eSPI& tft);
 
     virtual void draw();
 
     virtual bool touchScreenEvent(int x, int y);
-
-
-private:
-    enum FrameComponents {
-        BACK_BUTTON,
-        SSID_TEXT,
-        SSID_INPUT_BOX, 
-        NO_UI_COMPONENT
-    };
-
-    std::unordered_map<FrameComponents, UIComponent*> comps;
 
 };
 

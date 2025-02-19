@@ -9,5 +9,6 @@ Desc: Creating a screen state class to manage the different states of the screen
 enum ScreenFrames {
     MAIN_SCREEN,
     SSID_SCREEN,
-    PASSWORD_SCREEN
+    PASSWORD_SCREEN,
+    KEYBOARD_SCREEN
 };

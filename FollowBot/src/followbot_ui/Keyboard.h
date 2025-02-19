@@ -5,18 +5,24 @@ Desc: Creating a Keyboard interface
 */
 
 #pragma once
-#include "UIComponent.h"
+#include "FrameBase.h"
 #include <unordered_map>
 
 class TFT_eSPI;
 
-class Keyboard : public UIComponent{
+enum KeyboardButtons {
+    KBD_BACK_BUTTON,
+    KBD_INPUT_BOX,
+    KBD_NUMBER_1,
+    KBD_NUMBER_2
+};
 
+class Keyboard : public FrameBase<KeyboardButtons>{
 public:
 
-    void setup();
+    void setup(TFT_eSPI& tft);
 
-    virtual void drawScreen();
+    virtual void draw();
 
     virtual bool touchScreenEvent(int x, int y);
     
@@ -26,3 +32,5 @@ private:
 
 
 };
+
+extern Keyboard keyboard;
