@@ -5,9 +5,10 @@ Desc: Creating an input box for the user to put input
 */
 
 #pragma once
-#include "Text.h"
+#include "UIComponent.h"
+#include "Arduino.h"
 
-class InputBox: public Text{
+class InputBox: public UIComponent{
 
 public:
 
@@ -17,8 +18,15 @@ public:
 
     virtual bool touchScreenEvent(int x, int y);
 private:
+    int mX;
+    int mY;
     int mWidth;
     int mHeight;
+    String mText;
+    int mTextSize;
+    int mTextColor;
+ 
+
     unsigned int mLastTimeClicked;
 
 };

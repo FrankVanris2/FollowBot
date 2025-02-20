@@ -6,16 +6,19 @@ Desc: Creating a input box where the user will be able to input text when it com
 
 #include "InputBox.h"
 #include "TFT_eSPI.h"
+#include "Text.h"
 
 
 InputBox::InputBox(TFT_eSPI& tft, int x, int y, int width, int height, const String& text, int text_size, int text_color) : 
-Text(tft, x, y, text, text_size, text_color), mWidth(width), mHeight(height), mLastTimeClicked(0) {
+mX(x), mY(y), mWidth(width), mHeight(height), mText(text), 
+mTextSize(text_size), mTextColor(text_color), mLastTimeClicked(0) {
+    setTFT(tft);
+    Text* textObj = new Text(getTFT(), x, y, text, text_size, text_color);
 }
 
 void InputBox::draw() {
 
-    getTFT().drawRect(getX() - 5, getY() - 7, mWidth, mHeight, TFT_BLACK);
-    Text::draw();
+    getTFT().drawRect(mX, mY, mWidth, mHeight, TFT_BLACK);
 }
 
 bool InputBox::touchScreenEvent(int x, int y) {
@@ -25,13 +28,13 @@ bool InputBox::touchScreenEvent(int x, int y) {
     }
     mLastTimeClicked = currentTime;
     Serial.print("inputBox: ("); 
-    Serial.print(getX());
+    Serial.print(mX);
     Serial.print(", ");
-    Serial.print(getY());
+    Serial.print(mY);
     Serial.print("), width: ");
     Serial.print(mWidth);
     Serial.print(", height: ");
     Serial.println(mHeight);
 
-    return (x > getX() && x < getX() + mWidth && y > getY() && y < getY() + mHeight);
+    return (x > mX && x < mX + mWidth && y > mY && y < mY + mHeight);
 }

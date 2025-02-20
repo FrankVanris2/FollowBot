@@ -87,27 +87,35 @@ bool Keyboard::touchScreenEvent(int x, int y) {
             return true;
         
         case KBD_NUMBER_3:
+            Serial.println("button 3 pressed"); 
             return true;
         
         case KBD_NUMBER_4:
+            Serial.println("button 4 pressed"); 
             return true;
         
         case KBD_NUMBER_5:
+            Serial.println("button 5 pressed"); 
             return true;
 
         case KBD_NUMBER_6:
+            Serial.println("button 6 pressed"); 
             return true;
         
         case KBD_NUMBER_7:
+            Serial.println("button 7 pressed"); 
             return true;
         
         case KBD_NUMBER_8:
+            Serial.println("button 8 pressed"); 
             return true;
         
         case KBD_NUMBER_9:
+            Serial.println("button 9 pressed");     
             return true;
         
         case KBD_NUMBER_0:
+            Serial.println("button 0 pressed"); 
             return true;
 
     }

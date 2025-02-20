@@ -63,14 +63,14 @@ bool Button::touchScreenEvent(int x, int y) {
         return false;
     }
     mLastTimeClicked = currentTime;
-    Serial.print("Button: ("); 
+    /*Serial.print("Button: ("); 
     Serial.print(mX);
     Serial.print(", ");
     Serial.print(mY);
     Serial.print("), width: ");
     Serial.print(mW);
     Serial.print(", height: ");
-    Serial.println(mH);
+    Serial.println(mH);*/
 
     return (x > mX && x < mX + mW && y > mY && y < mY + mH);
 }
