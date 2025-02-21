@@ -16,7 +16,7 @@ Keyboard keyboard;
 void Keyboard::setup(TFT_eSPI& tft) {
     setTFT(tft);
     getComponents()[KBD_BACK_BUTTON] = new Button(tft, 5, 5, 60 , 40, "<--", 10);
-    getComponents()[KBD_INPUT_BOX] = new InputBox(tft, 140, 72, 200, 30, "input box", 2, TFT_BLACK);
+    getComponents()[KBD_INPUT_BOX] = new InputBox(tft, 140, 72, 200, "input box", 2, TFT_BLACK);
     getComponents()[BACKSPACE_BUTTON] = new Button(tft, 423, 214, 45, 36, "Del", 1);
     getComponents()[SPACE_BUTTON] = new Button(tft, 383, 260, 80, 36, "Space", 1);
     getComponents()[CAPS_BUTTON] = new Button(tft, 23, 214, 36, 36, "^", 1);
@@ -44,7 +44,7 @@ void Keyboard::setup(TFT_eSPI& tft) {
     getComponents()[KBD_o] = new Button(tft, 362, 168, 36, 36, "o", 1);
     getComponents()[KBD_p] = new Button(tft, 402, 168, 36, 36, "p", 1);
 
-    getComponents()[KBD_a] = new Button(tft, 63, 214, 36, 36, "a", 1);
+    getComponents()[KBD_a_A_EXLAMATION] = new Button(tft, 63, 214, 36, 36, "a", 1);
     getComponents()[KBD_s] = new Button(tft, 103, 214, 36, 36, "s", 1);
     getComponents()[KBD_d] = new Button(tft, 143, 214, 36, 36, "d", 1);
     getComponents()[KBD_f] = new Button(tft, 183, 214, 36, 36, "f", 1);
@@ -77,47 +77,13 @@ bool Keyboard::touchScreenEvent(int x, int y) {
             Serial.println("Back button pressed");
             myLCDScreen.setCurrentFrame(SSID_SCREEN);
             return true;
-
-        case KBD_NUMBER_1: 
-            Serial.println("button 1 pressed"); 
-            return true;
-
-        case KBD_NUMBER_2: 
-            Serial.println("button 2 pressed"); 
-            return true;
-        
-        case KBD_NUMBER_3:
-            Serial.println("button 3 pressed"); 
-            return true;
-        
-        case KBD_NUMBER_4:
-            Serial.println("button 4 pressed"); 
-            return true;
-        
-        case KBD_NUMBER_5:
-            Serial.println("button 5 pressed"); 
-            return true;
-
-        case KBD_NUMBER_6:
-            Serial.println("button 6 pressed"); 
-            return true;
-        
-        case KBD_NUMBER_7:
-            Serial.println("button 7 pressed"); 
-            return true;
-        
-        case KBD_NUMBER_8:
-            Serial.println("button 8 pressed"); 
-            return true;
-        
-        case KBD_NUMBER_9:
-            Serial.println("button 9 pressed");     
-            return true;
-        
-        case KBD_NUMBER_0:
-            Serial.println("button 0 pressed"); 
-            return true;
-
     }
+
+    if (KBD_NUMBER_0 <= selected && selected <= KBD_NUMBER_9) {
+        char chr = static_cast<char>('0' + (selected - KBD_NUMBER_0));
+        Serial.println(String(chr) + " is pressed");
+        return true;
+    }
+
     return false;
 }

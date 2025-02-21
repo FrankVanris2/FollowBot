@@ -21,6 +21,7 @@ enum KeyboardButtons {
     SPECIAL_CHAR_BUTTON,
 
     //Numbers
+    KBD_NUMBER_0,
     KBD_NUMBER_1,
     KBD_NUMBER_2,
     KBD_NUMBER_3,
@@ -30,10 +31,9 @@ enum KeyboardButtons {
     KBD_NUMBER_7,
     KBD_NUMBER_8,
     KBD_NUMBER_9,
-    KBD_NUMBER_0,
 
     //Alphabet
-    KBD_a,
+    KBD_a_A_EXLAMATION,
     KBD_b,
     KBD_c,
     KBD_d,

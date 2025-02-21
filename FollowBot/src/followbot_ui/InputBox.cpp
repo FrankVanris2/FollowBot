@@ -8,17 +8,27 @@ Desc: Creating a input box where the user will be able to input text when it com
 #include "TFT_eSPI.h"
 #include "Text.h"
 
+const int PADDING = 5; // pixels
 
-InputBox::InputBox(TFT_eSPI& tft, int x, int y, int width, int height, const String& text, int text_size, int text_color) : 
-mX(x), mY(y), mWidth(width), mHeight(height), mText(text), 
+InputBox::InputBox(TFT_eSPI& tft, int x, int y, int width, const String& text, int text_size, int text_color) : 
+mX(x), mY(y), mWidth(width), mText(text), 
 mTextSize(text_size), mTextColor(text_color), mLastTimeClicked(0) {
     setTFT(tft);
-    Text* textObj = new Text(getTFT(), x, y, text, text_size, text_color);
+    getTFT().setTextSize(text_size);
+    int fontHeight = tft.fontHeight(1);
+    mHeight = fontHeight + 2 * PADDING;
+    Serial.println(String("fontHeight = ") + fontHeight + ", mHeight = " + mHeight);
 }
 
 void InputBox::draw() {
 
+    Serial.println(String("mX = ") + mX + ", my = " + mY + ", mHeight = " + mHeight);
     getTFT().drawRect(mX, mY, mWidth, mHeight, TFT_BLACK);
+    getTFT().setTextColor(mTextColor);
+    getTFT().setTextSize(mTextSize);
+    getTFT().setCursor(mX + PADDING, mY + PADDING);
+    Serial.println(String("text mX = ") + (mX + PADDING) + ", my = " + (mY + PADDING));
+    getTFT().print(mText);
 }
 
 bool InputBox::touchScreenEvent(int x, int y) {

@@ -12,7 +12,7 @@ class InputBox: public UIComponent{
 
 public:
 
-    InputBox(TFT_eSPI& tft, int x, int y, int width, int height, const String& text, int text_size, int text_color);
+    InputBox(TFT_eSPI& tft, int x, int y, int width, const String& text, int text_size, int text_color);
 
     virtual void draw();
 
@@ -24,8 +24,7 @@ private:
     int mHeight;
     String mText;
     int mTextSize;
-    int mTextColor;
- 
+    int mTextColor; 
 
     unsigned int mLastTimeClicked;
 

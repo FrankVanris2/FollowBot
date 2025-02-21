@@ -20,10 +20,8 @@ SSIDFrame ssidFrame;
 void SSIDFrame::setup(TFT_eSPI& tft) {
     setTFT(tft);
     getComponents()[BACK_BUTTON] = new Button(tft, 5, 5, 60 , 40, "<--", 10);
-    getComponents()[SSID_TEXT] = new Text(tft, 50, 85, "Input SSID:", 2, TFT_BLACK);
-    getComponents()[SSID_INPUT_BOX] = new InputBox(tft, 200, 82, 200, 30, "input box", 2, TFT_BLACK);
-    
-
+    getComponents()[SSID_TEXT] = new Text(tft, 50, 87, "Input SSID:", 2, TFT_BLACK);
+    getComponents()[SSID_INPUT_BOX] = new InputBox(tft, 200, 80, 200, "input box", 2, TFT_BLACK);
 }
 
 void SSIDFrame::draw() {
