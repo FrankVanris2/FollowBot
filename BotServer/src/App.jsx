@@ -1,36 +1,37 @@
-
 import React from 'react';
-import { Routes, Route, BrowserRouter } from "react-router-dom"
-//import MoveControlsPage from './pages/MoveControlsPage'; // Import the new Move Controls Page
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 import Navbar from './NavBar';
 import AboutAppPage from './pages/AboutAppPage';
 import AboutFollowBotPage from './pages/AboutFollowBotPage';
-import AboutUsPage from './pages/AboutUsPage';
 import FeedbackPage from './pages/FeedbackPage';
-import NewsArticlePage from './pages/NewArticlePage';
+import NewsArticlePage from './pages/NewArticlePage'; // Fix the filename case
 import FollowBotControlsPage from './pages/FollowBotControlsPage';
 import HomePage from './pages/HomePage';
-import SignupPage from "./pages/SignupPage"; // Import the global style
+import NotFoundPage from './pages/NotFoundPage';
+import AboutUsPage from './pages/AboutUsPage'; // Add the missing import
 import { GlobalStyle } from './App.style.jsx';
+import Layout from './components/Layout';
 
-
-function App(){
-    return(
-        <BrowserRouter>
-            <GlobalStyle />
-            <Navbar />
-            <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/about-app" element={<AboutAppPage />} />
-                <Route path="/about-followbot" element={<AboutFollowBotPage />} />
-                <Route path="/about-us" element={<AboutUsPage />} />
-                <Route path="/feedback" element={<FeedbackPage />} />
-                <Route path="/news-articles" element={<NewsArticlePage />} />
-                <Route path="/followbot-controls" element={<FollowBotControlsPage />} />
-                <Route path="/signup" element={<SignupPage />} />
-            </Routes>
-        </BrowserRouter>
-    )
+function App() {
+  return (
+    <Router>
+      <GlobalStyle />
+      <Navbar />
+      <div className="container">
+        <Routes>
+          <Route path="/" element={<Layout><HomePage /></Layout>} />
+          <Route path="/AboutAppPage" element={<Layout><AboutAppPage /></Layout>} />
+          <Route path="/AboutFollowBotPage" element={<Layout><AboutFollowBotPage /></Layout>} />
+          <Route path="/AboutUsPage" element={<Layout><AboutUsPage /></Layout>} />
+          <Route path="/FeedbackPage" element={<Layout><FeedbackPage /></Layout>} />
+          <Route path="/NewsArticlePage" element={<Layout><NewsArticlePage /></Layout>} />
+          <Route path="/FollowBotControlsPage" element={<Layout><FollowBotControlsPage /></Layout>} />
+          <Route path="*" element={<Layout><NotFoundPage /></Layout>} />
+        </Routes>
+      </div>
+    </Router>
+  );
 }
 
 export default App;
