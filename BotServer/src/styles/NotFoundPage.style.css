@@ -1,0 +1,8 @@
+/* Page-specific styles for NotFoundPage */
+.not-found-section {
+    text-align: center;
+    padding: 50px;
+    background-color: #ffebee;
+    border-radius: 8px;
+  }
+  
