@@ -17,6 +17,8 @@ import Button from '@mui/material/Button';
 /**
  TODO: send login form to database
  TODO: change the dropdown menu after user is logged in
+ TODO: create authifcations 
+
  */
 
 const LoginForm = ({username, password, handleUsernameChange, handlePasswordChange, handleSubmit}) => {
@@ -69,8 +71,10 @@ const AccountMenu = () => {
     };
 
     const navigate = useNavigate();
+    // when user click it redirect them to other page 
     const handleSignupRedirect = () => {
-        navigate('/signup')
+        //    webpage 
+        navigate('/signup') //   make page to return them 
     }
 
     const menuProps = {
@@ -131,7 +135,7 @@ const AccountMenu = () => {
 
                 <MenuItem onClick={handleSignupRedirect}>Sign Up</MenuItem>
 
-                {/* TODO: IF SIGNED IN */}
+                {/* TODO: IF SIGNED IN   make changes so parts of website appear and dispear when user signs   */}
                 <MenuItem>
                     <ListItemIcon>
                         <PersonAdd fontSize="small" />

@@ -1,0 +1,26 @@
+.about-follow-bot-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.about-follow-bot-part {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex: 1;
+  margin: 50px;
+}
+
+.follow-bot-image {
+  width: 100%;
+  max-width: 1000px;
+  aspect-ratio: 3 / 2;
+  margin-bottom: 20px;
+}
+
+.center-title {
+  margin-top: 0;
+  text-align: center;
+  font-size: 3.5rem;
+}
