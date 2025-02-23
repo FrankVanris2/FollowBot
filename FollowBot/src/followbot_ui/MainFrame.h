@@ -14,7 +14,8 @@ class TFT_eSPI;
 enum FrameComponents {
     BUTTON_SSID,
     BUTTON_PASSWORD,
-    BUTTON_CONNECT
+    BUTTON_CONNECT,
+    TEXT_WAIT,
 };
 
 class MainFrame : public FrameBase<FrameComponents>{

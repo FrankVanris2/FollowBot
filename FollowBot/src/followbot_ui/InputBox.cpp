@@ -6,11 +6,12 @@ Desc: Creating a input box where the user will be able to input text when it com
 
 #include "InputBox.h"
 #include "TFT_eSPI.h"
-#include "Text.h"
+
 
 const int PADDING = 5; // pixels
 
 InputBox::InputBox(TFT_eSPI& tft, int x, int y, int width, const String& text, int text_size, int text_color) : 
+TextBase(tft, text, false, text_color),
 mX(x), mY(y), mWidth(width), mText(text), 
 mTextSize(text_size), mTextColor(text_color), mLastTimeClicked(0) {
     setTFT(tft);

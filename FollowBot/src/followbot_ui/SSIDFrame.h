@@ -15,7 +15,8 @@ enum SSIDFrameComponents {
     BACK_BUTTON,
     SSID_TEXT,
     SSID_INPUT_BOX, 
-    NO_UI_COMPONENT
+    NO_UI_COMPONENT,
+    SSID_TEXT_WAIT,
 };
 
 class SSIDFrame : public FrameBase<SSIDFrameComponents> {
