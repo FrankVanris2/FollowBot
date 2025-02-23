@@ -135,9 +135,18 @@ bool Keyboard::touchScreenEvent(int x, int y) {
                     char chr = static_cast<char>('!' + (selected - KBD_a_A_EXLAMATION));
                     Serial.println(String(chr) + " is pressed");
                 }  
-                
-                
-
+                return true;
+            }
+            break;
+        
+        case SPECIAL_CHAR_MODE2:
+            if(KBD_a_A_EXLAMATION <= selected && selected <= KBD_b_B_QUOTES) {
+                char chr = static_cast<char>('_' + (selected - KBD_a_A_EXLAMATION));
+                Serial.println(String(chr) + "is pressed");
+            }
+            if(KBD_c_C_HASHTAG <= selected && selected <= KBD_f_F_CARET) {
+                char chr = static_cast<char>('{' + (selected - KBD_c_C_HASHTAG));
+                Serial.println(String(chr) + "is pressed");
                 return true;
             }
             break;
@@ -150,15 +159,22 @@ void Keyboard::selectKeyboardMode(KeyboardButtons button) {
     //do things in order to change the text of the buttons
     Serial.println(String("selectKeyboardMode, button = ") + button + ", mKeyboardMode = " + mKeyboardMode);
     if(button == KBD_CAPS_BUTTON) {
-        Serial.println("In CAPS_MODE");
         if (mKeyboardMode == ALPHABET_MODE) {
-            Serial.println("In ALPHABET_MODE");
+            Serial.println("In Caps Mode");
             mKeyboardMode = CAPS_MODE;
             setUppercaseChars();
-        } else {
-            Serial.println("In else ALPHABET_MODE");
+        } else if (mKeyboardMode == CAPS_MODE) {
+            Serial.println("In ALPHABET_MODE");
             mKeyboardMode = ALPHABET_MODE;
             setLowercaseChars();
+        } else if (mKeyboardMode == SPECIAL_CHAR_MODE1) {
+            Serial.println("In special char mode2");
+            mKeyboardMode = SPECIAL_CHAR_MODE2;
+            setSpecialChars2();
+        } else if (mKeyboardMode == SPECIAL_CHAR_MODE2) {
+            Serial.println("In Special char mode1");
+            mKeyboardMode = SPECIAL_CHAR_MODE1;
+            setSpecialChars1();
         }
     }  else if (button == KBD_SPECIAL_CHAR_BUTTON) {
         Serial.println("IN SPECIAL CHAR MODE");
@@ -204,4 +220,15 @@ void Keyboard::setSpecialChars1() {
         Button* button = (Button*) getComponents()[but];
         button->setTextAndDraw(String(static_cast<char>('[' + but - KBD_w_W_LESSTHAN)));
     } 
+}
+
+void Keyboard::setSpecialChars2() {
+    for (KeyboardButtons but = KBD_a_A_EXLAMATION; but <= KBD_b_B_QUOTES; but = static_cast<KeyboardButtons>(but + 1)) {
+        Button* button = (Button*) getComponents()[but];
+        button->setTextAndDraw(String(static_cast<char>('_' + but - KBD_a_A_EXLAMATION)));
+    }
+    for (KeyboardButtons but = KBD_c_C_HASHTAG; but <= KBD_f_F_CARET; but = static_cast<KeyboardButtons>(but + 1)) {
+        Button* button = (Button*) getComponents()[but];
+        button->setTextAndDraw(String(static_cast<char>('{' + but - KBD_c_C_HASHTAG)));
+    }
 }
