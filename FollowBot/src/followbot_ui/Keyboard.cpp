@@ -37,34 +37,34 @@ void Keyboard::setup(TFT_eSPI& tft) {
     getComponents()[KBD_NUMBER_9] = new Button(tft, 362, 122, 36, 36, "9", 1);
     getComponents()[KBD_NUMBER_0] = new Button(tft, 402, 122, 36, 36, "0", 1);
 
-    getComponents()[KBD_a_A_EXLAMATION] = new Button(tft, 42, 168, 36, 36, "a", 1);
-    getComponents()[KBD_b_B_QUOTES] = new Button(tft, 82, 168, 36, 36, "b", 1);
-    getComponents()[KBD_c_C_HASHTAG] = new Button(tft, 122, 168, 36, 36, "c", 1);
-    getComponents()[KBD_d_D_DOLLAR] = new Button(tft, 162, 168, 36, 36, "d", 1);
-    getComponents()[KBD_e_E_PERCENT] = new Button(tft, 202, 168, 36, 36, "e", 1);
-    getComponents()[KBD_f_F_CARET] = new Button(tft, 242, 168, 36, 36, "f", 1);
-    getComponents()[KBD_g_G_AMPERSAND] = new Button(tft, 282, 168, 36, 36, "g", 1);
-    getComponents()[KBD_h_H_ASTERISK] = new Button(tft, 322, 168, 36, 36, "h", 1);
-    getComponents()[KBD_i_I_LPARENTHESIS] = new Button(tft, 362, 168, 36, 36, "i", 1);
-    getComponents()[KBD_j_J_RPARENTHESIS] = new Button(tft, 402, 168, 36, 36, "j", 1);
+    getComponents()[KBD_q_Q_LSQUAREBRACE] = new Button(tft, 42, 168, 36, 36, "q", 1);
+    getComponents()[KBD_w_W_LESSTHAN] = new Button(tft, 82, 168, 36, 36, "w", 1);
+    getComponents()[KBD_e_E_PERCENT] = new Button(tft, 122, 168, 36, 36, "e", 1);
+    getComponents()[KBD_r_R_RSQUAREBRACE] = new Button(tft, 162, 168, 36, 36, "r", 1);
+    getComponents()[KBD_t_T_VERTICALBAR] = new Button(tft, 202, 168, 36, 36, "t", 1);
+    getComponents()[KBD_y_Y_QUESTION] = new Button(tft, 242, 168, 36, 36, "y", 1);
+    getComponents()[KBD_u_U_COLON] = new Button(tft, 282, 168, 36, 36, "u", 1);
+    getComponents()[KBD_i_I_LPARENTHESIS] = new Button(tft, 322, 168, 36, 36, "i", 1);
+    getComponents()[KBD_o_O_SLASH] = new Button(tft, 362, 168, 36, 36, "o", 1);
+    getComponents()[KBD_p_P_COLON] = new Button(tft, 402, 168, 36, 36, "p", 1);
 
-    getComponents()[KBD_k_K_UNDERSCORE] = new Button(tft, 63, 214, 36, 36, "k", 1);
-    getComponents()[KBD_l_L_PLUS] = new Button(tft, 103, 214, 36, 36, "l", 1);
-    getComponents()[KBD_m_M_MINUS] = new Button(tft, 143, 214, 36, 36, "m", 1);
-    getComponents()[KBD_n_N_DOT] = new Button(tft, 183, 214, 36, 36, "n", 1);
-    getComponents()[KBD_o_O_SLASH] = new Button(tft, 223, 214, 36, 36, "o", 1);
-    getComponents()[KBD_p_P_COLON] = new Button(tft, 263, 214, 36, 36, "p", 1);
-    getComponents()[KBD_q_Q_LSQUAREBRACE] = new Button(tft, 303, 214, 36, 36, "q", 1);
-    getComponents()[KBD_r_R_RSQUAREBRACE] = new Button(tft, 343, 214, 36, 36, "r", 1);
-    getComponents()[KBD_s_S_BACKSLASH] = new Button(tft, 383, 214, 36, 36, "s", 1);
+    getComponents()[KBD_a_A_EXLAMATION] = new Button(tft, 63, 214, 36, 36, "a", 1);
+    getComponents()[KBD_s_S_BACKSLASH] = new Button(tft, 103, 214, 36, 36, "s", 1);
+    getComponents()[KBD_d_D_DOLLAR] = new Button(tft, 143, 214, 36, 36, "d", 1);
+    getComponents()[KBD_f_F_CARET] = new Button(tft, 183, 214, 36, 36, "f", 1);
+    getComponents()[KBD_g_G_AMPERSAND] = new Button(tft, 223, 214, 36, 36, "g", 1);
+    getComponents()[KBD_h_H_ASTERISK] = new Button(tft, 263, 214, 36, 36, "h", 1);
+    getComponents()[KBD_j_J_RPARENTHESIS] = new Button(tft, 303, 214, 36, 36, "j", 1);
+    getComponents()[KBD_k_K_UNDERSCORE] = new Button(tft, 343, 214, 36, 36, "k", 1);
+    getComponents()[KBD_l_L_PLUS] = new Button(tft, 383, 214, 36, 36, "l", 1);
 
-    getComponents()[KBD_t_T_VERTICALBAR] = new Button(tft, 103, 260, 36, 36, "t", 1);
-    getComponents()[KBD_u_U_COLON] = new Button(tft, 143, 260, 36, 36, "u", 1);
-    getComponents()[KBD_v_V_SEMICOLON] = new Button(tft, 183, 260, 36, 36, "v", 1);
-    getComponents()[KBD_w_W_LESSTHAN] = new Button(tft, 223, 260, 36, 36, "w", 1);
-    getComponents()[KBD_x_X_GREATERTHAN] = new Button(tft, 263, 260, 36, 36, "x", 1);
-    getComponents()[KBD_y_Y_QUESTION] = new Button(tft, 303, 260, 36, 36, "y", 1);
-    getComponents()[KBD_z_Z_ATSIGN] = new Button(tft, 343, 260, 36, 36, "z", 1);
+    getComponents()[KBD_z_Z_ATSIGN] = new Button(tft, 103, 260, 36, 36, "z", 1);
+    getComponents()[KBD_x_X_GREATERTHAN] = new Button(tft, 143, 260, 36, 36, "x", 1);
+    getComponents()[KBD_c_C_HASHTAG] = new Button(tft, 183, 260, 36, 36, "c", 1);
+    getComponents()[KBD_v_V_SEMICOLON] = new Button(tft, 223, 260, 36, 36, "v", 1);
+    getComponents()[KBD_b_B_QUOTES] = new Button(tft, 263, 260, 36, 36, "b", 1);
+    getComponents()[KBD_n_N_DOT] = new Button(tft, 303, 260, 36, 36, "n", 1);
+    getComponents()[KBD_m_M_MINUS] = new Button(tft, 343, 260, 36, 36, "m", 1);
 
 }
 
@@ -162,28 +162,35 @@ void Keyboard::selectKeyboardMode(KeyboardButtons button) {
         if (mKeyboardMode == ALPHABET_MODE) {
             Serial.println("In Caps Mode");
             mKeyboardMode = CAPS_MODE;
+            ((TextBase*) getComponents()[KBD_CAPS_BUTTON])->setTextAndDraw("^");
             setUppercaseChars();
         } else if (mKeyboardMode == CAPS_MODE) {
             Serial.println("In ALPHABET_MODE");
             mKeyboardMode = ALPHABET_MODE;
+            ((TextBase*) getComponents()[KBD_CAPS_BUTTON])->setTextAndDraw("^");
             setLowercaseChars();
         } else if (mKeyboardMode == SPECIAL_CHAR_MODE1) {
             Serial.println("In special char mode2");
             mKeyboardMode = SPECIAL_CHAR_MODE2;
+            ((TextBase*) getComponents()[KBD_CAPS_BUTTON])->setTextAndDraw("^2");
             setSpecialChars2();
         } else if (mKeyboardMode == SPECIAL_CHAR_MODE2) {
             Serial.println("In Special char mode1");
             mKeyboardMode = SPECIAL_CHAR_MODE1;
+            ((TextBase*) getComponents()[KBD_CAPS_BUTTON])->setTextAndDraw("^1");
             setSpecialChars1();
         }
     }  else if (button == KBD_SPECIAL_CHAR_BUTTON) {
         Serial.println("IN SPECIAL CHAR MODE");
         if (mKeyboardMode == ALPHABET_MODE || mKeyboardMode == CAPS_MODE) {
             mKeyboardMode = SPECIAL_CHAR_MODE1;
+            ((TextBase*) getComponents()[KBD_CAPS_BUTTON])->setTextAndDraw("^1");
             setSpecialChars1();
         } else {
             Serial.println("In else ALPHABET MODE");
             mKeyboardMode = ALPHABET_MODE;
+            ((TextBase*) getComponents()[KBD_CAPS_BUTTON])->setTextAndDraw("  "); //temp fix
+            ((TextBase*) getComponents()[KBD_CAPS_BUTTON])->setTextAndDraw("^");
             setLowercaseChars();
         }
     } 
@@ -230,5 +237,9 @@ void Keyboard::setSpecialChars2() {
     for (KeyboardButtons but = KBD_c_C_HASHTAG; but <= KBD_f_F_CARET; but = static_cast<KeyboardButtons>(but + 1)) {
         Button* button = (Button*) getComponents()[but];
         button->setTextAndDraw(String(static_cast<char>('{' + but - KBD_c_C_HASHTAG)));
+    }
+    for (KeyboardButtons but = KBD_g_G_AMPERSAND; but <= KBD_z_Z_ATSIGN; but = static_cast<KeyboardButtons>(but + 1)) {
+        Button* button = (Button*) getComponents()[but];
+        button->setTextAndDraw("  ");
     }
 }
