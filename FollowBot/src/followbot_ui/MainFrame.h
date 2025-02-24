@@ -12,8 +12,7 @@ Desc: The main frame where everything is projected with options
 class TFT_eSPI;
 
 enum FrameComponents {
-    BUTTON_SSID,
-    BUTTON_PASSWORD,
+    BUTTON_INPUT_CREDENTIALS,
     BUTTON_CONNECT,
     TEXT_WAIT,
 };

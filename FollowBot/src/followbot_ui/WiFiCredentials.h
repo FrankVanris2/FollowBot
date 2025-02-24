@@ -11,15 +11,17 @@ Desc: Creating an SSID Frame that will allow the user to input their SSID inform
 
 class TFT_eSPI;
 
-enum SSIDFrameComponents {
+enum WiFiCredentialsFrameComponents {
     BACK_BUTTON,
     SSID_TEXT,
     SSID_INPUT_BOX, 
+    PASSWORD_TEXT,
+    PASSWORD_INPUT_BOX,
     NO_UI_COMPONENT,
-    SSID_TEXT_WAIT,
+    CRED_TEXT_WAIT,
 };
 
-class SSIDFrame : public FrameBase<SSIDFrameComponents> {
+class WiFiCredentials : public FrameBase<WiFiCredentialsFrameComponents> {
 public:
     virtual void setup(TFT_eSPI& tft);
 
@@ -27,6 +29,9 @@ public:
 
     virtual bool touchScreenEvent(int x, int y);
 
+private:
+    void setSSID(const String& ssid);
+    void setPassword(const String& password);
 };
 
-extern SSIDFrame ssidFrame;
+extern WiFiCredentials wifiCredentials;

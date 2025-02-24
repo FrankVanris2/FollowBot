@@ -5,7 +5,9 @@ Desc: Creating a Keyboard interface
 */
 
 #pragma once
+#include <functional>
 #include "FrameBase.h"
+#include "ScreenState.h"
 #include <unordered_map>
 
 class TFT_eSPI;
@@ -17,7 +19,6 @@ enum KeyboardButtons {
     KBD_INPUT_BOX,
     KBD_BACKSPACE_BUTTON,
     KBD_SPACE_BUTTON,
-    KBD_ENTER_BUTTON,
     KBD_CAPS_BUTTON,
     KBD_SPECIAL_CHAR_BUTTON,
     KBD_ALPHABET_CHAR_BUTTON,
@@ -79,17 +80,24 @@ public:
 
     virtual bool touchScreenEvent(int x, int y);
 
+    void setInputAndCallback(const String& input, ScreenFrames screenFrame, std::function<void(const String&)> callback);
+
 private:
+    KeyboardMode mKeyboardMode = ALPHABET_MODE;
+    ScreenFrames mScreenFrame;
+    std::function<void(const String&)> mCallback;
+
     void selectKeyboardMode(KeyboardButtons button); 
     void setUppercaseChars();
     void setLowercaseChars();
-
     void setSpecialChars1();
     void setSpecialChars2();
 
+    void handleBackSpaceButton();
+    void handleSpaceButton();
+    bool checkButtonPressed(KeyboardButtons selected);
 
-    // other fields
-    KeyboardMode mKeyboardMode = ALPHABET_MODE; //added this
+    void handleBackButton();
 };
 
 extern Keyboard keyboard;

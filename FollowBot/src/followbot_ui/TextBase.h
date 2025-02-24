@@ -11,15 +11,16 @@ Desc: Creating a Text base class
 
 const int BASE_FONT_WIDTH = 6; // pixels
 const int BASE_FONT_HEIGHT = 8; // pixels
+const int TEXT_SIZE = 2;
 
 class TextBase: public UIComponent{
 
 public:
-    TextBase(TFT_eSPI& tft, const String& text = "", int color = TFT_BLACK, int backgroundColor = TFT_WHITE) :
-    TextBase(tft, 0, 0, text, color, backgroundColor)
+    TextBase(TFT_eSPI& tft, const String& text = "", int textSize = TEXT_SIZE, int color = TFT_BLACK, int backgroundColor = TFT_WHITE) :
+    TextBase(tft, 0, 0, text, textSize, color, backgroundColor)
     {}
 
-    TextBase(TFT_eSPI& tft, int xText, int yText, const String& text = "", int color = TFT_BLACK, int backgroundColor = TFT_WHITE);
+    TextBase(TFT_eSPI& tft, int xText, int yText, const String& text = "", int textSize = TEXT_SIZE, int color = TFT_BLACK, int backgroundColor = TFT_WHITE);
 
     void setTextPosition(int xText, int yText) {
         mXText = xText;
@@ -50,10 +51,9 @@ private:
     bool mIsCentered;
     int mXText;
     int mYText;
+    int mTextSize;
     String mText;
     int mColor;
     int mBackgroundColor;
     bool mHide;
-
-    const int TEXT_SIZE = 2;
 };

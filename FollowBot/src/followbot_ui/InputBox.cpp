@@ -10,26 +10,17 @@ Desc: Creating a input box where the user will be able to input text when it com
 
 const int PADDING = 5; // pixels
 
-InputBox::InputBox(TFT_eSPI& tft, int x, int y, int width, const String& text, int text_size, int text_color) : 
-TextBase(tft, text, false, text_color),
-mX(x), mY(y), mWidth(width), mText(text), 
-mTextSize(text_size), mTextColor(text_color), mLastTimeClicked(0) {
+InputBox::InputBox(TFT_eSPI& tft, int x, int y, int width, const String& text, int text_size, int text_color, int backgroundColor) : 
+TextBase(tft, x + PADDING, y + PADDING, text, text_size, text_color, backgroundColor),
+mX(x), mY(y), mWidth(width), mLastTimeClicked(0) {
     setTFT(tft);
-    getTFT().setTextSize(text_size);
     int fontHeight = tft.fontHeight(1);
-    mHeight = fontHeight + 2 * PADDING;
-    Serial.println(String("fontHeight = ") + fontHeight + ", mHeight = " + mHeight);
+    mHeight = fontHeight * text_size + 2 * PADDING;
 }
 
 void InputBox::draw() {
-
-    Serial.println(String("mX = ") + mX + ", my = " + mY + ", mHeight = " + mHeight);
     getTFT().drawRect(mX, mY, mWidth, mHeight, TFT_BLACK);
-    getTFT().setTextColor(mTextColor);
-    getTFT().setTextSize(mTextSize);
-    getTFT().setCursor(mX + PADDING, mY + PADDING);
-    Serial.println(String("text mX = ") + (mX + PADDING) + ", my = " + (mY + PADDING));
-    getTFT().print(mText);
+    TextBase::draw();
 }
 
 bool InputBox::touchScreenEvent(int x, int y) {
@@ -38,14 +29,6 @@ bool InputBox::touchScreenEvent(int x, int y) {
         return false;
     }
     mLastTimeClicked = currentTime;
-    Serial.print("inputBox: ("); 
-    Serial.print(mX);
-    Serial.print(", ");
-    Serial.print(mY);
-    Serial.print("), width: ");
-    Serial.print(mWidth);
-    Serial.print(", height: ");
-    Serial.println(mHeight);
 
     return (x > mX && x < mX + mWidth && y > mY && y < mY + mHeight);
 }

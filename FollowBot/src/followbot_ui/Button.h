@@ -19,8 +19,6 @@ public:
     virtual bool touchScreenEvent(int x, int y);
 
 private:
-    const int TEXT_SIZE = 2;
-
     int mX;
     int mY;
     int mW;

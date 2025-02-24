@@ -8,11 +8,14 @@ Desc: Creating a secure way to store your credentials
 #include "secrets/SecureWifiCredentials.h"
 #include <EEPROM.h>
 
+// Universal Object
+SecureWifiCredentials secureWifiCredentials;
+
 SecureWifiCredentials::SecureWifiCredentials() {
 }
 
 void SecureWifiCredentials::saveCredentials(const char* ssid, const char* password) {
-    EEPROM.begin();
+    // EEPROM.begin();
     //Store SSID
     for (int i = 0; i < 32; i++) {
         EEPROM.write(i, ssid[i]);
@@ -24,10 +27,12 @@ void SecureWifiCredentials::saveCredentials(const char* ssid, const char* passwo
 }
 
 void SecureWifiCredentials::loadCredentials(char* ssid, char* password) {
+    /*
     for (int i = 0; i < 32; i++) {
         ssid[i] = EEPROM.read(i);
     }
     for (int i = 32; i < 96; i++) {
         password[i - 32] = EEPROM.read(i);
     }
+    */
 }

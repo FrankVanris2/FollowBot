@@ -9,8 +9,8 @@ Desc: Making button making easy for the user
 
 
 
-Button::Button(TFT_eSPI& tft, int x, int y, int w, int h,  const String& label, int radius) : 
-TextBase(tft, label, TFT_WHITE, TFT_BLACK),
+Button::Button(TFT_eSPI& tft, int x, int y, int w, int h, const String& label, int radius) : 
+TextBase(tft, label, TEXT_SIZE, TFT_WHITE, TFT_BLACK),
 mX(x), mY(y), 
 mW(w), mH(h), mLabel(label), 
 mRadius(radius), mLastTimeClicked(0) {

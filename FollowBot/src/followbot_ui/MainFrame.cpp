@@ -17,10 +17,9 @@ MainFrame mainFrame;
 void MainFrame::setup(TFT_eSPI& tft) {
     setTFT(tft);
 
-    getComponents()[BUTTON_SSID] = new Button(tft, 140, 80, 200, 50, "SSID", 10);
-    getComponents()[BUTTON_PASSWORD] = new Button(tft, 140, 160, 200, 50, "Password", 10);
+    getComponents()[BUTTON_INPUT_CREDENTIALS] = new Button(tft, 135, 135, 210, 50, "Input Credentials", 10);
     getComponents()[BUTTON_CONNECT] = new Button(tft, 180, 240, 120, 40, "Connect", 10);
-    getComponents()[TEXT_WAIT] = new TextBase(tft, 5, 300, "Wait", TFT_WHITE, TFT_RED);
+    getComponents()[TEXT_WAIT] = new TextBase(tft, 5, 300, "Wait", TEXT_SIZE, TFT_WHITE, TFT_RED);
     ((TextBase*) getComponents()[TEXT_WAIT])->setHide(true);
 }
 
@@ -33,16 +32,12 @@ bool MainFrame::touchScreenEvent(int x, int y) {
     FrameComponents selected = getComponentForTouch(x, y);
 
     switch(selected) {
-        case BUTTON_SSID: 
-            Serial.println("SSID button pressed"); 
+        case BUTTON_INPUT_CREDENTIALS: 
+            Serial.println("Credentials  button pressed"); 
             ((TextBase*) getComponents()[TEXT_WAIT])->setHide(false);
             getComponents()[TEXT_WAIT]->draw();
-            myLCDScreen.setCurrentFrame(SSID_SCREEN);
+            myLCDScreen.setCurrentFrame(WIFI_CREDENTIALS_SCREEN);
             ((TextBase*) getComponents()[TEXT_WAIT])->setHide(true);
-            return true;
-
-        case BUTTON_PASSWORD: 
-            Serial.println("Password button pressed"); 
             return true;
 
         case BUTTON_CONNECT: 

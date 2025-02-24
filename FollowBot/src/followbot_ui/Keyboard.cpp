@@ -13,13 +13,19 @@ Desc: Creating a keyboard
 
 Keyboard keyboard;
 
+void Keyboard::setInputAndCallback(const String& input, ScreenFrames screenFrame, std::function<void(const String&)> callback) {
+    ((TextBase*) getComponents()[KBD_INPUT_BOX])->setText(input);
+    mScreenFrame = screenFrame;
+    mCallback = callback;
+}
+
 void Keyboard::setup(TFT_eSPI& tft) {
     setTFT(tft);
-    getComponents()[KBD_TEXT_WAIT] = new TextBase(tft, 5, 300, "Wait", TFT_WHITE, TFT_RED);
+    getComponents()[KBD_TEXT_WAIT] = new TextBase(tft, 5, 300, "Wait", TEXT_SIZE, TFT_WHITE, TFT_RED);
     ((TextBase*) getComponents()[KBD_TEXT_WAIT])->setHide(true);
 
     getComponents()[KBD_BACK_BUTTON] = new Button(tft, 5, 5, 60 , 40, "<--", 10);
-    getComponents()[KBD_INPUT_BOX] = new InputBox(tft, 140, 72, 200, "input box", 2, TFT_BLACK);
+    getComponents()[KBD_INPUT_BOX] = new InputBox(tft, 115, 72, 250);
     getComponents()[KBD_BACKSPACE_BUTTON] = new Button(tft, 423, 214, 45, 36, "Del", 1);
     getComponents()[KBD_SPACE_BUTTON] = new Button(tft, 383, 260, 80, 36, "Space", 1);
     getComponents()[KBD_CAPS_BUTTON] = new Button(tft, 23, 214, 36, 36, "^", 1);
@@ -78,13 +84,7 @@ bool Keyboard::touchScreenEvent(int x, int y) {
 
     switch(selected) {
         case KBD_BACK_BUTTON:
-            Serial.println("Back button pressed");
-            mKeyboardMode = ALPHABET_MODE;
-            setLowercaseChars();
-            ((TextBase*) getComponents()[KBD_TEXT_WAIT])->setHide(false);
-            getComponents()[KBD_TEXT_WAIT]->draw();
-            myLCDScreen.setCurrentFrame(SSID_SCREEN);
-            ((TextBase*) getComponents()[KBD_TEXT_WAIT])->setHide(true);
+            handleBackButton();
             return true;
         
         case KBD_CAPS_BUTTON:
@@ -96,60 +96,75 @@ bool Keyboard::touchScreenEvent(int x, int y) {
             Serial.println("SPECIAL CHAR button pressed");
             selectKeyboardMode(KBD_SPECIAL_CHAR_BUTTON);
             return true;
+        
+        case KBD_BACKSPACE_BUTTON:
+            Serial.println("BACKSPACE button pressed");
+            handleBackSpaceButton();
+            return true;
+
+        case KBD_SPACE_BUTTON:
+            Serial.println("SPACE button pressed");
+            handleSpaceButton();
+            return true;
     
     }
 
-    if (KBD_NUMBER_0 <= selected && selected <= KBD_NUMBER_9) {
-        char chr = static_cast<char>('0' + (selected - KBD_NUMBER_0));
-        Serial.println(String(chr) + " is pressed");
+    if (checkButtonPressed(selected)) {
         return true;
+    }
+
+    return false;
+}
+
+bool Keyboard::checkButtonPressed(KeyboardButtons selected) {
+    char chr = '\0';
+
+    if (KBD_NUMBER_0 <= selected && selected <= KBD_NUMBER_9) {
+        chr = static_cast<char>('0' + (selected - KBD_NUMBER_0));
     }
 
     switch (mKeyboardMode) {
         case ALPHABET_MODE:
             if(KBD_a_A_EXLAMATION <= selected && selected <= KBD_z_Z_ATSIGN) {
-                char chr = static_cast<char>('a' + (selected - KBD_a_A_EXLAMATION));
-                Serial.println(String(chr) + " is pressed");
-                return true;
+                chr = static_cast<char>('a' + (selected - KBD_a_A_EXLAMATION));
             }
             break;
     
         case CAPS_MODE:
             if(KBD_a_A_EXLAMATION <= selected && selected <= KBD_z_Z_ATSIGN) {
-                char chr = static_cast<char>('A' + (selected - KBD_a_A_EXLAMATION));
-                Serial.println(String(chr) + " is pressed");
-                return true;
+                chr = static_cast<char>('A' + (selected - KBD_a_A_EXLAMATION));
             }
             break;
 
         case SPECIAL_CHAR_MODE1:
             if(KBD_a_A_EXLAMATION <= selected && selected <= KBD_z_Z_ATSIGN) {
                 if(KBD_p_P_COLON <= selected && selected <= KBD_v_V_SEMICOLON) {
-                    char chr = static_cast<char>(':' + (selected - KBD_p_P_COLON));
-                    Serial.println(String(chr) + " is pressed");
+                    chr = static_cast<char>(':' + (selected - KBD_p_P_COLON));
                 }  else if(KBD_w_W_LESSTHAN <= selected && selected <= KBD_z_Z_ATSIGN) {
-                    char chr = static_cast<char>('[' + (selected - KBD_w_W_LESSTHAN));
-                    Serial.println(String(chr) + " is pressed");
+                    chr = static_cast<char>('[' + (selected - KBD_w_W_LESSTHAN));
                 }
                 else {
-                    char chr = static_cast<char>('!' + (selected - KBD_a_A_EXLAMATION));
-                    Serial.println(String(chr) + " is pressed");
+                    chr = static_cast<char>('!' + (selected - KBD_a_A_EXLAMATION));
                 }  
-                return true;
             }
             break;
         
         case SPECIAL_CHAR_MODE2:
             if(KBD_a_A_EXLAMATION <= selected && selected <= KBD_b_B_QUOTES) {
-                char chr = static_cast<char>('_' + (selected - KBD_a_A_EXLAMATION));
-                Serial.println(String(chr) + "is pressed");
-            }
-            if(KBD_c_C_HASHTAG <= selected && selected <= KBD_f_F_CARET) {
-                char chr = static_cast<char>('{' + (selected - KBD_c_C_HASHTAG));
-                Serial.println(String(chr) + "is pressed");
-                return true;
+                chr = static_cast<char>('_' + (selected - KBD_a_A_EXLAMATION));
+            } else if(KBD_c_C_HASHTAG <= selected && selected <= KBD_f_F_CARET) {
+                chr = static_cast<char>('{' + (selected - KBD_c_C_HASHTAG));
             }
             break;
+    }
+
+    if(chr != '\0') {
+        Serial.println(String(chr) + " is pressed");
+        InputBox* inputBox = (InputBox*) getComponents()[KBD_INPUT_BOX];
+        String currentText = inputBox->getText();
+        currentText += chr;
+        inputBox->setTextAndDraw(currentText);
+        return true;
     }
 
     return false;
@@ -189,7 +204,6 @@ void Keyboard::selectKeyboardMode(KeyboardButtons button) {
         } else {
             Serial.println("In else ALPHABET MODE");
             mKeyboardMode = ALPHABET_MODE;
-            ((TextBase*) getComponents()[KBD_CAPS_BUTTON])->setTextAndDraw("  "); //temp fix
             ((TextBase*) getComponents()[KBD_CAPS_BUTTON])->setTextAndDraw("^");
             setLowercaseChars();
         }
@@ -242,4 +256,37 @@ void Keyboard::setSpecialChars2() {
         Button* button = (Button*) getComponents()[but];
         button->setTextAndDraw("  ");
     }
+}
+
+void Keyboard::handleSpaceButton() {
+    Serial.println("Space button pressed");
+    InputBox* inputBox = (InputBox*) getComponents()[KBD_INPUT_BOX];
+    String currentText = inputBox->getText();
+    currentText += " ";
+    inputBox->setTextAndDraw(currentText);
+}
+
+void Keyboard::handleBackSpaceButton() {
+    Serial.println("Backspace button pressed");
+    InputBox* inputBox = (InputBox*) getComponents()[KBD_INPUT_BOX];
+    String currentText = inputBox->getText();
+    if (currentText.length() > 0) {
+        currentText.remove(currentText.length() - 1);
+        inputBox->setTextAndDraw(currentText);
+    }
+}
+
+void Keyboard::handleBackButton() {
+    Serial.println("Back button pressed");
+    ((TextBase*) getComponents()[KBD_TEXT_WAIT])->setHide(false);
+    getComponents()[KBD_TEXT_WAIT]->draw();
+
+    mKeyboardMode = ALPHABET_MODE;
+    setLowercaseChars();
+
+    const String& text = ((InputBox*) getComponents()[KBD_INPUT_BOX])->getText();
+    mCallback(text);
+    myLCDScreen.setCurrentFrame(mScreenFrame);
+
+    ((TextBase*) getComponents()[KBD_TEXT_WAIT])->setHide(true);
 }
