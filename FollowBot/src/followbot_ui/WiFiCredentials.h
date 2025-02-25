@@ -12,13 +12,14 @@ Desc: Creating an SSID Frame that will allow the user to input their SSID inform
 class TFT_eSPI;
 
 enum WiFiCredentialsFrameComponents {
-    BACK_BUTTON,
-    SSID_TEXT,
-    SSID_INPUT_BOX, 
-    PASSWORD_TEXT,
-    PASSWORD_INPUT_BOX,
-    NO_UI_COMPONENT,
-    CRED_TEXT_WAIT,
+    WIFI_BACK_BUTTON,
+    WIFI_SSID_TEXT,
+    WIFI_SSID_INPUT_BOX, 
+    WIFI_PASSWORD_TEXT,
+    WIFI_PASSWORD_INPUT_BOX,
+    WIFI_SAVE_BUTTON,
+    WIFI_SAVE_TEXT,
+    WIFI_TEXT_WAIT,
 };
 
 class WiFiCredentials : public FrameBase<WiFiCredentialsFrameComponents> {

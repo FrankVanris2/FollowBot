@@ -10,6 +10,7 @@ Desc: Creating the Main frame*/
 #include "TextBase.h"
 #include "ScreenState.h"
 #include "FollowBotLCD.h"
+#include "followbot_client/FollowBotClient.h"
 
 //Universal Object
 MainFrame mainFrame;
@@ -42,6 +43,7 @@ bool MainFrame::touchScreenEvent(int x, int y) {
 
         case BUTTON_CONNECT: 
             Serial.println("Connect button pressed"); 
+            followBotClient.followBotClient_Setup();
             return true;
     }
     return false;

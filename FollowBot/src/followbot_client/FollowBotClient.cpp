@@ -8,17 +8,13 @@
 #include "FollowBotClient.h"
 #include "motors/Motors.h"
 #include "WiFiS3.h"
-#include "secrets/FollowBot_Secrets.h"
 #include "followbot_manager/FollowBotManager.h"
+#include "secrets/EEPROMStorage.h"
 #include "states&types/DataStates.h"
 #include "ArduinoJson.h"
 
 // Universal Object
 FollowBotClient followBotClient;
-
-//sensitive information
-char ssid[] = SECRET_SSID;
-char pass[] = SECRET_PASS;
 
 // Interval
 const int TENTH_SECOND = 100;
@@ -60,11 +56,21 @@ void FollowBotClient::followBotClient_Setup() {
 
     // Attempt to connect to WiFi network;
     unsigned long startAttemptTime = millis();
-    while(mWifiConnectionStatus != WL_CONNECTED && millis() - startAttemptTime < SIXTY_SECONDS) {
-        Serial.print("Attempting to connect to SSID: ");
-        Serial.println(ssid);
-        mWifiConnectionStatus = WiFi.begin(ssid, pass); //pass for private networks
+    while(mWifiConnectionStatus != WL_CONNECTED && millis() - startAttemptTime < TEN_SECONDS) {
+        Serial.print(String("Attempting to connect to SSID: ") + eepromStorage.getSSID());
+        int ssidLength  = eepromStorage.getSSID().length() + 1; 
+        int passLength  = eepromStorage.getPassword().length() + 1;   //The +1 is for the 0x00h Terminator
+        char ssidArray[ssidLength];
+        char passArray[passLength];
+        eepromStorage.getSSID().toCharArray(ssidArray, ssidLength);
+        eepromStorage.getPassword().toCharArray(passArray, passLength);
 
+        if(eepromStorage.getPassword().length() == 0) {
+            mWifiConnectionStatus = WiFi.begin(ssidArray);
+        } else {
+            mWifiConnectionStatus = WiFi.begin(ssidArray, passArray);    //pass for private networks
+        }
+        
         // non-blocking delay:
         delay(100);
     }
