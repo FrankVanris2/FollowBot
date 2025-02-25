@@ -162,7 +162,9 @@ bool Keyboard::checkButtonPressed(KeyboardButtons selected) {
         Serial.println(String(chr) + " is pressed");
         InputBox* inputBox = (InputBox*) getComponents()[KBD_INPUT_BOX];
         String currentText = inputBox->getText();
-        currentText += chr;
+        if(currentText.length() < 20) {
+            currentText += chr;     
+        } 
         inputBox->setTextAndDraw(currentText);
         return true;
     }
