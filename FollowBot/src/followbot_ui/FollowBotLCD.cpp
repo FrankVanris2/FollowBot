@@ -9,19 +9,23 @@ Desc: Using an LSD screen to ask user for ssid and password so that robot can co
 #include "Arduino.h"
 #include "Adafruit_GFX.h"
 #include "MainFrame.h"
-#include "SSIDFrame.h"
+#include "WiFiCredentials.h"
+#include "Keyboard.h"
+
+
 // Universal object
 LCDScreen myLCDScreen;
 
 // Setup
 void LCDScreen::myLCDScreen_Setup() {
   mainFrame.setup(tft);
-  ssidFrame.setup(tft);
+  wifiCredentials.setup(tft);
+  keyboard.setup(tft);
 
   tft.begin();
   tft.setRotation(3);
   setCurrentFrame(MAIN_SCREEN);
-
+  mainFrame.wifiClientSetup();
 }
 
 // Loop
@@ -30,6 +34,13 @@ void LCDScreen::myLCDScreen_Loop() {
   bool pressed = tft.getTouch(&x, &y);
 
   if (pressed) {
+    x = SCREEN_WIDTH - x;
+    Serial.println();
+    Serial.print("Pressed: ("); 
+    Serial.print(x);
+    Serial.print(", ");
+    Serial.print(y);
+    Serial.println(")");
     mCurrentFrame->touchScreenEvent(x, y);
     
   }
@@ -41,8 +52,8 @@ void LCDScreen::setCurrentFrame(ScreenFrames newFrame) {
   
   switch (newFrame) {
     case MAIN_SCREEN: mCurrentFrame = &mainFrame; break;
-    case SSID_SCREEN: mCurrentFrame = &ssidFrame; break;
-    case PASSWORD_SCREEN: break;
+    case WIFI_CREDENTIALS_SCREEN: mCurrentFrame = &wifiCredentials; break;
+    case KEYBOARD_SCREEN: mCurrentFrame = &keyboard; break;
     default:
       Serial.print('LCDScreen::setCurrentFrame(), unknown Frame: ');
       Serial.println(newFrame);

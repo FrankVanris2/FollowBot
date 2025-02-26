@@ -12,9 +12,12 @@ Desc: The main frame where everything is projected with options
 class TFT_eSPI;
 
 enum FrameComponents {
-    BUTTON_SSID,
-    BUTTON_PASSWORD,
-    BUTTON_CONNECT
+    BUTTON_INPUT_CREDENTIALS,
+    BUTTON_CONNECT,
+
+    TEXT_WAIT,
+    TEXT_CONNECTION_STATUS,
+
 };
 
 class MainFrame : public FrameBase<FrameComponents>{
@@ -26,7 +29,7 @@ public:
 
     virtual bool touchScreenEvent(int x, int y);
 
- 
+    void wifiClientSetup();
 };
 
 extern MainFrame mainFrame;

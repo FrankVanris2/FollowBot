@@ -14,6 +14,7 @@
 #include "objectavoidance&detection/ObjectDetection.h"
 #include "following_mechanics/FollowMechanics.h"
 #include "followbot_ui/FollowBotLCD.h"
+#include "secrets/EEPROMStorage.h"
 //#include "ROS2_Testing/ros2Testing.h"
 
 
@@ -28,7 +29,7 @@ FollowBotManager::FollowBotManager(): mIsDirty(false) {
 
 //the setup that will store the many objects that will set in the main
 void FollowBotManager::followBotSetup() {
-    
+    eepromStorage.setup();
     myLCDScreen.myLCDScreen_Setup();
     myMotors.motorSetup();
     //followBotClient.followBotClient_Setup();
@@ -47,7 +48,7 @@ void FollowBotManager::followBotLoop() {
     myLCDScreen.myLCDScreen_Loop();
     
     //temperatureReader.temperatureReader_Loop();
-    //followBotClient.followBotClient_Loop();
+    followBotClient.followBotClient_Loop();
     objectDetection.objectDetection_Loop();
     followMechanics.followMechanics_Loop();
     

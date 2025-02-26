@@ -5,6 +5,7 @@ Desc: Creating an abstract class for drawing the screen
 */
 
 #pragma once
+#include "Arduino.h"
 
 //Abstract Base class for all frames
 class TFT_eSPI;

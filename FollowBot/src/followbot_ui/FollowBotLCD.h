@@ -10,6 +10,8 @@ Desc: Using an LSD screen to allow the user to input their ssid and pass for the
 #include "Button.h"
 #include "ScreenState.h"
 
+const int SCREEN_WIDTH = 480;
+const int SCREEN_HEIGHT = 320;
 
 class UIComponent;
 
