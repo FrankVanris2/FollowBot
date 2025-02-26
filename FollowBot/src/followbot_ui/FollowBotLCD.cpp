@@ -25,7 +25,7 @@ void LCDScreen::myLCDScreen_Setup() {
   tft.begin();
   tft.setRotation(3);
   setCurrentFrame(MAIN_SCREEN);
-
+  mainFrame.wifiClientSetup();
 }
 
 // Loop

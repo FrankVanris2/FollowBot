@@ -17,6 +17,10 @@ public:
     }
 
     void checkRSSI();
+
+    bool isConnected() {
+        return mIsConnected;
+    }
     
 private:
     void printWifiStatus();
@@ -24,10 +28,13 @@ private:
     bool getMove();
 
     
+
+    
  
     unsigned long mPreviousMillisMove;
     unsigned long lastServerCheck;
 
+    bool mIsConnected;
     int mCountMoves;
     int mWifiConnectionStatus;
     int mServerNotConnected;

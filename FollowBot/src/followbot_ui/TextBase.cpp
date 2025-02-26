@@ -23,6 +23,15 @@ void TextBase::setTextAndDraw(const String& text) {
     TextBase::draw();
 }
 
+void TextBase::setHideAndDraw(bool hide, int clearColor) {
+    mHide = hide;
+    if (mHide) {
+        getTFT().fillRect(mXText - 1, mYText - 1, mText.length() * BASE_FONT_WIDTH * mTextSize + 2, BASE_FONT_HEIGHT * mTextSize + 2, clearColor);
+    } else {
+        TextBase::draw();
+    }
+}
+
 void TextBase::draw() {
     if (mHide) return;
     getTFT().setTextColor(mColor);

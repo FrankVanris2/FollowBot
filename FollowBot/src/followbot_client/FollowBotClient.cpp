@@ -38,7 +38,7 @@ WiFiClient client;
 
 // Constructor
 FollowBotClient::FollowBotClient(): mWifiConnectionStatus(WL_IDLE_STATUS), mPreviousMillisMove(0), mCountMoves(0), 
-mIPAddress(server.toString()), mRSSI(0), lastServerCheck(0), mServerNotConnected(0) {
+mIPAddress(server.toString()), mRSSI(0), lastServerCheck(0), mServerNotConnected(0), mIsConnected(false) {
     client.setConnectionTimeout(15000);
 }
 
@@ -77,10 +77,11 @@ void FollowBotClient::followBotClient_Setup() {
 
     if(mWifiConnectionStatus == WL_CONNECTED) {
         printWifiStatus();
+        mIsConnected = true;
     } else {
         Serial.println("Failed to connect to Wifi");
+        mIsConnected = false;
     }
-    
 }
 
 void FollowBotClient::followBotClient_Loop() {

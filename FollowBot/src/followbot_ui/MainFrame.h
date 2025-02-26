@@ -14,7 +14,10 @@ class TFT_eSPI;
 enum FrameComponents {
     BUTTON_INPUT_CREDENTIALS,
     BUTTON_CONNECT,
+
     TEXT_WAIT,
+    TEXT_CONNECTION_STATUS,
+
 };
 
 class MainFrame : public FrameBase<FrameComponents>{
@@ -26,6 +29,7 @@ public:
 
     virtual bool touchScreenEvent(int x, int y);
 
+    void wifiClientSetup();
 };
 
 extern MainFrame mainFrame;

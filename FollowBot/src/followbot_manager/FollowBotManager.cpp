@@ -32,7 +32,7 @@ void FollowBotManager::followBotSetup() {
     eepromStorage.setup();
     myLCDScreen.myLCDScreen_Setup();
     myMotors.motorSetup();
-    followBotClient.followBotClient_Setup();
+    //followBotClient.followBotClient_Setup();
     //temperatureReader.temperatureReader_Setup();
     //objectAvoidance.objectAvoidance_Setup();
     objectDetection.objectDetection_Setup();

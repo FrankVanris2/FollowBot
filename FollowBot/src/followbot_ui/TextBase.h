@@ -47,6 +47,8 @@ public:
         mHide = hide;
     }
 
+    void setHideAndDraw(bool hide, int clearColor = TFT_WHITE);
+
 private:
     bool mIsCentered;
     int mXText;
