@@ -33,14 +33,10 @@ void Gyroscope::gyroscope_Loop() {
         sensors_event_t a, g, temp;
         mpu.getEvent(&a, &g, &temp);
     
-        gyroData[0] = a.acceleration.x;
-        gyroData[1] = a.acceleration.y;
-        gyroData[2] = a.acceleration.z;
-        gyroData[3] = g.gyro.x;
-        gyroData[4] = g.gyro.y;
-        gyroData[5] = g.gyro.z;
+        setGyroData(a.acceleration.x, a.acceleration.y, a.acceleration.z, g.gyro.x, g.gyro.y, g.gyro.z);
 
-        Serial.print("Gyroscope Data: ");
+        //debugging purposes
+        /*Serial.print("Gyroscope Data: ");
         Serial.print(gyroData[0]);
         Serial.print(", ");
         Serial.print(gyroData[1]);
@@ -51,6 +47,6 @@ void Gyroscope::gyroscope_Loop() {
         Serial.print(", ");
         Serial.print(gyroData[4]);
         Serial.print(", ");
-        Serial.println(gyroData[5]);
+        Serial.println(gyroData[5]);*/
     } 
 }

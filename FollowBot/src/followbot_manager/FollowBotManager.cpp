@@ -5,14 +5,13 @@
 * via the setup and loop
 */
 
-//WILL NEED SOON
-//#include "ROS2_Testing/ros2Testing.h"
 
 //NEEDED
 #include "FollowBotManager.h"
 #include "followbot_ui/FollowBotLCD.h"
 #include "secrets/EEPROMStorage.h"
 #include "followbot_client/FollowBotClient.h"
+#include "ROS2_Serial/ROS2_Serial.h"
 #include "states&types/MotorControlStates.h"
 #include "motors/Motors.h"
 #include "sensors/Gyroscope.h"
@@ -51,12 +50,11 @@ void FollowBotManager::followBotSetup() {
 }
 
 void FollowBotManager::followBotLoop() {
-    //ROS2 Testing:
-    //ros2_TestingObj.ros2_loop();
     
     myLCDScreen.myLCDScreen_Loop();
     followBotClient.followBotClient_Loop();
     gyroscope.gyroscope_Loop();
+    ros2_serial.ros2_loop();
 
     
     //temperatureReader.temperatureReader_Loop();
