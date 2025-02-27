@@ -64,6 +64,7 @@ void ObjectDetection::checkDistance() {
     digitalWrite(TRIG_PIN1, LOW);
     float duration1 = pulseIn(ECHO_PIN1, HIGH);
     setDistance1((duration1 * .0343) / 2);
+    
 
 
     // Sensor Middle
@@ -74,6 +75,7 @@ void ObjectDetection::checkDistance() {
     digitalWrite(TRIG_PIN2, LOW);
     float duration2 = pulseIn(ECHO_PIN2, HIGH);
     setDistance2((duration2 * .0343) / 2);
+    
 
     // Sensor Right
     digitalWrite(TRIG_PIN3, LOW);
@@ -83,6 +85,7 @@ void ObjectDetection::checkDistance() {
     digitalWrite(TRIG_PIN3, LOW);
     float duration3 = pulseIn(ECHO_PIN3, HIGH);
     setDistance3((duration3 * .0343) / 2);
+    
 }
 
 
