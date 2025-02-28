@@ -4,14 +4,15 @@
 * Desc: A motor class that will store all the types of motors that will be used
 * for this project.
 */
-#include "Arduino.h"
+#include <Arduino.h>
+#include <Wire.h>
+#include <Adafruit_MotorShield.h>
+
 #include "Motors.h"
 #include "objectavoidance&detection/ObjectAvoidance.h"
-#include "Wire.h"
 #include "states&types/MotorControlStates.h"
-#include "Adafruit_MotorShield.h"
 #include "followbot_manager/FollowBotManager.h"
-#include "Arduino_FreeRTOS.h"
+
 
 
 const int MAX_SPEED = 255;

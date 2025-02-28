@@ -4,10 +4,11 @@
 * Desc: Creating a temperature reader for the robot
 */
 
+#include <DHT.h>
 #include "TemperatureReader.h"
 #include "followbot_client/FollowBotClient.h"
 #include "followbot_manager/FollowBotManager.h"
-#include "DHT.h"
+
 
 #define DHTPIN 6
 #define DHTTYPE DHT11

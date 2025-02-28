@@ -4,12 +4,14 @@ Date: 9/19/2024
 Desc: Creating follow mechanics between the user and the robot
 */
 
+#include <list>
+
 #include "FollowMechanics.h"
 #include "followbot_client/FollowBotClient.h"
 #include "objectavoidance&detection/ObjectDetection.h"
 #include "states&types/MotorControlStates.h"
 #include "motors/Motors.h"
-#include <list>
+
 
 
 // Interval

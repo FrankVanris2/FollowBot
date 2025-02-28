@@ -4,8 +4,10 @@
 * Desc: Creating a setup for object detection in order to get the basic following mechanics down
 */
 
+#include <Arduino.h>
+
 #include "ObjectDetection.h"
-#include "Arduino.h"
+
 
 //Universal Object
 ObjectDetection objectDetection;

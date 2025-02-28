@@ -4,8 +4,21 @@ Date: 2/26/2025
 Desc: Creating a Gyroscope that will give important information and Data which is essential for mapping.
 */
 
+#pragma once
+#define DATA_SIZE 6
+
+enum DataIndices {
+    AX = 0,
+    AY,
+    AZ,
+    GX,
+    GY,
+    GZ
+};
+
 class Gyroscope {
     public:
+
         Gyroscope();
         void gyroscope_Setup();
         void gyroscope_Loop();
@@ -24,18 +37,10 @@ class Gyroscope {
     private:
         //Interval
         unsigned long interval;
-        unsigned long previousMillis;
-        static const int DATA_SIZE = 6;
+        unsigned long previousMillis;   
         double gyroData[DATA_SIZE];
 
-        enum DataIndices {
-            AX = 0,
-            AY,
-            AZ,
-            GX,
-            GY,
-            GZ
-        };
+        
 };
 
 extern Gyroscope gyroscope;

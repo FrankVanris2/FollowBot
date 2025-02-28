@@ -4,8 +4,12 @@ Date: 11/27/2024
 Desc: Creating a testing env for ROS2 in order to determine if there is communication between both devices
 */
 
+#include <ArduinoJson.h>
+#include <Arduino.h>
+
 #include "ROS2_Serial.h"
-#include "Arduino.h"
+#include "sensors/Gyroscope.h"
+
 
 //Singelton
 ROS2_Serial ros2_serial;
@@ -32,5 +36,18 @@ void ROS2_Serial::ros2SerialData() {
 }
 
 void ROS2_Serial::dataToSerial() {
-    Serial.println("Hello from Arduino");
+    const double* gyroData = gyroscope.getGyroData();
+    
+    // Create a JSON object
+    StaticJsonDocument<256> doc; // Adjust the size based on your data complexity
+    doc["AX"] = gyroData[AX];
+    doc["AY"] = gyroData[AY];
+    doc["AZ"] = gyroData[AZ];
+    doc["GX"] = gyroData[GX];
+    doc["GY"] = gyroData[GY];
+    doc["GZ"] = gyroData[GZ];
+
+    //Serialize the JSON object to a string and send it over Serial
+    serializeJson(doc, Serial);
+    Serial.println();
 }

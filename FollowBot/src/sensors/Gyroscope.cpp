@@ -4,10 +4,12 @@ Date: 2/26/2025
 Desc: Creating a gyroscope which is needed for mapping
 */
 
+#include <Adafruit_MPU6050.h>
+#include <Adafruit_Sensor.h>
+#include <Wire.h>
+
 #include "Gyroscope.h"
-#include "Adafruit_MPU6050.h"
-#include "Adafruit_Sensor.h"
-#include "Wire.h"
+
 
 Adafruit_MPU6050 mpu; 
 
@@ -34,19 +36,5 @@ void Gyroscope::gyroscope_Loop() {
         mpu.getEvent(&a, &g, &temp);
     
         setGyroData(a.acceleration.x, a.acceleration.y, a.acceleration.z, g.gyro.x, g.gyro.y, g.gyro.z);
-
-        //debugging purposes
-        /*Serial.print("Gyroscope Data: ");
-        Serial.print(gyroData[0]);
-        Serial.print(", ");
-        Serial.print(gyroData[1]);
-        Serial.print(", ");
-        Serial.print(gyroData[2]);
-        Serial.print(", ");
-        Serial.print(gyroData[3]);
-        Serial.print(", ");
-        Serial.print(gyroData[4]);
-        Serial.print(", ");
-        Serial.println(gyroData[5]);*/
     } 
 }

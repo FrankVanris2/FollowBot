@@ -4,14 +4,15 @@
 * Desc: Creating a client in which I will be able to send information up to the server and the server 
 * will be able to send information up to the website and the mobile app
 */
+#include <WiFiS3.h>
+#include <ArduinoJson.h>
 
 #include "FollowBotClient.h"
 #include "motors/Motors.h"
-#include "WiFiS3.h"
 #include "followbot_manager/FollowBotManager.h"
 #include "secrets/EEPROMStorage.h"
 #include "states&types/DataStates.h"
-#include "ArduinoJson.h"
+
 
 // Universal Object
 FollowBotClient followBotClient;

@@ -3,9 +3,9 @@ By: Frank Vanris
 Date 2/11/2025
 Desc: Creating the Main frame*/
 
+#include <TFT_eSPI.h>
 
 #include "MainFrame.h"
-#include "TFT_eSPI.h"
 #include "Button.h"
 #include "TextBase.h"
 #include "ScreenState.h"

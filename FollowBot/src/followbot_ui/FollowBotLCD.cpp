@@ -4,14 +4,14 @@ Date: 9/19/2024
 Desc: Using an LSD screen to ask user for ssid and password so that robot can connect to wireless network.
 */
 
+#include <SPI.h>
+#include <Arduino.h>
+#include <Adafruit_GFX.h>
+
 #include "FollowBotLCD.h"
-#include "SPI.h"
-#include "Arduino.h"
-#include "Adafruit_GFX.h"
 #include "MainFrame.h"
 #include "WiFiCredentials.h"
 #include "Keyboard.h"
-
 
 // Universal object
 LCDScreen myLCDScreen;
