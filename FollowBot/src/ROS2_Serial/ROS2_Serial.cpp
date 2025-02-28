@@ -40,12 +40,15 @@ void ROS2_Serial::dataToSerial() {
     
     // Create a JSON object
     StaticJsonDocument<256> doc; // Adjust the size based on your data complexity
-    doc["AX"] = gyroData[AX];
-    doc["AY"] = gyroData[AY];
-    doc["AZ"] = gyroData[AZ];
-    doc["GX"] = gyroData[GX];
-    doc["GY"] = gyroData[GY];
-    doc["GZ"] = gyroData[GZ];
+
+    doc["sensor_type"] = "imu";
+    JsonObject data = doc.createNestedObject("data");
+    data["ax"] = gyroData[AX];
+    data["ay"] = gyroData[AY];
+    data["az"] = gyroData[AZ];
+    data["gx"] = gyroData[GX];
+    data["gy"] = gyroData[GY];
+    data["gz"] = gyroData[GZ];
 
     //Serialize the JSON object to a string and send it over Serial
     serializeJson(doc, Serial);
