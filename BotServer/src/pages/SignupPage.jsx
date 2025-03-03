@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Button, Checkbox, FormControlLabel, TextField, Typography, Link, Paper } from '@mui/material';
 import api from '../services/api';
+import "../styles/Signup.style.css";  // Import the CSS file
+
 // Commenting out OtpForm temporarily
 // import OtpForm from './OtpForm';
 
@@ -43,19 +45,19 @@ const Signup = () => {
   };
 
   return (
-    <Box sx={{ maxWidth: 400, mx: 'auto', mt: 4, p: 3 }}>
-      <Paper sx={{ padding: 3 }}>
-        <Typography variant="h4" gutterBottom>Sign Up</Typography>
+    <Box className="signup-container">
+      <Paper className="signup-paper">
+        <Typography className="signup-title" variant="h4" gutterBottom>Sign Up</Typography>
         
         {!showOtp ? (
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className="signup-form">
             <TextField
               fullWidth
               label="Username"
               name="username"
               value={formData.username}
               onChange={handleChange}
-              margin="normal"
+              className="signup-input"
               required
             />
             
@@ -66,7 +68,7 @@ const Signup = () => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              margin="normal"
+              className="signup-input"
               required
             />
             
@@ -77,7 +79,7 @@ const Signup = () => {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              margin="normal"
+              className="signup-input"
               required
             />
             
@@ -87,7 +89,7 @@ const Signup = () => {
               name="phone_number"
               value={formData.phone_number}
               onChange={handleChange}
-              margin="normal"
+              className="signup-input"
             />
             
             <TextField
@@ -96,7 +98,7 @@ const Signup = () => {
               name="business_id"
               value={formData.business_id}
               onChange={handleChange}
-              margin="normal"
+              className="signup-input"
             />
             
             <FormControlLabel
@@ -115,7 +117,7 @@ const Signup = () => {
               fullWidth 
               variant="contained" 
               type="submit"
-              sx={{ mt: 2 }}
+              className="signup-button"
             >
               Register
             </Button>
@@ -133,13 +135,13 @@ const Signup = () => {
         {responseMessage.text && (
           <Typography 
             color={responseMessage.type === 'error' ? 'error' : 'success'}
-            sx={{ mt: 2 }}
+            className="signup-response"
           >
             {responseMessage.text}
           </Typography>
         )}
         
-        <Typography sx={{ mt: 2 }}>
+        <Typography className="signup-link">
           Already have an account? <Link href="/login">Login here</Link>
         </Typography>
       </Paper>
