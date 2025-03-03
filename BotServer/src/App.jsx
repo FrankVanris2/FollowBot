@@ -11,25 +11,27 @@ import AboutFollowBotPage from './pages/AboutFollowBotPage';
 import FeedbackPage from './pages/FeedbackPage';
 import NewsArticlePage from './pages/NewArticlePage'; // Fixed filename
 import FollowBotControlsPage from './pages/FollowBotControlsPage';
+import SignupPage from './pages/SignupPage';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
 import AboutUsPage from './pages/AboutUsPage';
+
 import { GlobalStyle } from './App.style.jsx';
 
 function App() {
   return (
     <Router>
       <GlobalStyle />
-      <Navbar />
+      <Navbar />  {/* Navbar does not need "Sign Up" */}
       <Routes>
         <Route path="/" element={<Layout><HomePage /></Layout>} />
-        {/* Match Navbar link paths exactly */}
+        {/* Other routes */}
         <Route path="/about-followbot" element={<Layout><AboutFollowBotPage /></Layout>} />
         <Route path="/about-app" element={<Layout><AboutAppPage /></Layout>} />
         <Route path="/about-us" element={<Layout><AboutUsPage /></Layout>} />
         <Route path="/feedback" element={<Layout><FeedbackPage /></Layout>} />
         <Route path="/news-articles" element={<Layout><NewsArticlePage /></Layout>} />
-        {/*<Route path="/followbot-controls" element={<Layout><FollowBotControlsPage /></Layout>} > */}
+        <Route path="/signup" element={<Layout><SignupPage /></Layout>} />  
         <Route path="*" element={<Layout><NotFoundPage /></Layout>} />
       </Routes>
     </Router>

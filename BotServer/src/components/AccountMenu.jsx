@@ -1,0 +1,133 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Box from '@mui/material/Box';
+import Avatar from '@mui/material/Avatar';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import PersonAdd from '@mui/icons-material/PersonAdd';
+import Settings from '@mui/icons-material/Settings';
+import Logout from '@mui/icons-material/Logout';
+import LoginForm from './LoginForm.jsx';
+
+const AccountMenu = () => {
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [isSignedIn, setIsSignedIn] = useState(false); // Track login state
+    const open = Boolean(anchorEl);
+
+    const handleClick = (event) => setAnchorEl(event.currentTarget);
+    const handleClose = () => setAnchorEl(null);
+
+    const handleUsernameChange = (event) => setUsername(event.target.value);
+    const handlePasswordChange = (event) => setPassword(event.target.value);
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log('Username:', username);
+        console.log('Password:', password);
+        setIsSignedIn(true); // Simulate successful login
+        handleClose(); // Close menu after login
+    };
+
+    const navigate = useNavigate();
+    const handleSignupRedirect = () => {
+        handleClose(); // Close the account menu
+        navigate('/signup'); // Navigate to /signup page
+    };
+
+    const handleLogout = () => {
+        setIsSignedIn(false);
+        setUsername('');
+        setPassword('');
+        handleClose();
+    };
+
+    const menuProps = {
+        elevation: 0,
+        sx: {
+            mt: 1.5,
+            '&:before': {
+                content: '""',
+                display: 'block',
+                position: 'absolute',
+                top: 0,
+                right: 14,
+                width: 10,
+                height: 10,
+                bgcolor: 'background.paper',
+                transform: 'translateY(-50%) rotate(45deg)',
+                zIndex: 0,
+            },
+        },
+    };
+
+    return (
+        <React.Fragment>
+            <Box sx={{ display: 'flex', alignItems: 'left', textAlign: 'center' }}>
+                <Tooltip title="Account settings">
+                    <IconButton
+                        onClick={handleClick}
+                        size="small"
+                        sx={{ ml: 2 }}
+                        aria-controls={open ? 'account-menu' : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={open ? 'true' : undefined}
+                    >
+                        <Avatar sx={{ width: 32, height: 32 }}></Avatar>
+                    </IconButton>
+                </Tooltip>
+            </Box>
+            <Menu
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                disableAutoFocusItem
+                PaperProps={menuProps}
+                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+            >
+                {!isSignedIn && (
+                    <MenuItem>
+                        <LoginForm
+                            username={username}
+                            password={password}
+                            handleUsernameChange={handleUsernameChange}
+                            handlePasswordChange={handlePasswordChange}
+                            handleSubmit={handleSubmit}
+                        />
+                    </MenuItem>
+                )}
+                <Divider />
+                {!isSignedIn && (
+                    <MenuItem onClick={handleSignupRedirect}>
+                        <ListItemIcon>
+                            <PersonAdd fontSize="small" />
+                        </ListItemIcon>
+                        Sign Up
+                    </MenuItem>
+                )}
+                <MenuItem>
+                    <ListItemIcon>
+                        <Settings fontSize="small" />
+                    </ListItemIcon>
+                    Settings
+                </MenuItem>
+                {isSignedIn && (
+                    <MenuItem onClick={handleLogout}>
+                        <ListItemIcon>
+                            <Logout fontSize="small" />
+                        </ListItemIcon>
+                        Logout
+                    </MenuItem>
+                )}
+            </Menu>
+        </React.Fragment>
+    );
+};
+
+export default AccountMenu;
