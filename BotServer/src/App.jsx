@@ -1,35 +1,37 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import Navbar from './NavBar';
+// Components imports
+import Navbar from './components/NavBar';
+import Layout from './components/Layout';
+
+// Page imports (verify file names match exactly)
 import AboutAppPage from './pages/AboutAppPage';
 import AboutFollowBotPage from './pages/AboutFollowBotPage';
 import FeedbackPage from './pages/FeedbackPage';
-import NewsArticlePage from './pages/NewArticlePage'; // Fix the filename case
+import NewsArticlePage from './pages/NewArticlePage'; // Fixed filename
 import FollowBotControlsPage from './pages/FollowBotControlsPage';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
-import AboutUsPage from './pages/AboutUsPage'; // Add the missing import
+import AboutUsPage from './pages/AboutUsPage';
 import { GlobalStyle } from './App.style.jsx';
-import Layout from './components/Layout';
 
 function App() {
   return (
     <Router>
       <GlobalStyle />
       <Navbar />
-      <div className="container">
-        <Routes>
-          <Route path="/" element={<Layout><HomePage /></Layout>} />
-          <Route path="/AboutAppPage" element={<Layout><AboutAppPage /></Layout>} />
-          <Route path="/AboutFollowBotPage" element={<Layout><AboutFollowBotPage /></Layout>} />
-          <Route path="/AboutUsPage" element={<Layout><AboutUsPage /></Layout>} />
-          <Route path="/FeedbackPage" element={<Layout><FeedbackPage /></Layout>} />
-          <Route path="/NewsArticlePage" element={<Layout><NewsArticlePage /></Layout>} />
-          <Route path="/FollowBotControlsPage" element={<Layout><FollowBotControlsPage /></Layout>} />
-          <Route path="*" element={<Layout><NotFoundPage /></Layout>} />
-        </Routes>
-      </div>
+      <Routes>
+        <Route path="/" element={<Layout><HomePage /></Layout>} />
+        {/* Match Navbar link paths exactly */}
+        <Route path="/about-followbot" element={<Layout><AboutFollowBotPage /></Layout>} />
+        <Route path="/about-app" element={<Layout><AboutAppPage /></Layout>} />
+        <Route path="/about-us" element={<Layout><AboutUsPage /></Layout>} />
+        <Route path="/feedback" element={<Layout><FeedbackPage /></Layout>} />
+        <Route path="/news-articles" element={<Layout><NewsArticlePage /></Layout>} />
+        {/*<Route path="/followbot-controls" element={<Layout><FollowBotControlsPage /></Layout>} > */}
+        <Route path="*" element={<Layout><NotFoundPage /></Layout>} />
+      </Routes>
     </Router>
   );
 }

@@ -1,9 +1,10 @@
 //import { PriceChangeOutlined } from "@mui/icons-material"
 import React from 'react';
 import { Link, useMatch,useResolvedPath } from "react-router-dom"
-import AccountMenu from './components/Login';
-import {Header, LinkItem} from './NavBar.style';
-import Logo from './res/logo.png';
+import AccountMenu from './Login';
+import {Header, LinkItem} from '../styles/NavBar.style';
+
+import Logo from '../res/logo.png';
 
 export default function Navbar(){
     return (
@@ -24,7 +25,7 @@ export default function Navbar(){
                     <CustomLink to="/about-us">About Us</CustomLink>
                     <CustomLink to="/feedback">Feedback</CustomLink>
                     <CustomLink to="/news-articles">News Article</CustomLink>
-                    <CustomLink to="/followbot-controls">FollowBot Controls</CustomLink>
+                    {/* <CustomLink to="/followbot-controls">FollowBot Controls</CustomLink> */}
                     <AccountMenu/>
                 </ul>
             </nav>
