@@ -1,5 +1,6 @@
 import React from "react";
-import "./style.css";
+//import "../styles/SettingPage.style.css";
+//import "./style.css";
 
 const UserAnalytics = () => {
   return (

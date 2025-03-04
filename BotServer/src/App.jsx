@@ -1,11 +1,11 @@
 import React from 'react'; 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-// Components imports
+// Component Imports
 import Navbar from './components/Navbar';
 import Layout from './components/Layout';
 
-// Page imports
+// Page Imports
 import AboutAppPage from './pages/AboutAppPage';
 import AboutFollowBotPage from './pages/AboutFollowBotPage';
 import FeedbackPage from './pages/FeedbackPage';
@@ -16,10 +16,17 @@ import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
 import AboutUsPage from './pages/AboutUsPage';
 
-// Newly added pages
+// Newly Added Pages (Subsign in Account)
 import MyProfilePage from './pages/MyProfile';
 import RulesPage from './pages/RulesPage';
 import SettingScreen from './pages/SettingScreen';
+
+// Imports for Profile Menu 
+import UserAnalyticsPage from './pages/UserAnalyticsPage';
+import MyAccountPage from './pages/MyAccountPage';
+import MappingPage from './pages/MappingPage';
+import SignalPage from './pages/SignalPage';
+import LivefeedPage from './pages/LivefeedPage';
 
 // Global Styles
 import { GlobalStyle } from './App.style.jsx';
@@ -38,17 +45,20 @@ function App() {
         <Route path="/news-articles" element={<Layout><NewsArticlePage /></Layout>} />
         <Route path="/signup" element={<Layout><SignupPage /></Layout>} />
        
-        {/* routes for subsign in acoccount */}
+        {/* Routes for Subsign-in Account */}
         <Route path="/my-profile" element={<Layout><MyProfilePage /></Layout>} />
         <Route path="/rules" element={<Layout><RulesPage /></Layout>} />
         <Route path="/settings" element={<Layout><SettingScreen /></Layout>} />
 
-
-        {/* routes for profiles */}
+        {/* Routes for Profiles */}
         <Route path="/followbot-controls" element={<Layout><FollowBotControlsPage /></Layout>} />
-
+        <Route path="/user-analytics" element={<Layout><UserAnalyticsPage /></Layout>} />
+        <Route path="/my-account" element={<Layout><MyAccountPage /></Layout>} />
+        <Route path="/mapping" element={<Layout><MappingPage /></Layout>} />
+        <Route path="/signal" element={<Layout><SignalPage /></Layout>} />
+        <Route path="/live-feed" element={<Layout><LivefeedPage /></Layout>} />
         
-        {/* Wildcard route for 404 Not Found */}
+        {/* Wildcard Route for 404 Not Found */}
         <Route path="*" element={<Layout><NotFoundPage /></Layout>} />
       </Routes>
     </Router>
