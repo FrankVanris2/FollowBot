@@ -1,5 +1,5 @@
 import React from "react";
-import "./style.css";
+import "../styles/SettingPage.style.css";
 import { FaMoon, FaSun, FaLock, FaBook } from "react-icons/fa"; // Import icons
 
 const Settings = () => {

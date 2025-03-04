@@ -4,9 +4,6 @@ import { Box, Button, Checkbox, FormControlLabel, TextField, Typography, Link, P
 import api from '../services/api';
 import "../styles/Signup.style.css";  // Import the CSS file
 
-// Commenting out OtpForm temporarily
-// import OtpForm from './OtpForm';
-
 const Signup = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -18,6 +15,7 @@ const Signup = () => {
     privacy_consent: false,
   });
   const [showOtp, setShowOtp] = useState(false);
+  const [otp, setOtp] = useState('');
   const [responseMessage, setResponseMessage] = useState({ type: '', text: '' });
 
   const handleChange = (event) => {
@@ -32,10 +30,19 @@ const Signup = () => {
     event.preventDefault();
     try {
       const response = await api.postSignUp(formData);
-      
+
       if (response.success) {
         setShowOtp(true);
         setResponseMessage({ type: 'success', text: 'Verification code sent to your email' });
+        
+        // Send OTP after successful signup
+        const otpResponse = await api.sendOtp({ email: formData.email });
+
+        if (otpResponse.success) {
+          setResponseMessage({ type: 'success', text: 'OTP sent to your email' });
+        } else {
+          setResponseMessage({ type: 'error', text: otpResponse.message });
+        }
       } else {
         setResponseMessage({ type: 'error', text: response.error });
       }
@@ -44,11 +51,27 @@ const Signup = () => {
     }
   };
 
+  const handleOtpSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      // Verify OTP with backend
+      const response = await api.verifyOtp({ email: formData.email, otp });
+      
+      if (response.success) {
+        navigate('/dashboard');  // Redirect to dashboard after successful OTP verification
+      } else {
+        setResponseMessage({ type: 'error', text: 'Invalid OTP. Please try again.' });
+      }
+    } catch (error) {
+      setResponseMessage({ type: 'error', text: 'OTP verification failed. Please try again.' });
+    }
+  };
+
   return (
     <Box className="signup-container">
       <Paper className="signup-paper">
         <Typography className="signup-title" variant="h4" gutterBottom>Sign Up</Typography>
-        
+
         {!showOtp ? (
           <form onSubmit={handleSubmit} className="signup-form">
             <TextField
@@ -123,13 +146,26 @@ const Signup = () => {
             </Button>
           </form>
         ) : (
-          // Temporarily disable OtpForm
-          // <OtpForm 
-          //   email={formData.email}
-          //   onSuccess={() => navigate('/dashboard')}  // Ensure '/dashboard' is defined
-          //   onResend={() => api.resendOtp(formData.email)}
-          // />
-          <Typography variant="body1" sx={{ mt: 2 }}>Please check your email for the verification code.</Typography>
+          <form onSubmit={handleOtpSubmit} className="signup-form">
+            <TextField
+              fullWidth
+              label="Enter OTP"
+              name="otp"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              className="signup-input"
+              required
+            />
+            
+            <Button 
+              fullWidth 
+              variant="contained" 
+              type="submit"
+              className="signup-button"
+            >
+              Verify OTP
+            </Button>
+          </form>
         )}
         
         {responseMessage.text && (

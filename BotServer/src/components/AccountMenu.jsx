@@ -12,6 +12,8 @@ import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import LoginForm from './LoginForm.jsx';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import RuleIcon from '@mui/icons-material/Gavel';
 
 const AccountMenu = () => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -36,8 +38,8 @@ const AccountMenu = () => {
 
     const navigate = useNavigate();
     const handleSignupRedirect = () => {
-        handleClose(); // Close the account menu
-        navigate('/signup'); // Navigate to /signup page
+        handleClose();
+        navigate('/signup');
     };
 
     const handleLogout = () => {
@@ -45,6 +47,11 @@ const AccountMenu = () => {
         setUsername('');
         setPassword('');
         handleClose();
+    };
+
+    const handleNavigate = (path) => {
+        handleClose();
+        navigate(path);
     };
 
     const menuProps = {
@@ -111,19 +118,33 @@ const AccountMenu = () => {
                         Sign Up
                     </MenuItem>
                 )}
-                <MenuItem>
-                    <ListItemIcon>
-                        <Settings fontSize="small" />
-                    </ListItemIcon>
-                    Settings
-                </MenuItem>
                 {isSignedIn && (
-                    <MenuItem onClick={handleLogout}>
-                        <ListItemIcon>
-                            <Logout fontSize="small" />
-                        </ListItemIcon>
-                        Logout
-                    </MenuItem>
+                    <>
+                        <MenuItem onClick={() => handleNavigate('/my-profile')}>
+                            <ListItemIcon>
+                                <AccountCircleIcon fontSize="small" />
+                            </ListItemIcon>
+                            My Profile
+                        </MenuItem>
+                        <MenuItem onClick={() => handleNavigate('/rules')}>
+                            <ListItemIcon>
+                                <RuleIcon fontSize="small" />
+                            </ListItemIcon>
+                            Rules
+                        </MenuItem>
+                        <MenuItem onClick={() => handleNavigate('/settings')}>
+                            <ListItemIcon>
+                                <Settings fontSize="small" />
+                            </ListItemIcon>
+                            Settings
+                        </MenuItem>
+                        <MenuItem onClick={handleLogout}>
+                            <ListItemIcon>
+                                <Logout fontSize="small" />
+                            </ListItemIcon>
+                            Logout
+                        </MenuItem>
+                    </>
                 )}
             </Menu>
         </React.Fragment>
