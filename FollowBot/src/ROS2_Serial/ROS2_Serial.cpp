@@ -28,10 +28,11 @@ void ROS2_Serial::ros2_loop() {
 void ROS2_Serial::ros2SerialData() {
     if(Serial.available() > 0) {
         String message = Serial.readStringUntil('\n');
+        //to do, put this into a logger file
+        Serial.print("Received message: ")
         Serial.print(message);
-        Serial.println(" from Pi");
     } else {
-        Serial.println("Data Not Received");
+        Serial.println("Pi is not sending any data");
     }
 }
 
@@ -53,4 +54,5 @@ void ROS2_Serial::dataToSerial() {
     //Serialize the JSON object to a string and send it over Serial
     serializeJson(doc, Serial);
     Serial.println();
+    
 }
