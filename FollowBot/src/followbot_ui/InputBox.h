@@ -5,8 +5,8 @@ Desc: Creating an input box for the user to put input
 */
 
 #pragma once
+#include <Arduino.h>
 #include "TextBase.h"
-#include "Arduino.h"
 
 class InputBox: public TextBase {
 

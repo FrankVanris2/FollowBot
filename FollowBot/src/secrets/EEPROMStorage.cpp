@@ -4,8 +4,9 @@ Date: 2/9/2025
 Desc: Creating a secure way to store your credentials 
 */
 
-#include "secrets/EEPROMStorage.h"
 #include <EEPROM.h>
+#include "secrets/EEPROMStorage.h"
+
 
 // Singelton object 
 EEPROMStorage eepromStorage;

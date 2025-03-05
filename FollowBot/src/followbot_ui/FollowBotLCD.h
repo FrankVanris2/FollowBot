@@ -5,8 +5,9 @@ Desc: Using an LSD screen to allow the user to input their ssid and pass for the
 */
 
 #pragma once
-#include "TFT_eSPI.h"
-#include "TFT_eWidget.h"
+#include <TFT_eSPI.h>
+#include <TFT_eWidget.h>
+
 #include "Button.h"
 #include "ScreenState.h"
 

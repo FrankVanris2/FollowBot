@@ -4,9 +4,8 @@ Date: 2/15/2025
 Desc: Creating a input box where the user will be able to input text when it comes to ssid and password info
 */
 
+#include <TFT_eSPI.h>
 #include "InputBox.h"
-#include "TFT_eSPI.h"
-
 
 const int PADDING = 5; // pixels
 

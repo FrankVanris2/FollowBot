@@ -4,9 +4,9 @@ Date: 2/15/2025
 Desc: Creating a SSID screen where user inputs ssid info and it gets stored in the EEPROM
 */
 
+#include <TFT_eSPI.h>
 
 #include "WiFiCredentials.h"
-#include "TFT_eSPI.h"
 #include "Button.h"
 #include "InputBox.h"
 #include "ScreenState.h"

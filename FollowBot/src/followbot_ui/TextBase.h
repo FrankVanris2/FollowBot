@@ -5,9 +5,11 @@ Desc: Creating a Text base class
 */
 
 #pragma once
-#include "Arduino.h"
+#include <Arduino.h>
+#include <TFT_eSPI.h>
+
 #include "UIComponent.h"
-#include "TFT_eSPI.h"
+
 
 const int BASE_FONT_WIDTH = 6; // pixels
 const int BASE_FONT_HEIGHT = 8; // pixels

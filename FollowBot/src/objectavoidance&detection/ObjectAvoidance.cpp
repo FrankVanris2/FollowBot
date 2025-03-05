@@ -4,9 +4,11 @@
 * Desc: Creating a Object Avoidance script in order to prevent the robot from colliding with unknown objects
 */
 
+#include <Arduino.h>
+
 #include "ObjectAvoidance.h"
 #include "motors/Motors.h"
-#include "Arduino.h"
+
 
 
 
