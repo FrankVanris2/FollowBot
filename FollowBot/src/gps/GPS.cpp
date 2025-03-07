@@ -18,8 +18,9 @@ GPS myGPS;
 TinyGPSPlus gps;
 
 
-GPS::GPS(): GPSBaud(9600) {
-    //Constructor
+GPS::GPS(): GPSBaud(9600), interval(3000), previousMillis(0) {
+    gpsData[LAT] = 0.0;
+    gpsData[LON] = 0.0;
 }
 
 void GPS::gps_setup() {
@@ -29,21 +30,24 @@ void GPS::gps_setup() {
 
 void GPS::gps_loop() {
     // This sketch displays information every time a new sentence is correctly encoded.
-    while (Serial1.available() > 0) {
-        if (gps.encode(Serial1.read()))
-            if(gps.location.isValid()) {
-                setGPS(gps.location.lat(), gps.location.lng());
-            } else {
-                setGPS(0, 0);
-                Serial.println("GPS is not valid");
-            }
-    }
+    if ((millis() - previousMillis) >= interval) {
+        previousMillis = millis();
 
-    if (millis() > 5000 && gps.charsProcessed() < 10)
-    {
-        Serial.println(F("No GPS detected: check wiring."));
-        while(true);
-    }   
+        while (Serial1.available() > 0) {
+            if (gps.encode(Serial1.read())) {
+                if(gps.location.isValid()) {
+                    setGPS(gps.location.lat(), gps.location.lng());
+                } else {
+                    Serial.println("GPS is not valid. Keeping previous coordinates");
+                }
+            }
+        }
+
+        if (millis() > 5000 && gps.charsProcessed() < 10) {
+            Serial.println(F("No GPS detected: check wiring."));
+            setGPS(0, 0);
+        }   
+    }
 }
 
 

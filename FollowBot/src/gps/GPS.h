@@ -29,6 +29,8 @@ public:
     double* getGPSData() { return gpsData;}
 
 private:
+    unsigned long interval;
+    unsigned long previousMillis;   
     
     const uint32_t GPSBaud;
     double gpsData[GPS_SIZE];
