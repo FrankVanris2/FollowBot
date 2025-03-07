@@ -18,7 +18,7 @@ ROS2_Serial ros2_serial;
 ROS2_Serial::ROS2_Serial(): interval(TEST_INTERVAL), previousMillis(0) {}
 
 void ROS2_Serial::ros2_loop() {
-    if ((unsigned long) (millis() - previousMillis) >= interval) {
+    if ((millis() - previousMillis) >= interval) {
         previousMillis = millis();
         ros2SerialData();
         dataToSerial();

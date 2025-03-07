@@ -32,7 +32,7 @@ void TemperatureReader::temperatureReader_Setup() {
 
 // Temperature Loop
 void TemperatureReader::temperatureReader_Loop() {
-    if ((unsigned long) (millis() - previousMillis) >= TEN_SECONDS) {
+    if ((millis() - previousMillis) >= TEN_SECONDS) {
         previousMillis = millis();
 
         // Every Second I read the dht11 sensor

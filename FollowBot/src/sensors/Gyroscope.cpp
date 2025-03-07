@@ -30,7 +30,7 @@ void Gyroscope::gyroscope_Setup() {
 }
 
 void Gyroscope::gyroscope_Loop() {
-    if ((unsigned long) (millis() - previousMillis) >= interval) {
+    if ((millis() - previousMillis) >= interval) {
         previousMillis = millis();
         sensors_event_t a, g, temp;
         mpu.getEvent(&a, &g, &temp);
