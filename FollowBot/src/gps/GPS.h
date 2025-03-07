@@ -15,6 +15,11 @@ public:
     void gps_setup();
     void gps_loop();
 
-private:
+    void displayInfo();
 
-}
+private:
+    
+    const uint32_t GPSBaud;
+};
+
+extern GPS myGPS;

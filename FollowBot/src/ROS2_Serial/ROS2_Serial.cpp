@@ -29,7 +29,7 @@ void ROS2_Serial::ros2SerialData() {
     if(Serial.available() > 0) {
         String message = Serial.readStringUntil('\n');
         //to do, put this into a logger file
-        Serial.print("Received message: ")
+        Serial.print("Received message: ");
         Serial.print(message);
     } else {
         Serial.println("Pi is not sending any data");
