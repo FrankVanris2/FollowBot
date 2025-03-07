@@ -17,6 +17,9 @@ public:
     void ros2SerialData();
     void dataToSerial();
 
+    void imuDataDoc();
+    void gpsDataDoc();
+
 private:
     const unsigned long TEST_INTERVAL = 1000;
     unsigned long interval;

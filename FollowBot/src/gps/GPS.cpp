@@ -24,12 +24,6 @@ GPS::GPS(): GPSBaud(9600) {
 
 void GPS::gps_setup() {
     Serial1.begin(GPSBaud);
-
-    Serial.println(F("DeviceExample.ino"));
-    Serial.println(F("A simple demonstration of TinyGPS++ with an attached GPS module"));
-    Serial.print(F("Testing TinyGPS++ library v. ")); Serial.println(TinyGPSPlus::libraryVersion());
-    Serial.println(F("by Mikal Hart"));
-    Serial.println();
 }
 
 
@@ -37,7 +31,12 @@ void GPS::gps_loop() {
     // This sketch displays information every time a new sentence is correctly encoded.
     while (Serial1.available() > 0) {
         if (gps.encode(Serial1.read()))
-            displayInfo();
+            if(gps.location.isValid()) {
+                setGPS(gps.location.lat(), gps.location.lng());
+            } else {
+                setGPS(0, 0);
+                Serial.println("GPS is not valid");
+            }
     }
 
     if (millis() > 5000 && gps.charsProcessed() < 10)
@@ -47,18 +46,4 @@ void GPS::gps_loop() {
     }   
 }
 
-void GPS::displayInfo() {
-    Serial.print(F("Location: ")); 
-    if (gps.location.isValid())
-    {
-        Serial.print(gps.location.lat(), 6);
-        Serial.print(F(","));
-        Serial.print(gps.location.lng(), 6);
-    }
-    else
-    {
-        Serial.print(F("INVALID"));
-    }
-    Serial.println();
-}
 
