@@ -103,16 +103,29 @@ void FollowBotClient::followBotClient_Loop() {
         if(mWifiConnectionStatus == WL_CONNECTED) {
             Serial.print("mServerNotConnected: ");
             Serial.println(mServerNotConnected);
-            if (!getMove()) return;
+
+            bool moveSuccess = getMove();
+            bool postSuccess = true;
+
             if(followBotManager.getDirtyFlag()) {
-                if (!postRobotInfo()) return;
+                postSuccess = postRobotInfo();
+            }
+
+            // Log failures instead of returning early
+            if(!moveSuccess) {
+                Serial.println("FollowBotClient.getMove() failed");
+            }
+            if(!postSuccess) {
+                Serial.println("FollowBotClient.postRobotInfo() failed");
             }
         }
 
+        
         // During extended intervals, continuously print RSSI
-        /*if(mServerNotConnected >= MAX_SERVER_NOT_CONNECTED) {
+        if(mServerNotConnected >= MAX_SERVER_NOT_CONNECTED) {
+            Serial.println("I am inside of this RSSI if statement");
             checkRSSI();
-        }*/
+        }
     }  
 }
 

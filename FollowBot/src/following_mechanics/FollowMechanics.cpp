@@ -6,10 +6,8 @@ Desc: Creating follow mechanics between the user and the robot
 
 
 #include <list>
-#include <ArduinoBLE.h>
 
 #include "FollowMechanics.h"
-#include "secrets/EEPROMStorage.h"
 #include "followbot_client/FollowBotClient.h"
 #include "states&types/MotorControlStates.h"
 #include "motors/Motors.h"
@@ -32,13 +30,7 @@ FollowMechanics::FollowMechanics():  mRSSIAvg(0), mRSSITotal(0), previousMillis(
 
 // Setup
 void FollowMechanics::followMechanics_Setup() {
-    if (!BLE.begin()) {
-        Serial.println("starting BLE failed!");
-        while (1);
-    }
 
-    Serial.println("BLE Central - Scanning for devices...");
-    BLE.scan();
 }
 
 // Loop 
@@ -55,21 +47,19 @@ void FollowMechanics::followMechanics_Loop() {
 
 
 void FollowMechanics::followMechanics_Averaging() { 
-    BLEDevice device = BLE.available();
-    if (device && device.hasLocalName() && device.localName() == eepromStorage.getSSID()) {
-        long followRSSI = device.rssi();
-        rssiList.push_front(followRSSI);
-        mRSSITotal += followRSSI;
+    long followRSSI = followBotClient.getRSSI();
+    rssiList.push_front(followRSSI);
+    mRSSITotal += followRSSI;
 
-        if (rssiList.size() > 30) {
-            mRSSITotal -= rssiList.back();
-            rssiList.pop_back();
-        }
-        mRSSIAvg = mRSSITotal / (long) rssiList.size();
+    if (rssiList.size() > 10) {
+        mRSSITotal -= rssiList.back();
+        rssiList.pop_back();
     }
+    mRSSIAvg = mRSSITotal / (long) rssiList.size();
     
-    //Serial.print("FollowMechanics, RSSI Avg Value: ");
-    //Serial.println(mRSSIAvg);      
+    
+    Serial.print("FollowMechanics, RSSI Avg Value: ");
+    Serial.println(mRSSIAvg);      
 }
 
 void FollowMechanics::followMechanics_Algorithm() {
