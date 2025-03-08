@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, Checkbox, FormControlLabel, TextField, Typography, Link, Paper } from '@mui/material';
+import { Box, Button, TextField, Typography, Link, Paper } from '@mui/material';
 import api from '../services/api';
 import "../styles/Signup.style.css";  // Import the CSS file
 
@@ -12,17 +12,16 @@ const Signup = () => {
     password: '',
     phone_number: '',
     business_id: '',
-    privacy_consent: false,
   });
   const [showOtp, setShowOtp] = useState(false);
   const [otp, setOtp] = useState('');
   const [responseMessage, setResponseMessage] = useState({ type: '', text: '' });
 
   const handleChange = (event) => {
-    const { name, value, type, checked } = event.target;
+    const { name, value } = event.target;
     setFormData(prev => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: value
     }));
   };
 
@@ -32,7 +31,7 @@ const Signup = () => {
       const response = await api.postSignUp(formData);
 
       if (response.success) {
-        setShowOtp(true);
+        navigate('/myprofile');
         setResponseMessage({ type: 'success', text: 'Verification code sent to your email' });
         
         // Send OTP after successful signup
@@ -122,18 +121,6 @@ const Signup = () => {
               value={formData.business_id}
               onChange={handleChange}
               className="signup-input"
-            />
-            
-            <FormControlLabel
-              control={
-                <Checkbox
-                  name="privacy_consent"
-                  checked={formData.privacy_consent}
-                  onChange={handleChange}
-                  required
-                />
-              }
-              label="I consent to data usage for service improvements"
             />
             
             <Button 
