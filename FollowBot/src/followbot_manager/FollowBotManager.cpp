@@ -15,6 +15,7 @@
 #include "states&types/MotorControlStates.h"
 #include "motors/Motors.h"
 #include "sensors/Gyroscope.h"
+#include "gps/GPS.h"
 
 //CURRENTLY NOT NEEDED
 //#include "objectavoidance&detection/ObjectAvoidance.h"
@@ -35,25 +36,30 @@ FollowBotManager::FollowBotManager(): mIsDirty(false) {
 
 //the setup that will store the many objects that will set in the main
 void FollowBotManager::followBotSetup() {
+    
+
     eepromStorage.setup();
     myLCDScreen.myLCDScreen_Setup();
     myMotors.motorSetup();
     gyroscope.gyroscope_Setup();
+    myGPS.gps_setup();
     
     
-    //temperatureReader.temperatureReader_Setup();
-    //objectAvoidance.objectAvoidance_Setup();
-    //objectDetection.objectDetection_Setup();
-    //followMechanics.followMechanics_Setup();
+    // temperatureReader.temperatureReader_Setup();
+    // objectAvoidance.objectAvoidance_Setup();
+    // objectDetection.objectDetection_Setup();
+    // followMechanics.followMechanics_Setup();
     
 
 }
 
 void FollowBotManager::followBotLoop() {
     
+    
     myLCDScreen.myLCDScreen_Loop();
     followBotClient.followBotClient_Loop();
     gyroscope.gyroscope_Loop();
+    myGPS.gps_loop();
     ros2_serial.ros2_loop();
 
     
