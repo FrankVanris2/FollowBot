@@ -4,21 +4,18 @@
 * Desc: Creating a client in which I will be able to send information up to the server and the server 
 * will be able to send information up to the website and the mobile app
 */
+#include <WiFiS3.h>
+#include <ArduinoJson.h>
 
 #include "FollowBotClient.h"
 #include "motors/Motors.h"
-#include "WiFiS3.h"
-#include "secrets/FollowBot_Secrets.h"
 #include "followbot_manager/FollowBotManager.h"
+#include "secrets/EEPROMStorage.h"
 #include "states&types/DataStates.h"
-#include "ArduinoJson.h"
+
 
 // Universal Object
 FollowBotClient followBotClient;
-
-//sensitive information
-char ssid[] = SECRET_SSID;
-char pass[] = SECRET_PASS;
 
 // Interval
 const int TENTH_SECOND = 100;
@@ -42,7 +39,7 @@ WiFiClient client;
 
 // Constructor
 FollowBotClient::FollowBotClient(): mWifiConnectionStatus(WL_IDLE_STATUS), mPreviousMillisMove(0), mCountMoves(0), 
-mIPAddress(server.toString()), mRSSI(0), lastServerCheck(0), mServerNotConnected(0) {
+mIPAddress(server.toString()), mRSSI(0), lastServerCheck(0), mServerNotConnected(0), mIsConnected(false) {
     client.setConnectionTimeout(15000);
 }
 
@@ -60,44 +57,74 @@ void FollowBotClient::followBotClient_Setup() {
 
     // Attempt to connect to WiFi network;
     unsigned long startAttemptTime = millis();
-    while(mWifiConnectionStatus != WL_CONNECTED && millis() - startAttemptTime < SIXTY_SECONDS) {
-        Serial.print("Attempting to connect to SSID: ");
-        Serial.println(ssid);
-        mWifiConnectionStatus = WiFi.begin(ssid, pass); //pass for private networks
+    while(mWifiConnectionStatus != WL_CONNECTED && millis() - startAttemptTime < TEN_SECONDS) {
+        Serial.print(String("Attempting to connect to SSID: ") + eepromStorage.getSSID());
+        int ssidLength  = eepromStorage.getSSID().length() + 1; 
+        int passLength  = eepromStorage.getPassword().length() + 1;   //The +1 is for the 0x00h Terminator
+        char ssidArray[ssidLength];
+        char passArray[passLength];
+        eepromStorage.getSSID().toCharArray(ssidArray, ssidLength);
+        eepromStorage.getPassword().toCharArray(passArray, passLength);
 
+        if(eepromStorage.getPassword().length() == 0) {
+            mWifiConnectionStatus = WiFi.begin(ssidArray);
+        } else {
+            mWifiConnectionStatus = WiFi.begin(ssidArray, passArray);    //pass for private networks
+        }
+        
         // non-blocking delay:
         delay(100);
     }
 
     if(mWifiConnectionStatus == WL_CONNECTED) {
         printWifiStatus();
+        mIsConnected = true;
     } else {
         Serial.println("Failed to connect to Wifi");
+        mIsConnected = false;
     }
-    
 }
 
 void FollowBotClient::followBotClient_Loop() {
     int intervalTime = mServerNotConnected < MAX_SERVER_NOT_CONNECTED ? TENTH_SECOND : TEN_SECONDS;
     
-
     if((unsigned long) (millis() - mPreviousMillisMove) >= intervalTime) {
         mPreviousMillisMove = millis();
 
         // Check WiFi connection status 
         if(WiFi.status() != WL_CONNECTED) {
             mWifiConnectionStatus = WL_DISCONNECTED;
-            Serial.println("FollowBotClient, Wifi disconnected");
+            //Serial.println("FollowBotClient, Wifi disconnected");
         } else {
             mWifiConnectionStatus = WL_CONNECTED;
             Serial.println("FollowBotClient, Wifi connected");
         }
 
         if(mWifiConnectionStatus == WL_CONNECTED) {
-            if (!getMove()) return;
+            Serial.print("mServerNotConnected: ");
+            Serial.println(mServerNotConnected);
+
+            bool moveSuccess = getMove();
+            bool postSuccess = true;
+
             if(followBotManager.getDirtyFlag()) {
-                if (!postRobotInfo()) return;
+                postSuccess = postRobotInfo();
             }
+
+            // Log failures instead of returning early
+            if(!moveSuccess) {
+                Serial.println("FollowBotClient.getMove() failed");
+            }
+            if(!postSuccess) {
+                Serial.println("FollowBotClient.postRobotInfo() failed");
+            }
+        }
+
+        
+        // During extended intervals, continuously print RSSI
+        if(mServerNotConnected >= MAX_SERVER_NOT_CONNECTED) {
+            Serial.println("I am inside of this RSSI if statement");
+            checkRSSI();
         }
     }  
 }
@@ -239,6 +266,6 @@ bool FollowBotClient::getMove() {
 void FollowBotClient::checkRSSI() {
     // The RSSI check is now handled by the FreeRTOS task
     mRSSI = WiFi.RSSI();
-    Serial.print("FollowBotClient, mRSSI = ");
-    Serial.println(mRSSI);
+    //Serial.print("FollowBotClient, mRSSI = ");
+    //Serial.println(mRSSI);
 }

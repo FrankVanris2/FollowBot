@@ -4,14 +4,22 @@ Date: 9/19/2024
 Desc: Creating follow mechanics between the user and the robot
 */
 
+
+#include <list>
+
 #include "FollowMechanics.h"
 #include "followbot_client/FollowBotClient.h"
+#include "states&types/MotorControlStates.h"
 #include "motors/Motors.h"
-#include <list>
+
+//#include "objectavoidance&detection/ObjectDetection.h"
+
+
 
 
 // Interval
 const int TENTH_SECOND = 100;
+
 
 // Universal Object
 FollowMechanics followMechanics;
@@ -30,25 +38,38 @@ void FollowMechanics::followMechanics_Loop() {
     if ((unsigned long) (millis() - previousMillis) >= TENTH_SECOND) {
         previousMillis = millis();
 
-        followBotClient.checkRSSI();
-        followMechanics.followMechanics_Averaging();
+        followMechanics_Averaging(); // Get and average RSSI
+        followMechanics_Algorithm(); // Use RSSI to decide robot movement
         myMotors.motorLoop();
+        
     }
 }
 
-void FollowMechanics::followMechanics_Averaging() {
-    //Add rssi value to list
-        long followRSSI = followBotClient.getRSSI();
-        rssiList.push_front(followRSSI);
-        mRSSITotal += followRSSI;
 
-        //if list is > 30 remove the last value 
-        if (rssiList.size() > 30) {
-            mRSSITotal -= rssiList.back();
-            rssiList.pop_back();
-        }
-        mRSSIAvg = mRSSITotal / (long) rssiList.size();
+void FollowMechanics::followMechanics_Averaging() { 
+    long followRSSI = followBotClient.getRSSI();
+    rssiList.push_front(followRSSI);
+    mRSSITotal += followRSSI;
 
-        Serial.print("FollowMechanics, RSSI Avg Value: ");
-        Serial.println(mRSSIAvg);
+    if (rssiList.size() > 10) {
+        mRSSITotal -= rssiList.back();
+        rssiList.pop_back();
+    }
+    mRSSIAvg = mRSSITotal / (long) rssiList.size();
+    
+    
+    Serial.print("FollowMechanics, RSSI Avg Value: ");
+    Serial.println(mRSSIAvg);      
 }
+
+void FollowMechanics::followMechanics_Algorithm() {
+    if (mRSSIAvg > -60) { // Strong signal -close proximity
+        Serial.println("Stopping - Too close to user");
+        myMotors.setDirection(MOTOR_STOP);
+    } else if (mRSSIAvg < -80) { // Weak signal - far proximity
+        Serial.println("Following User (Going Forward)");
+        myMotors.setDirection(MOTOR_FORWARD);
+    } 
+}
+
+

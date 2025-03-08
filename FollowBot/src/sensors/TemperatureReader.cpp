@@ -4,12 +4,13 @@
 * Desc: Creating a temperature reader for the robot
 */
 
+#include <DHT.h>
 #include "TemperatureReader.h"
 #include "followbot_client/FollowBotClient.h"
 #include "followbot_manager/FollowBotManager.h"
-#include "DHT.h"
 
-#define DHTPIN 13
+
+#define DHTPIN 6
 #define DHTTYPE DHT11
 
 const int TEN_SECONDS = 10000;
@@ -31,7 +32,7 @@ void TemperatureReader::temperatureReader_Setup() {
 
 // Temperature Loop
 void TemperatureReader::temperatureReader_Loop() {
-    if ((unsigned long) (millis() - previousMillis) >= TEN_SECONDS) {
+    if ((millis() - previousMillis) >= TEN_SECONDS) {
         previousMillis = millis();
 
         // Every Second I read the dht11 sensor
