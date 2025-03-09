@@ -5,7 +5,6 @@ Desc: Creating a gps class which allows me to send position data to the raspberr
 */
 
 #include <TinyGPS++.h>
-#include <SoftwareSerial.h>
 #include "GPS.h"
 
 
