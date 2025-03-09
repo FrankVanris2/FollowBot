@@ -14,6 +14,7 @@ import Logout from '@mui/icons-material/Logout';
 import LoginForm from './LoginForm.jsx';/// why does removing t casue a blank page
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import RuleIcon from '@mui/icons-material/Gavel';
+import api from "../services/api";
 
 const AccountMenu = () => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -28,25 +29,41 @@ const AccountMenu = () => {
     const handleUsernameChange = (event) => setUsername(event.target.value);
     const handlePasswordChange = (event) => setPassword(event.target.value);
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log('Username:', username);
-        console.log('Password:', password);
-        setIsSignedIn(true); // Simulate successful login
-        handleClose(); // Close menu after login
+        try {
+            const response = await api.postLogin({username, password});
+
+            if (response.success) {
+                setIsSignedIn(true);
+            } else {
+                console.error(response.error);
+            }
+            handleClose();
+        } catch (error) {
+            console.error('Error during login:', error);
+        }
     };
 
     const navigate = useNavigate();
+
     const handleSignupRedirect = () => {
         handleClose();
         navigate('/signup');
     };
 
-    const handleLogout = () => {
-        setIsSignedIn(false);
-        setUsername('');
-        setPassword('');
-        handleClose();
+    const handleLogout = async () => {
+        try {
+            const response = await api.postLogout;
+            if (response.ok) {
+                setIsSignedIn(false);
+                navigate('/');  // dashboard
+            } else {
+                console.error(response.error);
+            }
+        } catch (error) {
+            console.error('Logout error:', error);
+        }
     };
 
     const handleNavigate = (path) => {
@@ -118,6 +135,7 @@ const AccountMenu = () => {
                         Sign Up
                     </MenuItem>
                 )}
+
                 {isSignedIn && (
                     <>
                         <MenuItem onClick={() => handleNavigate('/my-profile')}>
