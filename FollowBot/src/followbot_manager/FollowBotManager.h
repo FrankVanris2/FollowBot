@@ -7,7 +7,9 @@
 
 #pragma once
 #include <Arduino.h>
+
 #include "states&types/Types.h"
+#include "gps/GPS.h"
 
 class FollowBotManager {
 
@@ -25,14 +27,12 @@ public:
     }
 
     void setTemperatureParams(double temp) {
-        Serial.println("FollowBotManager.setTemperatureParams()");
         mIsDirty = true;
         mOutputData.mTemperature = temp;
     }
 
     //for clock
     void setClock(int day, int month, int year, int hour, int minute, int second) {
-        Serial.println("FollowBotManager.setClcokParams()");
 
         //Format the date and time into a single string
         char clockBuffer[25];
@@ -40,6 +40,16 @@ public:
 
         mIsDirty = true;
         mOutputData.mClock = String(clockBuffer);
+    }
+
+    void setGPSData(double lat, double lon) {
+        mIsDirty = true;
+        mOutputData.mCoordinates[LAT] = lat;
+        mOutputData.mCoordinates[LON] = lon;
+    }
+
+    double* getGPSData() {
+        return mOutputData.mCoordinates;
     }
 
 

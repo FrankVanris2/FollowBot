@@ -5,8 +5,12 @@
 */
 
 #pragma once
+#include <Arduino.h>
+
+#include "config.h"
 
 struct OutputData {
     float mTemperature;
-    float mHeatIndex;
+    String mClock;
+    double mCoordinates[GPS_COORDS];
 };

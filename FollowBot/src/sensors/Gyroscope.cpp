@@ -7,8 +7,8 @@ Desc: Creating a gyroscope which is needed for mapping
 #include <Adafruit_MPU6050.h>
 #include <Adafruit_Sensor.h>
 #include <Wire.h>
-
 #include "Gyroscope.h"
+#include "followbot_manager/FollowBotManager.h"
 
 
 Adafruit_MPU6050 mpu; 
@@ -36,5 +36,6 @@ void Gyroscope::gyroscope_Loop() {
         mpu.getEvent(&a, &g, &temp);
     
         setGyroData(a.acceleration.x, a.acceleration.y, a.acceleration.z, g.gyro.x, g.gyro.y, g.gyro.z);
+        followBotManager.setTemperatureParams(temp.temperature);
     } 
 }

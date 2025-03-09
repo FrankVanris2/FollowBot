@@ -165,7 +165,12 @@ bool FollowBotClient::postRobotInfo() {
         
     //Adding given components to json object
     robotInformationJson["temperature"] = outputData.mTemperature;
-    robotInformationJson["heatIndex"] = outputData.mHeatIndex;
+    robotInformationJson["clock"] = outputData.mClock;
+    
+    JsonArray coordinates = robotInformationJson.createNestedArray("coordinates");
+    coordinates.add(outputData.mCoordinates[LAT]);
+    coordinates.add(outputData.mCoordinates[LON]);
+
     String outputDataStr;
     serializeJson(robotInformationJson, outputDataStr);
 

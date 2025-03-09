@@ -5,6 +5,9 @@ Desc: Creating a gps class which allows me to send position data to the raspberr
 */
 
 #include <TinyGPS++.h>
+#include <SoftwareSerial.h>
+
+#include "followbot_manager/FollowBotManager.h"
 #include "GPS.h"
 
 
@@ -36,8 +39,15 @@ void GPS::gps_loop() {
             if (gps.encode(Serial1.read())) {
                 if(gps.location.isValid()) {
                     setGPS(gps.location.lat(), gps.location.lng());
+                    followBotManager.setGPSData(gps.location.lat(), gps.location.lng());
                 } else {
                     Serial.println("GPS is not valid. Keeping previous coordinates");
+                }
+
+                if(gps.date.isValid() && gps.time.isValid()) {
+                    followBotManager.setClock(gps.date.day(), gps.date.month(), gps.date.year(), gps.time.hour(), gps.time.minute(), gps.time.second());
+                } else {
+                    Serial.println("GPS date/time is not valid. Keeping previous time");
                 }
             }
         }
