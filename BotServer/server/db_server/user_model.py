@@ -15,7 +15,7 @@ class UserModel(BaseModel):
         )
 
     def create_user(self, user_id, username, email,
-            password, phone_number=None, business_id=None, privacy_consent=False):
+            password, phone_number=None, business_id=None, privacy_consent=False, follow_bots = None):
         try:
             response = self.table.put_item(
                 Item={
@@ -26,7 +26,7 @@ class UserModel(BaseModel):
                     'phone_number': phone_number,
                     'business_id': business_id,
                     'privacy_consent': privacy_consent,
-                    'follow_bots': []
+                    'follow_bots': follow_bots if follow_bots else []
                 }
             )
             return response

@@ -1,3 +1,4 @@
+import flask_login
 from flask import Flask, request, send_file, jsonify, abort, make_response
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required
 from flask_cors import CORS
@@ -5,17 +6,15 @@ import logging
 
 from handleRobotData import handleRobotData, getDirection, handleMovementData
 
-
 from db_server.user_model import UserModel
 from db_server.followbot_model import FollowBotModel
 from sessionUser import SessionUser
 
 import os
 import uuid
-import hashlib
 import traceback
 import secrets
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 
 user_model = UserModel()
 follow_bot_model = FollowBotModel()
@@ -81,6 +80,7 @@ def login():
         print(f"Unexpected error during login: {traceback.format_exc()}")
         return jsonify({'error': 'An unexpected error occurred'}), 500
 
+
 @app.post("/api/logout")
 @login_required
 def logout():
@@ -111,7 +111,7 @@ def register_user():
         if user_model.get_user_by_username(username):
             return jsonify({'error': 'Username already in use'}), 400
 
-        password = hashlib.sha256(password.encode()).hexdigest()
+        password = generate_password_hash(password)
         user_id = str(uuid.uuid4())
 
         user_data = {
@@ -153,7 +153,7 @@ def link_user_to_bot():
         if this_bot.functional_key != pending_functional_key:
             return jsonify({'error': 'This was not the correct functional key'}), 400
 
-        user_id = data.get('user_id')
+        user_id = flask_login.current_user.id
 
         fb_response = follow_bot_model.assign_user_to_bot(bot_id, user_id)
         user_response = user_model.add_bot(user_id, bot_id)
