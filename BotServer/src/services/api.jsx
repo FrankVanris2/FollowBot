@@ -59,9 +59,11 @@ const postLogout = async () => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
-    }
+    },
+    credentials: 'include' // Include cookies
   });
-  return response.json();
+  const data = await response.json();
+  return { ...data, success: response.ok };
 };
 
 const postSignUp = async (formData) => {

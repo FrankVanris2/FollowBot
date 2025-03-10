@@ -14,7 +14,7 @@ const AddFollowBots = () => {
     const handleCheckBot = async () => {
         if (botId.trim()) {
             try {
-                const response = await fetch("/api/getbot", {
+                const response = await fetch("/api/getBot", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ bot_id: botId })
@@ -44,7 +44,7 @@ const AddFollowBots = () => {
     const handleLinkBot = async () => {
         if (pendingBotId && functionalKey.trim()) {
             try {
-                const response = await fetch("/api/linkbot", {
+                const response = await fetch("/api/linkBot", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({

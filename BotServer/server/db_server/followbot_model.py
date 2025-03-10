@@ -57,11 +57,11 @@ class FollowBotModel(BaseModel):
         try:
             response = self.table.update_item(
                 Key={'bot_id': bot_id},
-                UpdateExpress="SET assigned_user_id =:user_id",
+                UpdateExpression="SET assigned_user_id =:user_id",
                 ExpressionAttributeValues={
-                    'user_id': user_id
+                    ':user_id': user_id
                 },
-                ReturnedValues="UPDATED_NEW"
+                ReturnValues="UPDATED_NEW"
             )
             return response
         except ClientError as e:

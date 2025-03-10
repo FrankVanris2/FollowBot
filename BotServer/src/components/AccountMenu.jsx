@@ -39,7 +39,7 @@ const AccountMenu = () => {
             } else {
                 console.error(response.error);
             }
-            handleClose();
+            setAnchorEl(null);
         } catch (error) {
             console.error('Error during login:', error);
         }
@@ -54,13 +54,16 @@ const AccountMenu = () => {
 
     const handleLogout = async () => {
         try {
-            const response = await api.postLogout;
-            if (response.ok) {
+            const response = await api.postLogout();
+
+            if (response.success) {
                 setIsSignedIn(false);
+                handleClose();
                 navigate('/');  // dashboard
             } else {
                 console.error(response.error);
             }
+            handleClose()
         } catch (error) {
             console.error('Logout error:', error);
         }
@@ -106,6 +109,7 @@ const AccountMenu = () => {
                     </IconButton>
                 </Tooltip>
             </Box>
+
             <Menu
                 anchorEl={anchorEl}
                 open={open}
@@ -126,7 +130,9 @@ const AccountMenu = () => {
                         />
                     </MenuItem>
                 )}
+
                 <Divider />
+
                 {!isSignedIn && (
                     <MenuItem onClick={handleSignupRedirect}>
                         <ListItemIcon>
@@ -136,34 +142,33 @@ const AccountMenu = () => {
                     </MenuItem>
                 )}
 
-                {isSignedIn && (
-                    <>
-                        <MenuItem onClick={() => handleNavigate('/my-profile')}>
-                            <ListItemIcon>
-                                <AccountCircleIcon fontSize="small" />
-                            </ListItemIcon>
-                            My Profile
-                        </MenuItem>
-                        <MenuItem onClick={() => handleNavigate('/rules')}>
-                            <ListItemIcon>
-                                <RuleIcon fontSize="small" />
-                            </ListItemIcon>
-                            Rules
-                        </MenuItem>
-                        <MenuItem onClick={() => handleNavigate('/settings')}>
-                            <ListItemIcon>
-                                <Settings fontSize="small" />
-                            </ListItemIcon>
-                            Settings
-                        </MenuItem>
-                        <MenuItem onClick={handleLogout}>
-                            <ListItemIcon>
-                                <Logout fontSize="small" />
-                            </ListItemIcon>
-                            Logout
-                        </MenuItem>
-                    </>
-                )}
+                {isSignedIn && [
+                    <MenuItem key="profile" onClick={() => handleNavigate('/my-profile')}>
+                        <ListItemIcon>
+                            <AccountCircleIcon fontSize="small" />
+                        </ListItemIcon>
+                        My Profile
+                    </MenuItem>,
+                    <MenuItem key="rules" onClick={() => handleNavigate('/rules')}>
+                        <ListItemIcon>
+                            <RuleIcon fontSize="small" />
+                        </ListItemIcon>
+                        Rules
+                    </MenuItem>,
+                    <MenuItem key="settings" onClick={() => handleNavigate('/settings')}>
+                        <ListItemIcon>
+                            <Settings fontSize="small" />
+                        </ListItemIcon>
+                        Settings
+                    </MenuItem>,
+                    <MenuItem key="logout" onClick={handleLogout}>
+                        <ListItemIcon>
+                            <Logout fontSize="small" />
+                        </ListItemIcon>
+                        Logout
+                    </MenuItem>
+                ]}
+
             </Menu>
         </React.Fragment>
     );

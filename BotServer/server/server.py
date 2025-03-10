@@ -36,7 +36,7 @@ heatIndex_data = None     # Global variable to store heat index data
 def load_user(user_id):
     user_data = user_model.get_user(user_id)
     if user_data:
-        pass
+        return SessionUser(**user_data)
     return None
 
 
@@ -84,8 +84,12 @@ def login():
 @app.post("/api/logout")
 @login_required
 def logout():
-    logout_user()
-    return jsonify({'message': 'Successfully logged out.'}), 200
+    try:
+        logout_user()
+        return jsonify({'message': 'Successfully logged out.'}), 200
+    except Exception as e:
+        print(f"Error during logout: {e}")
+        return jsonify({'error': 'Logout failed'}), 500
 
 
 @app.post("/api/signup")
@@ -148,12 +152,15 @@ def link_user_to_bot():
 
         pending_functional_key = data.get('functional_key')
         bot_id = data.get('bot_id')
-        this_bot = follow_bot_model.get_follow_bot(bot_id)
+        this_bot_dict = follow_bot_model.get_follow_bot(bot_id)
 
-        if this_bot.functional_key != pending_functional_key:
+        print(this_bot_dict)
+
+        if this_bot_dict.get('functional_key') != pending_functional_key:
             return jsonify({'error': 'This was not the correct functional key'}), 400
 
         user_id = flask_login.current_user.id
+        print(f"user_id")
 
         fb_response = follow_bot_model.assign_user_to_bot(bot_id, user_id)
         user_response = user_model.add_bot(user_id, bot_id)
