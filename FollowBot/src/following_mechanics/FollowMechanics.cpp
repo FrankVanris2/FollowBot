@@ -63,10 +63,10 @@ void FollowMechanics::followMechanics_Averaging() {
 }
 
 void FollowMechanics::followMechanics_Algorithm() {
-    if (mRSSIAvg > -60) { // Strong signal -close proximity
+    if (mRSSIAvg > -50) { // Strong signal -close proximity
         Serial.println("Stopping - Too close to user");
         myMotors.setDirection(MOTOR_STOP);
-    } else if (mRSSIAvg < -80) { // Weak signal - far proximity
+    } else if (mRSSIAvg < -55) { // Weak signal - far proximity
         Serial.println("Following User (Going Forward)");
         myMotors.setDirection(MOTOR_FORWARD);
     } 
