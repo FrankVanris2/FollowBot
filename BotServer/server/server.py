@@ -118,24 +118,19 @@ def register_user():
         password = generate_password_hash(password)
         user_id = str(uuid.uuid4())
 
-        user_data = {
-            'user_id': user_id,
-            'username': username,
-            'password': password,
-            'email': email,
-            'phone_number': phone_number,
-            'business_id': business_id,
-            'privacy_consent': privacy_consent,
-            'follow_bots': []
-        }
-
-        response = user_model.create_user(**user_data)
+        response = user_model.create_user(**{
+            "user_id": user_id,
+            "username": username,
+            "email": email,
+            "password": password,
+            "phone_number": phone_number or None,
+            "business_id": business_id or None,
+            "privacy_consent": privacy_consent or False,
+            "follow_bots": []
+        })
 
         if response is None:
             return jsonify({'error': 'Failed to register user due to error in database'}), 500
-
-        user = SessionUser(**user_data)
-        login_user(user)
 
         return jsonify({'message': 'User registered successfully', 'user_id': user_id}), 200
 
@@ -194,6 +189,15 @@ def get_bot():
     except Exception as e:
         print(f"Error in accessing FollowBot entry: {e}")
         return jsonify({'error': 'An unexpected error occurred'}), 500
+
+
+def get_bot_logs():
+    pass
+
+
+def create_follow_bot_entry():
+    pass
+
 
 def get_index_html():
     try:

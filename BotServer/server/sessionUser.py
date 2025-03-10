@@ -1,11 +1,13 @@
 from flask_login import UserMixin
 
-class FollowBot:
-    def __init__(self, bot_id, name, logs, status):
-        self.bot_id = bot_id
-        self.name = name
-        self.logs = logs
-        self.status = status  # e.g., 'active', 'offline'
+# TODO: session use of FollowBot
+# class FollowBot:
+#     def __init__(self, bot_id, name, logs, status):
+#         self.bot_id = bot_id
+#         self.name = name
+#         self.logs = logs
+#         self.status = status  # e.g., 'active', 'offline'
+
 
 class SessionUser(UserMixin):
     def __init__(self, user_id, username, email,
@@ -27,5 +29,6 @@ class SessionUser(UserMixin):
             "email": self.email,
             "phone_number": self.phone_number,
             "business_id": self.business_id,
-            "privacy_consent": self.privacy_consent
+            "privacy_consent": self.privacy_consent,
+            "follow_bots": self.follow_bots
         }
