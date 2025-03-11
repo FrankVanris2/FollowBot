@@ -21,7 +21,6 @@ const AddFollowBots = () => {
                 });
 
                 const data = await response.json();
-                console.log("Fetched FollowBots data:", data);
 
                 if (response.ok)
                     setFollowBots(data.follow_bots || []);

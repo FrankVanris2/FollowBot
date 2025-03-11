@@ -14,6 +14,8 @@ import os
 import uuid
 import traceback
 import secrets
+from datetime import datetime
+from decimal import Decimal
 from werkzeug.security import check_password_hash, generate_password_hash
 
 user_model = UserModel()
@@ -226,26 +228,35 @@ def update_logs():
     data = request.get_json()
 
     if not data:
+        print("error invalid JSON")
         return jsonify({"error": "Invalid JSON payload"}), 400
 
-    required_fields = ["bot_id", "temperature", "lastKnownLocation", "battery", "time", "date"]
+    required_fields = ["botID", "temperature", "battery", "coordinates", "clock"]
     missing_fields = [field for field in required_fields if field not in data]
     if missing_fields:
+        print(f"error missing fields: {', '.join(missing_fields)}")
         return jsonify({"error": f"Missing fields: {', '.join(missing_fields)}"}), 400
 
-    bot_id = str(data["bot_id"])
+    clock_str = data["clock"]
+    clock_datetime = datetime.strptime(clock_str, "%d/%m/%Y %H:%M:%S")
+
+    date_str = clock_datetime.strftime("%d/%m/%Y")
+    time_str = clock_datetime.strftime("%H:%M:%S")
+
+    bot_id = str(data["botID"])
 
     new_log = {
-        "temperature": data["temperature"],
-        "lastKnownLocation": data["lastKnownLocation"],  # expected to be a dict with latitude & longitude
-        "battery": data["battery"],
-        "time": data["time"],
-        "date": data["date"]
+        "temperature": Decimal(str(data["temperature"])),
+        "last_location": [Decimal(str(coord)) for coord in data["coordinates"]],
+        "battery": Decimal(str(data["battery"])),
+        "date": date_str,
+        "time": time_str
     }
 
     response = follow_bot_model.update_follow_bot_logs(bot_id, new_log)
 
     if response:
+        print("good")
         return jsonify({"message": "Logs updated successfully"}), 200
     else:
         return jsonify({"error": "Failed to update logs"}), 500
