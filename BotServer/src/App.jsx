@@ -20,7 +20,6 @@ import AboutUsPage from './pages/AboutUsPage';
 import MyProfilePage from './pages/MyProfile';
 import RulesPage from './pages/RulesPage';
 import SettingScreen from './pages/SettingScreen';
-import AddFollowBotPage from "./pages/MyFollowBotsPage";
 
 // Imports for Profile Menu
 import UserAnalyticsPage from './pages/UserAnalyticsPage';
@@ -28,13 +27,14 @@ import MyAccountPage from './pages/MyAccountPage';
 import MappingPage from './pages/MappingPage';
 import SignalPage from './pages/SignalPage';
 import LivefeedPage from './pages/LivefeedPage';
+import MyFollowBotsPage from './pages/MyFollowBotsPage';
 
 // Global Styles
 import { GlobalStyle } from './App.style.jsx';
-import MyFollowBotsPage from "./pages/MyFollowBotsPage";
 
 // Import SensorData from data.js
 import SensorData from './data';
+
 function App() {
   return (
     <Router>
@@ -56,9 +56,7 @@ function App() {
 
         {/* Routes for Profiles */}
         <Route path="/followbot-controls" element={<Layout><FollowBotControlsPage /></Layout>} />
-        <Route path="/user-analytics"
-element={<Layout><UserAnalyticsPage sensorData={SensorData} /></Layout>} // Pass sensor data as props
-        />
+        <Route path="/user-analytics" element={<Layout><UserAnalyticsPage sensorData={SensorData} /></Layout>} />
         <Route path="/my-account" element={<Layout><MyAccountPage /></Layout>} />
         <Route path="/mapping" element={<Layout><MappingPage /></Layout>} />
         <Route path="/signal" element={<Layout><SignalPage /></Layout>} />
