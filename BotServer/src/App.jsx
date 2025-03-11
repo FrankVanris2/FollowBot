@@ -33,6 +33,8 @@ import LivefeedPage from './pages/LivefeedPage';
 import { GlobalStyle } from './App.style.jsx';
 import MyFollowBotsPage from "./pages/MyFollowBotsPage";
 
+// Import SensorData from data.js
+import SensorData from './data';
 function App() {
   return (
     <Router>
