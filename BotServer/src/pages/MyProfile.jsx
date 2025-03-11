@@ -13,8 +13,8 @@ const MyProfilePage = () => {
         <div onClick={() => navigate('/user-analytics')} className="profile-item">
           <p>User Analytics & FollowBot Usage</p>
         </div>
-        <div onClick={() => navigate('/register-bot')} className="profile-item">
-          <p>Add a FollowBot</p>
+        <div onClick={() => navigate('/my-bots')} className="profile-item">
+          <p>My FollowBots</p>
         </div>
         <div onClick={() => navigate('/followbot-controls')} className="profile-item">
           <p>FollowBot Controls</p>

@@ -116,7 +116,7 @@ def register_user():
             return jsonify({'error': 'Username already in use'}), 400
 
         password = generate_password_hash(password)
-        user_id = str(uuid.uuid4())
+        user_id = str(uuid.uuid4())[:8]
 
         response = user_model.create_user(**{
             "user_id": user_id,
@@ -149,13 +149,10 @@ def link_user_to_bot():
         bot_id = data.get('bot_id')
         this_bot_dict = follow_bot_model.get_follow_bot(bot_id)
 
-        print(this_bot_dict)
-
         if this_bot_dict.get('functional_key') != pending_functional_key:
             return jsonify({'error': 'This was not the correct functional key'}), 400
 
         user_id = flask_login.current_user.id
-        print(f"user_id")
 
         fb_response = follow_bot_model.assign_user_to_bot(bot_id, user_id)
         user_response = user_model.add_bot(user_id, bot_id)
@@ -191,12 +188,96 @@ def get_bot():
         return jsonify({'error': 'An unexpected error occurred'}), 500
 
 
+@app.get("/api/getUserBots")
+@login_required
+def get_user_bots():
+    try:
+        user_id = flask_login.current_user.id
+        user_data = user_model.get_user(user_id)
+
+        if not user_data:
+            return jsonify({'error': 'User not found'}), 404
+
+        follow_bots = user_data.get("follow_bots", [])
+        return jsonify({'follow_bots': follow_bots}), 200
+
+    except Exception as e:
+        print(f"Error in retrieving user:{flask_login.current_user.id}'s FollowBot ids.")
+        return jsonify({'error': 'An unexpected error occurred'}), 500
+
+
+@app.get("/api/getBotLogs")
+@login_required
 def get_bot_logs():
-    pass
+    bot_id = request.args.get("bot_id")
+    if not bot_id:
+        return jsonify({"error": "Missing bot ID"}), 400
+
+    bot_data = follow_bot_model.get_follow_bot(bot_id)
+    if not bot_data:
+        return jsonify({"error": "Bot not found"}), 404
+
+    logs = bot_data.get("logs", [])
+    return jsonify({"logs": logs}), 200
 
 
+@app.post("/api/postBotLogs")
+def update_logs():
+    data = request.get_json()
+
+    if not data:
+        return jsonify({"error": "Invalid JSON payload"}), 400
+
+    required_fields = ["bot_id", "temperature", "lastKnownLocation", "battery", "time", "date"]
+    missing_fields = [field for field in required_fields if field not in data]
+    if missing_fields:
+        return jsonify({"error": f"Missing fields: {', '.join(missing_fields)}"}), 400
+
+    bot_id = str(data["bot_id"])
+
+    new_log = {
+        "temperature": data["temperature"],
+        "lastKnownLocation": data["lastKnownLocation"],  # expected to be a dict with latitude & longitude
+        "battery": data["battery"],
+        "time": data["time"],
+        "date": data["date"]
+    }
+
+    response = follow_bot_model.update_follow_bot_logs(bot_id, new_log)
+
+    if response:
+        return jsonify({"message": "Logs updated successfully"}), 200
+    else:
+        return jsonify({"error": "Failed to update logs"}), 500
+
+# Pre: The Arduino board will send a consistent functional_key if IN_DATABASE is false.
+# Post: A FollowBot entry is created in the database.
+# Post: Returns a bot_id, which should be stored for future API functionalities.
+@app.post("/api/createBotEntry")
 def create_follow_bot_entry():
-    pass
+    try:
+        functional_key = request.get_json().get("functional_key")
+        if not functional_key:
+            return jsonify({"error": "Missing functional key"}), 400
+
+        bot_id = str(uuid.uuid4())[:8]
+
+        response = follow_bot_model.create_follow_bot(**{
+            'bot_id': bot_id,
+            'functional_key': functional_key,
+            'logs': [],
+            'business_id': None,
+            'assigned_user_id': None
+        })
+
+        if response is None:
+            return jsonify({"error": "Failed to create the FollowBot entry"}), 500
+
+        return jsonify({"bot_id": bot_id, "message": "FollowBot entry created successfully"}), 200
+
+    except Exception as e:
+        print(f"Error creating FollowBot entry: {e}")
+        return jsonify({"error": "An unexpected error occurred"}), 500
 
 
 def get_index_html():

@@ -20,7 +20,7 @@ import AboutUsPage from './pages/AboutUsPage';
 import MyProfilePage from './pages/MyProfile';
 import RulesPage from './pages/RulesPage';
 import SettingScreen from './pages/SettingScreen';
-import AddFollowBotPage from "./pages/AddFollowBotPage";
+import AddFollowBotPage from "./pages/MyFollowBotsPage";
 
 // Imports for Profile Menu 
 import UserAnalyticsPage from './pages/UserAnalyticsPage';
@@ -31,6 +31,7 @@ import LivefeedPage from './pages/LivefeedPage';
 
 // Global Styles
 import { GlobalStyle } from './App.style.jsx';
+import MyFollowBotsPage from "./pages/MyFollowBotsPage";
 
 function App() {
   return (
@@ -58,7 +59,7 @@ function App() {
         <Route path="/mapping" element={<Layout><MappingPage /></Layout>} />
         <Route path="/signal" element={<Layout><SignalPage /></Layout>} />
         <Route path="/live-feed" element={<Layout><LivefeedPage /></Layout>} />
-        <Route path="/register-bot" element={<Layout><AddFollowBotPage /></Layout>} />
+        <Route path="/my-bots" element={<Layout><MyFollowBotsPage /></Layout>} />
 
         {/* Wildcard Route for 404 Not Found */}
         <Route path="*" element={<Layout><NotFoundPage /></Layout>} />

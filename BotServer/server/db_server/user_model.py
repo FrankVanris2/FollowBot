@@ -77,6 +77,7 @@ class UserModel(BaseModel):
             response = self.table.update_item(
                 Key={'user_id': user_id},
                 UpdateExpression="SET follow_bots = list_append(if_not_exists(follow_bots, :empty_list), :bot_id)",
+                ConditionExpression="not contains(follow_bots, :bot_id)",
                 ExpressionAttributeValues={
                     ':empty_list': [],
                     ':bot_id': [bot_id]

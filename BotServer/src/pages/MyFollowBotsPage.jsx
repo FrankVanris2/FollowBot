@@ -1,15 +1,45 @@
-import React from "react";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 
 const AddFollowBots = () => {
+    const navigate = useNavigate();
     const [botId, setBotId] = useState("");
     const [functionalKey, setFunctionalKey] = useState("");
     const [followBots, setFollowBots] = useState([]);
     const [responseMessage, setResponseMessage] = useState("");
     const [botExists, setBotExists] = useState(false);
     const [pendingBotId, setPendingBotId] = useState(null);
+
+    useEffect(() => {
+        const fetchFollowBots = async () => {
+            try {
+                const response = await fetch("/api/getUserBots", {
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" }
+                });
+
+                const data = await response.json();
+                console.log("Fetched FollowBots data:", data);
+
+                if (response.ok)
+                    setFollowBots(data.follow_bots || []);
+                else
+                    console.error("Failed to fetch FollowBots:", data.error);
+
+            } catch (error) {
+                console.error("Error fetching FollowBots:", error);
+            }
+        };
+
+        fetchFollowBots();
+    }, []);
+
+    const handleAnalyzeBot = (botId) => {
+        navigate(`/`);
+        // navigate(`/analytics/${botId}`);
+    };
 
     const handleCheckBot = async () => {
         if (botId.trim()) {
@@ -104,8 +134,11 @@ const AddFollowBots = () => {
             <section className="list-section">
                 <h3>My FollowBots:</h3>
                 <ul>
-                    {followBots.map((bot, index) => (
-                        <li key={index}>{bot}</li>
+                    {followBots.map((botId, index) => (
+                        <li key={index}>
+                            {botId}
+                            <button onClick={() => handleAnalyzeBot(botId)}>Analyze</button>
+                        </li>
                     ))}
                 </ul>
             </section>
