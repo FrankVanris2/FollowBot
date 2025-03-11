@@ -1,32 +1,68 @@
 import React from "react";
-//import "../styles/SettingPage.style.css";
-//import "./style.css";
+import BarChart from "../components/Bar"; // Adjust the path to Bar.jsx
+import LineGraph from "../components/Line"; // Adjust the path to Line.jsx
+import PieChart from "../components/Pie"; // Adjust the path to Pie.jsx
 
 const UserAnalytics = () => {
+  // Sample data for the charts
+  const barData = {
+    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    datasets: [
+      {
+        label: "My First dataset",
+        backgroundColor: "rgba(75,192,192,0.6)",
+        borderColor: "rgba(75,192,192,1)",
+        borderWidth: 1,
+        data: [65, 59, 80, 81, 56, 55, 40],
+      },
+    ],
+  };
+
+  const lineData = {
+    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    datasets: [
+      {
+        label: "My First dataset",
+        backgroundColor: "rgba(75,192,192,0.6)",
+        borderColor: "rgba(75,192,192,1)",
+        borderWidth: 1,
+        data: [65, 59, 80, 81, 56, 55, 40],
+      },
+    ],
+  };
+
+  const pieData = {
+    labels: ["Red", "Blue", "Yellow"],
+    datasets: [
+      {
+        data: [300, 50, 100],
+        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+        hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+      },
+    ],
+  };
+
   return (
     <div className="container">
       <h1 className="title">User Analytics & FollowBot Usage</h1>
       <div className="content">
-        <div className="analytics-section">
-          <img
-            src="image.png"
-            alt="Data Analytics"
-            className="analytics-image"
-          />
-          <p className="label">Data Analytics</p>
+        {/* Bar Chart */}
+        <div className="chart-section">
+          <h2 className="chart-title">Bar Chart</h2>
+          <BarChart chartData={barData} />
         </div>
 
-        {/* TEMPORARY SECTION: Placeholder for FollowBot Usage, expand later */}
-        <div className="usage-section">
-          <img
-            src="followbot-usage.png"
-            alt="FollowBot Usage"
-            className="usage-image"
-          />
-          <p className="label">FollowBot Usage</p>
+        {/* Line Chart */}
+        <div className="chart-section">
+          <h2 className="chart-title">Line Chart</h2>
+          <LineGraph data={lineData} />
         </div>
-        {/* END TEMPORARY SECTION */}
 
+        {/* Pie Chart */}
+        <div className="chart-section">
+          <h2 className="chart-title">Pie Chart</h2>
+          <PieChart chartData={pieData} />
+        </div>
       </div>
       <button className="back-button">Back</button>
     </div>

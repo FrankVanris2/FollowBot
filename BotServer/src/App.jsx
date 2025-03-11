@@ -1,4 +1,4 @@
-import React from 'react'; 
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Component Imports
@@ -9,7 +9,7 @@ import Layout from './components/Layout';
 import AboutAppPage from './pages/AboutAppPage';
 import AboutFollowBotPage from './pages/AboutFollowBotPage';
 import FeedbackPage from './pages/FeedbackPage';
-import NewsArticlePage from './pages/NewsArticlePage'; 
+import NewsArticlePage from './pages/NewsArticlePage';
 import FollowBotControlsPage from './pages/FollowBotControlsPage';
 import SignupPage from './pages/SignupPage';
 import HomePage from './pages/HomePage';
@@ -22,7 +22,7 @@ import RulesPage from './pages/RulesPage';
 import SettingScreen from './pages/SettingScreen';
 import AddFollowBotPage from "./pages/MyFollowBotsPage";
 
-// Imports for Profile Menu 
+// Imports for Profile Menu
 import UserAnalyticsPage from './pages/UserAnalyticsPage';
 import MyAccountPage from './pages/MyAccountPage';
 import MappingPage from './pages/MappingPage';
@@ -46,7 +46,7 @@ function App() {
         <Route path="/feedback" element={<Layout><FeedbackPage /></Layout>} />
         <Route path="/news-articles" element={<Layout><NewsArticlePage /></Layout>} />
         <Route path="/signup" element={<Layout><SignupPage /></Layout>} />
-       
+
         {/* Routes for Subsign-in Account */}
         <Route path="/my-profile" element={<Layout><MyProfilePage /></Layout>} />
         <Route path="/rules" element={<Layout><RulesPage /></Layout>} />
@@ -54,7 +54,10 @@ function App() {
 
         {/* Routes for Profiles */}
         <Route path="/followbot-controls" element={<Layout><FollowBotControlsPage /></Layout>} />
-        <Route path="/user-analytics" element={<Layout><UserAnalyticsPage /></Layout>} />
+        <Route
+          path="/user-analytics"
+          element={<Layout><UserAnalyticsPage sensorData={SensorData} /></Layout>} // Pass sensor data as props
+        />
         <Route path="/my-account" element={<Layout><MyAccountPage /></Layout>} />
         <Route path="/mapping" element={<Layout><MappingPage /></Layout>} />
         <Route path="/signal" element={<Layout><SignalPage /></Layout>} />
