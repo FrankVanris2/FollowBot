@@ -1,8 +1,11 @@
 import React from "react";
 import "../styles/SettingPage.style.css";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { FaMoon, FaSun, FaLock, FaBook } from "react-icons/fa"; // Import icons
 
 const Settings = () => {
+  const navigate = useNavigate(); // Initialize the navigate function
+
   return (
     <div className="settings-container">
       <h1 className="settings-title">Settings</h1>
@@ -31,7 +34,10 @@ const Settings = () => {
           <span>Rules</span>
         </div>
       </div>
-      <button className="back-button">Back</button>
+      {/* Back Button */}
+      <button className="back-button" onClick={() => navigate("/my-profile")}>
+        Back to Profile
+      </button>
     </div>
   );
 };

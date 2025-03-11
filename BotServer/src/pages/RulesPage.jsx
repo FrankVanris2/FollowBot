@@ -1,7 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "../styles/RulesPage.style.css";
 
 const Rules = () => {
+  const navigate = useNavigate(); // Initialize the navigate function
+
   return (
     <div className="rules-container">
       <h2 className="rules-title">CarryWithMe User Guidelines and Rules</h2>
@@ -43,7 +46,10 @@ const Rules = () => {
       <p>8.1. User data is handled in accordance with our Privacy Policy.</p>
       <p>8.2. Users agree to the collection and processing of necessary information for account and robot management.</p>
       
-      <button className="back-button">Back</button>
+      {/* Back Button */}
+      <button className="back-button" onClick={() => navigate("/my-profile")}>
+        Back to Profile
+      </button>
     </div>
   );
 };
