@@ -1,4 +1,3 @@
-// src/pages/MoveControlsPage.js
 import React, { useState, useEffect, useRef } from 'react';
 import MoveAroundButtons from '../components/MoveAroundButtons';
 import TemperatureDisplay from '../components/TemperatureDisplay';
@@ -6,7 +5,7 @@ import HeatIndexDisplay from '../components/HeatIndexDisplay';
 import DirectionList from '../components/DirectionList';
 import api from '../services/api';
 import cameradisconnected from '../res/cameradisconnected.jpg';
-import '../styles/FollowBotControlsPage.style.css'; // Import your CSS file
+import '../styles/FollowBotControlsPage.style.css'; // Import the CSS file
 
 const FollowBotControlsPage = () => {
     const [presses, setPresses] = useState([]);
