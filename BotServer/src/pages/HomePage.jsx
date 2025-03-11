@@ -1,18 +1,19 @@
+// src/pages/HomePage.js
 import React from 'react';
-import '../styles/HomePage.style.css'; 
-import prototype from '../res/FollowBotPrototype.png';
 import { Link } from 'react-router-dom';
+import '../styles/HomePage.style.css';
+import prototype from '../res/FollowBotPrototype.png';
 
 const HomePage = () => {
     return (
         <div className="home-page-container">
-            <h1 className="header">FollowBot</h1> {/* Title moved here */}
+            <h1 className="header">FollowBot</h1>
             <div className="main-content">
                 <div className="content-box">
-                    <img 
-                        src={prototype} 
-                        alt="FollowBot Prototype" 
-                        className="followbot-image" 
+                    <img
+                        src={prototype}
+                        alt="FollowBot Prototype"
+                        className="followbot-image"
                     />
                     <div className="text-content">
                         <p className="description">
@@ -23,7 +24,7 @@ const HomePage = () => {
                         <p className="extra-info">
                             It is there to help you when you are in need. It will always be by your side.
                         </p>
-                        <Link to="/AboutFollowBotPage" className="learn-more">
+                        <Link to="/about-followbot" className="learn-more">
                             <span className="arrow">→</span> Learn More
                         </Link>
                     </div>

@@ -56,9 +56,8 @@ function App() {
 
         {/* Routes for Profiles */}
         <Route path="/followbot-controls" element={<Layout><FollowBotControlsPage /></Layout>} />
-        <Route
-          path="/user-analytics"
-          element={<Layout><UserAnalyticsPage sensorData={SensorData} /></Layout>} // Pass sensor data as props
+        <Route path="/user-analytics"
+element={<Layout><UserAnalyticsPage sensorData={SensorData} /></Layout>} // Pass sensor data as props
         />
         <Route path="/my-account" element={<Layout><MyAccountPage /></Layout>} />
         <Route path="/mapping" element={<Layout><MappingPage /></Layout>} />
