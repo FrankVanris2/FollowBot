@@ -10,6 +10,7 @@
 #include "config.h"
 
 struct OutputData {
+    int mBotID;
     float mTemperature;
     String mClock;
     double mCoordinates[GPS_COORDS];

@@ -48,6 +48,13 @@ public:
         mOutputData.mCoordinates[LON] = lon;
     }
 
+    void setBotID() {
+        mIsDirty = true;
+        mOutputData.mBotID = 1234;
+    }
+
+    int getBotID() const { return mOutputData.mBotID; }
+
     double* getGPSData() {
         return mOutputData.mCoordinates;
     }

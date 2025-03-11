@@ -43,7 +43,7 @@ void FollowBotManager::followBotSetup() {
     followBotClient.followBotClient_Setup();
     gyroscope.gyroscope_Setup();
     myGPS.gps_setup();
-    followMechanics.followMechanics_Setup();
+    //followMechanics.followMechanics_Setup();
     
     // temperatureReader.temperatureReader_Setup();
     // objectAvoidance.objectAvoidance_Setup();
@@ -56,7 +56,7 @@ void FollowBotManager::followBotSetup() {
 void FollowBotManager::followBotLoop() {
     myLCDScreen.myLCDScreen_Loop();
     followBotClient.followBotClient_Loop();
-    followMechanics.followMechanics_Loop();
+    //followMechanics.followMechanics_Loop();
     gyroscope.gyroscope_Loop();
     myGPS.gps_loop();
     ros2_serial.ros2_loop();

@@ -18,6 +18,7 @@ FollowBotData_Schema = {
 
 #defining a example object
 FollowBotData_Example = {
+    "botID": "123",
     "temperature": 25.5,
     #"battery": 75,
     "Time": "2023-10-01T12:00:00Z",
