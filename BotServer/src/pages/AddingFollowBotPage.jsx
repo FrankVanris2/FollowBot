@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../styles/AddFollowBots.css";
+import "../styles/AddFollowBots.css"; // Import the CSS file
 
 const AddFollowBots = () => {
   const [privateKey, setPrivateKey] = useState("");

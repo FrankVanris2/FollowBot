@@ -19,14 +19,17 @@ const UserAnalytics = () => {
   };
 
   const lineData = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    labels: ["08:51", "09:51", "10:51", "11:51", "12:51", "13:51", "14:51", "15:51", "16:51", "17:51"],
     datasets: [
       {
-        label: "My First dataset",
-        backgroundColor: "rgba(75,192,192,0.6)",
-        borderColor: "rgba(75,192,192,1)",
-        borderWidth: 1,
-        data: [65, 59, 80, 81, 56, 55, 40],
+        label: "Temperature (°C)",
+        data: [23.5, 24, 22.3, 24.3, 25.5, 24.3, 24.3, 22.5, 21.4, 20.6],
+        borderColor: "rgba(54, 162, 235, 1)",
+        backgroundColor: "rgba(54, 162, 235, 0.2)",
+        pointRadius: 5,
+        pointBackgroundColor: "rgba(54, 162, 235, 1)",
+        fill: true,
+        tension: 0.4,
       },
     ],
   };
