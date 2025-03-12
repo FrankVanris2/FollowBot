@@ -14,6 +14,7 @@ import Logout from '@mui/icons-material/Logout';
 import LoginForm from './LoginForm.jsx';/// why does removing t casue a blank page
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import RuleIcon from '@mui/icons-material/Gavel';
+import api from "../services/api";
 
 const AccountMenu = () => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -28,25 +29,44 @@ const AccountMenu = () => {
     const handleUsernameChange = (event) => setUsername(event.target.value);
     const handlePasswordChange = (event) => setPassword(event.target.value);
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log('Username:', username);
-        console.log('Password:', password);
-        setIsSignedIn(true); // Simulate successful login
-        handleClose(); // Close menu after login
+        try {
+            const response = await api.postLogin({username, password});
+
+            if (response.success) {
+                setIsSignedIn(true);
+            } else {
+                console.error(response.error);
+            }
+            setAnchorEl(null);
+        } catch (error) {
+            console.error('Error during login:', error);
+        }
     };
 
     const navigate = useNavigate();
+
     const handleSignupRedirect = () => {
         handleClose();
         navigate('/signup');
     };
 
-    const handleLogout = () => {
-        setIsSignedIn(false);
-        setUsername('');
-        setPassword('');
-        handleClose();
+    const handleLogout = async () => {
+        try {
+            const response = await api.postLogout();
+
+            if (response.success) {
+                setIsSignedIn(false);
+                handleClose();
+                navigate('/');  // dashboard
+            } else {
+                console.error(response.error);
+            }
+            handleClose()
+        } catch (error) {
+            console.error('Logout error:', error);
+        }
     };
 
     const handleNavigate = (path) => {
@@ -89,6 +109,7 @@ const AccountMenu = () => {
                     </IconButton>
                 </Tooltip>
             </Box>
+
             <Menu
                 anchorEl={anchorEl}
                 open={open}
@@ -109,7 +130,9 @@ const AccountMenu = () => {
                         />
                     </MenuItem>
                 )}
+
                 <Divider />
+
                 {!isSignedIn && (
                     <MenuItem onClick={handleSignupRedirect}>
                         <ListItemIcon>
@@ -118,34 +141,34 @@ const AccountMenu = () => {
                         Sign Up
                     </MenuItem>
                 )}
-                {isSignedIn && (
-                    <>
-                        <MenuItem onClick={() => handleNavigate('/my-profile')}>
-                            <ListItemIcon>
-                                <AccountCircleIcon fontSize="small" />
-                            </ListItemIcon>
-                            My Profile
-                        </MenuItem>
-                        <MenuItem onClick={() => handleNavigate('/rules')}>
-                            <ListItemIcon>
-                                <RuleIcon fontSize="small" />
-                            </ListItemIcon>
-                            Rules
-                        </MenuItem>
-                        <MenuItem onClick={() => handleNavigate('/settings')}>
-                            <ListItemIcon>
-                                <Settings fontSize="small" />
-                            </ListItemIcon>
-                            Settings
-                        </MenuItem>
-                        <MenuItem onClick={handleLogout}>
-                            <ListItemIcon>
-                                <Logout fontSize="small" />
-                            </ListItemIcon>
-                            Logout
-                        </MenuItem>
-                    </>
-                )}
+
+                {isSignedIn && [
+                    <MenuItem key="profile" onClick={() => handleNavigate('/my-profile')}>
+                        <ListItemIcon>
+                            <AccountCircleIcon fontSize="small" />
+                        </ListItemIcon>
+                        My Profile
+                    </MenuItem>,
+                    <MenuItem key="rules" onClick={() => handleNavigate('/rules')}>
+                        <ListItemIcon>
+                            <RuleIcon fontSize="small" />
+                        </ListItemIcon>
+                        Rules
+                    </MenuItem>,
+                    <MenuItem key="settings" onClick={() => handleNavigate('/settings')}>
+                        <ListItemIcon>
+                            <Settings fontSize="small" />
+                        </ListItemIcon>
+                        Settings
+                    </MenuItem>,
+                    <MenuItem key="logout" onClick={handleLogout}>
+                        <ListItemIcon>
+                            <Logout fontSize="small" />
+                        </ListItemIcon>
+                        Logout
+                    </MenuItem>
+                ]}
+
             </Menu>
         </React.Fragment>
     );

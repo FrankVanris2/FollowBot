@@ -1,0 +1,139 @@
+/* AddFollowBots.css */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh; /* Full viewport height */
+    background-color: #f5f5f5; /* Light background color */
+    padding: 20px;
+  }
+  
+  .nav-bar {
+    display: flex;
+    justify-content: space-around; /* Space out buttons evenly */
+    width: 100%;
+    max-width: 1200px; /* Limit width for larger screens */
+    background-color: #007bff; /* Blue background for the nav bar */
+    padding: 10px;
+    border-radius: 8px; /* Rounded corners */
+    margin-bottom: 20px; /* Space below the nav bar */
+  }
+  
+  .nav-bar button {
+    background: none;
+    border: none;
+    color: white; /* White text for buttons */
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 5px; /* Rounded corners for buttons */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+  }
+  
+  .nav-bar button:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Light hover effect */
+  }
+  
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 800px; /* Limit width for better readability */
+    background: white; /* White background for content */
+    padding: 20px;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  }
+  
+  .add-section {
+    width: 100%;
+    margin-bottom: 20px; /* Space below the add section */
+  }
+  
+  .add-section h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #333; /* Dark text color */
+  }
+  
+  .add-section p {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #666; /* Gray text color */
+  }
+  
+  .add-section label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .add-section input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 1rem;
+    margin-bottom: 10px; /* Space below the input */
+  }
+  
+  .add-section button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff; /* Blue background */
+    color: white; /* White text */
+    border: none;
+    border-radius: 5px; /* Rounded corners */
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+  }
+  
+  .add-section button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  .list-section {
+    width: 100%;
+  }
+  
+  .list-section h3 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .list-section ul {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0;
+  }
+  
+  .list-section li {
+    background: #f9f9f9; /* Light background for list items */
+    padding: 10px;
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    margin-bottom: 10px; /* Space between list items */
+    color: #333;
+  }
+  
+  /* Responsive Design for Smaller Screens */
+  @media (max-width: 768px) {
+    .nav-bar {
+      flex-direction: column; /* Stack buttons vertically on smaller screens */
+      align-items: center;
+    }
+  
+    .nav-bar button {
+      width: 100%; /* Full width for buttons */
+      margin-bottom: 10px; /* Space between buttons */
+    }
+  
+    .add-section input,
+    .add-section button {
+      width: 100%; /* Full width for input and button */
+    }
+  }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./AddFollowBots.css";
+import "../styles/AddFollowBots.css"; // Import the CSS file
 
 const AddFollowBots = () => {
   const [privateKey, setPrivateKey] = useState("");
@@ -21,22 +21,22 @@ const AddFollowBots = () => {
         <button>Feedback</button>
         <button>News</button>
       </nav>
-      
+
       <main className="content">
         <section className="add-section">
           <h2>Add FollowBots</h2>
           <p>If you own a FollowBot, input their private key below:</p>
           <label>
             FollowBot Private Key:
-            <input 
-              type="text" 
-              value={privateKey} 
-              onChange={(e) => setPrivateKey(e.target.value)} 
+            <input
+              type="text"
+              value={privateKey}
+              onChange={(e) => setPrivateKey(e.target.value)}
             />
           </label>
           <button onClick={handleAddBot}>Add</button>
         </section>
-        
+
         <section className="list-section">
           <h3>My FollowBots:</h3>
           <ul>

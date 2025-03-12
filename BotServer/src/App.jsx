@@ -27,9 +27,13 @@ import MyAccountPage from './pages/MyAccountPage';
 import MappingPage from './pages/MappingPage';
 import SignalPage from './pages/SignalPage';
 import LivefeedPage from './pages/LivefeedPage';
+import MyFollowBotsPage from './pages/MyFollowBotsPage';
 
 // Global Styles
 import { GlobalStyle } from './App.style.jsx';
+
+// Import SensorData from data.js
+import SensorData from './data';
 
 function App() {
   return (
@@ -52,11 +56,12 @@ function App() {
 
         {/* Routes for Profiles */}
         <Route path="/followbot-controls" element={<Layout><FollowBotControlsPage /></Layout>} />
-        <Route path="/user-analytics" element={<Layout><UserAnalyticsPage /></Layout>} />
+        <Route path="/user-analytics" element={<Layout><UserAnalyticsPage sensorData={SensorData} /></Layout>} />
         <Route path="/my-account" element={<Layout><MyAccountPage /></Layout>} />
         <Route path="/mapping" element={<Layout><MappingPage /></Layout>} />
         <Route path="/signal" element={<Layout><SignalPage /></Layout>} />
         <Route path="/live-feed" element={<Layout><LivefeedPage /></Layout>} />
+        <Route path="/my-bots" element={<Layout><MyFollowBotsPage /></Layout>} />
 
         {/* Wildcard Route for 404 Not Found */}
         <Route path="*" element={<Layout><NotFoundPage /></Layout>} />

@@ -1,10 +1,13 @@
 import React from 'react';
+import '../styles/MappingPage.style.css'; // Import the CSS file
 
 const MappingPage = () => {
   return (
-    <div>
-      <h1>Mapping Page</h1>
-      <p>This is the Mapping/Location page.</p>
+    <div className="container">
+      <h1 className="header">Mapping Page</h1>
+      <div className="content">
+        <p>This is the Mapping/Location page.</p>
+      </div>
     </div>
   );
 };
