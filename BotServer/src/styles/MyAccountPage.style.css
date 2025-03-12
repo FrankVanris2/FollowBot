@@ -1,0 +1,87 @@
+.account-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #d3d3d3;
+  font-family: 'Arial', sans-serif;
+  min-height: 100vh;
+  gap: 20px;
+}
+
+.account-header {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.account-options {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.account-options li {
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.account-options li:hover {
+  text-decoration: underline;
+}
+
+.followbots-container {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #c4c4c4;
+  border-radius: 10px;
+  width: 300px;
+  text-align: center;
+}
+
+.followbots-header {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.followbots-list {
+  border-top: 2px solid #000;
+  padding: 10px;
+  min-height: 100px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+}
+
+.back-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #888;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.back-button:hover {
+  background-color: #555;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .account-options {
+      align-items: center;
+  }
+
+  .followbots-container {
+      width: 90%;
+  }
+}
