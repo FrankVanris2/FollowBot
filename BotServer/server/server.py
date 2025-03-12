@@ -1,6 +1,7 @@
 import flask_login
 from flask import Flask, request, send_file, jsonify, abort, make_response
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required
+
 from flask_cors import CORS
 import logging
 
@@ -33,6 +34,10 @@ app.logger.setLevel(logging.INFO) # Set to the desired level
 temperature_data = None   # Global variable to store temperature data
 heatIndex_data = None     # Global variable to store heat index data
 
+MAPS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'dist', 'maps')
+@app.route('/maps/<path:filename>')
+def serve_maps(filename):
+    return send_from_directory('MAPS_DIR', filename)
 
 @login_manager.user_loader
 def load_user(user_id):

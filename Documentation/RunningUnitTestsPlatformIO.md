@@ -43,4 +43,10 @@ pio test -e native
 pio run -e uno_r4_wifi
 ```
 
+When it comes to uploading code to a specific board, it get's quite annoying to see the native environment fail over and over again since it's meant for unit testing nothing else. That is why it is best to upload the code specifically to the board through this pio command:
+
+```sh
+platformio run --target upload --environment uno_r4_wifi
+```
+
 Following these instructions will help ensure your unit tests and source code are handled in the correct environments.

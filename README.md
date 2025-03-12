@@ -34,7 +34,7 @@ On the hardware side we are utilizing the Arduino Uno Rev4 in order to send and 
 In terms of project success, our primary focus will be on systematic organization and incremental prototyping. We plan to develop a prototype during the first quarter and progressively refine it. Our goal is to deliver a practical and beneficial product for any consumer seeking a Followbot to carry their belongings or allow the Followbot to go to designated places.
 
 ### High Level Design Architecture
-![image](/Images/High_Level_Design_Architecture.png)
+![image](/Images/High_Level_Design_Architecture1.png)
 
 # Installation
 
@@ -62,14 +62,22 @@ After VSCode with the PlatformIO extension has been installed we can now git clo
 ## Front-end & Back-end
 Developing on the front-end requires to set up the server side. And it's quite easy.
 
+Firstly, we run our server with Node.js. Follow instructions [here](https://nodejs.org/en/download) to install.
+
 * In your command prompt go to the `BotServer` directory
 * Once in the directory you must run these pip commands:
   ```cmd
   pip install Flask
   pip install -U flask-cors
+  pip install boto3
   ```
+  
+* If you are working on the front-end map integration, install these npm packages:
+```
+npm install react-leaflet@4 leaflet
+```
 
-* Once those two things are installed and hopefully you have npm installed you will need to do the next following commands:
+* Once those packages are installed alongside npm, you will need to do the next following commands:
 ```cmd
 npm i
 npm i -g npm
@@ -78,10 +86,16 @@ npm i -g npm
 ```cmd
 npm run build
 ```
-* After the build run the server
+* After the build, run the server
 ```cmd
 npm run start
 ```
+
+* Run this to render changes to the server for testing
+```cmd
+npm run watch
+```
+
 * In your browser be sure to use this url: `http://xx.xx.xx.xx:5000`
 * the xx.xx.xx.xx is showed in the server command window.
 

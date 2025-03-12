@@ -4,21 +4,18 @@
 * Desc: Creating a client in which I will be able to send information up to the server and the server 
 * will be able to send information up to the website and the mobile app
 */
+#include <WiFiS3.h>
+#include <ArduinoJson.h>
 
 #include "FollowBotClient.h"
 #include "motors/Motors.h"
-#include "WiFiS3.h"
-#include "secrets/FollowBot_Secrets.h"
 #include "followbot_manager/FollowBotManager.h"
+#include "secrets/EEPROMStorage.h"
 #include "states&types/DataStates.h"
-#include "ArduinoJson.h"
+
 
 // Universal Object
 FollowBotClient followBotClient;
-
-//sensitive information
-char ssid[] = SECRET_SSID;
-char pass[] = SECRET_PASS;
 
 // Interval
 const int TENTH_SECOND = 100;
@@ -26,23 +23,27 @@ const int HALF_SECOND = 500;
 const int SECOND = 1000;
 const int TEN_SECONDS = 10000;
 const int SIXTY_SECONDS = 60000;
+const int HOUR = 3600000;
 const int MAX_SERVER_NOT_CONNECTED = 3;
 
+// Variable to track the last time postRobotInfo was executed
+unsigned long lastPostTime = 0;
 
 //My Json creator
  StaticJsonDocument<200> robotInformationJson;
 
 // Server IP address
 //IPAddress server(3, 145, 197, 165); // numeric IP for Google (no DNS)
-IPAddress server(3, 131, 97, 5); // numeric IP for Google (no DNS)
-const int PORT = 80;
+//IPAddress server(3, 131, 97, 5); // numeric IP for Google (no DNS) /
+IPAddress server(192, 168, 0, 106);
+const int PORT = 5000; //Originally 80
 
 // WiFi client
 WiFiClient client;
 
 // Constructor
 FollowBotClient::FollowBotClient(): mWifiConnectionStatus(WL_IDLE_STATUS), mPreviousMillisMove(0), mCountMoves(0), 
-mIPAddress(server.toString()), mRSSI(0), lastServerCheck(0), mServerNotConnected(0) {
+mIPAddress(server.toString()), mRSSI(0), lastServerCheck(0), mServerNotConnected(0), mIsConnected(false) {
     client.setConnectionTimeout(15000);
 }
 
@@ -60,44 +61,80 @@ void FollowBotClient::followBotClient_Setup() {
 
     // Attempt to connect to WiFi network;
     unsigned long startAttemptTime = millis();
-    while(mWifiConnectionStatus != WL_CONNECTED && millis() - startAttemptTime < SIXTY_SECONDS) {
-        Serial.print("Attempting to connect to SSID: ");
-        Serial.println(ssid);
-        mWifiConnectionStatus = WiFi.begin(ssid, pass); //pass for private networks
+    while(mWifiConnectionStatus != WL_CONNECTED && millis() - startAttemptTime < TEN_SECONDS) {
+        Serial.print(String("Attempting to connect to SSID: ") + eepromStorage.getSSID());
+        int ssidLength  = eepromStorage.getSSID().length() + 1; 
+        int passLength  = eepromStorage.getPassword().length() + 1;   //The +1 is for the 0x00h Terminator
+        char ssidArray[ssidLength];
+        char passArray[passLength];
+        eepromStorage.getSSID().toCharArray(ssidArray, ssidLength);
+        eepromStorage.getPassword().toCharArray(passArray, passLength);
 
+        if(eepromStorage.getPassword().length() == 0) {
+            mWifiConnectionStatus = WiFi.begin(ssidArray);
+        } else {
+            mWifiConnectionStatus = WiFi.begin(ssidArray, passArray);    //pass for private networks
+        }
+        
         // non-blocking delay:
         delay(100);
     }
 
     if(mWifiConnectionStatus == WL_CONNECTED) {
         printWifiStatus();
+        mIsConnected = true;
     } else {
         Serial.println("Failed to connect to Wifi");
+        mIsConnected = false;
     }
-    
 }
 
 void FollowBotClient::followBotClient_Loop() {
     int intervalTime = mServerNotConnected < MAX_SERVER_NOT_CONNECTED ? TENTH_SECOND : TEN_SECONDS;
     
-
     if((unsigned long) (millis() - mPreviousMillisMove) >= intervalTime) {
         mPreviousMillisMove = millis();
 
         // Check WiFi connection status 
         if(WiFi.status() != WL_CONNECTED) {
             mWifiConnectionStatus = WL_DISCONNECTED;
-            Serial.println("FollowBotClient, Wifi disconnected");
+            //Serial.println("FollowBotClient, Wifi disconnected");
         } else {
             mWifiConnectionStatus = WL_CONNECTED;
             Serial.println("FollowBotClient, Wifi connected");
         }
 
         if(mWifiConnectionStatus == WL_CONNECTED) {
-            if (!getMove()) return;
-            if(followBotManager.getDirtyFlag()) {
-                if (!postRobotInfo()) return;
+            Serial.print("mServerNotConnected: ");
+            Serial.println(mServerNotConnected);
+
+            bool moveSuccess = getMove();
+            bool postSuccess = true;
+
+            // Check if it's time to post robot info (once per hour)
+            unsigned long currentTime = millis();
+            if(followBotManager.getDirtyFlag() && (currentTime - lastPostTime >= HOUR || lastPostTime == 0)) {
+                postSuccess = postRobotInfo();
+                if(postSuccess) {
+                    lastPostTime = currentTime; // Update last post time only on success
+                    Serial.println("Posted robot info - next post in 1 hour");
+                }
             }
+
+            // Log failures instead of returning early
+            if(!moveSuccess) {
+                Serial.println("FollowBotClient.getMove() failed");
+            }
+            if(!postSuccess) {
+                Serial.println("FollowBotClient.postRobotInfo() failed");
+            }
+        }
+
+        
+        // During extended intervals, continuously print RSSI
+        if(mServerNotConnected >= MAX_SERVER_NOT_CONNECTED) {
+            Serial.println("I am inside of this RSSI if statement");
+            checkRSSI();
         }
     }  
 }
@@ -137,13 +174,22 @@ bool FollowBotClient::postRobotInfo() {
     const OutputData& outputData = followBotManager.getOutputData();
         
     //Adding given components to json object
+    robotInformationJson["botID"] = 123;
     robotInformationJson["temperature"] = outputData.mTemperature;
-    robotInformationJson["heatIndex"] = outputData.mHeatIndex;
+    robotInformationJson["battery"] = 100;
+    
+    JsonArray coordinates = robotInformationJson.createNestedArray("coordinates");
+    coordinates.add(outputData.mCoordinates[LAT]);
+    coordinates.add(outputData.mCoordinates[LON]);
+
+    robotInformationJson["clock"] = outputData.mClock;
+
+
     String outputDataStr;
     serializeJson(robotInformationJson, outputDataStr);
 
     //Serial.println("connected to server");
-    client.println("POST /api/robotinfo HTTP/1.1");
+    client.println("POST /api/postBotLogs HTTP/1.1"); //Originally /api/robotinfo
     client.print("Host: "); // main server is 3.145.197.165
     client.println(mIPAddress);
     client.println("Content-Type: application/json");
@@ -153,6 +199,12 @@ bool FollowBotClient::postRobotInfo() {
     client.println(outputDataStr);
     client.println("Connection: close");
     client.println(); 
+
+    String response = "";
+    while (client.available()) {
+        char c = client.read();
+        response += c;
+    }
     client.stop();
 
     return true;
@@ -239,6 +291,6 @@ bool FollowBotClient::getMove() {
 void FollowBotClient::checkRSSI() {
     // The RSSI check is now handled by the FreeRTOS task
     mRSSI = WiFi.RSSI();
-    Serial.print("FollowBotClient, mRSSI = ");
-    Serial.println(mRSSI);
+    //Serial.print("FollowBotClient, mRSSI = ");
+    //Serial.println(mRSSI);
 }

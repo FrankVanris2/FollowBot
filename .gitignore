@@ -10,3 +10,4 @@ Documentation/.idea/vcs.xml
 .idea/misc.xml
 .idea/misc.xml
 .idea/misc.xml
+BotServer/server/db_server/db_resource.py
