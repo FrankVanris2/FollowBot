@@ -8,6 +8,8 @@ pip install -U flask-cors
 npm install --save-dev style-loader css-loader
 
 
+npm install chart.js react-chartjs-2
+
 npm i better version npm i -g npm
 pip install boto3
 npm install @mui/icons-material // only revalant for FollowBot controller
