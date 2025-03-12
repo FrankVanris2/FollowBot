@@ -5,14 +5,25 @@
 * via the setup and loop
 */
 
+
+//NEEDED
 #include "FollowBotManager.h"
+#include "followbot_ui/FollowBotLCD.h"
+#include "secrets/EEPROMStorage.h"
+#include "followbot_client/FollowBotClient.h"
+#include "ROS2_Serial/ROS2_Serial.h"
 #include "states&types/MotorControlStates.h"
 #include "motors/Motors.h"
-//#include "objectavoidance&detection/ObjectAvoidance.h"
-#include "sensors/TemperatureReader.h"
-#include "followbot_client/FollowBotClient.h"
+#include "sensors/Gyroscope.h"
+#include "gps/GPS.h"
 #include "following_mechanics/FollowMechanics.h"
-//#include "ROS2_Testing/ros2Testing.h"
+
+//CURRENTLY NOT NEEDED
+//#include "objectavoidance&detection/ObjectAvoidance.h"
+//#include "objectavoidance&detection/ObjectDetection.h"
+
+//#include "sensors/TemperatureReader.h"
+
 
 
 //universal object
@@ -25,21 +36,39 @@ FollowBotManager::FollowBotManager(): mIsDirty(false) {
 
 
 //the setup that will store the many objects that will set in the main
-void FollowBotManager::followBotSetup() {
+void FollowBotManager::followBotSetup() {  
+    eepromStorage.setup();  
+    myLCDScreen.myLCDScreen_Setup();
     myMotors.motorSetup();
     followBotClient.followBotClient_Setup();
-    temperatureReader.temperatureReader_Setup();
-    //objectAvoidance.objectAvoidance_Setup();
+    gyroscope.gyroscope_Setup();
+    myGPS.gps_setup();
+    //followMechanics.followMechanics_Setup();
+    
+    // temperatureReader.temperatureReader_Setup();
+    // objectAvoidance.objectAvoidance_Setup();
+    // objectDetection.objectDetection_Setup();
+    // followMechanics.followMechanics_Setup();
+    
 
 }
 
 void FollowBotManager::followBotLoop() {
-    //ROS2 Testing:
-    //ros2_TestingObj.ros2_loop();
-    
-    temperatureReader.temperatureReader_Loop();
+    myLCDScreen.myLCDScreen_Loop();
     followBotClient.followBotClient_Loop();
-    followMechanics.followMechanics_Loop();
+    //followMechanics.followMechanics_Loop();
+    gyroscope.gyroscope_Loop();
+    myGPS.gps_loop();
+    ros2_serial.ros2_loop();
+     
+    
+     
+
+    
+    //temperatureReader.temperatureReader_Loop();
+    //objectDetection.objectDetection_Loop();
+    
+
 }
 
 

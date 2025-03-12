@@ -64,6 +64,11 @@ links:<br><br>
 * https://shorturl.at/MdsLB (How to choose the right battery for your robotics system?)
 * https://www.wiferion.com/us/wireless-charging-for-robots/#:~:text=Inductive%20Charging%3A%20This%20is%20the,receiver%20coil%20in%20the%20robot (Induction charging)
 * https://www.sparkfun.com/datasheets/GPS/Modules/LS20030~3_datasheet_v1.2.pdf (GPS module Datasheet)
+* https://www.amazon.com/HiLetgo-MPU-6050-Accelerometer-Gyroscope-Converter/dp/B01DK83ZYQ/?th=1 (Gyroscope)
+* https://www.amazon.com/Arducam-Raspberry-Motorized-Software-Precise/dp/B09VSVB4DT/?th=1 (Camera)
+* https://www.amazon.com/GeeekPi-NVMe-Adapter-Raspberry-Support/dp/B0CRK4YB4C/ (NVMe drive)
+* https://www.amazon.com/Encoder-Gearmotor-300RPM-Arduino-Printers/dp/B07GNGCNK1/ (Motors with Encoders)
+
 
 **Software**: <br>
 * https://docs.ros.org/en/foxy/index.html (ROS2)

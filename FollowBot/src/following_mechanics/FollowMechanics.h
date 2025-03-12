@@ -17,6 +17,7 @@ public:
     void followMechanics_Loop();
 
     void followMechanics_Averaging();
+    void followMechanics_Algorithm();
 
 private:
     unsigned long previousMillis;
