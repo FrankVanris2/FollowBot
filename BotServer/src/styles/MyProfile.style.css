@@ -1,0 +1,21 @@
+.profile-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.profile-item {
+  cursor: pointer;
+  text-align: center;
+}
+
+.profile-item img {
+  width: 100px;
+  height: 100px;
+  display: block;
+  margin: 0 auto;
+}
+
+.profile-item:hover {
+  opacity: 0.8;
+}

@@ -1,34 +1,68 @@
-
 import React from 'react';
-import {Routes,Route, BrowserRouter} from "react-router-dom"
-//import MoveControlsPage from './pages/MoveControlsPage'; // Import the new Move Controls Page
-import Navbar from './NavBar';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+// Component Imports
+import Navbar from './components/Navbar';
+import Layout from './components/Layout';
+
+// Page Imports
 import AboutAppPage from './pages/AboutAppPage';
 import AboutFollowBotPage from './pages/AboutFollowBotPage';
-import AboutUsPage from './pages/AboutUsPage';
 import FeedbackPage from './pages/FeedbackPage';
-import NewsArticlePage from './pages/NewArticlePage';
+import NewsArticlePage from './pages/NewsArticlePage';
 import FollowBotControlsPage from './pages/FollowBotControlsPage';
-import MappingPage from './pages/MappingPage'
+import SignupPage from './pages/SignupPage';
 import HomePage from './pages/HomePage';
-import { GlobalStyle } from './App.style.jsx'; // Import the global style
+import NotFoundPage from './pages/NotFoundPage';
+import AboutUsPage from './pages/AboutUsPage';
 
-function App(){
-    return(
-        <BrowserRouter>
-            <GlobalStyle />
-            <Navbar />
-            <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/about-app" element={<AboutAppPage />} />
-                <Route path="/about-followbot" element={<AboutFollowBotPage />} />
-                <Route path="/about-us" element={<AboutUsPage />} />
-                <Route path="/feedback" element={<FeedbackPage />} />
-                <Route path="/news-articles" element={<NewsArticlePage />} />
-                <Route path="/followbot-controls" element={<FollowBotControlsPage />} />
-                <Route path="/mapping" element={<MappingPage />} />
-            </Routes>
-        </BrowserRouter>
-    )
+// Newly Added Pages (Subsign in Account)
+import MyProfilePage from './pages/MyProfile';
+import RulesPage from './pages/RulesPage';
+import SettingScreen from './pages/SettingScreen';
+
+// Imports for Profile Menu
+import UserAnalyticsPage from './pages/UserAnalyticsPage';
+import MyAccountPage from './pages/MyAccountPage';
+import MappingPage from './pages/MappingPage';
+import SignalPage from './pages/SignalPage';
+import LivefeedPage from './pages/LivefeedPage';
+
+// Global Styles
+import { GlobalStyle } from './App.style.jsx';
+
+function App() {
+  return (
+    <Router>
+      <GlobalStyle />
+      <Navbar /> {/* Navbar is present across all pages */}
+      <Routes>
+        <Route path="/" element={<Layout><HomePage /></Layout>} />
+        <Route path="/about-followbot" element={<Layout><AboutFollowBotPage /></Layout>} />
+        <Route path="/about-app" element={<Layout><AboutAppPage /></Layout>} />
+        <Route path="/about-us" element={<Layout><AboutUsPage /></Layout>} />
+        <Route path="/feedback" element={<Layout><FeedbackPage /></Layout>} />
+        <Route path="/news-articles" element={<Layout><NewsArticlePage /></Layout>} />
+        <Route path="/signup" element={<Layout><SignupPage /></Layout>} />
+
+        {/* Routes for Subsign-in Account */}
+        <Route path="/my-profile" element={<Layout><MyProfilePage /></Layout>} />
+        <Route path="/rules" element={<Layout><RulesPage /></Layout>} />
+        <Route path="/settings" element={<Layout><SettingScreen /></Layout>} />
+
+        {/* Routes for Profiles */}
+        <Route path="/followbot-controls" element={<Layout><FollowBotControlsPage /></Layout>} />
+        <Route path="/user-analytics" element={<Layout><UserAnalyticsPage /></Layout>} />
+        <Route path="/my-account" element={<Layout><MyAccountPage /></Layout>} />
+        <Route path="/mapping" element={<Layout><MappingPage /></Layout>} />
+        <Route path="/signal" element={<Layout><SignalPage /></Layout>} />
+        <Route path="/live-feed" element={<Layout><LivefeedPage /></Layout>} />
+
+        {/* Wildcard Route for 404 Not Found */}
+        <Route path="*" element={<Layout><NotFoundPage /></Layout>} />
+      </Routes>
+    </Router>
+  );
 }
+
 export default App;

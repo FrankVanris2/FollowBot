@@ -1,12 +1,12 @@
 // src/pages/MoveControlsPage.js
 import React, { useState, useEffect, useRef } from 'react';
-import MoveAroundButtons from '../components/MoveAroundButtons'; // Move Around Buttons component
-import TemperatureDisplay from '../components/TemperatureDisplay'; // Temperature Display component
-import HeatIndexDisplay from '../components/HeatIndexDisplay'; // Heat Index Display component
-import DirectionList from '../components/DirectionList'; // List of directions
-import api from '../services/api'; // API service
-import cameradisconnected from './res/cameradisconnected.jpg'; // Ensure the correct path to the image
-import { Header, Container, ImageWrapper, Image, LiveFeedText, ButtonWrapper, InfoWrapper, TemperatureWrapper } from './FollowBotControlsPage.style';
+import MoveAroundButtons from '../components/MoveAroundButtons';
+import TemperatureDisplay from '../components/TemperatureDisplay';
+import HeatIndexDisplay from '../components/HeatIndexDisplay';
+import DirectionList from '../components/DirectionList';
+import api from '../services/api';
+import cameradisconnected from '../res/cameradisconnected.jpg';
+import '../styles/FollowBotControlsPage.style.css'; // Import your CSS file
 
 const FollowBotControlsPage = () => {
     const [presses, setPresses] = useState([]);
@@ -19,7 +19,6 @@ const FollowBotControlsPage = () => {
         const fetchTemperature = async () => {
             try {
                 const data = await api.getTemperature();
-                console.log(data);
                 if (data.temperature) {
                     setTemperature(data.temperature);
                 }
@@ -31,7 +30,6 @@ const FollowBotControlsPage = () => {
         const fetchHeatIndex = async () => {
             try {
                 const data = await api.getHeatIndex();
-                console.log(data);
                 if (data.heatIndex) {
                     setHeatIndex(data.heatIndex);
                 }
@@ -57,7 +55,6 @@ const FollowBotControlsPage = () => {
 
     const handleButtonClick = async (direction) => {
         setPresses(prevPresses => [direction]);
-        console.log(`Button pressed: ${direction}`);
         try {
             await api.postMovement(direction);
         } catch (exc) {
@@ -67,36 +64,37 @@ const FollowBotControlsPage = () => {
 
     return (
         <div>
-            <Header>FollowBot Controls (Demo)</Header>
-            <Container>
-                <ButtonWrapper>
+            <h1 className="header">FollowBot Controls (Demo)</h1>
+            <div className="container">
+                <div className="button-wrapper">
                     <MoveAroundButtons 
                         handleMouseDown={handleMouseDown}
                         handleMouseUp={handleMouseUp}
                         handleButtonClick={handleButtonClick}
                     />
                     <DirectionList presses={presses} />
-                </ButtonWrapper>
-                <ImageWrapper>
-                    <LiveFeedText>Live Feed</LiveFeedText>
-                    <Image 
+                </div>
+
+                <div className="image-wrapper">
+                    <span className="live-feed-text">Live Feed</span>
+                    <img 
                         src={cameradisconnected}
                         alt="Camera disconnected"
+                        style={{ width: '600px', height: '400px' }}
                     />
-                </ImageWrapper>
-                <TemperatureWrapper>
-                    <h2>Current Temperature</h2>
-                    <TemperatureDisplay temperature={temperature} />
-                    <h2>Heat Index</h2>
-                    <HeatIndexDisplay heatIndex={heatIndex} />
-                </TemperatureWrapper>
-            </Container>
+                </div>
+
+                <div className="temperature-wrapper">
+                    <div className="info-wrapper">
+                        <h2>Current Temperature</h2>
+                        <TemperatureDisplay temperature={temperature} />
+                        <h2>Heat Index</h2>
+                        <HeatIndexDisplay heatIndex={heatIndex} />
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
 
 export default FollowBotControlsPage;
-
-
-
-

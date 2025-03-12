@@ -23,16 +23,20 @@ const int HALF_SECOND = 500;
 const int SECOND = 1000;
 const int TEN_SECONDS = 10000;
 const int SIXTY_SECONDS = 60000;
+const int HOUR = 3600000;
 const int MAX_SERVER_NOT_CONNECTED = 3;
 
+// Variable to track the last time postRobotInfo was executed
+unsigned long lastPostTime = 0;
 
 //My Json creator
  StaticJsonDocument<200> robotInformationJson;
 
 // Server IP address
 //IPAddress server(3, 145, 197, 165); // numeric IP for Google (no DNS)
-IPAddress server(3, 131, 97, 5); // numeric IP for Google (no DNS)
-const int PORT = 80;
+//IPAddress server(3, 131, 97, 5); // numeric IP for Google (no DNS) /
+IPAddress server(192, 168, 0, 106);
+const int PORT = 5000; //Originally 80
 
 // WiFi client
 WiFiClient client;
@@ -103,16 +107,35 @@ void FollowBotClient::followBotClient_Loop() {
         if(mWifiConnectionStatus == WL_CONNECTED) {
             Serial.print("mServerNotConnected: ");
             Serial.println(mServerNotConnected);
-            if (!getMove()) return;
-            if(followBotManager.getDirtyFlag()) {
-                if (!postRobotInfo()) return;
+
+            bool moveSuccess = getMove();
+            bool postSuccess = true;
+
+            // Check if it's time to post robot info (once per hour)
+            unsigned long currentTime = millis();
+            if(followBotManager.getDirtyFlag() && (currentTime - lastPostTime >= HOUR || lastPostTime == 0)) {
+                postSuccess = postRobotInfo();
+                if(postSuccess) {
+                    lastPostTime = currentTime; // Update last post time only on success
+                    Serial.println("Posted robot info - next post in 1 hour");
+                }
+            }
+
+            // Log failures instead of returning early
+            if(!moveSuccess) {
+                Serial.println("FollowBotClient.getMove() failed");
+            }
+            if(!postSuccess) {
+                Serial.println("FollowBotClient.postRobotInfo() failed");
             }
         }
 
+        
         // During extended intervals, continuously print RSSI
-        /*if(mServerNotConnected >= MAX_SERVER_NOT_CONNECTED) {
+        if(mServerNotConnected >= MAX_SERVER_NOT_CONNECTED) {
+            Serial.println("I am inside of this RSSI if statement");
             checkRSSI();
-        }*/
+        }
     }  
 }
 
@@ -151,13 +174,22 @@ bool FollowBotClient::postRobotInfo() {
     const OutputData& outputData = followBotManager.getOutputData();
         
     //Adding given components to json object
+    robotInformationJson["botID"] = 123;
     robotInformationJson["temperature"] = outputData.mTemperature;
-    robotInformationJson["heatIndex"] = outputData.mHeatIndex;
+    robotInformationJson["battery"] = 100;
+    
+    JsonArray coordinates = robotInformationJson.createNestedArray("coordinates");
+    coordinates.add(outputData.mCoordinates[LAT]);
+    coordinates.add(outputData.mCoordinates[LON]);
+
+    robotInformationJson["clock"] = outputData.mClock;
+
+
     String outputDataStr;
     serializeJson(robotInformationJson, outputDataStr);
 
     //Serial.println("connected to server");
-    client.println("POST /api/robotinfo HTTP/1.1");
+    client.println("POST /api/postBotLogs HTTP/1.1"); //Originally /api/robotinfo
     client.print("Host: "); // main server is 3.145.197.165
     client.println(mIPAddress);
     client.println("Content-Type: application/json");
@@ -167,6 +199,12 @@ bool FollowBotClient::postRobotInfo() {
     client.println(outputDataStr);
     client.println("Connection: close");
     client.println(); 
+
+    String response = "";
+    while (client.available()) {
+        char c = client.read();
+        response += c;
+    }
     client.stop();
 
     return true;
