@@ -1,139 +1,59 @@
-/* MappingPage.css */
-
-/* General styles for the container */
-.mapping-container {
-  height: 90vh;
-  width: 90%; /* Wider container */
-  max-width: 1200px; /* Optional: Set a max-width for larger screens */
-  margin: 0 auto;
+.about-app-page-container {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f8f9fa;
   padding: 20px;
-  box-sizing: border-box;
-  font-family: 'Arial', sans-serif;
-  background-color: #f9f9f9;
-  color: #333;
+}
+
+.content {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: column; /* Stack content vertically on mobile */
+  align-items: center; /* Center align items */
+  padding: 20px;
 }
 
-/* Header styles */
-.mapping-container h1 {
-  text-align: center;
+.mobile-app-info {
+  max-width: 100%; /* Take full width on mobile */
+  padding: 20px;
+  text-align: center; /* Center text */
+}
+
+.mobile-app-info-heading {
   font-size: 2rem;
-  margin-bottom: 20px;
-  color: #007bff;
+  margin-bottom: 15px;
+  color: #343a40;
 }
 
-/* Button styles */
-.toggle-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-bottom: 20px;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
-}
-
-.toggle-button:hover {
-  background-color: #0056b3;
-}
-
-/* Map container styles */
-.map-container {
-  height: 70vh;
-  width: 100%; /* Full width of the parent container */
-  margin-top: 20px;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Popup styles */
-.leaflet-popup-content {
-  font-size: 14px;
-  color: #333;
-}
-
-.leaflet-popup-content strong {
-  color: #007bff;
-}
-
-/* Selected position display styles */
-.selected-position {
-  text-align: center;
-  margin-top: 20px;
-  padding: 15px;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 600px;
-}
-
-.selected-position p {
-  margin: 5px 0;
-  font-size: 1rem;
-  color: #555;
-}
-
-.selected-position .text-lg {
+.mobile-app-info-text {
   font-size: 1.2rem;
-  font-weight: bold;
-  color: #007bff;
+  line-height: 1.6;
+  color: #495057;
+  margin-bottom: 20px; /* Add spacing below the text */
 }
 
-/* Responsive styles for mobile devices */
-@media (max-width: 768px) {
-  .mapping-container {
-      height: 100vh;
-      padding: 10px;
-      width: 95%; /* Slightly wider on smaller screens */
-  }
-
-  .mapping-container h1 {
-      font-size: 1.5rem;
-  }
-
-  .map-container {
-      height: 60vh;
-  }
-
-  .toggle-button {
-      padding: 10px 20px;
-      font-size: 0.9rem;
-  }
-
-  .selected-position {
-      margin-top: 15px;
-      padding: 10px;
-  }
-
-  .selected-position p {
-      font-size: 0.9rem;
-  }
-
-  .selected-position .text-lg {
-      font-size: 1rem;
-  }
+.mobile-preview {
+  text-align: center;
 }
 
-@media (max-width: 480px) {
-  .mapping-container h1 {
-      font-size: 1.2rem;
+.phone-image {
+  width: 150px; /* Slightly smaller image for mobile */
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Media query for larger screens */
+@media (min-width: 768px) {
+  .content {
+      flex-direction: row; /* Switch back to horizontal layout */
+      justify-content: space-around;
   }
 
-  .map-container {
-      height: 50vh;
+  .mobile-app-info {
+      max-width: 45%; /* Restore original width */
+      text-align: left; /* Align text to the left */
   }
 
-  .selected-position p {
-      font-size: 0.8rem;
-  }
-
-  .selected-position .text-lg {
-      font-size: 0.9rem;
+  .phone-image {
+      width: 200px; /* Restore original image size */
   }
 }
