@@ -38,34 +38,38 @@ FollowBotManager::FollowBotManager(): mIsDirty(false) {
 //the setup that will store the many objects that will set in the main
 void FollowBotManager::followBotSetup() {  
     eepromStorage.setup();  
+
+    //REALLY NEEDED
     myLCDScreen.myLCDScreen_Setup();
     myMotors.motorSetup();
     followBotClient.followBotClient_Setup();
     gyroscope.gyroscope_Setup();
     myGPS.gps_setup();
+
+    //NEEDED
     //followMechanics.followMechanics_Setup();
     
-    // temperatureReader.temperatureReader_Setup();
+    //WORKING ON
     // objectAvoidance.objectAvoidance_Setup();
     // objectDetection.objectDetection_Setup();
-    // followMechanics.followMechanics_Setup();
+    
     
 
 }
 
 void FollowBotManager::followBotLoop() {
+
+    //REALLY NEEDED
     myLCDScreen.myLCDScreen_Loop();
     followBotClient.followBotClient_Loop();
-    //followMechanics.followMechanics_Loop();
     gyroscope.gyroscope_Loop();
     myGPS.gps_loop();
     ros2_serial.ros2_loop();
      
-    
-     
+    //WORKING ON
+    //followMechanics.followMechanics_Loop();
 
-    
-    //temperatureReader.temperatureReader_Loop();
+    //NOT NEEDED YET
     //objectDetection.objectDetection_Loop();
     
 
