@@ -1,14 +1,14 @@
-import React, {useEffect, useState, useCallback} from 'react'
-import {GeoJSON, MapContainer, Marker, Popup, TileLayer, useMap} from 'react-leaflet';
+import React, { useEffect, useState, useCallback } from 'react';
+import { GeoJSON, MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import campus from '../res/campus.json';
 import dropOffIconImg from '../res/logo.png';
 import adaAccessIconImg from '../res/accessible-icon.jpg';
-
+import '../styles/MappingPage.style.css'; 
 const MappingPage = () => {
     const [selectedPosition, setSelectedPosition] = useState(null);
-    const [geoJsonData, setGeoJsonData] = useState(null); // necessary for scalability
-    const [showTileLayer, setShowTileLayer] = useState(false); // toggle for TileLayer
+    const [geoJsonData, setGeoJsonData] = useState(null);
+    const [showTileLayer, setShowTileLayer] = useState(false);
 
     useEffect(() => {
         if (campus) {
@@ -29,10 +29,9 @@ const MappingPage = () => {
         feature => feature.properties?.accessibility === "wheelchair" && feature.geometry.type === "Point"
     ) || [];
 
-    // function to calculate distance between two points (Haversine formula approximation)
     const getDistance = (lat1, lng1, lat2, lng2) => {
         const toRad = deg => (deg * Math.PI) / 180;
-        const R = 6371e3; // radius of earth in m
+        const R = 6371e3;
         const dLat = toRad(lat2 - lat1);
         const dLng = toRad(lng2 - lng1);
         const a = Math.sin(dLat / 2) ** 2
@@ -47,9 +46,9 @@ const MappingPage = () => {
             const dist = getDistance(lat, lng, dropLat, dropLng);
 
             return dist < (nearest?.dist || Infinity)
-                ? {lat : dropLat, lng : dropLng, dist}
-                : nearest
-        } , null);
+                ? { lat: dropLat, lng: dropLng, dist }
+                : nearest;
+        }, null);
     }, [dropOffPoints]);
 
     const MapClickHandler = () => {
@@ -78,9 +77,9 @@ const MappingPage = () => {
                 lngSum: accumulator.lngSum + lng,
                 count: accumulator.count + 1
             }),
-            {latSum: 0, lngSum: 0, count: 0});
+            { latSum: 0, lngSum: 0, count: 0 });
 
-        return {lat: latSum / count, lng: lngSum / count};
+        return { lat: latSum / count, lng: lngSum / count };
     };
 
     const handleEachFeature = (feature, layer) => {
@@ -88,7 +87,7 @@ const MappingPage = () => {
             layer.bindPopup(`<strong>${feature.properties.name}</strong>`);
         }
         layer.on('click', (event) => {
-            event.originalEvent.stopPropagation(); // Prevents interfering with map click
+            event.originalEvent.stopPropagation();
 
             const buildingCenter = getBuildingCenter(feature);
             const nearestDropOff = findNearestDropOff(buildingCenter.lat, buildingCenter.lng);
@@ -100,14 +99,14 @@ const MappingPage = () => {
     const adaAccessIcon = new L.Icon({ iconUrl: adaAccessIconImg, iconSize: [16, 16], iconAnchor: [8, 8] });
 
     return (
-        <div style={{height: "90vh", maxWidth: "1200px", margin: "0 auto"}}>
+        <div className="mapping-container">
             <h1>My Campus Map</h1>
 
-            <button onClick={() => setShowTileLayer(prev => !prev)}>
+            <button className="toggle-button" onClick={() => setShowTileLayer(prev => !prev)}>
                 {showTileLayer ? "Hide Map Layer" : "Show Map Layer"}
             </button>
 
-            <MapContainer style={{height: "70vh", width: "100%"}} zoom={16} center={[47.585, -122.148]}>
+            <MapContainer className="map-container" zoom={16} center={[47.585, -122.148]}>
                 {showTileLayer && (
                     <TileLayer
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -118,10 +117,10 @@ const MappingPage = () => {
                 {filteredGeoJsonData && (
                     <GeoJSON
                         data={filteredGeoJsonData}
-                        style={{color: 'blue', weight: 2}}
+                        style={{ color: 'blue', weight: 2 }}
                         pointToLayer={(feature, latlng) => {
                             if (feature.geometry.type === "Point") {
-                                return L.circleMarker(latlng, {radius: 5, color: 'blue'});
+                                return L.circleMarker(latlng, { radius: 5, color: 'blue' });
                             }
                         }}
                         onEachFeature={handleEachFeature}
@@ -143,7 +142,7 @@ const MappingPage = () => {
                     </Marker>
                 ))}
 
-                <MapClickHandler/>
+                <MapClickHandler />
 
                 {selectedPosition && (
                     <Marker position={[selectedPosition.lat, selectedPosition.lng]} icon={dropOffIcon}>
@@ -158,9 +157,8 @@ const MappingPage = () => {
                 )}
             </MapContainer>
 
-            {/* display selected position */}
             {selectedPosition && (
-                <div className="text-center mt-4">
+                <div className="selected-position">
                     <p className="text-lg">Nearest Drop-off Position:</p>
                     <p>Latitude: {selectedPosition.lat.toFixed(6)}</p>
                     <p>Longitude: {selectedPosition.lng.toFixed(6)}</p>

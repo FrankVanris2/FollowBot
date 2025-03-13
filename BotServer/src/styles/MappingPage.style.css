@@ -1,43 +1,139 @@
-/* MappingPage.style.css */
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh; /* Full viewport height */
-    background-color: #f5f5f5; /* Light background color */
-    padding: 20px;
+/* MappingPage.css */
+
+/* General styles for the container */
+.mapping-container {
+  height: 90vh;
+  width: 90%; /* Wider container */
+  max-width: 1200px; /* Optional: Set a max-width for larger screens */
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Header styles */
+.mapping-container h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #007bff;
+}
+
+/* Button styles */
+.toggle-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-button:hover {
+  background-color: #0056b3;
+}
+
+/* Map container styles */
+.map-container {
+  height: 70vh;
+  width: 100%; /* Full width of the parent container */
+  margin-top: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Popup styles */
+.leaflet-popup-content {
+  font-size: 14px;
+  color: #333;
+}
+
+.leaflet-popup-content strong {
+  color: #007bff;
+}
+
+/* Selected position display styles */
+.selected-position {
+  text-align: center;
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+}
+
+.selected-position p {
+  margin: 5px 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+.selected-position .text-lg {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #007bff;
+}
+
+/* Responsive styles for mobile devices */
+@media (max-width: 768px) {
+  .mapping-container {
+      height: 100vh;
+      padding: 10px;
+      width: 95%; /* Slightly wider on smaller screens */
   }
-  
-  .header {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 2rem;
-    color: #333; /* Dark text color */
+
+  .mapping-container h1 {
+      font-size: 1.5rem;
   }
-  
-  .content {
-    text-align: center;
-    background: white; /* White background for content */
-    padding: 20px;
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    max-width: 800px; /* Limit width for better readability */
-    width: 100%;
+
+  .map-container {
+      height: 60vh;
   }
-  
-  .content p {
-    font-size: 1.2rem;
-    color: #666; /* Gray text color */
+
+  .toggle-button {
+      padding: 10px 20px;
+      font-size: 0.9rem;
   }
-  
-  /* Responsive Design for Smaller Screens */
-  @media (max-width: 768px) {
-    .header {
-      font-size: 1.5rem; /* Smaller font size for smaller screens */
-    }
-  
-    .content p {
-      font-size: 1rem; /* Smaller font size for smaller screens */
-    }
+
+  .selected-position {
+      margin-top: 15px;
+      padding: 10px;
   }
+
+  .selected-position p {
+      font-size: 0.9rem;
+  }
+
+  .selected-position .text-lg {
+      font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .mapping-container h1 {
+      font-size: 1.2rem;
+  }
+
+  .map-container {
+      height: 50vh;
+  }
+
+  .selected-position p {
+      font-size: 0.8rem;
+  }
+
+  .selected-position .text-lg {
+      font-size: 0.9rem;
+  }
+}
