@@ -1,43 +1,59 @@
-/* MappingPage.style.css */
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh; /* Full viewport height */
-    background-color: #f5f5f5; /* Light background color */
-    padding: 20px;
-  }
-  
-  .header {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 2rem;
-    color: #333; /* Dark text color */
-  }
-  
+.about-app-page-container {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f8f9fa;
+  padding: 20px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column; /* Stack content vertically on mobile */
+  align-items: center; /* Center align items */
+  padding: 20px;
+}
+
+.mobile-app-info {
+  max-width: 100%; /* Take full width on mobile */
+  padding: 20px;
+  text-align: center; /* Center text */
+}
+
+.mobile-app-info-heading {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: #343a40;
+}
+
+.mobile-app-info-text {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #495057;
+  margin-bottom: 20px; /* Add spacing below the text */
+}
+
+.mobile-preview {
+  text-align: center;
+}
+
+.phone-image {
+  width: 150px; /* Slightly smaller image for mobile */
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Media query for larger screens */
+@media (min-width: 768px) {
   .content {
-    text-align: center;
-    background: white; /* White background for content */
-    padding: 20px;
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    max-width: 800px; /* Limit width for better readability */
-    width: 100%;
+      flex-direction: row; /* Switch back to horizontal layout */
+      justify-content: space-around;
   }
-  
-  .content p {
-    font-size: 1.2rem;
-    color: #666; /* Gray text color */
+
+  .mobile-app-info {
+      max-width: 45%; /* Restore original width */
+      text-align: left; /* Align text to the left */
   }
-  
-  /* Responsive Design for Smaller Screens */
-  @media (max-width: 768px) {
-    .header {
-      font-size: 1.5rem; /* Smaller font size for smaller screens */
-    }
-  
-    .content p {
-      font-size: 1rem; /* Smaller font size for smaller screens */
-    }
+
+  .phone-image {
+      width: 200px; /* Restore original image size */
   }
+}

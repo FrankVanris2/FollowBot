@@ -28,6 +28,7 @@ import MappingPage from './pages/MappingPage';
 import SignalPage from './pages/SignalPage';
 import LivefeedPage from './pages/LivefeedPage';
 import MyFollowBotsPage from './pages/MyFollowBotsPage';
+import BotAnalyticsPage from './pages/BotAnalyticsPage';
 
 // Global Styles
 import { GlobalStyle } from './App.style.jsx';
@@ -62,6 +63,7 @@ function App() {
         <Route path="/signal" element={<Layout><SignalPage /></Layout>} />
         <Route path="/live-feed" element={<Layout><LivefeedPage /></Layout>} />
         <Route path="/my-bots" element={<Layout><MyFollowBotsPage /></Layout>} />
+        <Route path="/bot-analytics/:botId" element={<Layout><BotAnalyticsPage /></Layout>} />
 
         {/* Wildcard Route for 404 Not Found */}
         <Route path="*" element={<Layout><NotFoundPage /></Layout>} />
