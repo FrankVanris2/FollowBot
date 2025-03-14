@@ -90,7 +90,7 @@ void FollowBotClient::followBotClient_Setup() {
 }
 
 void FollowBotClient::followBotClient_Loop() {
-    int intervalTime = mServerNotConnected < MAX_SERVER_NOT_CONNECTED ? TENTH_SECOND : TEN_SECONDS;
+    int intervalTime = mServerNotConnected < MAX_SERVER_NOT_CONNECTED ? TENTH_SECOND : SIXTY_SECONDS;
     
     if((unsigned long) (millis() - mPreviousMillisMove) >= intervalTime) {
         mPreviousMillisMove = millis();
@@ -108,6 +108,7 @@ void FollowBotClient::followBotClient_Loop() {
             Serial.print("mServerNotConnected: ");
             Serial.println(mServerNotConnected);
 
+            myMotors.setDirection(MOTOR_STOP);
             bool moveSuccess = getMove();
             bool postSuccess = true;
 
