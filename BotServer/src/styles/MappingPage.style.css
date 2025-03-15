@@ -1,59 +1,40 @@
-.about-app-page-container {
-  font-family: 'Roboto', sans-serif;
-  background-color: #f8f9fa;
-  padding: 20px;
-}
-
-.content {
+/* Ensure the parent container takes up the full viewport */
+.mapping-container {
   display: flex;
-  flex-direction: column; /* Stack content vertically on mobile */
-  align-items: center; /* Center align items */
+  flex-direction: column;
+  height: 100vh; /* Full viewport height */
+  width: 100vw; /* Full viewport width */
   padding: 20px;
+  box-sizing: border-box; /* Include padding in height/width */
 }
 
-.mobile-app-info {
-  max-width: 100%; /* Take full width on mobile */
-  padding: 20px;
-  text-align: center; /* Center text */
+/* Make the map container responsive */
+.map-container {
+  flex: 1; /* Take up remaining space */
+  height: 100%; /* Full height of parent */
+  width: 100%; /* Full width of parent */
+  z-index: 1; /* Ensure the map is above other elements */
 }
 
-.mobile-app-info-heading {
-  font-size: 2rem;
-  margin-bottom: 15px;
-  color: #343a40;
+/* Style the toggle button */
+.toggle-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff; /* Blue color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 20px; /* Add spacing below the button */
 }
 
-.mobile-app-info-text {
+.toggle-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Style for selected position display */
+.selected-position {
+  margin-top: 20px;
   font-size: 1.2rem;
-  line-height: 1.6;
-  color: #495057;
-  margin-bottom: 20px; /* Add spacing below the text */
-}
-
-.mobile-preview {
-  text-align: center;
-}
-
-.phone-image {
-  width: 150px; /* Slightly smaller image for mobile */
-  height: auto;
-  border-radius: 15px;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
-}
-
-/* Media query for larger screens */
-@media (min-width: 768px) {
-  .content {
-      flex-direction: row; /* Switch back to horizontal layout */
-      justify-content: space-around;
-  }
-
-  .mobile-app-info {
-      max-width: 45%; /* Restore original width */
-      text-align: left; /* Align text to the left */
-  }
-
-  .phone-image {
-      width: 200px; /* Restore original image size */
-  }
 }

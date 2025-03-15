@@ -1,14 +1,16 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { GeoJSON, MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
+import L from 'leaflet'; // Import Leaflet
+import 'leaflet/dist/leaflet.css'; // Import Leaflet CSS
 import campus from '../res/campus.json';
 import dropOffIconImg from '../res/logo.png';
 import adaAccessIconImg from '../res/accessible-icon.jpg';
-import '../styles/MappingPage.style.css'; 
+import '../styles/MappingPage.style.css';
+
 const MappingPage = () => {
     const [selectedPosition, setSelectedPosition] = useState(null);
     const [geoJsonData, setGeoJsonData] = useState(null);
-    const [showTileLayer, setShowTileLayer] = useState(false);
+    const [showTileLayer, setShowTileLayer] = useState(true); // Set to true by default
 
     useEffect(() => {
         if (campus) {
@@ -69,6 +71,21 @@ const MappingPage = () => {
         return null;
     };
 
+    const ResizeHandler = () => {
+        const map = useMap();
+
+        useEffect(() => {
+            const handleResize = () => {
+                map.invalidateSize(); // Update map size on window resize
+            };
+
+            window.addEventListener('resize', handleResize);
+            return () => window.removeEventListener('resize', handleResize);
+        }, [map]);
+
+        return null;
+    };
+
     const getBuildingCenter = (building) => {
         const coords = building.geometry.coordinates[0];
         const { latSum, lngSum, count } = coords.reduce(
@@ -106,7 +123,12 @@ const MappingPage = () => {
                 {showTileLayer ? "Hide Map Layer" : "Show Map Layer"}
             </button>
 
-            <MapContainer className="map-container" zoom={16} center={[47.585, -122.148]}>
+            <MapContainer
+                className="map-container"
+                zoom={16}
+                center={[47.585, -122.148]}
+                style={{ height: '100%', width: '100%' }} // Make map responsive
+            >
                 {showTileLayer && (
                     <TileLayer
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -143,6 +165,7 @@ const MappingPage = () => {
                 ))}
 
                 <MapClickHandler />
+                <ResizeHandler />
 
                 {selectedPosition && (
                     <Marker position={[selectedPosition.lat, selectedPosition.lng]} icon={dropOffIcon}>
@@ -166,6 +189,6 @@ const MappingPage = () => {
             )}
         </div>
     );
-}
+};
 
 export default MappingPage;
