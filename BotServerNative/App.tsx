@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'; // Import useEffect
-import { View, Text, Button, ScrollView } from 'react-native';
+import { View, Text, Button, ScrollView, Platform} from 'react-native';
 import { Row, Col } from 'react-native-responsive-grid-system';
 import Geolocation from '@react-native-community/geolocation';  
 import BleManager from 'react-native-ble-manager';
+import { PermissionsAndroid } from 'react-native';
 import { styles } from './App.styles';
 
 const startBluetooth = async () => {
@@ -37,9 +38,12 @@ const App = () => {
   const [isScanning, setIsScanning] = React.useState(false);
   const [peripherals, setPeripherals] = React.useState(new Map());
   const [connectedPeripheral, setConnectedPeripheral] = React.useState<string | null>(null);
+  const [location, setLocation] = React.useState<{ latitude: number; longitude: number} | null>(null);
 
   useEffect(() => {
     startBluetooth();
+    requestPermissions();
+    getLocation();
 
     return () => {
       BleManager.stopScan();
@@ -49,6 +53,38 @@ const App = () => {
   useEffect(() => {
     scanBluetooth(isScanning, setPeripherals);
   }, [isScanning]);
+
+
+  const getLocation = async () => {
+    if (Platform.OS === 'android') {
+      try {
+        const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          getCurrentPosition();
+        } else {
+          console.log('Location permission denied');
+        }
+      } catch (error) {
+        console.warn(error);
+      }
+    } else {
+      getCurrentPosition();
+    }
+  };
+
+  const getCurrentPosition = () => {
+    Geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        setLocation({ latitude, longitude});
+        console.log('Location:', latitude, longitude);
+      },
+      (error) => {
+        console.log('Geolocation error:', error);
+      },
+      { enableHighAccuracy: true, timeout:15000, maximumAge:10000 }
+    );
+  };
 
   const connectToPeripheral = async (peripheralId: string) => {
     try {
@@ -72,6 +108,30 @@ const App = () => {
     ));
   };
 
+  const requestPermissions = async () => {
+    if (Platform.OS === 'android') {
+      try {
+        const granted = await PermissionsAndroid.requestMultiple([
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          PermissionsAndroid.PERMISSIONS.BLUETOOTH,
+          PermissionsAndroid.PERMISSIONS.BLUETOOTH_ADMIN,
+        ]);
+        if (
+          granted['android.permission.ACCESS_FINE_LOCATION'] === PermissionsAndroid.RESULTS.GRANTED &&
+          granted['android.permission.BLUETOOTH_SCAN'] === PermissionsAndroid.RESULTS.GRANTED &&
+          granted['android.permission.BLUETOOTH_CONNECT'] === PermissionsAndroid.RESULTS.GRANTED
+        ) {
+          console.log('Permissions granted');
+        } else {
+          console.log('Permissions denied');
+        }
+      } catch (err) {
+        console.warn(err);
+      }
+    }
+    // On iOS, permissions are handled automatically
+  };
+
   return (
     <Row>
       <Col xs={12} sm={4} md={4} lg={4}>
@@ -81,6 +141,7 @@ const App = () => {
         </View>
         <ScrollView>{renderPeripheralList()}</ScrollView>
         {connectedPeripheral && <Text>Connected to: {connectedPeripheral}</Text>}
+        {location && <Text>Location: {location.latitude}, {location.longitude}</Text>}
       </Col>
       <Col xs={12} sm={4} md={4} lg={4}>
         <View><Text style={styles.header}>Column 2</Text></View>
