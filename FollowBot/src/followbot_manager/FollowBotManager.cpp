@@ -11,6 +11,7 @@
 #include "followbot_ui/FollowBotLCD.h"
 #include "secrets/EEPROMStorage.h"
 #include "followbot_client/FollowBotClient.h"
+#include "followbot_client/FollowBotBluetooth.h"
 #include "ROS2_Serial/ROS2_Serial.h"
 #include "states&types/MotorControlStates.h"
 #include "motors/Motors.h"
@@ -36,17 +37,16 @@ FollowBotManager::FollowBotManager(): mIsDirty(false) {
 
 
 //the setup that will store the many objects that will set in the main
-void FollowBotManager::followBotSetup() {  
-    eepromStorage.setup();  
 
-    //REALLY NEEDED
-    myLCDScreen.myLCDScreen_Setup();
-    myMotors.motorSetup();
-    followBotClient.followBotClient_Setup();
-    gyroscope.gyroscope_Setup();
-    myGPS.gps_setup();
-
-    //NEEDED
+void FollowBotManager::followBotSetup() { 
+    followBotBluetooth.setup();
+    
+    //eepromStorage.setup();  
+    //myLCDScreen.myLCDScreen_Setup();
+    //myMotors.motorSetup();
+    //followBotClient.followBotClient_Setup();
+    //gyroscope.gyroscope_Setup();
+    //myGPS.gps_setup();
     //followMechanics.followMechanics_Setup();
     
     //WORKING ON
@@ -58,21 +58,17 @@ void FollowBotManager::followBotSetup() {
 }
 
 void FollowBotManager::followBotLoop() {
+    followBotBluetooth.loop();
 
-    //REALLY NEEDED
-    myLCDScreen.myLCDScreen_Loop();
-    followBotClient.followBotClient_Loop();
-    gyroscope.gyroscope_Loop();
-    myGPS.gps_loop();
-    ros2_serial.ros2_loop();
-     
-    //WORKING ON
+    //myLCDScreen.myLCDScreen_Loop();
+    //followBotClient.followBotClient_Loop();
     //followMechanics.followMechanics_Loop();
-
-    //NOT NEEDED YET
-    //objectDetection.objectDetection_Loop();
+    // gyroscope.gyroscope_Loop();
+    // myGPS.gps_loop();
+    // ros2_serial.ros2_loop();
     
-
+    //temperatureReader.temperatureReader_Loop();
+    //objectDetection.objectDetection_Loop();
 }
 
 
