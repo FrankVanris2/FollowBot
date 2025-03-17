@@ -22,10 +22,10 @@ The Goal for this FollowBot is for the user to be able to use it wherever they g
 The main gist of this document is to explain and express how the design for this software/hardware will be handled and to explain how the user will be able to use our software and hardware efficiently and reliably.<br><br>
 
 <h3> 1.4 Reference Material <br> </h3>
-Here are the given sources that were used to rely information for this document:<br>
+Here are the given sources that were used to relay information for this document:<br>
 
 * https://onlinelibrary.wiley.com/doi/10.1155/2022/8274455
-* https://docs.ros.org/en/foxy/index.html
+* https://docs.ros.org/en/jazzy/index.html
 * https://docs.wpilib.org/en/stable/docs/hardware/hardware-basics/index.html
 * https://docs.wpilib.org/en/stable/docs/software/hardware-apis/motors/index.html
 * https://docs.arduino.cc/
@@ -55,7 +55,7 @@ Here are the given sources that were used to rely information for this document:
 
 * Topics: one of the three main ways that nodes can communicate with one another is via topics.
 
-* Foxy: A version of the ROS2, there are other versions such as Jammy, Jazzy, Humble, Iron, and others.
+* Jazzy: The newest version of the ROS2 of the creation of this document, there are other versions such as Jammy, Foxy, Humble, Iron, and others.
 
 * Motor Drivers: control chips that are meant to run current through a number of motors.
 

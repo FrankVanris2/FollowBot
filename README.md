@@ -18,20 +18,20 @@ This robot will consist of different phases:
  - [License](#license)
 
 ## Introduction
-Followbot is a companion robot that follows you around. The goal for this project is to build a low cost robot that can carry you belongings for you. Currently Followbot is useful within school/city settings. Future endeavors include developing the capability for Followbot to traverse uneven terrain such as dirt of gravel
+Followbot is a companion robot that follows you around. The goal for this project is to build a low-cost robot that can carry you belongings for you. Currently, FollowBot is useful within school/city settings. Future endeavors include developing the capability for FollowBot to traverse uneven terrain such as dirt of gravel
 
 ## Features
 - Carry up to 50 lbs
--  Mapping capabilities to traverse from one point to another
--  Following mechanics
+- Mapping capabilities to traverse from one point to another
+- Following mechanics
 - Companion app and website to monitor and control robot remotely
 
 ## Design Details
-The construction of the Followbot presents a significant challenge, given the intricate engineering required to create a device capable of carrying and autonomously following a user. The hardware components and their assembly will demand meticulous attention and precision.
+The construction of the FollowBot presents a significant challenge, given the intricate engineering required to create a device capable of carrying and autonomously following a user. The hardware components and their assembly will demand meticulous attention and precision.
 
-On the hardware side we are utilizing the Arduino Uno Rev4 in order to send and do important tasks for the user. We will be developing a webpage and a app with valuabe information for the user to use when needed. Mapping capabilities and path-finding algorithms will be applied to the Followbot in order to avoid obstacles while following a designated path to a specific location. Computer vision techniques will be used to allow the Followbot to follow the user if needed in order for it to carry their belongings. Sensors such as LiDAR, RGB etc. will come with software that will allow us to really improve the machine learning models that we will apply.
+On the hardware side we are utilizing the Arduino Uno Rev4 in order to send and do important tasks for the user. We will be developing a webpage and an app with valuable information for the user to use when needed. Mapping capabilities and path-finding algorithms will be applied to the FollowBot in order to avoid obstacles while following a designated path to a specific location. Computer vision techniques will be used to allow the FollowBot to follow the user if needed in order for it to carry their belongings. Sensors such as LiDAR, RGB etc. will come with software that will allow us to really improve the machine learning models that we will apply.
 
-In terms of project success, our primary focus will be on systematic organization and incremental prototyping. We plan to develop a prototype during the first quarter and progressively refine it. Our goal is to deliver a practical and beneficial product for any consumer seeking a Followbot to carry their belongings or allow the Followbot to go to designated places.
+In terms of project success, our primary focus will be on systematic organization and incremental prototyping. We plan to develop a prototype during the first quarter and progressively refine it. Our goal is to deliver a practical and beneficial product for any consumer seeking a FollowBot to carry their belongings or allow the FollowBot to go to designated places.
 
 ### High Level Design Architecture
 ![image](/Images/High_Level_Design_Architecture1.png)
@@ -39,8 +39,11 @@ In terms of project success, our primary focus will be on systematic organizatio
 # Installation
 
 ## Installation Steps
-Before you clone your repo you will need to first download vscode. The reason being is because when developing on the Robotics side There is a nice extension that is not found in any other IDE's. To make your life
+Before you clone your repo you will need to first download vscode. The reason being is that when developing on the Robotics side There is a nice extension that is not found in any other IDE's. To make your life
 easier and for you to not try and configure PlatformIO on another IDE with hassle. I would absolutely advise you to download VSCode.
+
+
+
 
 * In VSCode click the extensions icon.
 
@@ -69,13 +72,21 @@ Firstly, we run our server with Node.js. Follow instructions [here](https://node
   ```cmd
   pip install Flask
   pip install -U flask-cors
-  pip install boto3
   ```
-  
-* If you are working on the front-end map integration, install these npm packages:
+
+Our database is built using AWS DynamoDB. Install this package in order to access and interact with AWS services like DynamoDB and S3.
 ```
-npm install react-leaflet@4 leaflet
+pip install boto3 
 ```
+For more information about database interactions between our website and Arduino clients, go to [DatabaseDocument](./Documentation/DatabaseDocument.md):
+
+* install these npm packages for front-end development:
+```
+pip install flask-login  # manage user sessions and authentication in Flask apps
+npm install react-leaflet@4 leaflet  # build mapping interfaces
+npm install chart.js react-chartjs-2 # interactive data visualizations
+```
+
 
 * Once those packages are installed alongside npm, you will need to do the next following commands:
 ```cmd
@@ -111,16 +122,16 @@ The robotic side of this project will involve the integration and communication 
 
 ![image](/Images/readMe_images/OpenProj.png)
 
-* When you do so please go where you placed your repo and you will need to open this folder: `FollowBot->FollowBot`
+* When you do so please go where you placed your repo, and you will need to open this folder: `FollowBot->FollowBot`
 
 ![image](/Images/readMe_images/DirProject.png)
 
-* After you do so you will see all of the files that we have made for the development of FollowBot.
-* To run it you will need to press the blue checkmark icon on the bottom of the screen
+* After you do so you will see all the files that we have made for the development of FollowBot.
+* To run it you will need to press the blue checkmark icon at the bottom of the screen
 
 ![image](/Images/readMe_images/Compile.png)
 
-* To push and build the code on the Arduino board or any Microcontroller that is applicable press the arrow icon on the bottom of the screen
+* To push and build the code on the Arduino board or any Microcontroller that is applicable press the arrow icon at the bottom of the screen
 
 ![image](/Images/readMe_images/push_build.png)
 
