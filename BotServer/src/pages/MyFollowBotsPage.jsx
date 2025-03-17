@@ -36,8 +36,7 @@ const AddFollowBots = () => {
     }, []);
 
     const handleAnalyzeBot = (botId) => {
-        navigate(`/`);
-        // navigate(`/analytics/${botId}`);
+        navigate(`/bot-analytics/${botId}`);
     };
 
     const handleCheckBot = async () => {
