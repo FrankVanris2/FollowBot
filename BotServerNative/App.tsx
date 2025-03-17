@@ -1,49 +1,143 @@
-import React, { useEffect } from 'react'; // Import useEffect
-import { View, Text, Button, ScrollView, Platform} from 'react-native';
-import { Row, Col } from 'react-native-responsive-grid-system';
-import Geolocation from '@react-native-community/geolocation';  
+import React, { useCallback, useEffect } from 'react'; // Import useEffect
+import { View, Text, Button, Platform, PermissionsAndroid} from 'react-native';
+import Geolocation from '@react-native-community/geolocation'; 
 import BleManager from 'react-native-ble-manager';
-import { PermissionsAndroid } from 'react-native';
 import { styles } from './App.styles';
 
-const startBluetooth = async () => {
-  try {
-    await BleManager.start({ showAlert: false });
-    console.log('Bluetooth started');
-  } catch (error) {
-    console.error('Bluetooth start error:', error);
-  }
+const FOLLOWBOT_GPS_CHARACTERISTIC = '87654321-4321-8765-4321-0fedcba98765';
+
+type CharacteristicData = {
+  peripheral: string;
+  serviceUUID: string;
+  characteristicUUID: string;
+};
+
+
+
+type Location = {
+  latitude: number;
+  longitude: number;
+};
+
+
+const initialize = async (
+  setCharacteristicData: (characteristicData: CharacteristicData) => void,
+    setLocation: (loc: Location) => void) => {
+  await requestPermissions();
+  await startBluetooth(setCharacteristicData);
+  getCurrentPosition(setLocation);
 }
 
-const scanBluetooth = async (isScanning : boolean, setPeripherals: React.Dispatch<React.SetStateAction<Map<string, any>>>) => {
-  try {
-    if (isScanning) {
-      await BleManager.scan([], 15, false);
-      const peripherals = await BleManager.getDiscoveredPeripherals();
-      const peripheralMap = new Map();
-      peripherals.forEach(peripheral => {
-        peripheralMap.set(peripheral.id, peripheral);
-      });
-      setPeripherals(peripheralMap);
-      console.log('Discovered peripherals:', peripherals);
-    } else {
-      await BleManager.stopScan();
-    } 
-  } catch (error) {
-    console.error('Scan error:', error);
+const requestPermissions = async () => {
+  if (Platform.OS === 'android') {
+    try {
+      const granted = await PermissionsAndroid.requestMultiple([
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN,
+        PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT,
+      ]);
+      if (
+        granted['android.permission.ACCESS_FINE_LOCATION'] === PermissionsAndroid.RESULTS.GRANTED &&
+        granted['android.permission.BLUETOOTH_SCAN'] === PermissionsAndroid.RESULTS.GRANTED &&
+        granted['android.permission.BLUETOOTH_CONNECT'] === PermissionsAndroid.RESULTS.GRANTED
+      ) {
+        console.log('Permissions granted');
+      } else {
+        console.log('Permissions denied');
+      }
+    } catch (err) {
+      console.warn('requestPermissions(), error:', err);
+    }
   }
-}
+  // On iOS, permissions are handled automatically
+};
+
+const startBluetooth = async (setCharacteristicData: (characteristicData: CharacteristicData) => void) => {
+  try {
+    await BleManager.start();
+    const state = await BleManager.checkState();
+    console.log('Bluetooth state:', state);
+
+    getFollowBotCharacteristic(setCharacteristicData);
+
+  } catch (error) {  
+    console.log('Error starting Bluetooth:', error);
+  } 
+};
+
+const getFollowBotCharacteristic = async (setCharacteristicData: (characteristicData: CharacteristicData) => void) => {
+  const peripherals = await BleManager.getBondedPeripherals();
+  console.log('Bonded peripherals:', peripherals);
+  const followBotPeripheral = peripherals.find((per) => per.name === 'FollowBot_Proto1');
+  if (!followBotPeripheral) {
+    console.log('FollowBot Peripheral not found');
+    return;
+  }
+  console.log('FollowBot Peripheral:', followBotPeripheral);
+  await BleManager.connect(followBotPeripheral.id);
+  console.log('Connected to FollowBot Peripheral');
+
+  const services = await BleManager.retrieveServices(followBotPeripheral.id);
+  if (!services) {
+    console.log('No services found');
+    return;
+  }
+  console.log('Services:', JSON.stringify(services, null, 2));
+
+  const characteristic = services.characteristics?.find((char: any) => char.characteristic === FOLLOWBOT_GPS_CHARACTERISTIC);
+  if (!characteristic) {
+    console.log('Characteristic not found');
+    return;
+  }
+  console.log('Characteristic:', characteristic);
+  const characteristicData: CharacteristicData = {
+    peripheral: followBotPeripheral.id,
+    serviceUUID: characteristic.service,
+    characteristicUUID: characteristic.characteristic,
+  };
+  console.log('Characteristic Data:', characteristicData);
+  setCharacteristicData(characteristicData);
+};
+
+const getCurrentPosition = (setLocation: (loc: Location) => void) => {
+  Geolocation.getCurrentPosition(
+    (position) => {
+      const { latitude, longitude } = position.coords;
+      setLocation({ latitude, longitude});
+      console.log('Location:', latitude, longitude);
+    },
+    (error) => {
+      console.log('Geolocation error:', error);
+    },
+    { enableHighAccuracy: true, timeout:15000, maximumAge:10000 }
+  );
+};
+
+const sendLocationToFollowBot = async (characteristicData: CharacteristicData, location: Location) => {
+  try {
+    const byteArray = new Uint8Array(8);
+    const dataView = new DataView(byteArray.buffer);
+    dataView.setFloat32(0, location.latitude, true);
+    dataView.setFloat32(4, location.longitude, true);
+  
+    await BleManager.write(
+      characteristicData.peripheral,
+      characteristicData.serviceUUID,
+      characteristicData.characteristicUUID,
+      Array.from(byteArray),
+      byteArray.length);
+    console.log('Location sent to FollowBot:', location);
+    } catch (error) {
+      console.log('Error sending location to FollowBot:', error);
+    }
+};
 
 const App = () => {
-  const [isScanning, setIsScanning] = React.useState(false);
-  const [peripherals, setPeripherals] = React.useState(new Map());
-  const [connectedPeripheral, setConnectedPeripheral] = React.useState<string | null>(null);
-  const [location, setLocation] = React.useState<{ latitude: number; longitude: number} | null>(null);
+  const [characteristicData, setCharacteristicData] = React.useState<CharacteristicData>();
+  const [location, setLocation] = React.useState<Location | null>(null);
 
   useEffect(() => {
-    startBluetooth();
-    requestPermissions();
-    getLocation();
+    initialize(setCharacteristicData, setLocation);
 
     return () => {
       BleManager.stopScan();
@@ -51,105 +145,28 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    scanBluetooth(isScanning, setPeripherals);
-  }, [isScanning]);
+    if (!characteristicData) return;
 
+    setInterval(() => {
+      getCurrentPosition(setLocation);
 
-  const getLocation = async () => {
-    if (Platform.OS === 'android') {
-      try {
-        const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          getCurrentPosition();
-        } else {
-          console.log('Location permission denied');
-        }
-      } catch (error) {
-        console.warn(error);
-      }
-    } else {
-      getCurrentPosition();
-    }
-  };
+    }, 10000);
 
-  const getCurrentPosition = () => {
-    Geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        setLocation({ latitude, longitude});
-        console.log('Location:', latitude, longitude);
-      },
-      (error) => {
-        console.log('Geolocation error:', error);
-      },
-      { enableHighAccuracy: true, timeout:15000, maximumAge:10000 }
-    );
-  };
+  }, [characteristicData]);
 
-  const connectToPeripheral = async (peripheralId: string) => {
-    try {
-      await BleManager.connect(peripheralId);
-      console.log('Connected to', peripheralId);
-      setConnectedPeripheral(peripheralId);
-    } catch (error) {
-      console.error('Connection error:', error);
-    }
-  };
+  useEffect(() => {
+    if (!characteristicData || !location) return;
 
-  const renderPeripheralList = () => {
-    const peripheralList = Array.from(peripherals.values());
-
-    return peripheralList.map((peripheral) => (
-      <Button
-        key={peripheral.id}
-        title={`Connect to ${peripheral.name || 'Unknown'}`}
-        onPress={() => connectToPeripheral(peripheral.id)}
-        />
-    ));
-  };
-
-  const requestPermissions = async () => {
-    if (Platform.OS === 'android') {
-      try {
-        const granted = await PermissionsAndroid.requestMultiple([
-          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-          PermissionsAndroid.PERMISSIONS.BLUETOOTH,
-          PermissionsAndroid.PERMISSIONS.BLUETOOTH_ADMIN,
-        ]);
-        if (
-          granted['android.permission.ACCESS_FINE_LOCATION'] === PermissionsAndroid.RESULTS.GRANTED &&
-          granted['android.permission.BLUETOOTH_SCAN'] === PermissionsAndroid.RESULTS.GRANTED &&
-          granted['android.permission.BLUETOOTH_CONNECT'] === PermissionsAndroid.RESULTS.GRANTED
-        ) {
-          console.log('Permissions granted');
-        } else {
-          console.log('Permissions denied');
-        }
-      } catch (err) {
-        console.warn(err);
-      }
-    }
-    // On iOS, permissions are handled automatically
-  };
+    sendLocationToFollowBot(characteristicData, location);
+}, [location]);
 
   return (
-    <Row>
-      <Col xs={12} sm={4} md={4} lg={4}>
-        <Button title='Scan' onPress={() => setIsScanning(true)} />
-        <View>
-          <Text style={styles.header}>{isScanning ? 'Scanning' : ''}</Text>
-        </View>
-        <ScrollView>{renderPeripheralList()}</ScrollView>
-        {connectedPeripheral && <Text>Connected to: {connectedPeripheral}</Text>}
-        {location && <Text>Location: {location.latitude}, {location.longitude}</Text>}
-      </Col>
-      <Col xs={12} sm={4} md={4} lg={4}>
-        <View><Text style={styles.header}>Column 2</Text></View>
-      </Col>
-      <Col xs={12} sm={4} md={4} lg={4}>
-        <View><Text style={styles.header}>Column 3</Text></View>
-      </Col>
-    </Row>
+    <View>
+      <Button title="Retry connect" onPress={() => getFollowBotCharacteristic(setCharacteristicData)} />
+
+      {/* connectedPeripheral && <Text>Connected to: {connectedPeripheral}</Text> */}
+      {location && <Text>Location: {location.latitude}, {location.longitude}</Text>}
+    </View>
   );
 };
 
