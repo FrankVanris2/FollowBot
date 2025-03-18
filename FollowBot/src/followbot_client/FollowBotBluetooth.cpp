@@ -7,6 +7,9 @@ Desc: Creating a bluetooth connection
 #include <ArduinoBLE.h>
 
 #include "FollowBotBluetooth.h"
+#include "states&types/FollowBotNavigation.h"
+
+
 
 //Singelton
 FollowBotBluetooth followBotBluetooth;
@@ -30,6 +33,8 @@ void followBotGPSCharacteristicWritten(BLEDevice central, BLECharacteristic char
     } data;
 
     characteristic.readValue(data.charArray, sizeof(data.charArray)); // Read the value into the union
+    
+    followBotBluetooth.setMobileGPSData(data.floatArray[0], data.floatArray[1]); // Set the mobile GPS data
 
     char buff[30];
 

@@ -9,6 +9,9 @@
 
 #include "states&types/MotorControlStates.h"
 
+const int MOTOR_LEFT_OFFSET = 0; // Adjust as needed
+const int MOTOR_RIGHT_OFFSET = 0; // Adjust as needed
+
 class Motors {
 public:
 
@@ -17,6 +20,8 @@ public:
 
     void motorSetup();
     void motorLoop();
+
+    void setMotorSpeed(int leftSpeed, int rightSpeed);
 
     void setDirection(String dir) {
        mNewDirection = dir;   
@@ -41,14 +46,14 @@ public:
     void justStop() {
         mNewDirection = MOTOR_STOP;
     }
-private:
+
     void motorForwards();
     void motorBackwards();
     void motorLeft();
     void motorRight();
     void motorStop();
-
-
+private:
+    
     void adjustDirection();
 
     String mCurrentDirection;

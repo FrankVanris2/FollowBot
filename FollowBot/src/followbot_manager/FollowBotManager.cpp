@@ -39,17 +39,23 @@ FollowBotManager::FollowBotManager(): mIsDirty(false) {
 //the setup that will store the many objects that will set in the main
 
 void FollowBotManager::followBotSetup() { 
+    //WORKING ON
     followBotBluetooth.setup();
     
+    //NEEDED
     //eepromStorage.setup();  
     //myLCDScreen.myLCDScreen_Setup();
     //myMotors.motorSetup();
     //followBotClient.followBotClient_Setup();
     //gyroscope.gyroscope_Setup();
     //myGPS.gps_setup();
+
+    //WORKING ON
     //followMechanics.followMechanics_Setup();
     
-    //WORKING ON
+
+    //DELAYED
+    // temperatureReader.temperatureReader_Setup();
     // objectAvoidance.objectAvoidance_Setup();
     // objectDetection.objectDetection_Setup();
     
@@ -58,15 +64,20 @@ void FollowBotManager::followBotSetup() {
 }
 
 void FollowBotManager::followBotLoop() {
+    //WORKING ON
     followBotBluetooth.loop();
 
+    //NEEDED
     //myLCDScreen.myLCDScreen_Loop();
     //followBotClient.followBotClient_Loop();
-    //followMechanics.followMechanics_Loop();
     // gyroscope.gyroscope_Loop();
     // myGPS.gps_loop();
     // ros2_serial.ros2_loop();
+
+    //WORKING ON
+    //followMechanics.followMechanics_Loop();
     
+    //DELAYED
     //temperatureReader.temperatureReader_Loop();
     //objectDetection.objectDetection_Loop();
 }

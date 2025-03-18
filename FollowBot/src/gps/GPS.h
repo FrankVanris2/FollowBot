@@ -5,6 +5,7 @@ Desc: Creating a GPS module that will be used in order to obtain the actual posi
 */
 
 #pragma once
+#include "states&types/FollowBotNavigation.h"
 #define GPS_SIZE 2
 
 enum GPSIndices {
@@ -21,19 +22,14 @@ public:
     void gps_setup();
     void gps_loop();
 
-    void setGPS(double lat, double lon) {
-        gpsData[LAT] = lat;
-        gpsData[LON] = lon;
-    }
-
-    double* getGPSData() { return gpsData;}
+    const GeoLoc& getRobotGPSData() { return robotGPSData;}
 
 private:
     unsigned long interval;
     unsigned long previousMillis;   
     
     const uint32_t GPSBaud;
-    double gpsData[GPS_SIZE];
+    GeoLoc robotGPSData;
 };
 
 extern GPS myGPS;
