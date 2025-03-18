@@ -7,6 +7,7 @@ Desc: Creating a bluetooth connection
 #include <ArduinoBLE.h>
 
 #include "FollowBotBluetooth.h"
+#include "following_mechanics/FollowMechanics.h"
 #include "states&types/FollowBotNavigation.h"
 
 
@@ -16,6 +17,7 @@ FollowBotBluetooth followBotBluetooth;
 
 BLEService followBotGPSService("12345678-1234-5678-1234-56789abcdef0");
 BLECharacteristic followBotGPSCharacteristic("87654321-4321-8765-4321-0fedcba98765", BLERead | BLEWrite, 20);
+BLECharacteristic followBotEnabledCharacteristic("11112222-3333-4444-5555-666677778888", BLERead | BLEWrite, 1);
 
 
 void blePeripheralConnectHandler(BLEDevice central) {
@@ -45,7 +47,15 @@ void followBotGPSCharacteristicWritten(BLEDevice central, BLECharacteristic char
     snprintf (buff, sizeof(buff), "%.15f", data.floatArray[1]);
     Serial.println(buff);
 }
-  
+
+void followBotEnabledCharacteristicWritten(BLEDevice central, BLECharacteristic characteristic) {
+    if (characteristic.written()) {
+        byte value;
+        characteristic.readValue(&value, 1);
+        followMechanics.setEnabled(value == 1);
+        Serial.println(String("Enabled characteristic written: ") + value);
+    }
+}
 
 FollowBotBluetooth::FollowBotBluetooth() : isError(false) {
     // Constructor implementation
@@ -65,6 +75,7 @@ void FollowBotBluetooth::setup() {
     BLE.setAdvertisedService(followBotGPSService);
     followBotGPSService.addCharacteristic(followBotGPSCharacteristic);
     BLE.addService(followBotGPSService);
+    followBotEnabledCharacteristic.setEventHandler(BLEWritten, followBotEnabledCharacteristicWritten); // Adding a new event handler
   
     // Set the callbacks
     BLE.setEventHandler(BLEConnected, blePeripheralConnectHandler);
