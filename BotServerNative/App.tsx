@@ -150,7 +150,7 @@ const App = () => {
     setInterval(() => {
       getCurrentPosition(setLocation);
 
-    }, 10000);
+    }, 1000);
 
   }, [characteristicData]);
 

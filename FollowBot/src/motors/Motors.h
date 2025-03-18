@@ -47,17 +47,24 @@ public:
         mNewDirection = MOTOR_STOP;
     }
 
+    
+
+    void moveForward();
+    void moveBackward();
+    void turn (float turn);
+    void stopMoving();
+
+private:
+    String mCurrentDirection;
+    String mNewDirection;
+    
+    void adjustDirection();
+
     void motorForwards();
     void motorBackwards();
     void motorLeft();
     void motorRight();
     void motorStop();
-private:
-    
-    void adjustDirection();
-
-    String mCurrentDirection;
-    String mNewDirection;
 };
 
 extern Motors myMotors;

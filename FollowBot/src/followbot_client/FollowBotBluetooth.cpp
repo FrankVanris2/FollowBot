@@ -4,8 +4,6 @@ Date: 3/16/2025
 Desc: Creating a bluetooth connection
 */
 
-#include <ArduinoBLE.h>
-
 #include "FollowBotBluetooth.h"
 #include "following_mechanics/FollowMechanics.h"
 #include "states&types/FollowBotNavigation.h"
@@ -20,15 +18,18 @@ BLECharacteristic followBotGPSCharacteristic("87654321-4321-8765-4321-0fedcba987
 BLECharacteristic followBotEnabledCharacteristic("11112222-3333-4444-5555-666677778888", BLERead | BLEWrite, 1);
 
 
-void blePeripheralConnectHandler(BLEDevice central) {
+FollowBotBluetooth::FollowBotBluetooth() : mIsError(false), mIsEnabled(false) {
+}
+
+void FollowBotBluetooth::blePeripheralConnectHandler(BLEDevice central) {
 Serial.println(String("Connected event, central: ") + central.address() + ", name: " + central.localName());
 }
 
-void blePeripheralDisconnectHandler(BLEDevice central) {
+void FollowBotBluetooth::blePeripheralDisconnectHandler(BLEDevice central) {
 Serial.println(String("Disconnected event, central: ") + central.address() + ", name: " + central.localName());
 }
 
-void followBotGPSCharacteristicWritten(BLEDevice central, BLECharacteristic characteristic) {
+void FollowBotBluetooth::followBotGPSCharacteristicWritten(BLEDevice central, BLECharacteristic characteristic) {
     union {
         float floatArray[2];
         char charArray[8]; 
@@ -36,7 +37,9 @@ void followBotGPSCharacteristicWritten(BLEDevice central, BLECharacteristic char
 
     characteristic.readValue(data.charArray, sizeof(data.charArray)); // Read the value into the union
     
-    followBotBluetooth.setMobileGPSData(data.floatArray[0], data.floatArray[1]); // Set the mobile GPS data
+    followBotBluetooth.mobileGPSData.lat = data.floatArray[0];
+    followBotBluetooth.mobileGPSData.lon = data.floatArray[1];
+    followBotBluetooth.mIsEnabled = true;
 
     char buff[30];
 
@@ -48,24 +51,20 @@ void followBotGPSCharacteristicWritten(BLEDevice central, BLECharacteristic char
     Serial.println(buff);
 }
 
-void followBotEnabledCharacteristicWritten(BLEDevice central, BLECharacteristic characteristic) {
+void FollowBotBluetooth::followBotEnabledCharacteristicWritten(BLEDevice central, BLECharacteristic characteristic) {
     if (characteristic.written()) {
         byte value;
         characteristic.readValue(&value, 1);
-        followMechanics.setEnabled(value == 1);
+        followBotBluetooth.mIsEnabled = value == 1;
         Serial.println(String("Enabled characteristic written: ") + value);
     }
-}
-
-FollowBotBluetooth::FollowBotBluetooth() : isError(false) {
-    // Constructor implementation
 }
 
 void FollowBotBluetooth::setup() {
     // Initialize BLE
     if (!BLE.begin()) {
         Serial.println("Starting BLE failed!");
-        isError = true;
+        mIsError = true;
         return;
     }
     Serial.println("BLE started");

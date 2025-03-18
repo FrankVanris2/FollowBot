@@ -89,6 +89,28 @@ void Motors::adjustDirection() {
     }
 }
 
+void Motors::turn(float turn) {
+    if (turn > 5) {
+        motorRight();
+    } else if (turn < -5) {
+        motorLeft();
+    } else {
+        motorForwards();
+    }
+}
+
+void Motors::moveForward() {
+    motorForwards();
+}
+
+void Motors::moveBackward() {
+    motorBackwards();
+}
+
+void Motors::stopMoving() {
+    motorStop();
+}
+
 
 
 // Forward motion with the motors

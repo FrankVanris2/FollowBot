@@ -45,16 +45,17 @@ FollowBotManager::FollowBotManager(): mIsDirty(false) {
 
 void FollowBotManager::followBotSetup() { 
     //WORKING ON
+    myMotors.motorSetup();
+    compass.compass_Setup();
+    myGPS.gps_setup();
     followBotBluetooth.setup();
     followMechanics.followMechanics_Setup();
 
     //NEEDED
     //eepromStorage.setup();  
     //myLCDScreen.myLCDScreen_Setup();
-    //myMotors.motorSetup();
     //followBotClient.followBotClient_Setup();
     //gyroscope.gyroscope_Setup();
-    //myGPS.gps_setup();
 
     
     
@@ -70,6 +71,7 @@ void FollowBotManager::followBotSetup() {
 
 void FollowBotManager::followBotLoop() {
     //WORKING ON
+    myGPS.gps_loop();
     followBotBluetooth.loop();
     followMechanics.followMechanics_Loop();
 
@@ -77,7 +79,7 @@ void FollowBotManager::followBotLoop() {
     //myLCDScreen.myLCDScreen_Loop();
     //followBotClient.followBotClient_Loop();
     // gyroscope.gyroscope_Loop();
-    // myGPS.gps_loop();
+    
     // ros2_serial.ros2_loop();
 
     //WORKING ON

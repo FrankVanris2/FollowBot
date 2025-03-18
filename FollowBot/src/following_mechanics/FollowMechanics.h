@@ -20,9 +20,20 @@ public:
     void followMechanics_Setup();
     void followMechanics_Loop();
 
+private:
+    unsigned long previousMillis;
+
+    //list for RSSI Avg
+    std::list<long> rssiList;
+
+    long mRSSITotal;
+    long mRSSIAvg;
+
     //drive mechanics
     void drive(float distance, float turn);
-    void driveTo(struct GeoLoc &loc, int timeout);
+
+    void driveTo_Test_1(struct GeoLoc &loc, int timeout);
+    void driveTo_Test_2(struct GeoLoc &loc, int timeout);
 
     //Mathematical stuff
     float geoDistance(struct GeoLoc &a, struct GeoLoc &b);
@@ -30,20 +41,6 @@ public:
 
     void followMechanics_Averaging();
     void followMechanics_Algorithm();
-
-    void setEnabled(bool state) { enabled = state; }
-
-private:
-    unsigned long previousMillis;
-
-    //list for RSSI Avg
-    std::list<long> rssiList;
-
-    // Master Enable
-    bool enabled;
-
-    long mRSSITotal;
-    long mRSSIAvg;
 };
 
 extern FollowMechanics followMechanics;
