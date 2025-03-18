@@ -44,18 +44,20 @@ FollowBotManager::FollowBotManager(): mIsDirty(false) {
 //the setup that will store the many objects that will set in the main
 
 void FollowBotManager::followBotSetup() { 
-    //WORKING ON
+    //Following Mechanics setup
     myMotors.motorSetup();
     compass.compass_Setup();
     myGPS.gps_setup();
     followBotBluetooth.setup();
     followMechanics.followMechanics_Setup();
 
-    //NEEDED
+    //Server Setup
     //eepromStorage.setup();  
+    //myMotors.motorSetup();
     //myLCDScreen.myLCDScreen_Setup();
     //followBotClient.followBotClient_Setup();
     //gyroscope.gyroscope_Setup();
+    //myGPS.gps_setup();
 
     
     
@@ -70,16 +72,17 @@ void FollowBotManager::followBotSetup() {
 }
 
 void FollowBotManager::followBotLoop() {
-    //WORKING ON
+    //Following Mechanics loop setup
     myGPS.gps_loop();
     followBotBluetooth.loop();
     followMechanics.followMechanics_Loop();
 
-    //NEEDED
+    //Server Setup
     //myLCDScreen.myLCDScreen_Loop();
     //followBotClient.followBotClient_Loop();
     // gyroscope.gyroscope_Loop();
-    
+    //myGPS.gps_loop(); 
+    //myMotors.motorLoop();
     // ros2_serial.ros2_loop();
 
     //WORKING ON
