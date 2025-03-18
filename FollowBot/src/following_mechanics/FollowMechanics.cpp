@@ -6,7 +6,10 @@ Desc: Creating follow mechanics between the user and the robot
 
 
 #include <list>
+#include <Wire.h>
+#include <math.h>
 
+#include "sensors/Compass.h"
 #include "FollowMechanics.h"
 #include "followbot_client/FollowBotClient.h"
 
@@ -19,9 +22,6 @@ Desc: Creating follow mechanics between the user and the robot
 #include "gps/GPS.h"
 
 //#include "objectavoidance&detection/ObjectDetection.h"
-
-
-
 
 // Interval
 const int TENTH_SECOND = 100;
@@ -86,11 +86,11 @@ void FollowMechanics::driveTo(struct GeoLoc &loc, int timeout) {
         do {
             currentRobotLoc = myGPS.getRobotGPSData();
             d = geoDistance(currentRobotLoc, loc);
-            float t = geoBearing(currentRobotLoc, loc) - geoHeading();
+            float t = geoBearing(currentRobotLoc, loc) - compass.geoHeading();
 
             Serial.println(String("Distance: ") + geoDistance(currentRobotLoc, loc));
             Serial.println(String("Bearing: ") + geoBearing(currentRobotLoc, loc));
-            Serial.println(String("Heading: ") + geoHeading());
+            Serial.println(String("Heading: ") + compass.geoHeading());
 
             drive(d, t);
             timeout -= 1;
@@ -119,36 +119,7 @@ float FollowMechanics::geoBearing(struct GeoLoc &a, struct GeoLoc &b) {
     return atan2(y, x) * RADTODEG;
 }
 
-float FollowMechanics::geoHeading() {
-  /* Get a new sensor event */ 
-  sensors_event_t event; 
-  mag.getEvent(&event);
 
-  // Hold the module so that Z is pointing 'up' and you can measure the heading with x&y
-  // Calculate heading when the magnetometer is level, then correct for signs of axis.
-  float heading = atan2(event.magnetic.y, event.magnetic.x);
-
-  // Offset
-  heading -= DECLINATION_ANGLE;
-  heading -= COMPASS_OFFSET;
-  
-  // Correct for when signs are reversed.
-  if(heading < 0)
-    heading += 2*PI;
-    
-  // Check for wrap due to addition of declination.
-  if(heading > 2*PI)
-    heading -= 2*PI;
-   
-  // Convert radians to degrees for readability.
-  float headingDegrees = heading * 180/M_PI; 
-
-  // Map to -180 - 180
-  while (headingDegrees < -180) headingDegrees += 360;
-  while (headingDegrees >  180) headingDegrees -= 360;
-
-  return headingDegrees;
-}
 
 // Loop 
 void FollowMechanics::followMechanics_Loop() { 
@@ -182,7 +153,7 @@ void FollowMechanics::followMechanics_Averaging() {
 void FollowMechanics::followMechanics_Algorithm() {
     struct GeoLoc currentMobileLoc = followBotBluetooth.getMobileGPSData();
     if (enabled) {
-        driveTo(currentMobileLoc, GPS_FOLLOW_TIMEOUT)
+        driveTo(currentMobileLoc, GPS_FOLLOW_TIMEOUT);
     }
 }
 

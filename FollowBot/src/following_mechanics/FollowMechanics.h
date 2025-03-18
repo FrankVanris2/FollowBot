@@ -27,7 +27,6 @@ public:
     //Mathematical stuff
     float geoDistance(struct GeoLoc &a, struct GeoLoc &b);
     float geoBearing(struct GeoLoc &a, struct GeoLoc &b);
-    float geoHeading();
 
     void followMechanics_Averaging();
     void followMechanics_Algorithm();

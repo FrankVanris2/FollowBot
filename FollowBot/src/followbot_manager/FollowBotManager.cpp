@@ -10,12 +10,17 @@
 #include "FollowBotManager.h"
 #include "followbot_ui/FollowBotLCD.h"
 #include "secrets/EEPROMStorage.h"
+
 #include "followbot_client/FollowBotClient.h"
 #include "followbot_client/FollowBotBluetooth.h"
+
 #include "ROS2_Serial/ROS2_Serial.h"
 #include "states&types/MotorControlStates.h"
 #include "motors/Motors.h"
+
 #include "sensors/Gyroscope.h"
+#include "sensors/Compass.h"
+
 #include "gps/GPS.h"
 #include "following_mechanics/FollowMechanics.h"
 
@@ -41,7 +46,8 @@ FollowBotManager::FollowBotManager(): mIsDirty(false) {
 void FollowBotManager::followBotSetup() { 
     //WORKING ON
     followBotBluetooth.setup();
-    
+    followMechanics.followMechanics_Setup();
+
     //NEEDED
     //eepromStorage.setup();  
     //myLCDScreen.myLCDScreen_Setup();
@@ -50,8 +56,7 @@ void FollowBotManager::followBotSetup() {
     //gyroscope.gyroscope_Setup();
     //myGPS.gps_setup();
 
-    //WORKING ON
-    //followMechanics.followMechanics_Setup();
+    
     
 
     //DELAYED
@@ -66,6 +71,7 @@ void FollowBotManager::followBotSetup() {
 void FollowBotManager::followBotLoop() {
     //WORKING ON
     followBotBluetooth.loop();
+    followMechanics.followMechanics_Loop();
 
     //NEEDED
     //myLCDScreen.myLCDScreen_Loop();
@@ -75,7 +81,7 @@ void FollowBotManager::followBotLoop() {
     // ros2_serial.ros2_loop();
 
     //WORKING ON
-    //followMechanics.followMechanics_Loop();
+    
     
     //DELAYED
     //temperatureReader.temperatureReader_Loop();

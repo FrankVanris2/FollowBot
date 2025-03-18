@@ -21,8 +21,8 @@ TinyGPSPlus gps;
 
 
 GPS::GPS(): GPSBaud(9600), interval(3000), previousMillis(0) {
-    gpsData[LAT] = 0.0;
-    gpsData[LON] = 0.0;
+    robotGPSData.lat = 0.0;
+    robotGPSData.lon = 0.0;
 }
 
 void GPS::gps_setup() {
@@ -55,7 +55,8 @@ void GPS::gps_loop() {
 
         if (millis() > 5000 && gps.charsProcessed() < 10) {
             Serial.println(F("No GPS detected: check wiring."));
-            setGPS(0, 0);
+            robotGPSData.lat = 0.0;
+            robotGPSData.lon = 0.0;
         }   
     }
 }
