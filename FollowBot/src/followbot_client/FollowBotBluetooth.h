@@ -5,6 +5,7 @@ Desc: Creating a bluetooth connection for my arduino uno rev4 board.
 */
 
 #pragma once
+#include <ArduinoBLE.h>
 #include "states&types/FollowBotNavigation.h"
 
 class FollowBotBluetooth {
@@ -14,15 +15,23 @@ public:
     void setup();
     void loop();
 
-    void setMobileGPSData(float lat, float lon) {
-        mobileGPSData.lat = lat;
-        mobileGPSData.lon = lon;
+    bool isEnabled() const {
+        return mIsEnabled; 
     }
-    
-    const GeoLoc& getMobileGPSData() { return mobileGPSData; }
+
+    const GeoLoc& getMobileGPSData() const {
+        return mobileGPSData; 
+    }
+
 private:
-    bool isError;
+    bool mIsError;
+    bool mIsEnabled;
     GeoLoc mobileGPSData;
+
+    static void blePeripheralConnectHandler(BLEDevice central);
+    static void blePeripheralDisconnectHandler(BLEDevice central);
+    static void followBotGPSCharacteristicWritten(BLEDevice central, BLECharacteristic characteristic);   
+    static void followBotEnabledCharacteristicWritten(BLEDevice central, BLECharacteristic characteristic); 
 };
 
 extern FollowBotBluetooth followBotBluetooth; // Declare the singleton instance

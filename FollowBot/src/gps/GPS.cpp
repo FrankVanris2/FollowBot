@@ -41,6 +41,7 @@ void GPS::gps_loop() {
                     robotGPSData.lat = gps.location.lat();
                     robotGPSData.lon = gps.location.lng();
                     followBotManager.setGPSData(gps.location.lat(), gps.location.lng());
+                    //Serial.println(String("Latitude: ") + robotGPSData.lat + ", Longitude: " + robotGPSData.lon);
                 } else {
                     Serial.println("GPS is not valid. Keeping previous coordinates");
                 }

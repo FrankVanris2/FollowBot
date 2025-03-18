@@ -31,7 +31,7 @@ const int TENTH_SECOND = 100;
 FollowMechanics followMechanics;
 
 // Constructor
-FollowMechanics::FollowMechanics():  mRSSIAvg(0), mRSSITotal(0), previousMillis(0), enabled(false) {}
+FollowMechanics::FollowMechanics():  mRSSIAvg(0), mRSSITotal(0), previousMillis(0) {}
 
 
 // Setup
@@ -55,7 +55,7 @@ void FollowMechanics::drive(float distance, float turn) {
     float t = turn;
     while (t < -180) t += 360;
     while (t > 180) t -= 360;
-    Serial.print(String("Turn: ") + t + "Original: " + turn);
+    Serial.println(String("Turn: ") + t + " Original: " + turn);
 
     float t_modifier = (180.0 - abs(t)) / 180.0;
     float autoSteerA = 1;
@@ -74,14 +74,16 @@ void FollowMechanics::drive(float distance, float turn) {
     int speedA = (int) (((float) autoThrottle) * autoSteerA);
     int speedB = (int) (((float) autoThrottle) * autoSteerB);
 
+    
     int leftSpeed = speedA;
     int rightSpeed = speedB;
     myMotors.setMotorSpeed(leftSpeed, rightSpeed);
 }
 
-void FollowMechanics::driveTo(struct GeoLoc &loc, int timeout) {
+void FollowMechanics::driveTo_Test_1(struct GeoLoc &loc, int timeout) {
     struct GeoLoc currentRobotLoc = myGPS.getRobotGPSData();
-    if(currentRobotLoc.lat != 0 && currentRobotLoc.lon != 0 && enabled) {
+    Serial.println(String("Current Robot Location: ") + currentRobotLoc.lat + ", " + currentRobotLoc.lon);
+    if(currentRobotLoc.lat != 0 && currentRobotLoc.lon != 0 && followBotBluetooth.isEnabled()) {
         float d = 0;
         do {
             currentRobotLoc = myGPS.getRobotGPSData();
@@ -94,9 +96,35 @@ void FollowMechanics::driveTo(struct GeoLoc &loc, int timeout) {
 
             drive(d, t);
             timeout -= 1;
-        } while (d > 3.0 && enabled && timeout > 0);
+        } while (d > 3.0 && followBotBluetooth.isEnabled() && timeout > 0);
 
-        myMotors.motorStop();
+        myMotors.stopMoving();
+    }
+}
+
+void FollowMechanics::driveTo_Test_2(struct GeoLoc &loc, int timeout) {
+    struct GeoLoc currentRobotLoc = myGPS.getRobotGPSData();
+    Serial.println(String("Current Robot Location: ") + currentRobotLoc.lat + ", " + currentRobotLoc.lon);
+    if (currentRobotLoc.lat != 0 && currentRobotLoc.lon != 0 && followBotBluetooth.isEnabled()) {
+        float d = 0;
+        do {
+            currentRobotLoc = myGPS.getRobotGPSData();
+            d = geoDistance(currentRobotLoc, loc);
+            float t = geoBearing(currentRobotLoc, loc) - compass.geoHeading();
+
+            Serial.println(String("Distance: ") + geoDistance(currentRobotLoc, loc));
+            Serial.println(String("Bearing: ") + geoBearing(currentRobotLoc, loc));
+            Serial.println(String("Heading: ") + compass.geoHeading());
+            
+            myMotors.turn(t);
+            if(d > 4) {
+                myMotors.moveForward();
+            }
+
+            timeout -= 1;
+        } while (d > 3.0 && followBotBluetooth.isEnabled() && timeout > 0);
+
+        myMotors.justStop();
     }
 }
 
@@ -109,6 +137,8 @@ float FollowMechanics::geoDistance(struct GeoLoc &a, struct GeoLoc &b) {
   
     float x = sin(dp/2) * sin(dp/2) + cos(p1) * cos(p2) * sin(dl/2) * sin(dl/2);
     float y = 2 * atan2(sqrt(x), sqrt(1-x));
+
+    Serial.println(String("Distance between you and the robot: ") + (R * y));
   
     return R * y;
 }
@@ -152,8 +182,10 @@ void FollowMechanics::followMechanics_Averaging() {
 
 void FollowMechanics::followMechanics_Algorithm() {
     struct GeoLoc currentMobileLoc = followBotBluetooth.getMobileGPSData();
-    if (enabled) {
-        driveTo(currentMobileLoc, GPS_FOLLOW_TIMEOUT);
+    Serial.println(String("Bluetooth is enabled: ") + followBotBluetooth.isEnabled());
+    if (followBotBluetooth.isEnabled()) {
+        driveTo_Test_1(currentMobileLoc, GPS_FOLLOW_TIMEOUT);
+        //driveTo_Test_2(currentMobileLoc, GPS_FOLLOW_TIMEOUT);
     }
 }
 
