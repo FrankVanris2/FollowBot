@@ -31,6 +31,8 @@ public:
     void followMechanics_Averaging();
     void followMechanics_Algorithm();
 
+    void setEnabled(bool state) { enabled = state; }
+
 private:
     unsigned long previousMillis;
 
