@@ -61,14 +61,14 @@ void ROS2_Serial::imuDataDoc() {
 }
 
 void ROS2_Serial::gpsDataDoc() {
-    const double* gpsData = myGPS.getGPSData();
+    
 
     StaticJsonDocument<256> gpsDoc; 
 
     gpsDoc["sensor_type"] = "gps";
     JsonObject gpsDataDoc = gpsDoc.createNestedObject("data");
-    gpsDataDoc["latitude"] = gpsData[LAT];
-    gpsDataDoc["longitude"] = gpsData[LON];
+    gpsDataDoc["latitude"] = myGPS.getRobotGPSData().lat;
+    gpsDataDoc["longitude"] = myGPS.getRobotGPSData().lon;
 
     serializeJson(gpsDoc, Serial);
     Serial.println();

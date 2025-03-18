@@ -11,10 +11,11 @@ public:
     Compass();
 
     void compass_Setup();
-
-
+    void displayCompassDetails(void);
+    float geoHeading();
 
 private:
+    bool isError;
 };
 
 extern Compass compass;
