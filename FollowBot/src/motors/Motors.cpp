@@ -65,6 +65,14 @@ void Motors::motorLoop() {
    } 
 }
 
+void Motors::setMotorSpeed(int leftSpeed, int rightSpeed) {
+    motor1->setSpeed(leftSpeed);
+    motor2->setSpeed(rightSpeed);
+    motor3->setSpeed(rightSpeed);
+    motor4->setSpeed(leftSpeed);
+    motorForwards();
+}
+
 //testing client, (very important)
 void Motors::adjustDirection() {
 
