@@ -9,9 +9,6 @@ Desc: Creating the following mechanic between the user and the robot.
 #define DEGTORAD 0.0174532925199432957f
 #define RADTODEG 57.295779513082320876f
 
-
-const int GPS_FOLLOW_TIMEOUT = 100;
-
 class FollowMechanics {
 public:
 
@@ -24,23 +21,22 @@ private:
     unsigned long previousMillis;
 
     //list for RSSI Avg
-    std::list<long> rssiList;
+    std::list<int> rssiList;
 
-    long mRSSITotal;
-    long mRSSIAvg;
+    int mRSSITotal;
+    int mRSSIAvg;
+
+    void followMechanics_Averaging();
 
     //drive mechanics
-    void drive(float distance, float turn);
+    void driveTo_Test_1();
+    void driveTo_Test_2();
 
-    void driveTo_Test_1(struct GeoLoc &loc, int timeout);
-    void driveTo_Test_2(struct GeoLoc &loc, int timeout);
+    void drive(float distance, float turn);
 
     //Mathematical stuff
     float geoDistance(struct GeoLoc &a, struct GeoLoc &b);
     float geoBearing(struct GeoLoc &a, struct GeoLoc &b);
-
-    void followMechanics_Averaging();
-    void followMechanics_Algorithm();
 };
 
 extern FollowMechanics followMechanics;

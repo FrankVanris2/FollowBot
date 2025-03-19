@@ -35,7 +35,7 @@ unsigned long lastPostTime = 0;
 // Server IP address
 //IPAddress server(3, 145, 197, 165); // numeric IP for Google (no DNS)
 //IPAddress server(3, 131, 97, 5); // numeric IP for Google (no DNS) /
-IPAddress server(192, 168, 0, 106);
+IPAddress server(10, 0, 0, 245);
 const int PORT = 5000; //Originally 80
 
 // WiFi client

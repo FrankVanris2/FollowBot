@@ -16,7 +16,7 @@ Adafruit_MPU6050 mpu;
 //Singelton
 Gyroscope gyroscope;
 
-Gyroscope::Gyroscope(): interval(200), previousMillis(0) {}
+Gyroscope::Gyroscope(): interval(500), previousMillis(0) {}
 
 void Gyroscope::gyroscope_Setup() {
 

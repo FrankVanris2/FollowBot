@@ -18,7 +18,7 @@ BLECharacteristic followBotGPSCharacteristic("87654321-4321-8765-4321-0fedcba987
 BLECharacteristic followBotEnabledCharacteristic("11112222-3333-4444-5555-666677778888", BLERead | BLEWrite, 1);
 
 
-FollowBotBluetooth::FollowBotBluetooth() : mIsError(false), mIsEnabled(false) {
+FollowBotBluetooth::FollowBotBluetooth() : mIsError(false), mIsEnabled(false), previousMillis(0), interval(100) {
 }
 
 void FollowBotBluetooth::blePeripheralConnectHandler(BLEDevice central) {
@@ -87,6 +87,10 @@ void FollowBotBluetooth::setup() {
 }
 
 void FollowBotBluetooth::loop() {
-    // Listen for BLE events
-    BLE.poll();
+    if ((millis() - previousMillis) >= interval) {
+        previousMillis = millis();
+        // Listen for BLE events
+        BLE.poll();
+        mRSSI = BLE.rssi();
+    }
 }

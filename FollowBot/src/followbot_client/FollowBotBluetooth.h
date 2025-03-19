@@ -23,10 +23,20 @@ public:
         return mobileGPSData; 
     }
 
+    int getRSSI() const {
+        return mRSSI; 
+    }
+
 private:
+    unsigned long interval;
+    unsigned long previousMillis; 
+
     bool mIsError;
     bool mIsEnabled;
     GeoLoc mobileGPSData;
+    int mRSSI;
+
+
 
     static void blePeripheralConnectHandler(BLEDevice central);
     static void blePeripheralDisconnectHandler(BLEDevice central);
