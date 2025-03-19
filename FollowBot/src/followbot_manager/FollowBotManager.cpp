@@ -45,19 +45,18 @@ FollowBotManager::FollowBotManager(): mIsDirty(false) {
 
 void FollowBotManager::followBotSetup() { 
     //Following Mechanics setup
-    //myLCDScreen.myLCDScreen_Setup();
-    myMotors.motorSetup();
-    compass.compass_Setup();
-    myGPS.gps_setup();
-    followBotBluetooth.setup();
-    followMechanics.followMechanics_Setup();
+    // myMotors.motorSetup();
+    // compass.compass_Setup();
+    // myGPS.gps_setup();
+    // followBotBluetooth.setup();
+    // followMechanics.followMechanics_Setup();
 
     //Server Setup
-    // eepromStorage.setup();  
-    // myMotors.motorSetup();
-    // myLCDScreen.myLCDScreen_Setup();
-    // followBotClient.followBotClient_Setup();  
-    // myGPS.gps_setup();
+    eepromStorage.setup();  
+    myLCDScreen.myLCDScreen_Setup();
+    myMotors.motorSetup();
+    followBotClient.followBotClient_Setup();  
+    myGPS.gps_setup();
 
     
     //ROS2 specific:
@@ -74,17 +73,16 @@ void FollowBotManager::followBotSetup() {
 
 void FollowBotManager::followBotLoop() {
     //Following Mechanics loop setup
-    //myLCDScreen.myLCDScreen_Loop();
-    myGPS.gps_loop();
-    followBotBluetooth.loop();
-    followMechanics.followMechanics_Loop();
-    compass.compass_loop();
+    // myGPS.gps_loop();
+    // followBotBluetooth.loop();
+    // followMechanics.followMechanics_Loop();
+    // compass.compass_loop();
 
     //Server Setup
-    // myLCDScreen.myLCDScreen_Loop();
-    // followBotClient.followBotClient_Loop(); 
-    // myGPS.gps_loop(); 
-    // myMotors.motorLoop();
+    myLCDScreen.myLCDScreen_Loop();
+    followBotClient.followBotClient_Loop(); 
+    myGPS.gps_loop(); 
+    myMotors.motorLoop();
     
 
     //ROS2 Specific

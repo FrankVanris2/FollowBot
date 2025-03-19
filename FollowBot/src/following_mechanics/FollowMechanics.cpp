@@ -52,12 +52,20 @@ void FollowMechanics::followMechanics_Loop() {
             Serial.println(String("FollowMechanics_Loop(), RSSI Value: ") + mRSSIAvg);
             //if (mRSSIAvg < -50) {
                 //driveTo_Test_1();
-                driveTo_Test_2();
+                //driveTo_Test_2();
             //} else {
              //   myMotors.stopMoving();
             //}
             
             //driveTo_Test_2();
+
+            if (mRSSIAvg < -50) {
+                Serial.println("Moving Forwards");
+                myMotors.moveForward();
+            } else {
+                Serial.println("Stopping Motors");
+                myMotors.stopMoving();
+            }
         }
     }
 }
