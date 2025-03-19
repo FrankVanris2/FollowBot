@@ -19,6 +19,8 @@ const int MAX_SPEED = 255;
 const int MED_SPEED = 200;
 const int LOW_SPEED = 150;
 
+const int ANGLE_THRESHOLD = 45; // degrees
+
 // Universal Object
 Motors myMotors;
 
@@ -90,9 +92,9 @@ void Motors::adjustDirection() {
 }
 
 void Motors::turn(float turn) {
-    if (turn > 5) {
+    if (turn > ANGLE_THRESHOLD) {
         motorRight();
-    } else if (turn < -5) {
+    } else if (turn < -ANGLE_THRESHOLD) {
         motorLeft();
     } else {
         motorForwards();

@@ -11,6 +11,7 @@ public:
     Compass();
 
     void compass_Setup();
+    void compass_loop();
     void displayCompassDetails(void);
     float geoHeading();
 
