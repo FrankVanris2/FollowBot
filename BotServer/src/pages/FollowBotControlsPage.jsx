@@ -74,23 +74,23 @@ const FollowBotControlsPage = () => {
                     <DirectionList presses={presses} />
                 </div>
 
-                <div className="image-wrapper">
+                {/* <div className="image-wrapper">
                     <span className="live-feed-text">Live Feed</span>
                     <img 
                         src={cameradisconnected}
                         alt="Camera disconnected"
                         style={{ width: '600px', height: '400px' }}
                     />
-                </div>
+                </div> */}
 
-                <div className="temperature-wrapper">
+                {/* <div className="temperature-wrapper">
                     <div className="info-wrapper">
                         <h2>Current Temperature</h2>
                         <TemperatureDisplay temperature={temperature} />
                         <h2>Heat Index</h2>
                         <HeatIndexDisplay heatIndex={heatIndex} />
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     );

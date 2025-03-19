@@ -6,7 +6,7 @@
 pip install Flask
 pip install -U flask-cors
 npm install --save-dev style-loader css-loader
-
+npm install react-bootstrap bootstrap
 
 npm install chart.js react-chartjs-2
 

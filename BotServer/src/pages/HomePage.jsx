@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/HomePage.style.css';
 import prototype from '../res/FollowBotPrototype.png';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const HomePage = () => {
     return (
@@ -30,10 +31,15 @@ const HomePage = () => {
                     </div>
                 </div>
                 <div className="video-box-container">
-                    <div className="video-box">
-                        <div className="video-placeholder">
-                            Video of FollowBot
-                        </div>
+                    <div className="video-box" style={{ width: '100%', position: 'relative', paddingBottom: '56.25%' }}>
+                    <iframe
+    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+    src="https://www.youtube.com/embed/VBmE77GVLnA"
+    title="YouTube video"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+></iframe>
+
                     </div>
                     <p className="video-description">
                         This is a demonstration of the FollowBot in action.
