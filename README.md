@@ -1,13 +1,6 @@
 # FollowBot
 
 
-This robot will consist of different phases:
-
-1. Following mechanics, sensor intel. (Stage 1)
-2. Carrying mechanics, power efficiency. (Stage 2)
-3. Pathfinding mechanics, power efficiency. (Stage 3)
-4. Cost efficiency, balancing efficiency. (Stage 4)
-
 ## Table of Contents
  - [Introduction](#introduction)
  - [Features](#features)
