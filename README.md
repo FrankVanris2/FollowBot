@@ -1,5 +1,6 @@
 # FollowBot
 
+[Watch the FollowBot Prototype 1 in Action!](https://www.youtube.com/shorts/VBmE77GVLnA)
 
 ## Table of Contents
  - [Introduction](#introduction)
