@@ -10,6 +10,7 @@
 #include "FollowBotClient.h"
 #include "motors/Motors.h"
 #include "followbot_manager/FollowBotManager.h"
+#include "following_mechanics/FollowMechanics.h"
 #include "secrets/EEPROMStorage.h"
 #include "states&types/DataStates.h"
 
@@ -43,7 +44,8 @@ WiFiClient client;
 
 // Constructor
 FollowBotClient::FollowBotClient(): mWifiConnectionStatus(WL_IDLE_STATUS), mPreviousMillisMove(0), mCountMoves(0), 
-mIPAddress(server.toString()), mRSSI(0), lastServerCheck(0), mServerNotConnected(0), mIsConnected(false) {
+mIPAddress(server.toString()), mRSSI(0), lastServerCheck(0), mServerNotConnectedCnt(0), mIsConnected(false)
+, mCurrentControl(ROBOT) {
     client.setConnectionTimeout(15000);
 }
 
@@ -90,10 +92,11 @@ void FollowBotClient::followBotClient_Setup() {
 }
 
 void FollowBotClient::followBotClient_Loop() {
-    int intervalTime = mServerNotConnected < MAX_SERVER_NOT_CONNECTED ? TENTH_SECOND : SIXTY_SECONDS;
+    int intervalTime = mServerNotConnectedCnt < MAX_SERVER_NOT_CONNECTED ? TENTH_SECOND : SIXTY_SECONDS;
     
-    if((unsigned long) (millis() - mPreviousMillisMove) >= intervalTime) {
-        mPreviousMillisMove = millis();
+    unsigned long currentTime = millis();
+    if(currentTime - mPreviousMillisMove) >= intervalTime) {
+        mPreviousMillisMove = currentTime;
 
         // Check WiFi connection status 
         if(WiFi.status() != WL_CONNECTED) {
@@ -105,35 +108,24 @@ void FollowBotClient::followBotClient_Loop() {
         }
 
         if(mWifiConnectionStatus == WL_CONNECTED) {
-            Serial.print("mServerNotConnected: ");
-            Serial.println(mServerNotConnected);
+            Serial.println(String("mServerNotConnectedCnt: ") + mServerNotConnectedCnt);
 
-            myMotors.setDirection(MOTOR_STOP);
-            bool moveSuccess = getMove();
-            bool postSuccess = true;
+            String dataString = getActionData();
+            handleActionData(dataString);
 
             // Check if it's time to post robot info (once per hour)
-            unsigned long currentTime = millis();
             if(followBotManager.getDirtyFlag() && (currentTime - lastPostTime >= HOUR || lastPostTime == 0)) {
-                postSuccess = postRobotInfo();
+                bool postSuccess = postRobotInfo();
                 if(postSuccess) {
                     lastPostTime = currentTime; // Update last post time only on success
                     Serial.println("Posted robot info - next post in 1 hour");
                 }
             }
-
-            // Log failures instead of returning early
-            if(!moveSuccess) {
-                Serial.println("FollowBotClient.getMove() failed");
-            }
-            if(!postSuccess) {
-                Serial.println("FollowBotClient.postRobotInfo() failed");
-            }
         }
 
         
         // During extended intervals, continuously print RSSI
-        if(mServerNotConnected >= MAX_SERVER_NOT_CONNECTED) {
+        if(mServerNotConnectedCnt >= MAX_SERVER_NOT_CONNECTED) {
             Serial.println("I am inside of this RSSI if statement");
             checkRSSI();
         }
@@ -164,13 +156,13 @@ bool FollowBotClient::postRobotInfo() {
     Serial.println("FollowBotClient.postRobotInfo(): Connecting to server...") ;
     if(!client.connect(server, PORT)) {
         Serial.println("FollowBotClient.postRobotInfo(): Server did not connect");
-        if(mServerNotConnected < MAX_SERVER_NOT_CONNECTED) {
-            mServerNotConnected++;
+        if(mServerNotConnectedCnt < MAX_SERVER_NOT_CONNECTED) {
+            mServerNotConnectedCnt++;
         }
         return false;
     }
     Serial.println("FollowBotClient.postRobotInfo(): Server connected");
-    mServerNotConnected = 0;
+    mServerNotConnectedCnt = 0;
 
     const OutputData& outputData = followBotManager.getOutputData();
         
@@ -211,82 +203,92 @@ bool FollowBotClient::postRobotInfo() {
     return true;
 }
 
-bool FollowBotClient::getMove() {
+String FollowBotClient::getActionData() {
     Serial.println("FollowBotClient.getMove(): Connecting to server...") ;
     if(!client.connect(server, PORT)) {
         Serial.println("FollowBotClient.getMove(): Server did not connect");
-        if(mServerNotConnected < MAX_SERVER_NOT_CONNECTED) {
-            mServerNotConnected++;
+        if(mServerNotConnectedCnt < MAX_SERVER_NOT_CONNECTED) {
+            mServerNotConnectedCnt++;
         }
-        return false;
+        return ERROR;
     }
     Serial.println("FollowBotClient.getMove(): Server connected");
-    mServerNotConnected = 0;
+    mServerNotConnectedCnt = 0;
 
     // get the information to make the robot move
-    client.println("GET /api/getmove HTTP/1.1");
-    client.print("Host: ");
-    client.println(mIPAddress);
-    client.println("Connection: close");
-    client.println();
+     client.println("GET /api/getactiondata HTTP/1.1");
+     client.print("Host: ");
+     client.println(mIPAddress);
+     client.println("Connection: close");
+     client.println();
+ 
+     String robotUserSwitch;
+     const int SIZE = 1024;
+     char buffer[SIZE];
+     int bufLength = 0;
+     int bodyIdx = 0;
+     Data_States dataState = HEADER_STATE;
+     bool readData = true;
+ 
+     while (dataState != FINISHED) {
+         int prevBufLen = bufLength;
+         int numChars = 0; 
+         if(readData) {
+             
+             numChars = client.read(reinterpret_cast<uint8_t*>(buffer + bufLength), SIZE - bufLength);
+             bufLength += numChars;
+             buffer[bufLength] = 0;
+         }
+ 
+         if(!readData || numChars > 0) {
+             switch(dataState) {
+                 // Find start of body in just read data
+                 case HEADER_STATE: {
+                     char* bufPtr;
+                     for (bufPtr = buffer + prevBufLen; *(bufPtr + 3); ++bufPtr) {
+                         /*if (isprint(*bufPtr)) Serial.print(*bufPtr);
+                         char buf[5];
+                         Serial.print(" ");
+                         Serial.print(itoa(*bufPtr, buf, 16));
+                         Serial.print(", ");*/
+                         if (*bufPtr == 0x0d && *(bufPtr + 1) == 0x0a && *(bufPtr + 2) == 0x0d && *(bufPtr + 3) == 0x0a) {
+                             bodyIdx = bufPtr - buffer + 4; // Calculate index relative to buffer start
+                             dataState = BODY_STATE;
+                             readData = false;
+                             break;
+                         } 
+                     }
+                     break;
+                 }
+ 
+                 // Wait for the body to arrive
+                 case BODY_STATE:
+                     if(bufLength > bodyIdx) {
+                         dataState = FINISHED;
+                     } else {
+                         readData = true;
+                     }
+                     break;
+             }
+         }         
+     } 
+     client.stop();
 
-    String direction;
-    const int SIZE = 1024;
-    char buffer[SIZE];
-    int bufLength = 0;
-    int bodyIdx = 0;
-    Data_States dataState = HEADER_STATE;
-    bool readData = true;
+     String dataActionString(buffer, bodyIdx);
+     return dataActionString;
+}
 
-    while (dataState != FINISHED) {
-        int prevBufLen = bufLength;
-        int numChars = 0; 
-        if(readData) {
-            
-            numChars = client.read(reinterpret_cast<uint8_t*>(buffer + bufLength), SIZE - bufLength);
-            bufLength += numChars;
-            buffer[bufLength] = 0;
-        }
-
-        if(!readData || numChars > 0) {
-            switch(dataState) {
-                // Find start of body in just read data
-                case HEADER_STATE: {
-                    char* bufPtr;
-                    for (bufPtr = buffer + prevBufLen; *(bufPtr + 3); ++bufPtr) {
-                        /*if (isprint(*bufPtr)) Serial.print(*bufPtr);
-                        char buf[5];
-                        Serial.print(" ");
-                        Serial.print(itoa(*bufPtr, buf, 16));
-                        Serial.print(", ");*/
-                        if (*bufPtr == 0x0d && *(bufPtr + 1) == 0x0a && *(bufPtr + 2) == 0x0d && *(bufPtr + 3) == 0x0a) {
-                            bodyIdx = bufPtr - buffer + 4; // Calculate index relative to buffer start
-                            dataState = BODY_STATE;
-                            readData = false;
-                            break;
-                        } 
-                    }
-                    break;
-                }
-
-                // Wait for the body to arrive
-                case BODY_STATE:
-                    if(bufLength > bodyIdx) {
-                        dataState = FINISHED;
-                    } else {
-                        readData = true;
-                    }
-                    break;
-            }
-        }
-        
-        direction = buffer + bodyIdx;  
-    } 
-    client.stop();
-
-    Serial.print("Direction: ");
-    Serial.println(direction);
-    myMotors.setDirection(direction);
+void FollowBotClient::handleActionData(String dataString) {
+    Serial.println(String("FollowBotClient.handleActionData(): Received data: ") + dataString);
+    if(dataString == USER) {
+        followBotManager.setCurrentControl(dataString);
+    } else if (dataString == ROBOT) {
+        followBotManager.setCurrentControl(dataString);
+    } else {
+        if(followBotManager.getCurrentControl() == USER) {
+            myMotors.setDirection(dataActionString);
+        } 
+    }
 }
 
 void FollowBotClient::checkRSSI() {
@@ -295,3 +297,5 @@ void FollowBotClient::checkRSSI() {
     //Serial.print("FollowBotClient, mRSSI = ");
     //Serial.println(mRSSI);
 }
+
+

@@ -49,7 +49,6 @@ void FollowBotManager::followBotSetup() {
     // compass.compass_Setup();
     // myGPS.gps_setup();
     // followBotBluetooth.setup();
-    // followMechanics.followMechanics_Setup();
 
     //Server Setup
     eepromStorage.setup();  
@@ -82,7 +81,11 @@ void FollowBotManager::followBotLoop() {
     myLCDScreen.myLCDScreen_Loop();
     followBotClient.followBotClient_Loop(); 
     myGPS.gps_loop(); 
+    if (getCurrentControl() == ROBOT) {
+        followMechanics.followMechanics_Loop();
+    }
     myMotors.motorLoop();
+}    
     
 
     //ROS2 Specific
