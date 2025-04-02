@@ -62,6 +62,16 @@ public:
 
     String getClock() const { return mOutputData.mClock; }
 
+    void setCurrentControl(const String& control) {
+        if(control != mCurrentControl) {
+            myMotors.setDirection(MOTOR_STOP);
+            mCurrentControl = control;
+        }   
+    }
+
+    const String& getCurrentControl() const {
+        return mCurrentControl;
+    }
 
 
     const OutputData& getOutputData() const {
@@ -78,6 +88,7 @@ private:
     //String mDirection; 
     OutputData mOutputData;
     mutable bool mIsDirty;
+    String mCurrentControl;
 };
 
 extern FollowBotManager followBotManager;

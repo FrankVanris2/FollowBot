@@ -5,6 +5,11 @@
 */
 
 #pragma once
+#include <Arduino.h>
+
+const String USER = "User";
+const String ROBOT = "Robot";
+const String ERROR = "Error";
 
 const String MOTOR_FORWARD = "Forward";
 const String MOTOR_BACKWARD = "Backward";

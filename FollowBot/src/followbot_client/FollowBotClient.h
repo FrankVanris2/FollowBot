@@ -23,10 +23,13 @@ public:
         return mIsConnected;
     }
     
+    
 private:
     void printWifiStatus();
     bool postRobotInfo();
     bool getMove();
+    String getActionData();
+    void handleActiondata(String dataString);
 
     
 
@@ -38,7 +41,7 @@ private:
     bool mIsConnected;
     int mCountMoves;
     int mWifiConnectionStatus;
-    int mServerNotConnected;
+    int mServerNotConnectedCnt;
     long mRSSI;
     String mIPAddress;
 };
