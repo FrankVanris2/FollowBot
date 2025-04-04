@@ -29,12 +29,8 @@ private:
     bool postRobotInfo();
     bool getMove();
     String getActionData();
-    void handleActiondata(String dataString);
+    void handleActionData(String dataString);
 
-    
-
-    
- 
     unsigned long mPreviousMillisMove;
     unsigned long lastServerCheck;
 

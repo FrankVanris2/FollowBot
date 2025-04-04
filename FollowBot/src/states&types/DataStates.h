@@ -11,5 +11,3 @@ enum Data_States {
     BODY_STATE,
     FINISHED
 };
-
-enum 
