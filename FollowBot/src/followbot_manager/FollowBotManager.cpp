@@ -35,7 +35,7 @@
 //universal object
 FollowBotManager followBotManager;
 
-FollowBotManager::FollowBotManager(): mIsDirty(false) {
+FollowBotManager::FollowBotManager(): mIsDirty(false), mCurrentControl(ROBOT){
     //mDirection(MOTOR_STOP)
 }
 
@@ -81,12 +81,10 @@ void FollowBotManager::followBotLoop() {
     myLCDScreen.myLCDScreen_Loop();
     followBotClient.followBotClient_Loop(); 
     myGPS.gps_loop(); 
-    if (getCurrentControl() == ROBOT) {
+    if (mCurrentControl == ROBOT) {
         followMechanics.followMechanics_Loop();
     }
     myMotors.motorLoop();
-}    
-    
 
     //ROS2 Specific
     //gyroscope.gyroscope_Loop();

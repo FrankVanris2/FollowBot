@@ -9,6 +9,7 @@
 #include <Arduino.h>
 
 #include "states&types/Types.h"
+#include "motors/Motors.h"
 #include "gps/GPS.h"
 
 class FollowBotManager {

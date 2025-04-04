@@ -44,8 +44,7 @@ WiFiClient client;
 
 // Constructor
 FollowBotClient::FollowBotClient(): mWifiConnectionStatus(WL_IDLE_STATUS), mPreviousMillisMove(0), mCountMoves(0), 
-mIPAddress(server.toString()), mRSSI(0), lastServerCheck(0), mServerNotConnectedCnt(0), mIsConnected(false)
-, mCurrentControl(ROBOT) {
+mIPAddress(server.toString()), mRSSI(0), lastServerCheck(0), mServerNotConnectedCnt(0), mIsConnected(false){
     client.setConnectionTimeout(15000);
 }
 
@@ -95,7 +94,7 @@ void FollowBotClient::followBotClient_Loop() {
     int intervalTime = mServerNotConnectedCnt < MAX_SERVER_NOT_CONNECTED ? TENTH_SECOND : SIXTY_SECONDS;
     
     unsigned long currentTime = millis();
-    if(currentTime - mPreviousMillisMove) >= intervalTime) {
+    if((currentTime - mPreviousMillisMove) >= intervalTime) {
         mPreviousMillisMove = currentTime;
 
         // Check WiFi connection status 
@@ -286,7 +285,7 @@ void FollowBotClient::handleActionData(String dataString) {
         followBotManager.setCurrentControl(dataString);
     } else {
         if(followBotManager.getCurrentControl() == USER) {
-            myMotors.setDirection(dataActionString);
+            myMotors.setDirection(dataString);
         } 
     }
 }
