@@ -43,8 +43,6 @@ void FollowMechanics::followMechanics_Setup() {
 void FollowMechanics::followMechanics_Loop() {
     if ((unsigned long) (millis() - previousMillis) >= TENTH_SECOND) {
         previousMillis = millis();
-
-        
         
         Serial.println(String("Bluetooth is enabled: ") + followBotBluetooth.isEnabled());
         if (followBotBluetooth.isEnabled()) {

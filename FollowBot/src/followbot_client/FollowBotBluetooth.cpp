@@ -92,5 +92,6 @@ void FollowBotBluetooth::loop() {
         // Listen for BLE events
         BLE.poll();
         mRSSI = BLE.rssi();
+        Serial.println(String("FollowBotBluetooth.loop - RSSI: ") + mRSSI);
     }
 }

@@ -48,7 +48,7 @@ void FollowBotManager::followBotSetup() {
     // myMotors.motorSetup();
     // compass.compass_Setup();
     // myGPS.gps_setup();
-    // followBotBluetooth.setup();
+    followBotBluetooth.setup();
 
     //Server Setup
     eepromStorage.setup();  
@@ -73,7 +73,7 @@ void FollowBotManager::followBotSetup() {
 void FollowBotManager::followBotLoop() {
     //Following Mechanics loop setup
     // myGPS.gps_loop();
-    // followBotBluetooth.loop();
+    followBotBluetooth.loop();
     // followMechanics.followMechanics_Loop();
     // compass.compass_loop();
 

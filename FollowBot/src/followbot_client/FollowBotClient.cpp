@@ -36,7 +36,7 @@ unsigned long lastPostTime = 0;
 // Server IP address
 //IPAddress server(3, 145, 197, 165); // numeric IP for Google (no DNS)
 //IPAddress server(3, 131, 97, 5); // numeric IP for Google (no DNS) /
-IPAddress server(10, 12, 61, 18);
+IPAddress server(10, 0, 0, 245);
 const int PORT = 5000; //Originally 80
 
 // WiFi client
@@ -225,7 +225,7 @@ String FollowBotClient::getActionData() {
      const int SIZE = 1024;
      char buffer[SIZE];
      int bufLength = 0;
-     int bodyIdx = 0;
+     int bodyIdx = 0; // Start of body in buffer
      Data_States dataState = HEADER_STATE;
      bool readData = true;
  
@@ -273,7 +273,7 @@ String FollowBotClient::getActionData() {
      } 
      client.stop();
 
-     String dataActionString(buffer, bodyIdx);
+     String dataActionString(buffer + bodyIdx); // Create a string starting at the body
      return dataActionString;
 }
 
@@ -285,6 +285,7 @@ void FollowBotClient::handleActionData(String dataString) {
         followBotManager.setCurrentControl(dataString);
     } else {
         if(followBotManager.getCurrentControl() == USER) {
+            Serial.println(String("FollowBotClient.handleActionData - Current Motor Direction: ") + dataString);
             myMotors.setDirection(dataString);
         } 
     }

@@ -50,6 +50,7 @@ const FollowBotControlsPage = () => {
 
     const toggleControlMode = () => {
         setControlMode(controlMode === ROBOT ? USER : ROBOT);
+        handleButtonClick(controlMode === ROBOT ? USER : ROBOT);
     }
 
     const handleMouseDown = (direction) => {
@@ -57,6 +58,7 @@ const FollowBotControlsPage = () => {
             handleButtonClick(direction);
         }, holdThreshold);
     };
+
 
     const handleMouseUp = (direction) => {
         clearTimeout(holdTimer.current);

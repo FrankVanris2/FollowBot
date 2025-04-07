@@ -60,7 +60,7 @@ void Motors::motorLoop() {
     
     
    if(mNewDirection != mCurrentDirection) {
-        Serial.print("Updated Motor Direction: ");
+        Serial.print("Motors.motorLoop - Updated Motor Direction: ");
         Serial.println(mNewDirection);
        mCurrentDirection = mNewDirection;
        adjustDirection();
@@ -77,7 +77,7 @@ void Motors::setMotorSpeed(int leftSpeed, int rightSpeed) {
 
 //testing client, (very important)
 void Motors::adjustDirection() {
-
+    Serial.println(String("Motors.adjustDirection - Current Direction: ") + mCurrentDirection); 
     if (mCurrentDirection == MOTOR_FORWARD) {
         motorForwards();
     } else if (mCurrentDirection == MOTOR_BACKWARD) {
@@ -117,6 +117,7 @@ void Motors::stopMoving() {
 
 // Forward motion with the motors
 void Motors::motorForwards() {
+    Serial.println("Motors.motorForwards()");
     motor1->run(BACKWARD);
     motor2->run(BACKWARD);
     motor3->run(FORWARD);
@@ -125,6 +126,7 @@ void Motors::motorForwards() {
 
 // Backward motions with the motors
 void Motors::motorBackwards() {
+    Serial.println("Motors.motorBackwards()");
     motor1->run(FORWARD);
     motor2->run(FORWARD);
     motor3->run(BACKWARD);
@@ -133,6 +135,7 @@ void Motors::motorBackwards() {
 
 // Left motions with the motors
 void Motors::motorLeft() {
+    Serial.println("Motors.motorLeft()");
     motor1->run(FORWARD);
     motor2->run(BACKWARD);
     motor3->run(FORWARD);
@@ -141,6 +144,7 @@ void Motors::motorLeft() {
 
 // Right motions with the motors
 void Motors::motorRight() {
+    Serial.println("Motors.motorRight()");
     motor1->run(BACKWARD);
     motor2->run(FORWARD);
     motor3->run(BACKWARD);
@@ -148,6 +152,7 @@ void Motors::motorRight() {
 }
 
 void Motors::motorStop() {
+    Serial.println("Motors.motorStop()");
     motor1->run(RELEASE);
     motor2->run(RELEASE);
     motor3->run(RELEASE);
