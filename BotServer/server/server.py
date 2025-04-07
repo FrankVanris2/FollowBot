@@ -356,7 +356,7 @@ def get_image_files(filename):
 
 
 
-@app.get("/api/getmove")
+@app.get("/api/getactiondata")
 def getMove():
     dir = getDirection()
     print(dir)

@@ -10,11 +10,17 @@
 #include "FollowBotManager.h"
 #include "followbot_ui/FollowBotLCD.h"
 #include "secrets/EEPROMStorage.h"
+
 #include "followbot_client/FollowBotClient.h"
+#include "followbot_client/FollowBotBluetooth.h"
+
 #include "ROS2_Serial/ROS2_Serial.h"
 #include "states&types/MotorControlStates.h"
 #include "motors/Motors.h"
+
 #include "sensors/Gyroscope.h"
+#include "sensors/Compass.h"
+
 #include "gps/GPS.h"
 #include "following_mechanics/FollowMechanics.h"
 
@@ -29,27 +35,34 @@
 //universal object
 FollowBotManager followBotManager;
 
-FollowBotManager::FollowBotManager(): mIsDirty(false) {
+FollowBotManager::FollowBotManager(): mIsDirty(false), mCurrentControl(ROBOT){
     //mDirection(MOTOR_STOP)
 }
 
 
 
 //the setup that will store the many objects that will set in the main
-void FollowBotManager::followBotSetup() {  
-    eepromStorage.setup();  
 
-    //REALLY NEEDED
+void FollowBotManager::followBotSetup() { 
+    //Following Mechanics setup
+    // myMotors.motorSetup();
+    // compass.compass_Setup();
+    // myGPS.gps_setup();
+    followBotBluetooth.setup();
+
+    //Server Setup
+    eepromStorage.setup();  
     myLCDScreen.myLCDScreen_Setup();
     myMotors.motorSetup();
-    followBotClient.followBotClient_Setup();
-    gyroscope.gyroscope_Setup();
+    followBotClient.followBotClient_Setup();  
     myGPS.gps_setup();
 
-    //NEEDED
-    //followMechanics.followMechanics_Setup();
     
-    //WORKING ON
+    //ROS2 specific:
+    //gyroscope.gyroscope_Setup();
+
+    //DELAYED
+    // temperatureReader.temperatureReader_Setup();
     // objectAvoidance.objectAvoidance_Setup();
     // objectDetection.objectDetection_Setup();
     
@@ -58,21 +71,28 @@ void FollowBotManager::followBotSetup() {
 }
 
 void FollowBotManager::followBotLoop() {
+    //Following Mechanics loop setup
+    // myGPS.gps_loop();
+    followBotBluetooth.loop();
+    // followMechanics.followMechanics_Loop();
+    // compass.compass_loop();
 
-    //REALLY NEEDED
+    //Server Setup
     myLCDScreen.myLCDScreen_Loop();
-    followBotClient.followBotClient_Loop();
-    gyroscope.gyroscope_Loop();
-    myGPS.gps_loop();
-    ros2_serial.ros2_loop();
-     
-    //WORKING ON
-    //followMechanics.followMechanics_Loop();
+    followBotClient.followBotClient_Loop(); 
+    myGPS.gps_loop(); 
+    if (mCurrentControl == ROBOT) {
+        followMechanics.followMechanics_Loop();
+    }
+    myMotors.motorLoop();
 
-    //NOT NEEDED YET
-    //objectDetection.objectDetection_Loop();
+    //ROS2 Specific
+    //gyroscope.gyroscope_Loop();
+    //ros2_serial.ros2_loop();
     
-
+    //DELAYED
+    //temperatureReader.temperatureReader_Loop();
+    //objectDetection.objectDetection_Loop();
 }
 
 

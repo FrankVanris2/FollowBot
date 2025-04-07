@@ -9,7 +9,7 @@ Desc: Creating a gps class which allows me to send position data to the raspberr
 
 #include "followbot_manager/FollowBotManager.h"
 #include "GPS.h"
-
+#include "states&types/FollowBotNavigation.h"
 
 //The TX pin is 1, and the RX pin is 0
 
@@ -21,8 +21,8 @@ TinyGPSPlus gps;
 
 
 GPS::GPS(): GPSBaud(9600), interval(3000), previousMillis(0) {
-    gpsData[LAT] = 0.0;
-    gpsData[LON] = 0.0;
+    robotGPSData.lat = 0.0;
+    robotGPSData.lon = 0.0;
 }
 
 void GPS::gps_setup() {
@@ -38,8 +38,10 @@ void GPS::gps_loop() {
         while (Serial1.available() > 0) {
             if (gps.encode(Serial1.read())) {
                 if(gps.location.isValid()) {
-                    setGPS(gps.location.lat(), gps.location.lng());
+                    robotGPSData.lat = gps.location.lat();
+                    robotGPSData.lon = gps.location.lng();
                     followBotManager.setGPSData(gps.location.lat(), gps.location.lng());
+                    //Serial.println(String("Latitude: ") + robotGPSData.lat + ", Longitude: " + robotGPSData.lon);
                 } else {
                     Serial.println("GPS is not valid. Keeping previous coordinates");
                 }
@@ -54,7 +56,8 @@ void GPS::gps_loop() {
 
         if (millis() > 5000 && gps.charsProcessed() < 10) {
             Serial.println(F("No GPS detected: check wiring."));
-            setGPS(0, 0);
+            robotGPSData.lat = 0.0;
+            robotGPSData.lon = 0.0;
         }   
     }
 }

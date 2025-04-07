@@ -19,6 +19,8 @@ const int MAX_SPEED = 255;
 const int MED_SPEED = 200;
 const int LOW_SPEED = 150;
 
+const int ANGLE_THRESHOLD = 45; // degrees
+
 // Universal Object
 Motors myMotors;
 
@@ -58,16 +60,24 @@ void Motors::motorLoop() {
     
     
    if(mNewDirection != mCurrentDirection) {
-        Serial.print("Updated Motor Direction: ");
+        Serial.print("Motors.motorLoop - Updated Motor Direction: ");
         Serial.println(mNewDirection);
        mCurrentDirection = mNewDirection;
        adjustDirection();
    } 
 }
 
+void Motors::setMotorSpeed(int leftSpeed, int rightSpeed) {
+    motor1->setSpeed(leftSpeed);
+    motor2->setSpeed(rightSpeed);
+    motor3->setSpeed(rightSpeed);
+    motor4->setSpeed(leftSpeed);
+    motorForwards();
+}
+
 //testing client, (very important)
 void Motors::adjustDirection() {
-
+    Serial.println(String("Motors.adjustDirection - Current Direction: ") + mCurrentDirection); 
     if (mCurrentDirection == MOTOR_FORWARD) {
         motorForwards();
     } else if (mCurrentDirection == MOTOR_BACKWARD) {
@@ -81,10 +91,33 @@ void Motors::adjustDirection() {
     }
 }
 
+void Motors::turn(float turn) {
+    if (turn > ANGLE_THRESHOLD) {
+        motorRight();
+    } else if (turn < -ANGLE_THRESHOLD) {
+        motorLeft();
+    } else {
+        motorForwards();
+    }
+}
+
+void Motors::moveForward() {
+    motorForwards();
+}
+
+void Motors::moveBackward() {
+    motorBackwards();
+}
+
+void Motors::stopMoving() {
+    motorStop();
+}
+
 
 
 // Forward motion with the motors
 void Motors::motorForwards() {
+    Serial.println("Motors.motorForwards()");
     motor1->run(BACKWARD);
     motor2->run(BACKWARD);
     motor3->run(FORWARD);
@@ -93,6 +126,7 @@ void Motors::motorForwards() {
 
 // Backward motions with the motors
 void Motors::motorBackwards() {
+    Serial.println("Motors.motorBackwards()");
     motor1->run(FORWARD);
     motor2->run(FORWARD);
     motor3->run(BACKWARD);
@@ -101,6 +135,7 @@ void Motors::motorBackwards() {
 
 // Left motions with the motors
 void Motors::motorLeft() {
+    Serial.println("Motors.motorLeft()");
     motor1->run(FORWARD);
     motor2->run(BACKWARD);
     motor3->run(FORWARD);
@@ -109,6 +144,7 @@ void Motors::motorLeft() {
 
 // Right motions with the motors
 void Motors::motorRight() {
+    Serial.println("Motors.motorRight()");
     motor1->run(BACKWARD);
     motor2->run(FORWARD);
     motor3->run(BACKWARD);
@@ -116,6 +152,7 @@ void Motors::motorRight() {
 }
 
 void Motors::motorStop() {
+    Serial.println("Motors.motorStop()");
     motor1->run(RELEASE);
     motor2->run(RELEASE);
     motor3->run(RELEASE);

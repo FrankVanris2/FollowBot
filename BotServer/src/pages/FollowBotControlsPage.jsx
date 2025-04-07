@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 import MoveAroundButtons from '../components/MoveAroundButtons';
 import TemperatureDisplay from '../components/TemperatureDisplay';
 import HeatIndexDisplay from '../components/HeatIndexDisplay';
@@ -7,12 +9,17 @@ import api from '../services/api';
 import cameradisconnected from '../res/cameradisconnected.jpg';
 import '../styles/FollowBotControlsPage.style.css'; // Import the CSS file
 
+const USER = 'User';
+const ROBOT = 'Robot';
+
 const FollowBotControlsPage = () => {
     const [presses, setPresses] = useState([]);
     const [temperature, setTemperature] = useState(null);
     const [heatIndex, setHeatIndex] = useState(null);
+    const [controlMode, setControlMode] = useState('Robot');
     const holdThreshold = 5000; // 5 seconds
     const holdTimer = useRef(null);
+
 
     useEffect(() => {
         const fetchTemperature = async () => {
@@ -41,11 +48,17 @@ const FollowBotControlsPage = () => {
         fetchHeatIndex();
     }, []);
 
+    const toggleControlMode = () => {
+        setControlMode(controlMode === ROBOT ? USER : ROBOT);
+        handleButtonClick(controlMode === ROBOT ? USER : ROBOT);
+    }
+
     const handleMouseDown = (direction) => {
         holdTimer.current = setTimeout(() => {
             handleButtonClick(direction);
         }, holdThreshold);
     };
+
 
     const handleMouseUp = (direction) => {
         clearTimeout(holdTimer.current);
@@ -66,10 +79,17 @@ const FollowBotControlsPage = () => {
             <h1 className="header">FollowBot Controls (Demo)</h1>
             <div className="container">
                 <div className="button-wrapper">
+                    <Box mb={10}>
+                        <Button variant="contained" onClick={toggleControlMode}>
+                            {controlMode === ROBOT ? 'User Control' : 'Robot Control'}
+                        </Button>
+                    </Box>  
+
                     <MoveAroundButtons 
                         handleMouseDown={handleMouseDown}
                         handleMouseUp={handleMouseUp}
                         handleButtonClick={handleButtonClick}
+                        disabled={controlMode === ROBOT}
                     />
                     <DirectionList presses={presses} />
                 </div>
