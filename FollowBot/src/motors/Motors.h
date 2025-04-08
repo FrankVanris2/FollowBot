@@ -48,7 +48,7 @@ public:
     }
 
     
-
+    void turningRight();
     void moveForward();
     void moveBackward();
     void turn (float turn);

@@ -109,9 +109,16 @@ void Motors::moveBackward() {
     motorBackwards();
 }
 
+void Motors::turningRight() {
+    motorRight();
+}
+
+
 void Motors::stopMoving() {
     motorStop();
 }
+
+
 
 
 

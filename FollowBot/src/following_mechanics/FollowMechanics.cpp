@@ -21,6 +21,8 @@ Desc: Creating follow mechanics between the user and the robot
 #include "motors/Motors.h"
 #include "gps/GPS.h"
 
+#define TWO_SECONDS 2000
+
 //#include "objectavoidance&detection/ObjectDetection.h"
 
 // Interval
@@ -31,7 +33,8 @@ const int TENTH_SECOND = 100; // ms
 FollowMechanics followMechanics;
 
 // Constructor
-FollowMechanics::FollowMechanics():  mRSSIAvg(0), mRSSITotal(0), previousMillis(0) {}
+FollowMechanics::FollowMechanics():  mRSSIAvg(0), mRSSITotal(0), previousMillis(0), 
+lastTurnMillis(0), isTurning(false) {}
 
 
 // Setup
@@ -48,22 +51,41 @@ void FollowMechanics::followMechanics_Loop() {
         if (followBotBluetooth.isEnabled()) {
             followMechanics_Averaging(); // Get and average RSSI
             Serial.println(String("FollowMechanics_Loop(), RSSI Value: ") + mRSSIAvg);
-            //if (mRSSIAvg < -50) {
-                //driveTo_Test_1();
-                //driveTo_Test_2();
-            //} else {
-             //   myMotors.stopMoving();
-            //}
             
-            //driveTo_Test_2();
-
+        
             if (mRSSIAvg < -50) {
-                Serial.println("Moving Forwards");
-                myMotors.moveForward();
+                
+               // Check if 2 seconds have passed
+               if ((unsigned long) (millis() - lastTurnMillis) >= TWO_SECONDS) {
+                    lastTurnMillis = millis();
+                    if (!isTurning) {
+                        // Begin turning the robot
+                        Serial.println("Turning Right...");
+                        myMotors.turningRight();
+                        isTurning = true;
+                    } else {
+                        // Stop turning and check RSSI again
+                        myMotors.stopMoving();
+                        Serial.println("FollowMechanics_Loop(), Stopping Motors. Checking RSSI...");
+                        followMechanics_Averaging(); // Checking RSSI Again
+                        Serial.println(String("New RSSI Value: ") + mRSSIAvg);
+
+                        // If the RSSI improves, move forward
+                        if (mRSSIAvg >= -50) {
+                            Serial.println("RSSI Improved, Moving Forward...");
+                            myMotors.moveForward();
+                        } else {
+                            Serial.println("RSSI Still Weak. Continuing Turn...");
+                        }
+                        isTurning = false; // Reset turning state
+                    }
+               }
             } else {
+                // If the RSSI is strong enough, stop and do nothing
                 Serial.println("Stopping Motors");
                 myMotors.stopMoving();
             }
+                
         }
     }
 }

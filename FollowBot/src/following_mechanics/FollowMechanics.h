@@ -19,6 +19,9 @@ public:
 
 private:
     unsigned long previousMillis;
+    unsigned long lastTurnMillis;
+
+    bool isTurning;
 
     //list for RSSI Avg
     std::list<int> rssiList;
@@ -31,6 +34,8 @@ private:
     //drive mechanics
     void driveTo_Test_1();
     void driveTo_Test_2();
+
+    void followingMechanics_Test_3();
 
     void drive(float distance, float turn);
 
