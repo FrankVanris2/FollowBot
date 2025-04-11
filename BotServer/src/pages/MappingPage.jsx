@@ -10,6 +10,8 @@ import '../styles/MappingPage.style.css';
 const MappingPage = () => {
     // State to store map interactions
     const [selectedPosition, setSelectedPosition] = useState(null);
+    const [confirmedPosition, setConfirmedPosition] = useState(null);
+    const [showConfirmation, setShowConfirmation] = useState(false);
     const [geoJsonData, setGeoJsonData] = useState(null);
     const [showTileLayer, setShowTileLayer] = useState(true);
 
@@ -69,6 +71,7 @@ const MappingPage = () => {
                     clicked: { lat, lng },
                     nearestDropOff: nearestDropOff
                 });
+                setShowConfirmation(true);
             };
 
             map.on("click", handleClick);
@@ -121,7 +124,16 @@ const MappingPage = () => {
                 clicked: buildingCenter,
                 nearestDropOff: nearestDropOff
             });
+            setShowConfirmation(true);
         });
+    };
+
+    // Handle confirmation response
+    const handleConfirmation = (confirmed) => {
+        if (confirmed) {
+            setConfirmedPosition(selectedPosition);
+        }
+        setShowConfirmation(false);
     };
 
     // Create custom icons
@@ -191,7 +203,7 @@ const MappingPage = () => {
                     <Marker position={[selectedPosition.clicked.lat, selectedPosition.clicked.lng]}>
                         <Popup>
                             <div>
-                                <p>Clicked Position:</p>
+                                <p>Selected Position:</p>
                                 <p>Lat: {selectedPosition.clicked.lat.toFixed(6)}</p>
                                 <p>Lng: {selectedPosition.clicked.lng.toFixed(6)}</p>
                             </div>
@@ -215,23 +227,73 @@ const MappingPage = () => {
                         </Popup>
                     </Marker>
                 )}
+
+                {/* Confirmed position marker */}
+                {confirmedPosition?.clicked && (
+                    <Marker position={[confirmedPosition.clicked.lat, confirmedPosition.clicked.lng]} 
+                            icon={new L.Icon({ 
+                                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
+                                iconSize: [25, 41],
+                                iconAnchor: [12, 41]
+                            })}>
+                        <Popup>
+                            <div>
+                                <p>Confirmed Position:</p>
+                                <p>Lat: {confirmedPosition.clicked.lat.toFixed(6)}</p>
+                                <p>Lng: {confirmedPosition.clicked.lng.toFixed(6)}</p>
+                            </div>
+                        </Popup>
+                    </Marker>
+                )}
             </MapContainer>
 
-            {/* Display coordinates below map */}
-            {selectedPosition && (
-                <div className="selected-position">
-                    <div className="position-section">
-                        <h3>Clicked Position</h3>
-                        <p>Latitude: {selectedPosition.clicked.lat.toFixed(6)}</p>
-                        <p>Longitude: {selectedPosition.clicked.lng.toFixed(6)}</p>
+            {/* Confirmation Dialog */}
+            {showConfirmation && (
+                <div className="confirmation-dialog">
+                    <div className="confirmation-content">
+                        <h3>Confirm this location?</h3>
+                        <div className="position-section">
+                            <p>Latitude: {selectedPosition?.clicked.lat.toFixed(6)}</p>
+                            <p>Longitude: {selectedPosition?.clicked.lng.toFixed(6)}</p>
+                            {selectedPosition?.nearestDropOff && (
+                                <>
+                                    <p>Nearest Drop-off: {selectedPosition.nearestDropOff.dist.toFixed(2)} meters</p>
+                                </>
+                            )}
+                        </div>
+                        <div className="confirmation-buttons">
+                            <button 
+                                className="confirm-button yes-button"
+                                onClick={() => handleConfirmation(true)}
+                            >
+                                Yes
+                            </button>
+                            <button 
+                                className="confirm-button no-button"
+                                onClick={() => handleConfirmation(false)}
+                            >
+                                No
+                            </button>
+                        </div>
                     </div>
-                    
-                    {selectedPosition.nearestDropOff && (
+                </div>
+            )}
+
+            {/* Display confirmed position */}
+            {confirmedPosition && (
+                <div className="confirmed-position">
+                    <h2>Confirmed Location</h2>
+                    <div className="position-section">
+                        <h3>Position</h3>
+                        <p>Latitude: {confirmedPosition.clicked.lat.toFixed(6)}</p>
+                        <p>Longitude: {confirmedPosition.clicked.lng.toFixed(6)}</p>
+                    </div>
+                    {confirmedPosition.nearestDropOff && (
                         <div className="position-section">
                             <h3>Nearest Drop-off</h3>
-                            <p>Latitude: {selectedPosition.nearestDropOff.lat.toFixed(6)}</p>
-                            <p>Longitude: {selectedPosition.nearestDropOff.lng.toFixed(6)}</p>
-                            <p>Distance: {selectedPosition.nearestDropOff.dist.toFixed(2)} meters</p>
+                            <p>Latitude: {confirmedPosition.nearestDropOff.lat.toFixed(6)}</p>
+                            <p>Longitude: {confirmedPosition.nearestDropOff.lng.toFixed(6)}</p>
+                            <p>Distance: {confirmedPosition.nearestDropOff.dist.toFixed(2)} meters</p>
                         </div>
                     )}
                 </div>
