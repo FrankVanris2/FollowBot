@@ -20,6 +20,7 @@
 
 #include "sensors/Gyroscope.h"
 #include "sensors/Compass.h"
+#include "sensors/Encoders.h"
 
 #include "gps/GPS.h"
 #include "following_mechanics/FollowMechanics.h"
@@ -48,14 +49,17 @@ void FollowBotManager::followBotSetup() {
     // myMotors.motorSetup();
     // compass.compass_Setup();
     // myGPS.gps_setup();
-    followBotBluetooth.setup();
+    //followBotBluetooth.setup();
 
     //Server Setup
-    eepromStorage.setup();  
-    myLCDScreen.myLCDScreen_Setup();
-    myMotors.motorSetup();
-    followBotClient.followBotClient_Setup();  
-    myGPS.gps_setup();
+    // eepromStorage.setup();  
+    // myLCDScreen.myLCDScreen_Setup();
+    // myMotors.motorSetup();
+    // followBotClient.followBotClient_Setup();  
+    // myGPS.gps_setup();
+
+    //Testing
+    encoders.setupEncoders();
 
     
     //ROS2 specific:
@@ -73,18 +77,21 @@ void FollowBotManager::followBotSetup() {
 void FollowBotManager::followBotLoop() {
     //Following Mechanics loop setup
     // myGPS.gps_loop();
-    followBotBluetooth.loop();
     // followMechanics.followMechanics_Loop();
     // compass.compass_loop();
+    //followBotBluetooth.loop();
 
     //Server Setup
-    myLCDScreen.myLCDScreen_Loop();
-    followBotClient.followBotClient_Loop(); 
-    myGPS.gps_loop(); 
-    if (mCurrentControl == ROBOT) {
-        followMechanics.followMechanics_Loop();
-    }
-    myMotors.motorLoop();
+    // myLCDScreen.myLCDScreen_Loop();
+    // followBotClient.followBotClient_Loop(); 
+    // myGPS.gps_loop(); 
+    // if (mCurrentControl == ROBOT) {
+    //     followMechanics.followMechanics_Loop();
+    // }
+    // myMotors.motorLoop();
+
+    // Testing
+    encoders.loopEncoders();
 
     //ROS2 Specific
     //gyroscope.gyroscope_Loop();
