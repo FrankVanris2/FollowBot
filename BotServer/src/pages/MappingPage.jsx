@@ -244,6 +244,18 @@ const MappingPage = () => {
             </Marker>
           ))}
 
+          {dropOffPoints.map((feature, index) => (
+            <Marker
+              key={`dropoff-${index}`}
+              position={[feature.geometry.coordinates[1], feature.geometry.coordinates[0]]}
+              icon={dropOffIcon}
+            >
+              <Popup>
+                <strong>{feature.properties.name || 'Drop-off Point'}</strong>
+              </Popup>
+            </Marker>
+          ))}
+
           <MapClickHandler />
           <ResizeHandler />
 
@@ -255,23 +267,6 @@ const MappingPage = () => {
                   <p>Selected Position:</p>
                   <p>Lat: {selectedPosition.clicked.lat.toFixed(6)}</p>
                   <p>Lng: {selectedPosition.clicked.lng.toFixed(6)}</p>
-                </div>
-              </Popup>
-            </Marker>
-          )}
-
-          {/* Nearest drop-off marker */}
-          {selectedPosition?.nearestDropOff && (
-            <Marker 
-              position={[selectedPosition.nearestDropOff.lat, selectedPosition.nearestDropOff.lng]} 
-              icon={dropOffIcon}
-            >
-              <Popup>
-                <div>
-                  <p>Nearest Drop-off:</p>
-                  <p>Lat: {selectedPosition.nearestDropOff.lat.toFixed(6)}</p>
-                  <p>Lng: {selectedPosition.nearestDropOff.lng.toFixed(6)}</p>
-                  <p>Distance: {selectedPosition.nearestDropOff.dist.toFixed(2)} meters</p>
                 </div>
               </Popup>
             </Marker>
@@ -303,10 +298,16 @@ const MappingPage = () => {
         <div className="confirmation-dialog">
           <div className="confirmation-content">
             <h3>Confirm this location?</h3>
-            <div className="position-section">
-              <p>Latitude: {selectedPosition?.clicked.lat.toFixed(6)}</p>
-              <p>Longitude: {selectedPosition?.clicked.lng.toFixed(6)}</p>
-            </div>
+            
+            {selectedPosition?.nearestDropOff && (
+              <div className="nearest-dropoff-section">
+                <h4>Nearest Drop-off Point:</h4>
+                <p>Latitude: {selectedPosition.nearestDropOff.lat.toFixed(6)}</p>
+                <p>Longitude: {selectedPosition.nearestDropOff.lng.toFixed(6)}</p>
+                <p>Distance: {selectedPosition.nearestDropOff.dist.toFixed(2)} meters</p>
+              </div>
+            )}
+
             {isSending ? (
               <div className="loading-spinner">Sending...</div>
             ) : (
