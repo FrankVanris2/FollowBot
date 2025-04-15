@@ -41,7 +41,8 @@ void Encoders::loopEncoders() {
    Serial.println(String("Encoder 1 num ticks: ") + mPosition1);
    Serial.println(String("Encoder 2 num ticks: ") + mPosition2);
 
-    if(currentTime % THREE_SECONDS == 0) {
+    if(currentTime - previousTime >= THREE_SECONDS * 1000) {
+        previousTime = currentTime;
         setEncoderData(mPosition1, mPosition2);
 
         previousPosition1 = mPosition1;
