@@ -64,9 +64,9 @@ void Encoders::readEncoder1() {
 void Encoders::readEncoder2() {
     int b = digitalRead(ENCODER_OUT_B2);
     if (b == HIGH) {
-        mPosition2++;
-    } else {
         mPosition2--;
+    } else {
+        mPosition2++;
     }
 }
 

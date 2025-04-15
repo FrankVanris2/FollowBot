@@ -10,9 +10,9 @@ Desc: Creating encoders that will read rotation speed of the motors. the wheel D
 #define THREE_SECONDS 3000
 
 #define ENCODER_OUT_A 2
-#define ENCODER_OUT_B 3
+#define ENCODER_OUT_B 4
 
-#define ENCODER_OUT_A2 4
+#define ENCODER_OUT_A2 3
 #define ENCODER_OUT_B2 5
 
 #define WHEEL_DIAMETER 62.48 // in mm
