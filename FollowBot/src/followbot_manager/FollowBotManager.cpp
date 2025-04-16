@@ -46,13 +46,13 @@ void FollowBotManager::followBotSetup() {
     // myLCDScreen.myLCDScreen_Setup();
     // myMotors.motorSetup();
     // followBotClient.followBotClient_Setup();  
-    // myGPS.gps_setup();
+    myGPS.gps_setup();
 
     //Testing
     encoders.setupEncoders();
   
     // ROS2 specific:
-    // gyroscope.gyroscope_Setup();
+    gyroscope.gyroscope_Setup();
 
 }
 
@@ -70,8 +70,8 @@ void FollowBotManager::followBotLoop() {
     encoders.loopEncoders();
 
     // //ROS2 Specific
-    // gyroscope.gyroscope_Loop();
-    // ros2_serial.ros2_loop();
+    gyroscope.gyroscope_Loop();
+    ros2_serial.ros2_loop();
     
 }
 
