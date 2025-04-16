@@ -18,7 +18,9 @@ public:
     void dataToSerial();
 
     void imuDataDoc();
+    void encoderDataDoc();
     void gpsDataDoc();
+    
 
 private:
     const unsigned long TEST_INTERVAL = 1000;

@@ -167,9 +167,9 @@
 // ###### EDIT THE PIN NUMBERS IN THE LINES FOLLOWING TO SUIT YOUR ESP8266 SETUP ######
 
 // For NodeMCU - use pin numbers in the form PIN_Dx where Dx is the NodeMCU pin designation
-#define TFT_MISO  12  // Automatically assigned with ESP8266 if not defined
-#define TFT_MOSI  11  // Automatically assigned with ESP8266 if not defined
-#define TFT_SCLK  13  // Automatically assigned with ESP8266 if not defined
+#define TFT_MISO  12  // Shared with T_DO
+#define TFT_MOSI  11  // Shared with T_DIN
+#define TFT_SCLK  13  // Shared with T_CLK
 
 #define TFT_CS    10  // Chip select control pin D8
 #define TFT_DC    9  // Data Command control pin

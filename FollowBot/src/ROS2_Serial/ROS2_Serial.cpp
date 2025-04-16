@@ -9,6 +9,7 @@ Desc: Creating a testing env for ROS2 in order to determine if there is communic
 
 #include "ROS2_Serial.h"
 #include "sensors/Gyroscope.h"
+#include "sensors/Encoders.h"
 #include "gps/GPS.h"
 
 
@@ -38,12 +39,12 @@ void ROS2_Serial::ros2SerialData() {
 
 void ROS2_Serial::dataToSerial() {
     imuDataDoc();
+    encoderDataDoc();
     gpsDataDoc();
 }
 
 void ROS2_Serial::imuDataDoc() {
     const double* gyroData = gyroscope.getGyroData();
-
     StaticJsonDocument<256> imuDoc; 
 
     imuDoc["sensor_type"] = "imu";
@@ -55,14 +56,27 @@ void ROS2_Serial::imuDataDoc() {
     imuData["gy"] = gyroData[GY];
     imuData["gz"] = gyroData[GZ];
 
-    //Serialize the JSON object to a string and send it over Serial
     serializeJson(imuDoc, Serial);
     Serial.println();
 }
 
-void ROS2_Serial::gpsDataDoc() {
-    
+void ROS2_Serial::encoderDataDoc() {
+    const long* encoderData = encoders.getEncoderData();
+    StaticJsonDocument<256> encoderDoc;
 
+    encoderDoc["sensor_type"] = "encoder";
+    JsonObject encodeData = encoderDoc.createNestedObject("data");
+    encodeData["left_wheel_ticks"] = encoderData[MOTOR_DISTANCE_IN_TICKS_1];
+    encodeData["right_wheel_ticks"] = encoderData[MOTOR_DISTANCE_IN_TICKS_2];
+    encodeData["wheel_radius"] = WHEEL_RADIUS;
+    encodeData["wheel_track"] = WHEEL_TRACK;
+    encodeData["ticks_per_rev"] = ENCODER_CPR;
+
+    serializeJson(encoderDoc, Serial);
+    Serial.println();
+}
+
+void ROS2_Serial::gpsDataDoc() {
     StaticJsonDocument<256> gpsDoc; 
 
     gpsDoc["sensor_type"] = "gps";
