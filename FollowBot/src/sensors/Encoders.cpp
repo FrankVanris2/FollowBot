@@ -16,8 +16,8 @@ Desc: Creating setup code for obtaining the rotations of the wheels through the 
 Encoders encoders;
 
 // Static Variable definition
-volatile long Encoders::mPosition1 = 0;
-volatile long Encoders::mPosition2 = 0;
+volatile double Encoders::mPosition1 = 0.0;
+volatile double Encoders::mPosition2 = 0.0;
 
 Encoders::Encoders() : currentTime(0), previousTime(0),
 previousPosition1(0), previousPosition2(0) {}
@@ -38,8 +38,8 @@ void Encoders::loopEncoders() {
     currentTime = micros();
     
    // Debug information
-   Serial.println(String("Encoder 1 num ticks: ") + mPosition1);
-   Serial.println(String("Encoder 2 num ticks: ") + mPosition2);
+   // Serial.println(String("Encoder 1 num ticks: ") + mPosition1);
+   // Serial.println(String("Encoder 2 num ticks: ") + mPosition2);
 
     if(currentTime - previousTime >= THREE_SECONDS * 1000) {
         previousTime = currentTime;

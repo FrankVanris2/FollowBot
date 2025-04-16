@@ -60,7 +60,7 @@ void FollowBotManager::followBotLoop() {
   
     // myLCDScreen.myLCDScreen_Loop();
     // followBotClient.followBotClient_Loop(); 
-    // myGPS.gps_loop(); 
+    myGPS.gps_loop(); 
     // if (mCurrentControl == ROBOT) {
     //     followMechanics.followMechanics_Loop();
     // }
