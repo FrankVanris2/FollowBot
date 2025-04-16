@@ -25,6 +25,14 @@ const MappingPage = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const botId = localStorage.getItem('selectedBotId');
+    if (!botId) {
+      alert('No bot selected. Please select a bot from MyFollowBotsPage.');
+      navigate('/my-bots'); // Redirect to MyFollowBotsPage if no bot is selected
+    }
+  }, []);
+
   // Filter out unwanted features
   const filteredGeoJsonData = geoJsonData && {
     ...geoJsonData,
@@ -44,7 +52,7 @@ const MappingPage = () => {
     const toRad = deg => (deg * Math.PI) / 180;
     const R = 6371e3;
     const dLat = toRad(lat2 - lat1);
-    const dLng = toRad(lng2 - lng1);
+    const dLng = toRad(lat2 - lng1);
     const a = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) ** 2;
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return R * c;
@@ -137,12 +145,13 @@ const MappingPage = () => {
       setIsSending(true);
       setSendStatus(null);
       try {
-        // Send coordinates to API
+        const botId = localStorage.getItem('selectedBotId'); // Retrieve bot ID
         const response = await api.sendCoordinates(
           selectedPosition.clicked.lat,
-          selectedPosition.clicked.lng
+          selectedPosition.clicked.lng,
+          botId // Include bot ID in the API call
         );
-        
+
         if (response.success) {
           console.log('Coordinates sent successfully:', response);
           setConfirmedPosition(selectedPosition);

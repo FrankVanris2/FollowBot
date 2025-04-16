@@ -36,7 +36,8 @@ const AddFollowBots = () => {
     }, []);
 
     const handleAnalyzeBot = (botId) => {
-        navigate(`/bot-analytics/${botId}`);
+        localStorage.setItem('selectedBotId', botId); // Store selected bot ID
+        navigate(`/mapping`); // Navigate to MappingPage
     };
 
     const handleCheckBot = async () => {

@@ -102,4 +102,18 @@ const api = {
   }
 };
 
-export default api;
+const sendCoordinates = async (lat, lng, botId) => {
+  const response = await fetch('/api/sendCoordinates', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ lat, lng, botId }), // Include bot ID in the payload
+  });
+  return response.json();
+};
+
+export default {
+  ...api,
+  sendCoordinates,
+};
