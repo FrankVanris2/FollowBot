@@ -15,13 +15,6 @@ Desc: Creating encoders that will read rotation speed of the motors. the wheel D
 #define ENCODER_OUT_A2 3
 #define ENCODER_OUT_B2 5
 
-#define WHEEL_DIAMETER 62.48 // in mm
-#define WHEEL_RADIUS (WHEEL_DIAMETER / 2) // in mm
-#define WHEEL_CIRCUMFERENCE (WHEEL_DIAMETER * 3.14) // in mm
-#define WHEEL_TRACK 258; // in mm
-
-#define ENCODER_CPR 48 // counts per revolution
-
 enum  MotorDistances {
     MOTOR_DISTANCE_IN_TICKS_1 = 0,
     MOTOR_DISTANCE_IN_TICKS_2,
@@ -42,12 +35,12 @@ public:
         encoderData[MOTOR_DISTANCE_IN_TICKS_2] = numTicks2;
     }
 
-    long* getEncoderData() { return encoderData; }
+    double* getEncoderData() { return encoderData; }
 
 
 private:  
-    static volatile long mPosition1;
-    static volatile long mPosition2;
+    static volatile double mPosition1;
+    static volatile double mPosition2;
 
     int previousPosition1;
     int previousPosition2;
@@ -55,7 +48,7 @@ private:
     unsigned long currentTime; 
     unsigned long previousTime;
 
-    long encoderData[DATA_SIZE];
+    double encoderData[DATA_SIZE];
 };
 
 extern Encoders encoders;

@@ -61,17 +61,14 @@ void ROS2_Serial::imuDataDoc() {
 }
 
 void ROS2_Serial::encoderDataDoc() {
-    const long* encoderData = encoders.getEncoderData();
+    const double* encoderData = encoders.getEncoderData();
     StaticJsonDocument<256> encoderDoc;
 
     encoderDoc["sensor_type"] = "encoder";
     JsonObject encodeData = encoderDoc.createNestedObject("data");
-    encodeData["left_wheel_ticks"] = encoderData[MOTOR_DISTANCE_IN_TICKS_1];
-    encodeData["right_wheel_ticks"] = encoderData[MOTOR_DISTANCE_IN_TICKS_2];
-    encodeData["wheel_radius"] = WHEEL_RADIUS;
-    encodeData["wheel_track"] = WHEEL_TRACK;
-    encodeData["ticks_per_rev"] = ENCODER_CPR;
-
+    encodeData["left_wheel_ticks"] = encoderData[MOTOR_DISTANCE_IN_TICKS_2]; // This is LEFT
+    encodeData["right_wheel_ticks"] = encoderData[MOTOR_DISTANCE_IN_TICKS_1]; // This is RIGHT (Weird I know)
+    
     serializeJson(encoderDoc, Serial);
     Serial.println();
 }
