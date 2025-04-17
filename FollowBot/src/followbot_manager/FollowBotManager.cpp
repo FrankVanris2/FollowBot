@@ -19,7 +19,7 @@
 #include "motors/Motors.h"
 
 #include "sensors/Gyroscope.h"
-#include "sensors/Compass.h"
+#include "sensors/Encoders.h"
 
 #include "gps/GPS.h"
 #include "following_mechanics/FollowMechanics.h"
@@ -39,60 +39,40 @@ FollowBotManager::FollowBotManager(): mIsDirty(false), mCurrentControl(ROBOT){
     //mDirection(MOTOR_STOP)
 }
 
-
-
 //the setup that will store the many objects that will set in the main
-
 void FollowBotManager::followBotSetup() { 
-    //Following Mechanics setup
-    // myMotors.motorSetup();
-    // compass.compass_Setup();
-    // myGPS.gps_setup();
-    followBotBluetooth.setup();
 
-    //Server Setup
-    eepromStorage.setup();  
-    myLCDScreen.myLCDScreen_Setup();
-    myMotors.motorSetup();
-    followBotClient.followBotClient_Setup();  
+    // eepromStorage.setup();  
+    // myLCDScreen.myLCDScreen_Setup();
+    // myMotors.motorSetup();
+    // followBotClient.followBotClient_Setup();  
     myGPS.gps_setup();
 
-    
-    //ROS2 specific:
-    //gyroscope.gyroscope_Setup();
-
-    //DELAYED
-    // temperatureReader.temperatureReader_Setup();
-    // objectAvoidance.objectAvoidance_Setup();
-    // objectDetection.objectDetection_Setup();
-    
-    
+    //Testing
+    encoders.setupEncoders();
+  
+    // ROS2 specific:
+    gyroscope.gyroscope_Setup();
 
 }
 
 void FollowBotManager::followBotLoop() {
-    //Following Mechanics loop setup
-    // myGPS.gps_loop();
-    followBotBluetooth.loop();
-    // followMechanics.followMechanics_Loop();
-    // compass.compass_loop();
-
-    //Server Setup
-    myLCDScreen.myLCDScreen_Loop();
-    followBotClient.followBotClient_Loop(); 
+  
+    // myLCDScreen.myLCDScreen_Loop();
+    // followBotClient.followBotClient_Loop(); 
     myGPS.gps_loop(); 
-    if (mCurrentControl == ROBOT) {
-        followMechanics.followMechanics_Loop();
-    }
-    myMotors.motorLoop();
+    // if (mCurrentControl == ROBOT) {
+    //     followMechanics.followMechanics_Loop();
+    // }
+    // myMotors.motorLoop();
 
-    //ROS2 Specific
-    //gyroscope.gyroscope_Loop();
-    //ros2_serial.ros2_loop();
+    // Testing
+    encoders.loopEncoders();
+
+    // //ROS2 Specific
+    gyroscope.gyroscope_Loop();
+    ros2_serial.ros2_loop();
     
-    //DELAYED
-    //temperatureReader.temperatureReader_Loop();
-    //objectDetection.objectDetection_Loop();
 }
 
 
