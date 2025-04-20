@@ -1,0 +1,39 @@
+.about-app-page-container {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
+}
+
+.content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+.mobile-app-info {
+    max-width: 45%;
+    padding: 20px;
+}
+
+.mobile-app-info-heading {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: #343a40;
+}
+
+.mobile-app-info-text {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #495057;
+}
+
+.mobile-preview {
+    text-align: center;
+}
+
+.phone-image {
+    width: 200px;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+}

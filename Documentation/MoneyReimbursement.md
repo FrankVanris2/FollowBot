@@ -22,4 +22,40 @@ M3 Screws: $4.99
 Arduino Rev4 Wifi: $27.50
 * https://store-usa.arduino.cc/products/uno-r4-wifi?gad_source=1&gclid=Cj0KCQjwzva1BhD3ARIsADQuPnUe2QQbA0fWsK1f4miBPJ3SgAhI6EdM5A6ZmWw8PeZ75cRRGwPQ5DMaAoTVEALw_wcB
 
-<h3> Total Cost + Tax: $65.60 </h3>
+USB to USB C Adapater: $5.99
+* https://www.amazon.com/dp/B0BJ8YQ2LM?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1
+
+USB C to quick wire cable connector: $7.99
+* https://www.amazon.com/dp/B0CLH7FR8V?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1
+
+Battery Pack 10400mAh: $13.99
+* https://www.amazon.com/dp/B0B7XNNJJB?ref=ppx_yo2ov_dt_b_fed_asin_title
+
+Infrared Sensors IR: $7.70
+* https://www.amazon.com/gp/product/B0B74QJV8H/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1
+
+
+Mecanum Wheel 48mm Omni Directional Electric: $15.79
+* https://www.amazon.com/gp/product/B0B6GLYLHZ/ref=ppx_yo_dt_b_asin_title_o01_s00?ie=UTF8&psc=1
+
+Raspberry Pi 4B 2GB RAM + Micro-HDMI + Official Raspberry Pi Case + Official Raspberry Pi power charger: $75.90
+* https://www.adafruit.com/product/4296
+
+
+Motors with Encoders: $14.88 
+* https://tinyurl.com/48wfdm87
+
+
+Gyroscope: $6.99
+* https://tinyurl.com/2yp4y88m
+
+Cheap Camera: $35.99
+* https://tinyurl.com/yd8knfjm
+
+Raspberry Pi 5: $72.99
+* https://tinyurl.com/y4cyc9cp 
+
+NVME drive for the Pi: $12.90
+* https://tinyurl.com/3h4cp4h5 
+
+<h3> Total Cost + Tax: $344.02 </h3>

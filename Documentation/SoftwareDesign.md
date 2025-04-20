@@ -4,7 +4,7 @@ Follow Bot</h1>
 
 <h2> Version 1.0 approved<br>
 <br>
-Prepared by Frank Vanris, Igor Janotti<br><br>
+Prepared by Frank Vanris, Igor Janotti, Trong Duong, Joseph Hoang<br><br>
 Bellevue College<br><br>
 7/10/2024<br><br></h2>
 
@@ -13,19 +13,19 @@ Bellevue College<br><br>
 </h2>
 
 <h3> 1.1 Purpose<br> </h3>
-This software/hardware design document describes the architecture and system design of the Follow Bot robot as well as it's software, and how reliable and usable it will be for the user.<br><br>
+This software/hardware design document describes the architecture and system design of the Follow Bot FollowBot as well as it's software, and how reliable and usable it will be for the user.<br><br>
 
 <h3> 1.2 Scope <br> </h3>
-The Goal for this robot is for the user to be able to use it wherever they go while storing their belongings in a safe and reliable place.<br><br>
+The Goal for this FollowBot is for the user to be able to use it wherever they go while storing their belongings in a safe and reliable place. As well as map it to specific locations in order to bring items from place to place.<br><br>
 
 <h3> 1.3 Overview <br></h3>
 The main gist of this document is to explain and express how the design for this software/hardware will be handled and to explain how the user will be able to use our software and hardware efficiently and reliably.<br><br>
 
 <h3> 1.4 Reference Material <br> </h3>
-Here are the given sources that were used to rely information for this document:<br>
+Here are the given sources that were used to relay information for this document:<br>
 
 * https://onlinelibrary.wiley.com/doi/10.1155/2022/8274455
-* https://docs.ros.org/en/foxy/index.html
+* https://docs.ros.org/en/jazzy/index.html
 * https://docs.wpilib.org/en/stable/docs/hardware/hardware-basics/index.html
 * https://docs.wpilib.org/en/stable/docs/software/hardware-apis/motors/index.html
 * https://docs.arduino.cc/
@@ -41,7 +41,7 @@ Here are the given sources that were used to rely information for this document:
 * Practical Robotics in C++ By *Lloyd Brombach*
 * An Introduction to AI Robotics By *Robin Murphy*
 * Introduction to Robotics: Mechanics and Control By *John J Craig*
-* A Concise introduction to Robot Programming with ROS2 By *Francisco Rico Manrique*
+* A Concise introduction to FollowBot Programming with ROS2 By *Francisco Rico Manrique*
 
 <h3> 1.5 Definitions and Acronyms <br> </h3>
 
@@ -55,7 +55,7 @@ Here are the given sources that were used to rely information for this document:
 
 * Topics: one of the three main ways that nodes can communicate with one another is via topics.
 
-* Foxy: A version of the ROS2, there are other versions such as Jammy, Jazzy, Humble, Iron, and others.
+* Jazzy: The newest version of the ROS2 of the creation of this document, there are other versions such as Jammy, Foxy, Humble, Iron, and others.
 
 * Motor Drivers: control chips that are meant to run current through a number of motors.
 
@@ -75,34 +75,39 @@ Here are the given sources that were used to rely information for this document:
 ### App
 
 #### Goal
-The goal of the app is to control and have the robot follow the user autonomously while avoiding obstacles. The mobile app should also send live data on battery life, location, weight, and temperature.
+The goal is to have the app update you on specific features that the FollowBot contains such as battery, weight, temperature, distance, and much more. With the app you will be able to map the FollowBot to a specific location. Or call the FollowBot to come to your specific location. There are many applications that the app will bring, and much more to come after.
 
 #### Requirements
 
 - **Light and Dark Mode**  
   The app should support both light and dark themes for user interface customization.
 
-- **Robot Follow Feature**  
-  The app will allow the robot to follow the phone, potentially using GPS or similar technology.
+- **FollowBot Mapping Feature**  
+  The app will allow the FollowBot to go to a specific location, or traverse to your location.
 
-- **Robot Status Updates**  
-  The app will update the robot's status every 30 seconds. The update will include:
+- **FollowBot Status Updates**  
+  The app will update the FollowBot's status every 30 seconds. The update will include:
   - Power level
   - Temperature
-  - Weight of the robot
+  - Weight of the FollowBot
   - Information on any movement issues related to the weight
+  - Distance between the user and the FollowBot when it comes to following mechanics.
 
 - **Distance Notifications**  
-  The app will send notifications if the robot gets too far away from the phone.
+  The app will send notifications if the FollowBot gets too far away from the user.
+
+**Damage Notifications**
+ Notifications for any possible damages that occurred on the FollowBot. Such as movement control changes, Temperature unresponsive changes, weight unresponsive changes, and power unresponsive changes. As well as network unresponsive changes.
+
 
 - **Controller Functionality**  
-  The app will act as a controller for the robots, using the touchscreen. 
+  The app will act as a controller for the FollowBots, using the touchscreen. 
   - Optionally, a game controller can be used if the touchscreen is not functional.
 
 ### Website
 
 #### Goal
-The goal of the website is to inform the users about what the robot does and send queries back to the owners of the website.
+The goal of the website is to inform the users about what the FollowBot does and send queries back to the owners of the website. It will contain as well demo features that the user will be able to try out with their FollowBot. And the website will contain a forums page in order for users alike to ask questions that are related to FollowBot
 
 #### Requirements
 
@@ -115,7 +120,7 @@ The goal of the website is to inform the users about what the robot does and sen
 - **Pages**  
   The website will contain four main pages:
   
-  1. **Robot**  
+  1. **FollowBot**  
      - This page will include text and an embedded video from YouTube.
   
   2. **App**  
@@ -129,60 +134,97 @@ The goal of the website is to inform the users about what the robot does and sen
      - A private section for owners will be available to download and delete messages.
      - Consider using a database to store and manage feedback submissions.
 
+  5. 
+
 ### Robotic Overview
 
 #### Goal
-The goal of the robot is for it to carry up to 50 lbs of your belongings and follow you while maneuvering through different obstacles along the way.
+The goal of the FollowBot is for it to carry up to 50 lbs of your belongings and follow the user while avoiding obstacles. FollowBot will also be able to map to a specific location as well as meet your specific position.
 
-We will be experimenting with different kinds of motors, sensors, and modules to determine the best way for the robot to follow the user while maneuvering through obstacles quickly. We also aim to create a device that keeps costs to a minimum.
+We will be experimenting with different kinds of motors, sensors, and modules to determine the best way for the FollowBot to follow the user while maneuvering through obstacles quickly. We also aim to create a device that keeps costs to a minimum, as well as find ways to have FollowBot map between two locations..
+We will be experimenting with different kinds of motors, sensors, and modules to determine the best way for the FollowBot to follow the user while maneuvering through obstacles quickly. We also aim to create a device that keeps costs to a minimum.
 
 #### Weight Carrying and Following
-The user will be able to place various belongings within the device, such as food, electronics, books, sports items, clothing, and more. The robot will track the user based on the phone's position and its current position via the GPS module installed within the robot.
+The user will be able to place various belongings within the device, such as food, electronics, books, sports items, clothing, and more. The FollowBot will be able to track the user based on it's 
 
 #### Sensors
-The robot will use multiple sensors to avoid and move away from obstacles. Forms of avoidance will include lidar sensors, computer vision, and echo locative tracking. The choice of sensors will be decided as a team based on their accuracy in avoiding obstacles quickly.
+The FollowBot will use multiple sensors to avoid and move away from obstacles. Forms of avoidance will include lidar sensors, computer vision, and echo locative tracking. The choice of sensors will be decided as a team based on their accuracy in avoiding obstacles quickly.
+
+#### Mapping
+The FollowBot will be able to map out a path to a given location through API tools such as Google Maps, BC's directed Map API, and much more.
+The FollowBot will use multiple sensors to avoid and move away from obstacles. Forms of avoidance will include lidar sensors, computer vision, and echo locative tracking. The choice of sensors will be decided as a team based on their accuracy in avoiding obstacles quickly.
 
 #### Hardware
 When designing the hardware, cost will be a key consideration. Initially, hardware will be created through 3D printing and simple woodworking. Designing the hardware will be done using various design applications such as FreeCAD, Fusion360, and Blender. For electronic hardware development and wiring, the final design will be created via a PCB manufacturer.
 
 #### Real-Time Updates
-Through the mobile app, the robot will provide real-time updates on battery life, distance between the user and the robot, the temperature within the robot's capsule, and the weight distribution on the robot. Notifications will be sent to the user if the battery life is low or if the robot needs help or repair.
+Through the mobile app, the FollowBot will provide real-time updates on battery life, distance between the user and the FollowBot, the temperature within the FollowBot's capsule, and the weight distribution on the FollowBot. Notifications will be sent to the user if the battery life is low or if the FollowBot needs help or repair.
 
 #### Machine Learning Models
-We aim to add machine learning to the robot. The capability for the robot to learn from its mistakes through reinforcement learning could be beneficial in improving performance while conserving battery life. Our goal is to maximize battery life so the robot can be used daily without frequent charging.
+We aim to add machine learning to the FollowBot. The capability for the FollowBot to learn from its mistakes through reinforcement learning could be beneficial in improving performance while conserving battery life. Our goal is to maximize battery life so the FollowBot can be used daily without frequent charging. As well as finding best possible paths to better improve the following mechanics of FollowBot.
 
 #### Authentication/Security
-We plan to add an authentication process when initializing the robot on the user's account through the mobile app and the website. Each robot will have a unique secure number configuration that cannot be changed. This configuration will only need to be done once.
+We plan to add an authentication process when initializing the FollowBot on the user's account through the mobile app and the website. Each FollowBot will have a unique secure number configuration that cannot be changed. This configuration will only need to be done once.
 
 #### Cost
-We aim to keep the price range for the robot under $500, ideally under $300. The device should be stable, useful, and beneficial to the consumer. The cost should attract consumers to buy our product. Our goal is to ensure the device is worth their money and to exceed their expectations.
+We aim to keep the price range for the FollowBot under $500, ideally under $300. The device should be stable, useful, and beneficial to the consumer. The cost should attract consumers to buy our product. Our goal is to ensure the device is worth their money and to exceed their expectations.
+
+###### UPDATE 
+
+#### Demo GOALS
+We aim to have multiple demos for FollowBot and  we consider FollowBot passing the demos as succesfully goal
+
+### Demo 1
+First demo getting information from FollowBot, 
+
+### Demo 2
+Second demo controlling the FollowBot from using website,
+
+
+### Demo 3
+Third demo moving circle while avoiding obsticles
+
+
+
+
+
+
+
+
 
 
 
 <h2>3. Robotic Architecture</h2>
 
 ![alt text](RoboticArchitecture.png)
-*Robot Architecture*
+*FollowBot Architecture*
 
 ![alt text](realTime_historicalDataRetrieval.png)
 *Data Retrieval for app and learning model*
  
  <h2>3. Systems Architecture:</h2>
 
-![alt text](SystemsArchitecture.png)
-*Interaction between website app and robot*
+![alt text](/Images/Mapping.png)
+*Mapping*
 
+![alt text](/Images/SystemsArchitecture.png)
+*Interaction between website app and FollowBot*
+![alt text](SystemsArchitecture.png)
+*Interaction between website app and FollowBot*
+
+![alt text](</Images/Authentication Process Design.png>)
+*Authentication process for FollowBot *
 ![alt text](<Authentication Process Design.png>)
-*Authentication process for robot*
+*Authentication process for FollowBot*
 
 <h2>Architectural Design for both Robotic and System sides: </h2>
 
-<h3> Robot Architectural Design </h3>
+<h3> FollowBot Architectural Design </h3>
 
-<h4> 3.1 Robot Architecture </h4>
-1. Robot Server:
+<h4> 3.1 FollowBot Architecture </h4>
+1. FollowBot Server:
 
-  * Robot server takes place within the ROS2 Raspberry Pi.
+  * FollowBot server takes place within the ROS2 Raspberry Pi.
   * allows information back and forth between client nodes.
 
 2. Universal Topic:
@@ -219,13 +261,14 @@ We aim to keep the price range for the robot under $500, ideally under $300. The
 
 <h4>Data Retrieval and Learning Model Architecture </h4>
 
-1. Robot Server:
+1. FollowBot Client:
+1. FollowBot Server:
 
-    * Robot server takes place within the ROS2 Raspberry Pi.
-    * Allows information back and forth between client nodes.
+    * FollowBot client takes place in the FollowBot 
+    * A python server is used to send information back and forth between the user and the FollowBot.
 
 2. Real Time Data Retrieval:
-    * A method that will be used to obtain live data from the robot.
+    * A method that will be used to obtain live data from the FollowBot.
     * live data varies from battery life, to weight gain.
 
 3. Data:
@@ -234,56 +277,67 @@ We aim to keep the price range for the robot under $500, ideally under $300. The
 
     **Weight Information**: Will give you the amount of weight that is being stored on the system.
 
-    **Distance Information**: Will give the proximity and distance between you and the robot.
+    **Distance Information**: Will give the proximity and distance between you and the FollowBot.
 
     **Temperature Information**: Will give you the interior temperature of where you are storing your items. Will be beneficial due to the fact that people are buying groceries and do not want their items to get spoiled.
 
 4. Mobile App:
-    * Will visually show the real time data to the user when they are using the app.
+    * Will visually show the real time data to the user when they are using the app as well as allow the user to direct itself from point A to B from a Map.
   
 5. Learning Model:
-    * Will be used to take in past data of the robot in order to find better ways to correct it's movement properly so it can easily, safely, and quickly follow you while trying to reduce battery consumption.
+    * Will be used to take in past data of the FollowBot  in order to find better ways to correct it's movement properly so it can easily, safely, and quickly follow you while trying to reduce battery consumption. 
+    * Will be used to take in past data of the FollowBot in order to find better ways to correct it's movement properly so it can easily, safely, and quickly follow you while trying to reduce battery consumption.
 <br><br>
 
 <h3> 3.1 Systems Architectural Design </h3>
 
 <h4> Mobile and Web Application Interaction </h4>
-1. Server Follow Bot:
+
+1. Server AWS:
     * We know that this will consist of all the connections to the client nodes, but it will also connect between the mobile app and the website itself.
   
-2. ROS2 Raspberry Pi:
-    * This device consists of all the fundamental backends in order to connect to the website and the mobile app.
+2. ROS2 Raspberry Pi or Microcontroller:
+    * This device consists of all the fundamental backends in order to connect to the Server which will connect to the website and mobile app. Mapping features will be also added as well.
 
 3. Website interaction:
-    * Backend to frontend interaction between the website and the Raspberry pi
-    * With the website you will be able to also control the robot itself a bit if one is near by.
+    * Backend to frontend interaction between the website server and FollowBot and vice versa.
+    * With the website you will be able to also control the FollowBot itself by connecting to it if it is yours.
 
 4. Website:
-    * The website will consist of reliable information about the robot as well as have some minor interaction with the robot.
+    * The website will consist of reliable information about the FollowBot as well as have some minor interaction with the FollowBot.
 
 5. Mobile interaction:
     * Backend to frontend interaction between the mobile app and the Raspberry pi
-    * The mobile app will have the main control over the robot itself, and will display reliable information about the robot
+    * The mobile app will have the main control over the FollowBot itself, and will display reliable information about the FollowBot
 
 6. Mobile App:
-    * You will be able to interact with the robot through a mobile interface. It will allow you to see certain specs such as battery, temperature, weight, and distance. You will also be able to control the robot if needed.
+    * You will be able to interact with the FollowBot through a mobile interface. It will allow you to see certain specs such as battery, temperature, weight, and distance. You will also be able to control the FollowBot if needed.
 
 7. Mail Application interaction:
-    * There will be an interaction from frontend to frontend for sending messages through email to a website owner who.
+    * There will be an interaction from frontend to frontend for for sending information to users who have purchased FollowBot. Updates will correlate to mobile related features, FollowBot related features, and much more.
 
 8. Mail Application:
-    * The owner of the website will recieve emails from users that use the feedback page on the website. This will allow owners of the website to gain reliable information based on issues or future add-ons for the robot.
+    * The owner of the website will recieve emails from users that use the feedback page on the website. This will allow owners of the website to gain reliable information based on issues or future add-ons for the FollowBot.
+
+9. Forums Page:
+    * Users will be able to open the forums page in order to ask questions or look up questions that are related to FollowBot. Users will be able to communicate with one another, answer questions from one another, and upvote answers to questions based on how reliable they are.
+  
 <br><br>
 
 <h4> Authentication Process </h4>
 
-1. Robot Server:
+1. AWS Server:
+1. FollowBot Server:
 
-    * Robot server takes place within the ROS2 Raspberry Pi.
+    * The Server will take place on a AWS instance EC2.
+    * Allows information back and forth between client nodes, website, and mobile app.
+    * FollowBot server takes place within the ROS2 Raspberry Pi.
     * Allows information back and forth between client nodes.
 
-2. Robot Authentication Key:
-    * A 16 number/character key meant for every robot.
+2. FollowBot  Authentication Key:
+    * A 16 number/character key meant for every FolloBobot.
+2. FollowBot Authentication Key:
+    * A 16 number/character key meant for every FollowBot.
     * Every key will be different from the last. 
 
 3. Mobile App/Website Authentication:
@@ -291,18 +345,33 @@ We aim to keep the price range for the robot under $500, ideally under $300. The
     b. You will input a password.
 
 4. Authentication process:
-    * the combination of the robots key as well as the users password and username will allow them to be authenticated for the use of the robot and for special offers as well as access towards the guides, feedback page, and support page.
+    * the combination of the FollowBots key as well as the users password and username will allow them to be authenticated for the use of the FollowBot  and for special offers as well as access towards the guides, feedback page, and support page.
+    * the combination of the FollowBots key as well as the users password and username will allow them to be authenticated for the use of the FollowBot and for special offers as well as access towards the guides, feedback page, and support page.
 
 5. Database:
-  * The database will be used to store the robots keys, passwords, and usernames of users that are subscribed to the product. The database will be a way of making sure certain keys are not the same from one another as well as passwords and usernames.
+  * The database will be used to store the FollowBots keys, passwords, and usernames of users that are subscribed to the product. The database will be a way of making sure certain keys are not the same from one another as well as passwords and usernames.
+
 <br><br>
 
-### 3.2 Robot Decomposition Architectural Design
+<h4> Mapping process </h4>
 
-#### Robot Architecture
+1. BC Mapping API:
+    * We will potentially use the BC map in order to determine the best possible path to a location for the FollowBot
+    * The map will allow FollowBot to go to different locations on BC
 
-1. **Robot Server**
-    - **Description**: The Robot Server operates within the ROS2 Raspberry Pi and facilitates communication between client nodes.
+2. Google Maps:
+    * Google maps will allow for full access of mapping for the FollowBot. It will allow FollowBot to go to specific locations from point A to point B.
+
+3. Database:
+    * We will contain a Database that will potentially contain most University Campuses maps in order to traverse from point A to point B.
+<br><br>
+
+### 3.2 FollowBot Decomposition Architectural Design
+
+#### FollowBot Architecture
+
+1. **FollowBot Server**
+    - **Description**: The FollowBot Server operates within the ROS2 Raspberry Pi and facilitates communication between client nodes.
     - **Subsystem Model**:
       - **Class**: `RobotServer`
       - **Attributes**: `serverID`, `status`
@@ -311,6 +380,7 @@ We aim to keep the price range for the robot under $500, ideally under $300. The
       - **Interfaces**: `ICommunication`
       - **Methods**: `sendMessage()`, `receiveMessage()`
 <br><br>
+
 2. **Universal Topic**
     - **Description**: The Universal Topic enables message transfer and retrieval between client and server nodes.
     - **Subsystem Model**:
@@ -381,8 +451,9 @@ We aim to keep the price range for the robot under $500, ideally under $300. The
   - **Interface Specifications**:
     - **Interfaces**: `IMotor`
     - **Methods**: `controlMotor()`
-<br><br>
-4. **External Weight Node**
+
+
+  f. **External Weight Node**
     
     - **Description**: Connects to a mobile device to provide live data on the weight being stored on the device.
     - **Subsystem Model**:
@@ -393,12 +464,16 @@ We aim to keep the price range for the robot under $500, ideally under $300. The
       - **Interfaces**: `IWeight`
       - **Methods**: `connectToDevice()`, `sendWeightData()`
 
+<br><br>
+
 #### Data Retrieval and Learning Model Architecture
 
-1. **Robot Server**
-    - **Description**: The Robot Server operates within the ROS2 Raspberry Pi and facilitates communication between client nodes.
+1. **AWS Server**
+    - **Description**: The FollowBot  Server operates within the AWS Instance and facilitates communication between client nodes.
+1. **FollowBot Server**
+    - **Description**: The FollowBot Server operates within the ROS2 Raspberry Pi and facilitates communication between client nodes.
     - **Subsystem Model**:
-      - **Class**: `RobotServer`
+      - **Class**: `AWSServer`
       - **Attributes**: `serverID`, `status`
       - **Methods**: `initialize()`, `sendMessage()`, `receiveMessage()`
     - **Interface Specifications**:
@@ -406,7 +481,8 @@ We aim to keep the price range for the robot under $500, ideally under $300. The
       - **Methods**: `sendMessage()`, `receiveMessage()`
 
 2. **Real Time Data Retrieval**
-    - **Description**: A method used to obtain live data from the robot. The live data varies from battery life to weight gain.
+    - **Description**: A method used to obtain live data from the FollowBot. The live data varies from battery life to weight gain and more.
+    - **Description**: A method used to obtain live data from the FollowBot. The live data varies from battery life to weight gain.
     - **Subsystem Model**:
       - **Class**: `RealTimeDataRetrieval`
       - **Attributes**: `dataID`, `batteryLife`, `weightGain`, `timestamp`
@@ -416,7 +492,7 @@ We aim to keep the price range for the robot under $500, ideally under $300. The
       - **Methods**: `retrieveBatteryLife()`, `retrieveWeightGain()`, `updateTimestamp()`
 
 3. **Data**
-    - **Description**: Provides various types of information about the robot.
+    - **Description**: Provides various types of information about the FollowBot.
     - **Subsystem Model**:
       - **Class**: `Data`
       - **Attributes**: `batteryInfo`, `weightInfo`, `distanceInfo`, `temperatureInfo`
@@ -436,7 +512,7 @@ We aim to keep the price range for the robot under $500, ideally under $300. The
       - **Methods**: `displayRealTimeData()`
 
 5. **Learning Model**
-    - **Description**: Takes in past data of the robot to find better ways to correct its movement, ensuring it can follow you easily, safely, and quickly while reducing battery consumption.
+    - **Description**: Takes in past data of the FollowBot to find better ways to correct its movement, ensuring it can follow you easily, safely, and quickly while reducing battery consumption.
     - **Subsystem Model**:
       - **Class**: `LearningModel`
       - **Attributes**: `modelID`, `pastData`
@@ -445,24 +521,34 @@ We aim to keep the price range for the robot under $500, ideally under $300. The
       - **Interfaces**: `ILearningModel`
       - **Methods**: `analyzeData()`, `optimizeMovement()`
 
+6. **Mapping**
+    - **Description**: Allows FollowBot to go from point A to point B from a Map that is saved on the Database.
+    - **Subsystem Model**:
+      - **Class**: `Mapping`
+      - **Attributes**: `mappingID`, `mapData`
+      - **Methods**: `obtainMap()`, `obtainMapPositionA()`, `obtainMapPositionB()`
+    - **Interface Specifications**:
+      - **Interface**: `IMapping`
+      - **Methods**: `obtainMap()`, `obtainMapPositionA()`, `obtainMapPositionB()`
+
 ### 3.2 Systems Decomposition Architectural Design
 
 #### Mobile and Web Application Interaction
 
-1. **Server Follow Bot**
+1. **Server AWS**
     - **Description**: Consists of all the connections to the client nodes and connects the mobile app and the website.
     - **Subsystem Model**:
-      - **Class**: `ServerFollowBot`
-      - **Attributes**: `botID`, `status`
+      - **Class**: `ServerAWS`
+      - **Attributes**: `awsID`, `status`
       - **Methods**: `connectToClientNodes()`, `connectToMobileApp()`, `connectToWebsite()`
     - **Interface Specifications**:
       - **Interfaces**: `IConnection`
       - **Methods**: `connectToClientNodes()`, `connectToMobileApp()`, `connectToWebsite()`
 
-2. **ROS2 Raspberry Pi**
+2. **ROS2 Raspberry Pi Or Microcontroller**
     - **Description**: Contains all the fundamental backends to connect to the website and the mobile app.
     - **Subsystem Model**:
-      - **Class**: `ROS2RaspberryPi`
+      - **Class**: `ROS2RaspberryPi`or `Arduino`
       - **Attributes**: `deviceID`, `backendStatus`
       - **Methods**: `initializeBackend()`, `connectToWebsite()`, `connectToMobileApp()`
     - **Interface Specifications**:
@@ -470,7 +556,8 @@ We aim to keep the price range for the robot under $500, ideally under $300. The
       - **Methods**: `initializeBackend()`, `connectToWebsite()`, `connectToMobileApp()`
 
 3. **Website Interaction**
-    - **Description**: Backend to frontend interaction between the website and the Raspberry Pi. Allows control of the robot if nearby.
+    - **Description**: Backend to frontend interaction between the website to server to Raspberry Pi or Microcontroller. Allows control of the FollowBot if nearby.
+    - **Description**: Backend to frontend interaction between the website and the Raspberry Pi. Allows control of the FollowBot if nearby.
     - **Subsystem Model**:
       - **Class**: `WebsiteInteraction`
       - **Attributes**: `interactionID`, `websiteStatus`
@@ -480,7 +567,7 @@ We aim to keep the price range for the robot under $500, ideally under $300. The
       - **Methods**: `backendToFrontend()`, `controlRobot()`
 
 4. **Website**
-    - **Description**: Provides reliable information about the robot and allows minor interaction with the robot.
+    - **Description**: Provides reliable information about the FollowBot and allows minor interaction with the FollowBot.
     - **Subsystem Model**:
       - **Class**: `Website`
       - **Attributes**: `websiteID`, `content`
@@ -490,7 +577,7 @@ We aim to keep the price range for the robot under $500, ideally under $300. The
       - **Methods**: `displayInfo()`, `interactWithRobot()`
 
 5. **Mobile Interaction**
-    - **Description**: Backend to frontend interaction between the mobile app and the Raspberry Pi. The mobile app has main control over the robot.
+    - **Description**: Backend to frontend interaction between the mobile app, server and the Raspberry Pi or Microcontroller. The mobile app has main control over the FollowBot.
     - **Subsystem Model**:
       - **Class**: `MobileInteraction`
       - **Attributes**: `interactionID`, `mobileStatus`
@@ -500,7 +587,7 @@ We aim to keep the price range for the robot under $500, ideally under $300. The
       - **Methods**: `backendToFrontend()`, `controlRobot()`
 
 6. **Mobile App**
-    - **Description**: Allows interaction with the robot through a mobile interface. Displays specs like battery, temperature, weight, and distance. Allows control of the robot.
+    - **Description**: Allows interaction with the FollowBot through a mobile interface. Displays specs like battery, temperature, weight, and distance. Allows control of the FollowBot.
     - **Subsystem Model**:
       - **Class**: `MobileApp`
       - **Attributes**: `appID`, `specs`
@@ -520,7 +607,7 @@ We aim to keep the price range for the robot under $500, ideally under $300. The
       - **Methods**: `sendMail()`
 
 8. **Mail Application**
-    - **Description**: The website owner receives emails from users using the feedback page. Provides reliable information based on issues or future add-ons for the robot.
+    - **Description**: The website owner receives emails from users using the feedback page. Provides reliable information based on issues or future add-ons for the FollowBot.
     - **Subsystem Model**:
       - **Class**: `MailApplication`
       - **Attributes**: `mailID`, `feedback`
@@ -531,8 +618,8 @@ We aim to keep the price range for the robot under $500, ideally under $300. The
 
 #### Authentication Process
 
-1. **Robot Authentication Key**
-    - **Description**: A 16 number/character key meant for every robot. Every key will be different from the last.
+1. **FollowBot Authentication Key**
+    - **Description**: A 16 number/character key meant for every FollowBot. Every key will be different from the last.
     - **Subsystem Model**:
       - **Class**: `RobotAuthKey`
       - **Attributes**: `keyID`, `keyValue`
@@ -552,7 +639,7 @@ We aim to keep the price range for the robot under $500, ideally under $300. The
       - **Methods**: `inputUsername()`, `inputPassword()`
 
 3. **Authentication Process**
-    - **Description**: Combines the robot’s key with the user’s password and username for authentication.
+    - **Description**: Combines the FollowBot’s key with the user’s password and username for authentication.
     - **Subsystem Model**:
       - **Class**: `Authentication`
       - **Attributes**: `authID`, `robotKey`, `userCredentials()`
@@ -562,7 +649,8 @@ We aim to keep the price range for the robot under $500, ideally under $300. The
       - **Methods**: `authenticateUser()`, `grantAccess()`
 
 3. **Database**
-    - **Description**: Stores robot keys, passwords, and usernames of users subscribed to the product. Ensures unique keys, passwords, and usernames.
+    - **Description**: Stores FollowBot keys, passwords, and usernames of users subscribed to the product. Ensures unique keys, passwords, and usernames.
+    - **Description**: Stores FollowBot keys, passwords, and usernames of users subscribed to the product. Ensures unique keys, passwords, and usernames.
     - **Subsystem Model**:
       - **Class**: `Databse`
       - **Attributes**: `dbID`, `userData`
@@ -571,17 +659,52 @@ We aim to keep the price range for the robot under $500, ideally under $300. The
       - **Interfaces**: `IDatabase`
       - **Methods**: `storeData()`, `retrieveData()`
 
+#### Mapping Process
+
+1. **BC Mapping API**
+    - **Description**: We will potentially use the BC map to determine the best possible path to a location for the FollowBot.
+    - **Subsystem Model**:
+        - **Class**: `BCMappingAPI`
+        - **Attributes**: `mapData`, `locationPoints`
+        - **Methods**: `getOptimalPath()`, `navigateToLocation()`
+    - **Interface Specifications**:
+        - **Interfaces**: `IMappingAPI`
+        - **Methods**: `getOptimalPath()`, `navigateToLocation()`
+
+2. **Google Maps**
+    - **Description**: Google Maps will allow for full access to mapping for the FollowBot. It will enable FollowBot to go to specific locations from point A to point B.
+    - **Subsystem Model**:
+        - **Class**: `GoogleMapsAPI`
+        - **Attributes**: `startPoint`, `endPoint`
+        - **Methods**: `getDirections()`, `calculateRoute()`
+    - **Interface Specifications**:
+        - **Interfaces**: `IMappingAPI`
+        - **Methods**: `getDirections()`, `calculateRoute()`
+
+3. **Database**
+    - **Description**: A Database that will potentially contain most University Campuses' maps to traverse from point A to point B.
+    - **Subsystem Model**:
+        - **Class**: `CampusMapDatabase`
+        - **Attributes**: `campusMapData`, `mapID`
+        - **Methods**: `storeMap()`, `retrieveMap()`
+    - **Interface Specifications**:
+        - **Interfaces**: `IDatabase`
+        - **Methods**: `storeMap()`
 
 <h2> 3.3 Design Rationale </h2>
-We chose this architecture because we needed something modulus in order to do things properly for the scope of our project. When it comes to the authentication process it was tedious in knowing how we would come about it, but we knew that if we made it modular it would make it less tedious in our side. The way we did it is by creating a Database that the authenticator would interact with in order to generate keys for the robot that would not create replicas based on the ones that are currently on the database. That was one rationale that we chose for this project. 
+We chose this architecture because we needed something modulus in order to do things properly for the scope of our project. When it comes to the authentication process it was tedious in knowing how we would come about it, but we knew that if we made it modular it would make it less tedious in our side. The way we did it is by creating a Database that the authenticator would interact with in order to generate keys for the FollowBot that would not create replicas based on the ones that are currently on the database. That was one rationale that we chose for this project. 
 <br><br>
-Another is by keeping the ros2 system on the raspberry pi very interactive between many different pieces of hardware and software. With the ROS2 most of the functionalities that will be introduced will always have to be modulus in order for us to communicate between many different areas of hardware and software. The way we structured our decomposition above makes it easier for us to understand how we will simplify yet comprehend how our system should be.
+Another is by keeping the ros2 system on the raspberry pi very interactive between many different pieces of hardware and software. With the ROS2 most of the functionalities that will be introduced will always have to be modulus in order for us to communicate between many different areas of hardware and software. Although we've been consistently using a Microcontroller so switching between the two will depend based on how much modular this project will become. No doubt it will become more modular based on the number of components we will be adding.
+<br><br>
+We also need to rely on the learning models and the mapping api's in order to see the improvements in following within FollowBot. We will also need to getting the Mapping algorithm working accordingly with the FollowBot  which is keeping an eye on it's surroundings.
+<br><br>
+The way we structured our decomposition above makes it easier for us to understand how we will simplify yet comprehend how our system should be.
 
     
 <h2> 4.0 Data Design </h2>
 
 <h3> 4.1 Data Description </h3>
-When it comes to data and obtaining historical data for the machine learning model we will be using dataframes in order to store the data properly, ranging from battery life to weight distribution. When it comes to Databases the information will also be stored in a table of data. Other forms of data storing will be used in other applications when it comes to the robot itself
+When it comes to data and obtaining historical data for the machine learning model we will be using dataframes in order to store the data properly, ranging from battery life to weight distribution. When it comes to Databases the information will also be stored in a table of data. Other forms of data storing will be used in other applications when it comes to the FollowBot itself
 
 <h3> 4.2 Data Dictionary </h3>
 
@@ -603,10 +726,10 @@ When it comes to data and obtaining historical data for the machine learning mod
 | **MotorDriverNode**| `driverID`: String,<br> `motorSpeed`: Float,<br> `batteryLevel`: Float| `controlSpeed()`,<br> `monitorBattery()`|
 | **MotorNode**| `motorID`: String,<br> `powerSupply`: Float| `controlMotor()`|
 | **RealTimeDataRetrieval**| `dataID`: String,<br> `batteryLife`: Float,<br> `weightGain`: Float,<br> `timestamp`: DateTime| `retrieveBatteryLife()`,<br> `retrieveWeightGain()`,<br> `updateTimestamp()`|
-| **RobotAuthKey**| `keyID`: String,<br> `keyValue`: String| `generateKey()`,<br> `validateKey()`|
-| **RobotServer**| `serverID`: String,<br> `status`: String| `initialize()`,<br> `sendMessage()`,<br> `receiveMessage()`|
+| **FollowBottAuthKey**| `keyID`: String,<br> `keyValue`: String| `generateKey()`,<br> `validateKey()`|
+| **AWSServer**| `serverID`: String,<br> `status`: String| `initialize()`,<br> `sendMessage()`,<br> `receiveMessage()`|
 | **SensorsNode**| `sensorID`: String,<br> `objectDistance`: Float| `detectObject()`,<br> `sendAlert()`|
-| **ServerFollowBot**| `botID`: String,<br> `status`: String| `connectToClientNodes()`,<br> `connectToMobileApp()`,<br> `connectToWebsite()`|
+| **ServerAWS**| `serverID`: String,<br> `status`: String| `connectToClientNodes()`,<br> `connectToMobileApp()`,<br> `connectToWebsite()`|
 | **UniversalTopic**| `topicID`: String,<br> `messageQueue`: Queue| `publishMessage()`,<br> `subscribe()`|
 | **Website**| `websiteID`: String,<br> `content`: String| `displayInfo()`,<br> `interactWithRobot()`|
 | **WebsiteInteraction**| `interactionID`: String,<br> `websiteStatus`: String| `backendToFrontend()`,<br> `controlRobot()`|
@@ -693,7 +816,7 @@ When it comes to data and obtaining historical data for the machine learning mod
 
 - **optimizeMovement()**
   - Input: Analysis results
-  - Process: Optimize robot movement
+  - Process: Optimize FollowBot movement
   - Output: Optimized movement parameters
 
 #### MailAppInteraction
@@ -719,10 +842,10 @@ When it comes to data and obtaining historical data for the machine learning mod
   - Process: Display `specs` on mobile app
   - Output: None
 
-- **controlRobot()**
+- **controlFollowBot()**
   - Input: Control commands
-  - Process: Send control commands to robot
-  - Output: Robot could move or follow a set of tasks
+  - Process: Send control commands to FollowBot
+  - Output: FollowBot could move or follow a set of tasks
 
 #### MobileInteraction
 - **backendToFrontend()**
@@ -730,10 +853,10 @@ When it comes to data and obtaining historical data for the machine learning mod
   - Process: Transfer data to frontend
   - Output: Data transfer successful or not
 
-- **controlRobot()**
+- **controlFollowBot()**
   - Input: Control commands
-  - Process: Send control commands to robot
-  - Output: Robot executes those commands
+  - Process: Send control commands to FollowBot
+  - Output: FollowBot executes those commands
 
 #### MotorControllerNode
 - **calculatePath()**
@@ -779,7 +902,7 @@ When it comes to data and obtaining historical data for the machine learning mod
   - Process: Update timestamp of data retrieval
   - Output: `timestamp`
 
-#### RobotAuthKey
+#### FollowBotAuthKey
 - **generateKey()**
   - Input: None
   - Process: Generate a new authentication key
@@ -790,10 +913,10 @@ When it comes to data and obtaining historical data for the machine learning mod
   - Process: Validate the authentication key
   - Output: Validation status
 
-#### RobotServer
+#### AWSServer
 - **initialize()**
   - Input: None
-  - Process: Initialize the robot server
+  - Process: Initialize the FollowBot server
   - Output: Initialization status
 
 - **sendMessage()**
@@ -817,7 +940,7 @@ When it comes to data and obtaining historical data for the machine learning mod
   - Process: Send alert when object is detected
   - Output: Stop or avoid obstacle when object is detected
 
-#### ServerFollowBot
+#### ServerAWS
 - **connectToClientNodes()**
   - Input: None
   - Process: Connect to client nodes
@@ -847,12 +970,12 @@ When it comes to data and obtaining historical data for the machine learning mod
 #### Website
 - **displayInfo()**
   - Input: Information
-  - Process: Display information about the robot
-  - Output: information of robot is displayed
+  - Process: Display information about the FollowBot
+  - Output: information of FollowBot is displayed
 
-- **interactWithRobot()**
+- **interactWithFollowBot()**
   - Input: Interaction commands
-  - Process: Execute interaction commands with the robot
+  - Process: Execute interaction commands with the FollowBot
   - Output: interaction command is executed
 
 #### WebsiteInteraction
@@ -861,42 +984,77 @@ When it comes to data and obtaining historical data for the machine learning mod
   - Process: Transfer data to frontend
   - Output: None
 
-- **controlRobot()**
+- **controlRFollowBot()**
   - Input: Control commands
-  - Process: Send control commands to robot
+  - Process: Send control commands to FollowBot
   - Output: control command is executed
+
+#### Mapping Process
+
+1. **BC Mapping API**
+    - **getOptimalPath()**
+        - **Input**: `currentLocation`, `destination`
+        - **Process**: Calculate the best possible path from `currentLocation` to `destination` using BC map data.
+        - **Output**: Optimal path as a list of coordinates
+    - **navigateToLocation()**
+        - **Input**: `targetLocation`
+        - **Process**: Navigate FollowBot to the target location based on the optimal path.
+        - **Output**: Success or failure status
+
+2. **Google Maps**
+    - **getDirections()**
+        - **Input**: `startPoint`, `endPoint`
+        - **Process**: Retrieve directions from Google Maps for the specified route.
+        - **Output**: Directions as a list of coordinates
+    - **calculateRoute()**
+        - **Input**: `startPoint`, `endPoint`
+        - **Process**: Calculate the route from `startPoint` to `endPoint` using Google Maps.
+        - **Output**: Calculated route as a list of coordinates
+
+3. **Database**
+    - **storeMap()**
+        - **Input**: `mapData`
+        - **Process**: Store campus maps in the database.
+        - **Output**: Success or failure status
+    - **retrieveMap()**
+        - **Input**: `mapID`
+        - **Process**: Retrieve the map for a given campus.
+        - **Output**
 
 <h2> 6. Human Interface Design </h2>
 
 <h3> Mobile App: </h3>
-As a user when it comes to both the mobild application, it will contain most of the major functionalities. For instance with the mobile app you will be able to see how much battery life is currently on the system, as well as how much weight, the current distance it is away from you, as well as the interior temperature. With the mobile app you will be able to as well interact with the device by controlling its movement if needed. You will be able to test given features with it. Look at the specs of the robot, as well as look at the health of the robot. Parts and services will also be shown of the application itself. The app will be able to as well send you notifications based on how much health is currently on the system, whether if the robot ran into some issues, or is in need of assistance. You as a user will be able to use the app throughout many different mobile devices ranging from apple to android. 
+As a user when it comes to both the mobile application, it will contain most of the major functionalities. For instance with the mobile app you will be able to see how much battery life is currently on the system, as well as how much weight, the current distance it is away from you, as well as the interior temperature. With the mobile app you will be able to as well interact with the device by controlling its movement if needed. You will be able to test given features with it. Look at the specs of the FollowBot, as well as look at the health of the FollowBot. Parts and services will also be shown of the application itself. The app will be able to as well send you notifications based on how much health is currently on the system, whether if the FollowBot ran into some issues, or is in need of assistance. You as a user will be able to use the app throughout many different mobile devices ranging from apple to android. 
 <br><br>
 
 #### Important Functionalities 
-Visually on the top right corner of the screen will indicate the battery life of your robot. The middle of the screen will consist of a 3d model version of the robot, while beneath the robot will indicate the amount of weight that is currently on the system. In the middle above the robot will indicate the current temperature within the interior of the robot. A small tab button on the bottom right corner will allow the user to see how far away the robot is from the user. 
+Visually on the top right corner of the screen will indicate the battery life of your FollowBot. The middle of the screen will consist of a 3d model version of the FollowBot, while beneath the FollowBot will indicate the amount of weight that is currently on the system. In the middle above the FollowBot will indicate the current temperature within the interior of the FollowBot. A small tab button on the bottom right corner will allow the user to see how far away the FollowBot is from the user. 
 <br><br>
 
 #### Settings
-on the top left corner will be a setting icon for the robot, where you will be able to find the specs of the robot, changing capabilities for when you want to change the distance between you and the robot, as well as the ability to switch on human control access towards the robot. When switching on human access within the mobile app, the ui will change to a control panel where you will now be able to control the robot through touch screen.
+on the top left corner will be a setting icon for the FollowBot, where you will be able to find the specs of the FollowBot, changing capabilities for when you want to change the distance between you and the FollowBot, as well as the ability to switch on human control access towards the FollowBot. When switching on human access within the mobile app, the ui will change to a control panel where you will now be able to control the FollowBot through touch screen.
 
 #### Authentication
-When accessing the app it will first bring you to an authenticator screen, where you will need to input your username or password . If the user is signing in for the first time then they'll also need to input the robots authentication key in order to access their specific robot that they purchased, as well as their email. However once they do it the first time they won't need to do it again. As a user you will be able to change your password, or username if you forgot. In order to do so, an email will be sent to the user in which they will have to confirm or not that they want a change for a new username or password.
+When accessing the app it will first bring you to an authenticator screen, where you will need to input your username or password . If the user is signing in for the first time then they'll also need to input the FollowBots authentication key in order to access their specific FollowBot that they purchased, as well as their email. However once they do it the first time they won't need to do it again. As a user you will be able to change your password, or username if you forgot. In order to do so, an email will be sent to the user in which they will have to confirm or not that they want a change for a new username or password.
 
 
 ### Website: 
-As for the website, it will have minor interactions with the user. But for the user, the website will offer another variety of options that is quite different compared to the mobile app. For instance, the web interface will consist of a variety of tabs to open and see. One tab will consist of a feedback page/guide where you as the user that is currently an owner of the device will be able to ask questions or discuss topics based on the robotic device that you have on hand. Questions can vary from hardware parts, to ways in keeping the robot clean, updating its software, or even future changes in parts for the robot. 
+As for the website, it will have minor interactions with the user. But for the user, the website will offer another variety of options that is quite different compared to the mobile app. For instance, the web interface will consist of a variety of tabs to open and see. One tab will consist of a feedback page/guide where you as the user that is currently an owner of the device will be able to ask questions or discuss topics based on the robotic device that you have on hand. Questions can vary from hardware parts, to ways in keeping the FollowBot clean, updating its software, or even future changes in parts for the FollowBot. 
 <br><br>
 
 #### Relevant tabs for user to go about
-Other tabs will consists of information of the robot, as well as a video recording in how the robot interacts with it's surroundings. Another tab will be accessible to owners of the robot where they will be able to interact with their robot and see how well it's able to avoid obstacles while being able to follow a coordinated path. You will be able to control the robot with this minor interaction that will be found on the web page.
+Other tabs will consists of information of the FollowBot, as well as a video recording in how the FollowBot interacts with it's surroundings. Another tab will be accessible to owners of the FollowBot where they will be able to interact with their FollowBot and see how well it's able to avoid obstacles while being able to follow a coordinated path. You will be able to control the FollowBot with this minor interaction that will be found on the web page.
 <br><br>
 
 #### News Posting
 Another important feature that we would like to add is a news posting tab,
-where people will be able to get notified in future updates based on the robots development progress, or even updates on future releases for the robot itself, such as enhancements in parts or software.
+where people will be able to get notified in future updates based on the FollowBots development progress, or even updates on future releases for the FollowBot itself, such as enhancements in parts or software.
 
 #### Authentication
 As mentioned within the Mobile App user interface, it will be the same. However the difference will be that you don't have to sign in immediately, The webpage is meant for informational purposes. If you wish to create an account or sign in. A user profile icon for that will be found above in the right hand corner of your screen.
+
+#### Mapping
+ON the Mobile app there will be a mapping interface where you will be able to obtain the location of the FollowBot and pinpoint it to a new location. Either to you or to a point of interest. It will give you the estimated time for it to travel there.
 
 ### 6.2 Screen Images
 
@@ -933,7 +1091,7 @@ As mentioned within the Mobile App user interface, it will be the same. However 
 
 ![image](/Images/VideoOfRobotPage.png)
 
-*Video of robot* 
+*Video of FollowBot* 
 
 <br>
 
@@ -945,13 +1103,17 @@ As mentioned within the Mobile App user interface, it will be the same. However 
 | FR-002| Display Battery Life| MobileApp| Data| RealTimeDataRetrieval|
 | FR-003| Display Weight Information| MobileApp| Data| RealTimeDataRetrieval| FR-004| Display Distance Information| MobileApp| Data| RealTimeDataRetrieval|
 | FR-005| Display Temperature Information| MobileApp| Data| RealTimeDataRetrieval|
-| FR-006| Control Robot Movement| MobileApp| MotorControllerNode| MotorDriverNode|
+| FR-006| Control FollowBot Movement| MobileApp| MotorControllerNode| MotorDriverNode|
 | FR-007| Send Notifications| MobileApp| Data| RealTimeDataRetrieval|
 | FR-008| User Feedback and Guide| Website| Database| MailApplication|
-| FR-009| Display Robot Information| Website| Data| RealTimeDataRetrieval|
-| FR-010| Video Recording of Robot Interaction| Website| Data| RealTimeDataRetrieval|
-| FR-011| Robot Interaction and Control| Website| MotorControllerNode| MotorDriverNode|
+| FR-009| Display FollowBot Information| Website| Data| RealTimeDataRetrieval|
+| FR-010| Video Recording of FollowBot Interaction| Website| Data| RealTimeDataRetrieval|
+| FR-011| FollowBot Interaction and Control| Website| MotorControllerNode| MotorDriverNode|
 | FR-012| News Posting and Updates| Website| Database| MailApplication|
-| FR-013| Generate and Validate Robot Authentication Key| RobotAuthKey| Database| Authentication|
+| FR-013| Generate and Validate FollowBot Authentication Key| RobotAuthKey| Database| Authentication|
 | FR-014| Analyze Past Data for Movement Optimization| LearningModel| Data| RealTimeDataRetrieval|
 | FR-015| Store and Retrieve User Data| Database| Database| Authentication|
+| FR-016| Obtaining Location on Map| Map API| Data| Mapping|
+| FR-017| Obtaining Time it takes from point A to B| Map API| Machine Learning| Mapping|
+| FR-018| Obtaining User location for Mapping| Map API| Data| Mapping|
+

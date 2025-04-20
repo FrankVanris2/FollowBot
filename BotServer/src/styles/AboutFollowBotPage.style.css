@@ -1,0 +1,45 @@
+/* AboutFollowBotPage.style.css */
+.about-follow-bot-container {
+  display: flex;
+  flex-direction: row; /* Arrange children in a row */
+  justify-content: space-between; /* Space out the columns */
+  align-items: flex-start; /* Align items at the top */
+  gap: 20px; /* Add space between columns */
+  padding: 20px; /* Add padding to the container */
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.about-follow-bot-part {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex: 1; /* Allow columns to grow and take equal space */
+  min-width: 300px; /* Minimum width for each column */
+  margin: 10px; /* Add margin for spacing */
+}
+
+.follow-bot-image {
+  width: 100%;
+  max-width: 1000px;
+  aspect-ratio: 3 / 2;
+  margin-bottom: 20px;
+  border-radius: 10px; /* Optional: Add rounded corners */
+}
+
+.center-title {
+  margin-top: 0;
+  text-align: center;
+  font-size: 3.5rem;
+  color: #333; /* Optional: Add a dark color for better readability */
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+  .about-follow-bot-container {
+    flex-direction: column; /* Stack columns vertically on smaller screens */
+  }
+
+  .about-follow-bot-part {
+    min-width: 100%; /* Full width for each column on smaller screens */
+  }
+}

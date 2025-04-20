@@ -1,0 +1,90 @@
+.container {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+/* Navigation bar styles */
+.nav-bar {
+    display: flex;
+    justify-content: space-around;
+    background-color: #4CAF50;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.nav-bar button {
+    background: none;
+    color: white;
+    border: none;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.nav-bar button:hover {
+    text-decoration: underline;
+}
+
+/* Main content styling */
+.content {
+    margin-top: 20px;
+}
+
+.add-section, .list-section {
+    margin-bottom: 20px;
+}
+
+/* Add-section styles */
+.add-section h2 {
+    color: #333;
+}
+
+.add-section label {
+    display: block;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+.add-section input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.add-section button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add-section button:hover {
+    background-color: #45a049;
+}
+
+/* List-section styles */
+.list-section h3 {
+    color: #333;
+}
+
+.list-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.list-section li {
+    padding: 8px;
+    background-color: #f2f2f2;
+    margin-bottom: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}

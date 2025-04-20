@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Carry With Me</title>
+  <link rel="icon" type="image/svg+xml" href="./logo.png">
+</head>
+<body>
+  <div id="root"></div>
+
+  <!-- BrowserSync Script (for live reloading) -->
+  <script id="__bs_script__">
+    (function() {
+      try {
+        var script = document.createElement('script');
+        if ('async') {
+          script.async = true;
+        }
+        script.src = '/browser-sync/browser-sync-client.js?v=2.29.3'.replace("HOST", location.hostname);
+        if (document.body) {
+          document.body.appendChild(script);
+        } else if (document.head) {
+          document.head.appendChild(script);
+        }
+      } catch (e) {
+        console.error("Browsersync: could not append script tag", e);
+      }
+    })()
+  </script>
+
+  <!-- Your main bundled JavaScript file -->
+  <script src="main.min.js"></script> <!-- This needs to be the script that contains your React code -->
+
+</body>
+</html>

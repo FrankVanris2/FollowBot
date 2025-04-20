@@ -1,0 +1,17 @@
+name: Main branch workflow
+
+on:
+  push:
+    branches:
+      - main  
+
+jobs:
+  build-main:
+    runs-on: ubuntu-latest  
+
+    steps:
+      - name: checkout code  
+        uses: actions/checkout@v3
+
+      - name: run script  
+        run: echo "This runs only on the main branch"

@@ -1,0 +1,71 @@
+/* UserAnalyticsPage.style.css */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh; /* Full viewport height */
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: #333;
+}
+
+.content {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping of chart sections */
+  gap: 20px; /* Space between chart sections */
+  justify-content: center; /* Center chart sections horizontally */
+  width: 100%; /* Ensure content takes full width */
+}
+
+.chart-section {
+  flex: 1 1 300px; /* Flex-grow, flex-shrink, flex-basis */
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 400px; /* Limit maximum width of each chart section */
+}
+
+.chart-title {
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  color: #333;
+  text-align: center;
+}
+
+.back-button {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.back-button:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column; /* Stack chart sections vertically on smaller screens */
+    align-items: center; /* Center chart sections */
+  }
+
+  .chart-section {
+    width: 100%; /* Full width for chart sections on smaller screens */
+    max-width: 100%; /* Remove max-width restriction */
+  }
+}

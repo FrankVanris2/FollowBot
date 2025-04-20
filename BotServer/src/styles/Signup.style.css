@@ -1,0 +1,38 @@
+/* Signup.css */
+.signup-container {
+    max-width: 400px;
+    margin: 0 auto;
+    margin-top: 16px;
+    padding: 24px;
+  }
+  
+  .signup-paper {
+    padding: 24px;
+  }
+  
+  .signup-title {
+    font-size: 2rem;
+    margin-bottom: 16px;
+  }
+  
+  .signup-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .signup-input {
+    margin-bottom: 16px;
+  }
+  
+  .signup-button {
+    margin-top: 16px;
+  }
+  
+  .signup-response {
+    margin-top: 16px;
+  }
+  
+  .signup-link {
+    margin-top: 16px;
+  }
+  
