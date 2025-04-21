@@ -7,8 +7,5 @@ module.exports = {
   moduleNameMapper: {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy', // Mock CSS imports
     '\\.(png|jpg|jpeg|gif|svg)$': '<rootDir>/__mocks__/fileMock.js', // Mock image imports
-  },
-  scripts: {
-    "test:browser": "jest --config=jest.browser.config.js"
   }
 };
