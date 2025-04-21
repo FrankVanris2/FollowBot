@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import Navbar from '../src/components/NavBar'; // Adjust the path if necessary
+import Navbar from '../components/NavBar';
 
 describe('Navbar Component', () => {
   it('should render the Navbar with links', () => {
@@ -12,9 +12,12 @@ describe('Navbar Component', () => {
     );
 
     // Check if specific links or elements are present
-    expect(screen.getByText('Home')).toBeInTheDocument();
-    expect(screen.getByText('About')).toBeInTheDocument();
-    expect(screen.getByText('Contact')).toBeInTheDocument();
+    expect(screen.getByText('FollowBot')).toBeInTheDocument(); // Updated to match the actual site title
+    expect(screen.getByText('About FollowBot')).toBeInTheDocument();
+    expect(screen.getByText('About App')).toBeInTheDocument();
+    expect(screen.getByText('About Us')).toBeInTheDocument();
+    expect(screen.getByText('Feedback')).toBeInTheDocument();
+    expect(screen.getByText('News Article')).toBeInTheDocument();
   });
 
   it('should have a logo', () => {
@@ -25,7 +28,7 @@ describe('Navbar Component', () => {
     );
 
     // Check if the logo is present
-    const logo = screen.getByAltText('Logo'); // Replace 'Logo' with the actual alt text of your logo
+    const logo = screen.getByAltText('Logo'); // Ensure the alt text matches the actual logo
     expect(logo).toBeInTheDocument();
   });
 });

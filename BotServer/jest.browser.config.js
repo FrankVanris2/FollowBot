@@ -6,4 +6,7 @@ module.exports = {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy', // Mock CSS imports
     '\\.(png|jpg|jpeg|gif|svg)$': '<rootDir>/__mocks__/fileMock.js', // Mock image imports
   },
+  transformIgnorePatterns: [
+    'node_modules/(?!(react-leaflet|@react-leaflet|leaflet)/)', // Transform react-leaflet and its dependencies
+  ],
 };
