@@ -12,7 +12,8 @@
     "startTest": "webpack serve --mode development",
     "startdebug": "run-server --debug",
     "startlinux": "./run-server.sh",
-    "test": "jest"
+    "test": "jest",
+    "test:browser": "jest --config=jest.browser.config.js"
   },
   "keywords": [],
   "author": "Frank Vanris",
