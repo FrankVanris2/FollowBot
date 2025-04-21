@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Component Imports
-import Navbar from './components/Navbar';
+import Navbar from './components/NavBar'; // Check if the file exists
 
 // Page Imports
 import AboutAppPage from './pages/AboutAppPage';
@@ -25,7 +25,7 @@ import UserAnalyticsPage from './pages/UserAnalyticsPage';
 import MyAccountPage from './pages/MyAccountPage';
 import MappingPage from './pages/MappingPage';
 import SignalPage from './pages/SignalPage';
-import LivefeedPage from './pages/LivefeedPage';
+import LivefeedPage from './pages/LivefeedPage'; // Check if the file exists
 import MyFollowBotsPage from './pages/MyFollowBotsPage';
 import BotAnalyticsPage from './pages/BotAnalyticsPage';
 
@@ -34,7 +34,7 @@ import { GlobalStyle } from './App.style.jsx';
 
 // Import SensorData from data.js
 import SensorData from './data';
-import data from './data';
+import data from './data'; // Check if the file exists
 
 function App() {
   return (
