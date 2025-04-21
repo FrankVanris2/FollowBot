@@ -33,7 +33,7 @@ import BotAnalyticsPage from './pages/BotAnalyticsPage';
 import { GlobalStyle } from './App.style.jsx';
 
 // Import SensorData from data.js
-import SensorData from './data';
+import SensorData from './Data';
 
 
 function App() {
