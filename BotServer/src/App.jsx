@@ -25,7 +25,7 @@ import UserAnalyticsPage from './pages/UserAnalyticsPage';
 import MyAccountPage from './pages/MyAccountPage';
 import MappingPage from './pages/MappingPage';
 import SignalPage from './pages/SignalPage';
-import LivefeedPage from './pages/LivefeedPage'; // Check if the file exists
+import LivefeedPage from './pages/LiveFeedPage.jsx'; // Check if the file exists
 import MyFollowBotsPage from './pages/MyFollowBotsPage';
 import BotAnalyticsPage from './pages/BotAnalyticsPage';
 
