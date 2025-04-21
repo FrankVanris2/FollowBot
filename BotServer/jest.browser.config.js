@@ -9,4 +9,7 @@ module.exports = {
   transformIgnorePatterns: [
     'node_modules/(?!(react-leaflet|@react-leaflet|leaflet)/)', // Transform react-leaflet and its dependencies
   ],
+  transform: {
+    '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest', // Use Babel to transform JavaScript files
+  },
 };
