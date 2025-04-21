@@ -60,7 +60,6 @@ jobs:
 
       - name: Initialize test tables
         run: |
-          # Create your test tables here
           aws dynamodb create-table \
             --table-name Users \
             --attribute-definitions AttributeName=user_id,AttributeType=S \
@@ -76,9 +75,5 @@ jobs:
             --endpoint-url http://localhost:8000
 
       - name: Run browser tests
+        working-directory: BotServer
         run: npm run test:browser
-
-      - name: Verify database operations (optional)
-        run: |
-          aws dynamodb list-tables --endpoint-url http://localhost:8000
-          aws dynamodb scan --table-name Users --endpoint-url http://localhost:8000
