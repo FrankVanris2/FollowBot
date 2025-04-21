@@ -25,7 +25,7 @@ import UserAnalyticsPage from './pages/UserAnalyticsPage';
 import MyAccountPage from './pages/MyAccountPage';
 import MappingPage from './pages/MappingPage';
 import SignalPage from './pages/SignalPage';
-import LivefeedPage from './pages/LiveFeedPage.jsx'; // Check if the file exists
+import LiveFeedPage from './pages/LiveFeedPage.jsx'; // Check if the file exists
 import MyFollowBotsPage from './pages/MyFollowBotsPage';
 import BotAnalyticsPage from './pages/BotAnalyticsPage';
 
@@ -61,7 +61,7 @@ function App() {
         <Route path="/my-account" element={<Layout><MyAccountPage /></Layout>} />
         <Route path="/mapping" element={<Layout><MappingPage /></Layout>} />
         <Route path="/signal" element={<Layout><SignalPage /></Layout>} />
-        <Route path="/live-feed" element={<Layout><LivefeedPage /></Layout>} />
+        <Route path="/live-feed" element={<Layout><LiveFeedPage /></Layout>} />
         <Route path="/my-bots" element={<Layout><MyFollowBotsPage /></Layout>} />
         <Route path="/bot-analytics/:botId" element={<Layout><BotAnalyticsPage /></Layout>} />
 
