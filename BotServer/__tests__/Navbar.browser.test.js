@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import Navbar from '../components/NavBar';
+import Navbar from 'src/components/NavBar';
 
 describe('Navbar Component', () => {
   it('should render the Navbar with links', () => {
