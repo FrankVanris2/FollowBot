@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/LivefeedPage.style.css'; // Import the CSS file
+import '../styles/LiveFeedPage.style.css'; // Import the CSS file
 
 const LivefeedPage = () => {
   return (
@@ -12,4 +12,4 @@ const LivefeedPage = () => {
   );
 };
 
-export default LivefeedPage;
+export default LiveFeedPage;
