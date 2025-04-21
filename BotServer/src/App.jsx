@@ -34,7 +34,7 @@ import { GlobalStyle } from './App.style.jsx';
 
 // Import SensorData from data.js
 import SensorData from './data';
-import data from './data'; // Check if the file exists
+
 
 function App() {
   return (
