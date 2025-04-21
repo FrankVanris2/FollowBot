@@ -6,7 +6,7 @@ const LivefeedPage = () => {
     <div className="container">
       <h1 className="header">Live Feed Page</h1>
       <div className="content">
-        <p>This is the Live Feed page.</p>
+        {/* Add your component content here */}
       </div>
     </div>
   );
