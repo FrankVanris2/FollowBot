@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Component Imports
 import Navbar from './components/NavBar'; // Check if the file exists
+import Layout from './components/Layout'; // Adjust the path as needed
 
 // Page Imports
 import AboutAppPage from './pages/AboutAppPage';
