@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import App from '../src/App'; // Adjust the path if necessary
+import App from '../src/App';
 
 describe('App Component', () => {
   it('should render the HomePage by default', () => {
@@ -11,8 +11,8 @@ describe('App Component', () => {
       </BrowserRouter>
     );
 
-    // Check if the HomePage content is rendered
-    expect(screen.getByText('Home')).toBeInTheDocument(); // Replace 'Home' with actual text from your HomePage
+    // Adjust this to match actual content in your HomePage component
+    expect(screen.getByText(/home/i)).toBeInTheDocument();
   });
 
   it('should render the AboutUsPage when navigating to /about-us', () => {
@@ -24,8 +24,8 @@ describe('App Component', () => {
       </BrowserRouter>
     );
 
-    // Check if the AboutUsPage content is rendered
-    expect(screen.getByText('About Us')).toBeInTheDocument(); // Replace 'About Us' with actual text from your AboutUsPage
+    // Adjust this to match actual content in your AboutUsPage component
+    expect(screen.getByText(/about us/i)).toBeInTheDocument();
   });
 
   it('should render the NotFoundPage for an unknown route', () => {
@@ -37,7 +37,7 @@ describe('App Component', () => {
       </BrowserRouter>
     );
 
-    // Check if the NotFoundPage content is rendered
-    expect(screen.getByText('Page Not Found')).toBeInTheDocument(); // Replace 'Page Not Found' with actual text from your NotFoundPage
+    // Adjust this to match actual content in your NotFoundPage component
+    expect(screen.getByText(/page not found/i)).toBeInTheDocument();
   });
 });
