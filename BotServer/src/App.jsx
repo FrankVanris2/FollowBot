@@ -61,12 +61,12 @@ function App() {
         <Route path="/my-account" element={<Layout><MyAccountPage /></Layout>} />
         <Route path="/mapping" element={<Layout><MappingPage /></Layout>} />
         <Route path="/signal" element={<Layout><SignalPage /></Layout>} />
-        <Route path="/live-feed" element={<Layout><LiveFeedPage /></Layout>} /> />
-        <Route path="/my-bots" element={<Layout><MyFollowBotsPage /></Layout>} />ut>} />
-        <Route path="/bot-analytics/:botId" element={<Layout><BotAnalyticsPage /></Layout>} />/></Layout>} />
+        <Route path="/live-feed" element={<Layout><LiveFeedPage /></Layout>} />
+        <Route path="/my-bots" element={<Layout><MyFollowBotsPage /></Layout>} />
+        <Route path="/bot-analytics/:botId" element={<Layout><BotAnalyticsPage /></Layout>} />
 
         {/* Wildcard Route for 404 Not Found */}
-        <Route path="*" element={<Layout><NotFoundPage /></Layout>} />        <Route path="*" element={<Layout><NotFoundPage /></Layout>} />
+        <Route path="*" element={<Layout><NotFoundPage /></Layout>} />
       </Routes>
     </Router>
   );
