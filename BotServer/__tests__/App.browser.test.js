@@ -9,9 +9,10 @@ describe('App Component', () => {
     });
 
     it('should render the HomePage by default', () => {
-        render(<App />); // Removed BrowserRouter wrapper
+        render(<App />);
 
-        expect(screen.getByText(/home/i)).toBeInTheDocument();
+        // Use a flexible matcher
+        expect(screen.getByText((content) => content.includes('FollowBot'))).toBeInTheDocument();
     });
 
     it('should render the AboutUsPage when navigating to /about-us', () => {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 
 // Component Imports
 import Navbar from './components/NavBar'; // Check if the file exists
@@ -74,3 +75,9 @@ function App() {
 }
 
 export default App;
+
+render(
+    <MemoryRouter initialEntries={['/']}>
+        <App />
+    </MemoryRouter>
+);
