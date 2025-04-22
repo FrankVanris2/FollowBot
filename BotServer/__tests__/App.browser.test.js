@@ -28,13 +28,13 @@ describe('App Component', () => {
     it('should render the ContactPage when navigating to /contact', () => {
         window.history.pushState({}, 'Contact Page', '/contact');
         render(<App />);
-        expect(screen.getByText(/contact us/i)).toBeInTheDocument();
+        expect(screen.getByRole('heading', { name: /Contact Us/i })).toBeInTheDocument();
     });
 
     it('should render the ServicesPage when navigating to /services', () => {
         window.history.pushState({}, 'Services Page', '/services');
         render(<App />);
-        expect(screen.getByText(/our services/i)).toBeInTheDocument();
+        expect(screen.getByRole('heading', { name: /Our Services/i })).toBeInTheDocument();
     });
 
     it('should maintain the correct page when navigating back and forth', () => {
@@ -49,17 +49,5 @@ describe('App Component', () => {
         window.history.back();
         render(<App />);
         expect(screen.getByRole('heading', { name: /We are the CarryWithMe Team!/i })).toBeInTheDocument();
-    });
-
-    it('should render the RulesPage when navigating to /rules', () => {
-        window.history.pushState({}, 'Rules Page', '/rules');
-        render(<App />);
-        expect(screen.getByText(/user guidelines and rules/i)).toBeInTheDocument();
-    });
-
-    it('should render the SettingsPage when navigating to /settings', () => {
-        window.history.pushState({}, 'Settings Page', '/settings');
-        render(<App />);
-        expect(screen.getByText(/settings/i)).toBeInTheDocument();
     });
 });

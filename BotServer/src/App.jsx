@@ -15,6 +15,8 @@ import SignupPage from './pages/SignupPage';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
 import AboutUsPage from './pages/AboutUsPage';
+import ContactPage from './pages/ContactPage';
+import ServicesPage from './pages/ServicesPage';
 
 // Newly Added Pages (Subsign in Account)
 import MyProfilePage from './pages/MyProfile';
@@ -49,6 +51,8 @@ function App() {
         <Route path="/feedback" element={<Layout><FeedbackPage /></Layout>} />
         <Route path="/news-articles" element={<Layout><NewsArticlePage /></Layout>} />
         <Route path="/signup" element={<Layout><SignupPage /></Layout>} />
+        <Route path="/contact" element={<Layout><ContactPage /></Layout>} /> {/* Add ContactPage */}
+        <Route path="/services" element={<Layout><ServicesPage /></Layout>} /> {/* Add ServicesPage */}
 
         {/* Routes for Subsign-in Account */}
         <Route path="/my-profile" element={<Layout><MyProfilePage /></Layout>} />
