@@ -1,0 +1,79 @@
+name: Browser Testing with DynamoDB Workflow
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - feature/*
+
+jobs:
+  test-suite:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        working-directory: BotServer
+        run: npm install
+
+      - name: Setup DynamoDB Local
+        uses: rrainn/dynamodb-action@v2.0.1
+        with:
+          port: 8000
+          cors: '*'
+          inMemory: true
+
+      - name: Install AWS CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y unzip
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install --update
+          aws configure set aws_access_key_id test
+          aws configure set aws_secret_access_key test
+          aws configure set default.region us-west-2
+          aws configure set default.output json
+
+      - name: Build the project
+        working-directory: BotServer
+        run: npm run build -- --stats-error-details
+
+      - name: Start the server
+        working-directory: BotServer
+        run: npm run start &
+        env:
+          NODE_ENV: test
+          DYNAMODB_ENDPOINT: http://localhost:8000
+
+      - name: Wait for services to be ready
+        run: sleep 15
+
+      - name: Initialize test tables
+        run: |
+          aws dynamodb create-table \
+            --table-name Users \
+            --attribute-definitions AttributeName=user_id,AttributeType=S \
+            --key-schema AttributeName=user_id,KeyType=HASH \
+            --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5 \
+            --endpoint-url http://localhost:8000
+
+          aws dynamodb create-table \
+            --table-name FollowBots \
+            --attribute-definitions AttributeName=bot_id,AttributeType=S \
+            --key-schema AttributeName=bot_id,KeyType=HASH \
+            --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5 \
+            --endpoint-url http://localhost:8000
+
+      - name: Run browser tests
+        working-directory: BotServer
+        run: npm run test:browser

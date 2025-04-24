@@ -4,7 +4,7 @@ import AccountMenu from './AccountMenu.jsx';
 import { Header, LinkItem, Nav, NavList } from '../styles/NavBar.style';
 import Logo from '../res/logo.png';
 
-export default function Navbar() {
+export default function NavBar() {
   return (
     <>
       {/* Header Section */}

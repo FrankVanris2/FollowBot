@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Component Imports
-import Navbar from './components/Navbar';
+import Navbar from './components/NavBar';
 import Layout from './components/Layout';
 
 // Page Imports
@@ -15,6 +15,8 @@ import SignupPage from './pages/SignupPage';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
 import AboutUsPage from './pages/AboutUsPage';
+import ContactPage from './pages/ContactPage';
+import ServicesPage from './pages/ServicesPage';
 
 // Newly Added Pages (Subsign in Account)
 import MyProfilePage from './pages/MyProfile';
@@ -26,7 +28,7 @@ import UserAnalyticsPage from './pages/UserAnalyticsPage';
 import MyAccountPage from './pages/MyAccountPage';
 import MappingPage from './pages/MappingPage';
 import SignalPage from './pages/SignalPage';
-import LivefeedPage from './pages/LivefeedPage';
+import LiveFeedPage from './pages/LiveFeedPage.jsx';
 import MyFollowBotsPage from './pages/MyFollowBotsPage';
 import BotAnalyticsPage from './pages/BotAnalyticsPage';
 
@@ -34,13 +36,13 @@ import BotAnalyticsPage from './pages/BotAnalyticsPage';
 import { GlobalStyle } from './App.style.jsx';
 
 // Import SensorData from data.js
-import SensorData from './data';
+import SensorData from './Data';
 
 function App() {
   return (
     <Router>
       <GlobalStyle />
-      <Navbar /> {/* Navbar is present across all pages */}
+      <Navbar />
       <Routes>
         <Route path="/" element={<Layout><HomePage /></Layout>} />
         <Route path="/about-followbot" element={<Layout><AboutFollowBotPage /></Layout>} />
@@ -49,6 +51,8 @@ function App() {
         <Route path="/feedback" element={<Layout><FeedbackPage /></Layout>} />
         <Route path="/news-articles" element={<Layout><NewsArticlePage /></Layout>} />
         <Route path="/signup" element={<Layout><SignupPage /></Layout>} />
+        <Route path="/contact" element={<Layout><ContactPage /></Layout>} /> {/* Add ContactPage */}
+        <Route path="/services" element={<Layout><ServicesPage /></Layout>} /> {/* Add ServicesPage */}
 
         {/* Routes for Subsign-in Account */}
         <Route path="/my-profile" element={<Layout><MyProfilePage /></Layout>} />
@@ -61,7 +65,7 @@ function App() {
         <Route path="/my-account" element={<Layout><MyAccountPage /></Layout>} />
         <Route path="/mapping" element={<Layout><MappingPage /></Layout>} />
         <Route path="/signal" element={<Layout><SignalPage /></Layout>} />
-        <Route path="/live-feed" element={<Layout><LivefeedPage /></Layout>} />
+        <Route path="/live-feed" element={<Layout><LiveFeedPage /></Layout>} />
         <Route path="/my-bots" element={<Layout><MyFollowBotsPage /></Layout>} />
         <Route path="/bot-analytics/:botId" element={<Layout><BotAnalyticsPage /></Layout>} />
 

@@ -1,40 +1,149 @@
+/* MappingPage.style.css */
+
 /* Ensure the parent container takes up the full viewport */
 .mapping-container {
   display: flex;
   flex-direction: column;
-  height: 100vh; /* Full viewport height */
-  width: 100vw; /* Full viewport width */
+  height: 100vh;
+  width: 100vw;
   padding: 20px;
-  box-sizing: border-box; /* Include padding in height/width */
+  box-sizing: border-box;
 }
 
 /* Make the map container responsive */
 .map-container {
-  flex: 1; /* Take up remaining space */
-  height: 100%; /* Full height of parent */
-  width: 100%; /* Full width of parent */
-  z-index: 1; /* Ensure the map is above other elements */
+  flex: 1;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  min-height: 400px;
 }
 
 /* Style the toggle button */
 .toggle-button {
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #007bff; /* Blue color */
+  background-color: #007bff;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-bottom: 20px; /* Add spacing below the button */
+  margin-bottom: 20px;
+  align-self: flex-start;
 }
 
 .toggle-button:hover {
-  background-color: #0056b3; /* Darker blue on hover */
+  background-color: #0056b3;
 }
 
-/* Style for selected position display */
-.selected-position {
+/* Style for position displays */
+.selected-position,
+.confirmed-position {
   margin-top: 20px;
-  font-size: 1.2rem;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  border: 1px solid #dee2e6;
+}
+
+.position-section {
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: white;
+  border-radius: 4px;
+  border: 1px solid #eaeaea;
+}
+
+.position-section h3 {
+  margin-top: 0;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 5px;
+}
+
+/* Confirmation dialog styles */
+.confirmation-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.confirmation-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.confirmation-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.confirm-button {
+  flex: 1;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.yes-button {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.yes-button:hover {
+  background-color: #45a049;
+}
+
+.no-button {
+  background-color: #f44336;
+  color: white;
+}
+
+.no-button:hover {
+  background-color: #d32f2f;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .mapping-container {
+    padding: 10px;
+  }
+  
+  .selected-position,
+  .confirmed-position {
+    font-size: 0.9rem;
+  }
+  
+  .toggle-button,
+  .confirm-button {
+    padding: 8px 15px;
+    font-size: 14px;
+  }
+}
+
+/* Leaflet popup adjustments */
+.leaflet-popup-content {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.leaflet-popup-content p {
+  margin: 5px 0;
 }

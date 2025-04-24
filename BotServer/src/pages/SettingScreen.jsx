@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/SettingPage.style.css";
+import "../styles/SettingPage.Style.css";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { FaMoon, FaSun, FaLock, FaBook } from "react-icons/fa"; // Import icons
 

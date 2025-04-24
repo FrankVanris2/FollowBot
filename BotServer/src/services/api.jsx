@@ -1,89 +1,105 @@
-const getTemperature = async () => {
-    const response = await fetch('/api/getTempInfo');
-    return response.json();
-  };
-  
-const getHeatIndex = async () => {
-  const response = await fetch('/api/getHeatIdxInfo');
-  return response.json();
-};
-  
-const postMovement = async (direction) => {
-  const response = await fetch('/api/postmovement', {
-    method: 'POST',
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ direction }),
-  });
-  return response.json()
-};
+const API_BASE_URL = '/api';
 
-const getBot = async(bot_id) => {
-  const response = await fetch('api/getBot', {
-    method: 'POST',
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({bot_id})
-  });
-  return response.json()
-};
-
-const linkBot = async() => {
-  const response = await fetch('api/linkBot', {
-    method: 'POST',
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify('holder')
-  });
-  return response.json()
-};
-
-const postLogin = async (credentials) => {
-  const response = await fetch('/api/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(credentials)
-  });
-
+const handleResponse = async (response) => {
   const data = await response.json();
-  return { ...data, success: response.ok };
+  if (!response.ok) {
+    throw new Error(data.message || 'API request failed');
+  }
+  return data;
 };
 
-const postLogout = async () => {
-  const response = await fetch('/api/logout', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    credentials: 'include' // Include cookies
-  });
-  const data = await response.json();
-  return { ...data, success: response.ok };
+const api = {
+  getTemperature: async () => {
+    const response = await fetch(`${API_BASE_URL}/getTempInfo`);
+    return handleResponse(response);
+  },
+  
+  getHeatIndex: async () => {
+    const response = await fetch(`${API_BASE_URL}/getHeatIdxInfo`);
+    return handleResponse(response);
+  },
+  
+  postMovement: async (direction) => {
+    const response = await fetch(`${API_BASE_URL}/postmovement`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ direction }),
+    });
+    return handleResponse(response);
+  },
+
+  getBot: async (bot_id) => {
+    const response = await fetch(`${API_BASE_URL}/getBot`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ bot_id })
+    });
+    return handleResponse(response);
+  },
+
+  linkBot: async () => {
+    const response = await fetch(`${API_BASE_URL}/linkBot`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({})  // Changed from 'holder' to empty object
+    });
+    return handleResponse(response);
+  },
+
+  postLogin: async (credentials) => {
+    const response = await fetch(`${API_BASE_URL}/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include',
+      body: JSON.stringify(credentials)
+    });
+    const data = await handleResponse(response);
+    return { ...data, success: true };  // Only reaches here if no error thrown
+  },
+
+  postLogout: async () => {
+    const response = await fetch(`${API_BASE_URL}/logout`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include'
+    });
+    return handleResponse(response);
+  },
+
+  postSignUp: async (formData) => {
+    const response = await fetch(`${API_BASE_URL}/signup`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(formData)
+    });
+    return handleResponse(response);
+  },
+
+  sendCoordinates: async (latitude, longitude) => {
+    const response = await fetch(`${API_BASE_URL}/send-coordinates`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ 
+        latitude,
+        longitude 
+      }),
+    });
+    return handleResponse(response);
+  }
 };
 
-const postSignUp = async (formData) => {
-  const response = await fetch('/api/signup', {
-    method: 'POST',
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(formData)
-  });
-  return response.json()
-};
-  
-export default {
-  getTemperature,
-  getHeatIndex,
-  postMovement,
-  postLogout,
-  postSignUp,
-  postLogin,
-  getBot
-};
-  
+export default api;
