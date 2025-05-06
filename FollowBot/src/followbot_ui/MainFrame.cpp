@@ -11,7 +11,6 @@ Desc: Creating the Main frame*/
 #include "ScreenState.h"
 #include "FollowBotLCD.h"
 #include "followbot_client/FollowBotClient.h"
-#include "followbot_client/FollowBotClient.h"
 
 //Universal Object
 MainFrame mainFrame;
@@ -45,10 +44,10 @@ bool MainFrame::touchScreenEvent(int x, int y) {
 
     switch(selected) {
         case BUTTON_INPUT_CREDENTIALS: 
-            Serial.println("Credentials  button pressed"); 
+            Serial.println("Credentials button pressed"); 
             ((TextBase*) getComponents()[TEXT_WAIT])->setHide(false);
             getComponents()[TEXT_WAIT]->draw();
-            myLCDScreen.setCurrentFrame(WIFI_CREDENTIALS_SCREEN);
+            myLCDScreen.setCurrentFrame(WIFI_CREDENTIALS_SCREEN); // Transition to WiFi Credentials Screen
             ((TextBase*) getComponents()[TEXT_WAIT])->setHide(true);
             return true;
 
@@ -56,6 +55,50 @@ bool MainFrame::touchScreenEvent(int x, int y) {
             Serial.println("Connect button pressed"); 
             wifiClientSetup();
             return true;
+
+        default:
+            Serial.println("Unknown button pressed");
+            return false;
     }
-    return false;
+}
+
+// New method to handle transitions to other screens
+void MainFrame::handleScreenTransition(ScreenFrames targetScreen) {
+    Serial.print("Transitioning to screen: ");
+    Serial.println(targetScreen);
+
+    switch (targetScreen) {
+        case MAIN_SCREEN:
+            Serial.println("Already on Main Screen.");
+            break;
+
+        case WIFI_CREDENTIALS_SCREEN:
+            Serial.println("Switching to WiFi Credentials Screen.");
+            myLCDScreen.setCurrentFrame(WIFI_CREDENTIALS_SCREEN);
+            break;
+
+        case KEYBOARD_SCREEN:
+            Serial.println("Switching to Keyboard Screen.");
+            myLCDScreen.setCurrentFrame(KEYBOARD_SCREEN);
+            break;
+
+        case idle_SCREEN:
+            Serial.println("Switching to Idle Screen.");
+            myLCDScreen.setCurrentFrame(idle_SCREEN);
+            break;
+
+        case Map_SCREEN:
+            Serial.println("Switching to Map Screen.");
+            myLCDScreen.setCurrentFrame(Map_SCREEN);
+            break;
+
+        case manual_CONTROL_SCREEN:
+            Serial.println("Switching to Manual Control Screen.");
+            myLCDScreen.setCurrentFrame(manual_CONTROL_SCREEN);
+            break;
+
+        default:
+            Serial.println("Unknown screen transition requested.");
+            break;
+    }
 }

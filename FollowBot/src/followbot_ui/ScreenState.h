@@ -9,5 +9,9 @@ Desc: Creating a screen state class to manage the different states of the screen
 enum ScreenFrames {
     MAIN_SCREEN,
     WIFI_CREDENTIALS_SCREEN,
-    KEYBOARD_SCREEN
+    KEYBOARD_SCREEN,
+    idle_SCREEN,
+    Map_SCREEN,
+    manual_CONTROL_SCREEN,
+
 };
