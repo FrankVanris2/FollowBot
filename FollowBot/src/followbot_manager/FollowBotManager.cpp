@@ -47,7 +47,7 @@ void FollowBotManager::followBotSetup() {
     myLCDScreen.myLCDScreen_Setup();
 
     myMotors.motorSetup();
-    // followBotClient.followBotClient_Setup();  
+    followBotClient.followBotClient_Setup();  
     myGPS.gps_setup();
 
     //Testing
@@ -61,12 +61,12 @@ void FollowBotManager::followBotSetup() {
 void FollowBotManager::followBotLoop() {
     batteryReader.batteryReaderLoop();
     myLCDScreen.myLCDScreen_Loop();
-    // followBotClient.followBotClient_Loop(); 
-    //myGPS.gps_loop(); 
-    // if (mCurrentControl == ROBOT) {
-    //     followMechanics.followMechanics_Loop();
-    // }
-    //myMotors.motorLoop();
+    followBotClient.followBotClient_Loop(); 
+    myGPS.gps_loop(); 
+    if (mCurrentControl == ROBOT) {
+        followMechanics.followMechanics_Loop();
+    }
+    myMotors.motorLoop();
 
     // Testing
     encoders.loopEncoders();

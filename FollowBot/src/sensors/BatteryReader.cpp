@@ -8,20 +8,23 @@ Desc: Creating a Battery reader that reads the level of the battery
 
 BatteryReader batteryReader; // singelton instance of BatteryReader
 
-BatteryReader::BatteryReader(): batteryPin(A0), R1(5100.0f), R2(2000.0f), referenceVoltage(3.3f) {}
+BatteryReader::BatteryReader(): batteryPin(A0), R1(5100.0f), R2(2000.0f), referenceVoltage(3.3f), interval(1000), previousMillis(0) {}
 
 void BatteryReader::batteryReaderLoop() {
-    int rawValue = analogRead(batteryPin); // Read the raw ADC value
-    float voltage = (rawValue / ADC_MAX_VALUE) * referenceVoltage;
-    float batteryVoltage = voltage * ((R1 + R2) / R2);
 
-    // Calculate battery percentage
-    mBatteryPercentage = ((batteryVoltage - MIN_VOLTAGE) / (MAX_VOLTAGE - MIN_VOLTAGE)) * FULLY_CHARGED_PERCENTAGE;
+    if ((millis() - previousMillis) >= interval) {
+        previousMillis = millis();
+        int rawValue = analogRead(batteryPin); // Read the raw ADC value
+        float voltage = (rawValue / ADC_MAX_VALUE) * referenceVoltage;
+        float batteryVoltage = voltage * ((R1 + R2) / R2);
 
-    // Ensure percentage stays within 0-100%
-    mBatteryPercentage = constrain(mBatteryPercentage, EMPTY_BATTERY_PERCENTAGE, FULL_BATTERY_PERCENTAGE);
+        // Calculate battery percentage
+        mBatteryPercentage = ((batteryVoltage - MIN_VOLTAGE) / (MAX_VOLTAGE - MIN_VOLTAGE)) * FULLY_CHARGED_PERCENTAGE;
 
-    Serial.println(String("Battery Voltage: ") + String(batteryVoltage) + "V");
-    Serial.println(String("Battery Percentage: ") + String(mBatteryPercentage) + "%"); // Print battery percentage to Serial Monitor
-    delay(1000); // Delay for 1 second before next reading
+        // Ensure percentage stays within 0-100%
+        mBatteryPercentage = constrain(mBatteryPercentage, EMPTY_BATTERY_PERCENTAGE, FULL_BATTERY_PERCENTAGE);
+
+        //Serial.println(String("Battery Voltage: ") + String(batteryVoltage) + "V");
+        //Serial.println(String("Battery Percentage: ") + String(mBatteryPercentage) + "%"); // Print battery percentage to Serial Monitor
+    }
 }

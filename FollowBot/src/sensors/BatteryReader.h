@@ -31,7 +31,9 @@ public:
 
 private:
     const int batteryPin;
-
+    unsigned long interval;
+    unsigned long previousMillis;   
+    
     float mBatteryPercentage;
     const float R1;
     const float R2;

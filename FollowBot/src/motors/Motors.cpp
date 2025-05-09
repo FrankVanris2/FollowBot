@@ -46,10 +46,10 @@ void Motors::motorSetup() {
     Serial.println("Motor Shield found.");
     
     //setting speeds of all motors to high
-    motor1->setSpeed(MAX_SPEED);
-    motor2->setSpeed(MAX_SPEED);
-    motor3->setSpeed(MAX_SPEED);
-    motor4->setSpeed(MAX_SPEED);
+    motor1->setSpeed(MED_SPEED);
+    motor2->setSpeed(MED_SPEED);
+    motor3->setSpeed(MED_SPEED);
+    motor4->setSpeed(MED_SPEED);
 }
 
 void Motors::motorLoop() {  

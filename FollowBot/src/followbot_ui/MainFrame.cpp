@@ -69,7 +69,6 @@ bool MainFrame::touchScreenEvent(int x, int y) {
 }
 
 void MainFrame::updateBatteryStatus() {
-    Serial.println("Updating battery status...");
     unsigned long currentMillis = millis();
 
     // Only check battery every 5 seconds
@@ -81,7 +80,6 @@ void MainFrame::updateBatteryStatus() {
 
         // Only update display if value changed
         if (newBatteryStatus != mLastBatteryStatus) {
-            Serial.println(String("Battery status updated: ") + newBatteryStatus);
             mLastBatteryStatus = newBatteryStatus;
             ((TextBase*) getComponents()[TEXT_BATTERY_STATUS])->setTextAndDraw(newBatteryStatus);
         }
