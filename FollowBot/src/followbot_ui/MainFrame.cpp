@@ -11,6 +11,7 @@ Desc: Creating the Main frame*/
 #include "ScreenState.h"
 #include "FollowBotLCD.h"
 #include "followbot_client/FollowBotClient.h"
+#include "followbot_manager/FollowBotManager.h"
 #include "sensors/BatteryReader.h"
 
 //Singelton Object
@@ -21,6 +22,7 @@ void MainFrame::setup(TFT_eSPI& tft) {
 
     getComponents()[BUTTON_INPUT_CREDENTIALS] = new Button(tft, 150, 75, 180, 50, "Wifi setup", 10);
     getComponents()[BUTTON_CONNECT] = new Button(tft, 150, 175, 180, 50, "Connect", 10);
+    getComponents()[BUTTON_START_FOLLOWING] = new Button(tft, 330, 129, 120, 40, "follow", 10);
     getComponents()[TEXT_CONNECTION_STATUS] = new TextBase(tft, 155, 250);
 
     getComponents()[TEXT_WAIT] = new TextBase(tft, 5, 300, "Wait", TEXT_SIZE, TFT_WHITE, TFT_RED);
@@ -63,6 +65,14 @@ bool MainFrame::touchScreenEvent(int x, int y) {
         case BUTTON_CONNECT: 
             Serial.println("Connect button pressed"); 
             wifiClientSetup();
+            return true;
+        case BUTTON_START_FOLLOWING:
+            Serial.println("Start Following button pressed");
+            ((TextBase*) getComponents()[TEXT_WAIT])->setHide(false);
+            getComponents()[TEXT_WAIT]->draw();
+            followBotManager.setCurrentControl(ROBOT);
+            myLCDScreen.setCurrentFrame(FOLLOWING_SCREEN);
+            ((TextBase*) getComponents()[TEXT_WAIT])->setHide(true);
             return true;
     }
     return false;

@@ -11,6 +11,9 @@ Desc: Creating an idle screen, a screen that will be printed out when things are
 #include "TextBase.h"
 #include "ScreenState.h"
 #include "FollowBotLCD.h"
+#include "followbot_manager/FollowBotManager.h"
+#include "followbot_client/FollowBotClient.h"
+#include "states&types/MotorControlStates.h"
 
 // Singelton Object
 IdleFrame idleFrame;
@@ -30,11 +33,22 @@ void IdleFrame::loop() {
     if (!mTimerStarted) {
         mStartTime = millis();
         mTimerStarted = true;
+        followBotManager.setCurrentControl(IDLE);
     }
 
     if (mTimerStarted && (millis() - mStartTime >= IDLE_TIME_INTERVAL)) {
         mTimerStarted = false;
-        myLCDScreen.setCurrentFrame(MAIN_SCREEN);
+        if(followBotClient.isConnected()) {
+            // After idle time, set to ROBOT mode by default
+            followBotManager.setCurrentControl(ROBOT);
+            myLCDScreen.setCurrentFrame(FOLLOWING_SCREEN);
+        } else {
+            followBotManager.setCurrentControl(IDLE);
+            myLCDScreen.setCurrentFrame(MAIN_SCREEN);
+        }
+        
+
+        
     }
 }
 
