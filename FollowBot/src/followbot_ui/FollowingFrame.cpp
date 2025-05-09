@@ -45,7 +45,10 @@ bool FollowingFrame::touchScreenEvent(int x, int y) {
 
 void FollowingFrame::loop() {
     if(followBotManager.getCurrentControl() == USER) {
-        // You will do things here.
+        ((TextBase*) getComponents()[FOLLOWING_TEXT_WAIT])->setHide(false);
+        getComponents()[FOLLOWING_TEXT_WAIT]->draw();
+        myLCDScreen.setCurrentFrame(MANUAL_SCREEN);
+        ((TextBase*) getComponents()[FOLLOWING_TEXT_WAIT])->setHide(true);
     } else if(followBotManager.getCurrentControl() == MAPPING) {
         // You will do things here.
     }

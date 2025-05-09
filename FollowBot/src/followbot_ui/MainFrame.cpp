@@ -19,7 +19,7 @@ MainFrame mainFrame;
 
 void MainFrame::setup(TFT_eSPI& tft) {
     setTFT(tft);
-
+ 
     getComponents()[BUTTON_INPUT_CREDENTIALS] = new Button(tft, 150, 75, 180, 50, "Wifi setup", 10);
     getComponents()[BUTTON_CONNECT] = new Button(tft, 150, 175, 180, 50, "Connect", 10);
     getComponents()[BUTTON_START_FOLLOWING] = new Button(tft, 330, 129, 120, 40, "follow", 10);
