@@ -27,7 +27,7 @@ void MainFrame::setup(TFT_eSPI& tft) {
     ((TextBase*) getComponents()[TEXT_WAIT])->setHide(true);
 
     // Adding the battery display in top right corner
-    getComponents()[TEXT_BATTERY_STATUS] = new TextBase(tft, 350, 15, "Batt: ---", 2, TFT_BLACK, TFT_WHITE);
+    getComponents()[TEXT_BATTERY_STATUS] = new TextBase(tft, 335, 15, "Batt: ---", 2, TFT_BLACK, TFT_WHITE);
 }
 
 void MainFrame::loop() {

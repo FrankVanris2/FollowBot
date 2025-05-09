@@ -6,6 +6,7 @@ Desc: Creating a Battery reader that reads the level of the battery
 
 #pragma once
 #include <Arduino.h>
+#include <cmath>
 
 const int ADC_MAX_VALUE = 1023; // Maximum value for a 10-bit ADC
 const float FULLY_CHARGED_PERCENTAGE = 100.0f; // Percentage when battery is fully charged
@@ -25,7 +26,7 @@ public:
     float getBatteryPercentage() const { return mBatteryPercentage; } // Getter for battery percentage
 
     String getBatteryPercentageString() const {
-        return String(mBatteryPercentage) + "%"; // Return battery percentage as a string
+        return String(std::round(mBatteryPercentage)) + "%"; // Return battery percentage as a string
     }
 
 private:
