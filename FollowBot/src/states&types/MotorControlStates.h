@@ -7,8 +7,10 @@
 #pragma once
 #include <Arduino.h>
 
+const String IDLE = "Idle";
 const String USER = "User";
 const String ROBOT = "Robot";
+const String MAPPING = "Mapping";
 const String ERROR = "Error";
 
 const String MOTOR_FORWARD = "Forward";
