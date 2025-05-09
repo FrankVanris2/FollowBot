@@ -9,6 +9,7 @@ Desc: Using an LSD screen to ask user for ssid and password so that robot can co
 #include <Adafruit_GFX.h>
 
 #include "FollowBotLCD.h"
+#include "IdleFrame.h"
 #include "MainFrame.h"
 #include "WiFiCredentials.h"
 #include "Keyboard.h"
@@ -18,13 +19,14 @@ LCDScreen myLCDScreen;
 
 // Setup
 void LCDScreen::myLCDScreen_Setup() {
+  idleFrame.setup(tft);
   mainFrame.setup(tft);
   wifiCredentials.setup(tft);
   keyboard.setup(tft);
 
   tft.begin();
   tft.setRotation(3);
-  setCurrentFrame(MAIN_SCREEN);
+  setCurrentFrame(IDLE_SCREEN);
   mainFrame.wifiClientSetup();
 }
 
@@ -53,6 +55,7 @@ void LCDScreen::setCurrentFrame(ScreenFrames newFrame) {
   Serial.println(newFrame);
   
   switch (newFrame) {
+    case IDLE_SCREEN: mCurrentFrame = &idleFrame; break;
     case MAIN_SCREEN: mCurrentFrame = &mainFrame; break;
     case WIFI_CREDENTIALS_SCREEN: mCurrentFrame = &wifiCredentials; break;
     case KEYBOARD_SCREEN: mCurrentFrame = &keyboard; break;

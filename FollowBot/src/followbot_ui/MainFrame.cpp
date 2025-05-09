@@ -13,7 +13,7 @@ Desc: Creating the Main frame*/
 #include "followbot_client/FollowBotClient.h"
 #include "sensors/BatteryReader.h"
 
-//Universal Object
+//Singelton Object
 MainFrame mainFrame;
 
 void MainFrame::setup(TFT_eSPI& tft) {

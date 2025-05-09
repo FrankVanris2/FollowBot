@@ -7,6 +7,7 @@ Desc: Creating a screen state class to manage the different states of the screen
 #pragma once
 
 enum ScreenFrames {
+    IDLE_SCREEN,
     MAIN_SCREEN,
     WIFI_CREDENTIALS_SCREEN,
     KEYBOARD_SCREEN
