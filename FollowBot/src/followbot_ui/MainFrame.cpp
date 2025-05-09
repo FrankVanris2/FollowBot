@@ -11,7 +11,7 @@ Desc: Creating the Main frame*/
 #include "ScreenState.h"
 #include "FollowBotLCD.h"
 #include "followbot_client/FollowBotClient.h"
-#include "followbot_client/FollowBotClient.h"
+#include "sensors/BatteryReader.h"
 
 //Universal Object
 MainFrame mainFrame;
@@ -25,6 +25,14 @@ void MainFrame::setup(TFT_eSPI& tft) {
 
     getComponents()[TEXT_WAIT] = new TextBase(tft, 5, 300, "Wait", TEXT_SIZE, TFT_WHITE, TFT_RED);
     ((TextBase*) getComponents()[TEXT_WAIT])->setHide(true);
+
+    // Adding the battery display in top right corner
+    getComponents()[TEXT_BATTERY_STATUS] = new TextBase(tft, 350, 15, "Batt: ---", 2, TFT_BLACK, TFT_WHITE);
+}
+
+void MainFrame::loop() {
+    // updating battery status every 5 seconds.
+    updateBatteryStatus();
 }
 
 void MainFrame::wifiClientSetup() {
@@ -58,4 +66,24 @@ bool MainFrame::touchScreenEvent(int x, int y) {
             return true;
     }
     return false;
+}
+
+void MainFrame::updateBatteryStatus() {
+    Serial.println("Updating battery status...");
+    unsigned long currentMillis = millis();
+
+    // Only check battery every 5 seconds
+    if (currentMillis - mLastBatteryCheckTime >= BATTERY_CHECK_INTERVAL) {
+        mLastBatteryCheckTime = currentMillis;
+        
+        // Get the battery percentage string using your existing Battery Reader
+        String newBatteryStatus = "Batt: " + batteryReader.getBatteryPercentageString();
+
+        // Only update display if value changed
+        if (newBatteryStatus != mLastBatteryStatus) {
+            Serial.println(String("Battery status updated: ") + newBatteryStatus);
+            mLastBatteryStatus = newBatteryStatus;
+            ((TextBase*) getComponents()[TEXT_BATTERY_STATUS])->setTextAndDraw(newBatteryStatus);
+        }
+    }
 }

@@ -8,7 +8,7 @@ Desc: Creating a Battery reader that reads the level of the battery
 
 BatteryReader batteryReader; // singelton instance of BatteryReader
 
-BatteryReader::BatteryReader(): batteryPin(A0), R1(5100.0f), R2(2000.0f), referenceVoltage(5.0f) {}
+BatteryReader::BatteryReader(): batteryPin(A0), R1(5100.0f), R2(2000.0f), referenceVoltage(3.3f) {}
 
 void BatteryReader::batteryReaderLoop() {
     int rawValue = analogRead(batteryPin); // Read the raw ADC value
@@ -20,4 +20,8 @@ void BatteryReader::batteryReaderLoop() {
 
     // Ensure percentage stays within 0-100%
     mBatteryPercentage = constrain(mBatteryPercentage, EMPTY_BATTERY_PERCENTAGE, FULL_BATTERY_PERCENTAGE);
+
+    Serial.println(String("Battery Voltage: ") + String(batteryVoltage) + "V");
+    Serial.println(String("Battery Percentage: ") + String(mBatteryPercentage) + "%"); // Print battery percentage to Serial Monitor
+    delay(1000); // Delay for 1 second before next reading
 }

@@ -42,8 +42,10 @@ void LCDScreen::myLCDScreen_Loop() {
     Serial.print(y);
     Serial.println(")");
     mCurrentFrame->touchScreenEvent(x, y);
-    
   }
+
+  // Call the current frame's loop method
+  mCurrentFrame->loop();
 }
 
 void LCDScreen::setCurrentFrame(ScreenFrames newFrame) {
