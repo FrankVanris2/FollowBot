@@ -7,9 +7,10 @@
 #pragma once
 #include <Arduino.h>
 
+// TODO: change this enums goddamnit Frank i.e. IDLE = 0
 const String IDLE = "Idle";
-const String USER = "User";
-const String ROBOT = "Robot";
+const String USER = "User"; // manual
+const String ROBOT = "Robot"; // following
 const String MAPPING = "Mapping";
 const String ERROR = "Error";
 

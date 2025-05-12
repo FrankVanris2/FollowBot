@@ -202,6 +202,7 @@ bool FollowBotClient::postRobotInfo() {
     return true;
 }
 
+// TODO: change this name so it is more specific to manual movement, adjust api.jsx accordingly
 String FollowBotClient::getActionData() {
     Serial.println("FollowBotClient.getMove(): Connecting to server...") ;
     if(!client.connect(server, PORT)) {
@@ -277,6 +278,71 @@ String FollowBotClient::getActionData() {
      return dataActionString;
 }
 
+String FollowBotClient::getCoordinatesData() {
+    Serial.println("Fetching coordinates...");
+    if (!client.connect(server, PORT)) {
+        Serial.println("Server connection failed");
+        mServerNotConnectedCnt = min(mServerNotConnectedCnt + 1, MAX_SERVER_NOT_CONNECTED);
+        return "ERROR";
+    }
+
+    // TODO: align this with api.jsx
+    client.println("GET /api/getcoordinates HTTP/1.1");
+    client.print("Host: "); client.println(mIPAddress);
+    client.println("Connection: close");
+    client.println();
+
+
+     String robotUserSwitch;
+     const int SIZE = 1024;
+     char buffer[SIZE];
+     int bufLength = 0;
+     int bodyIdx = 0; // Start of body in buffer
+     Data_States dataState = HEADER_STATE;
+     bool readData = true;
+
+     while (dataState != FINISHED) {
+         int prevBufLen = bufLength;
+         int numChars = 0;
+         if(readData) {
+
+             numChars = client.read(reinterpret_cast<uint8_t*>(buffer + bufLength), SIZE - bufLength);
+             bufLength += numChars;
+             buffer[bufLength] = 0;
+         }
+
+         if(!readData || numChars > 0) {
+             switch(dataState) {
+                 case HEADER_STATE: {
+                     char* bufPtr;
+                     for (bufPtr = buffer + prevBufLen; *(bufPtr + 3); ++bufPtr) {
+                         if (*bufPtr == 0x0d && *(bufPtr + 1) == 0x0a && *(bufPtr + 2) == 0x0d && *(bufPtr + 3) == 0x0a) {
+                             bodyIdx = bufPtr - buffer + 4;
+                             dataState = BODY_STATE;
+                             readData = false;
+                             break;
+                         }
+                     }
+                     break;
+                 }
+
+                 case BODY_STATE:
+                     if(bufLength > bodyIdx) {
+                         dataState = FINISHED;
+                     } else {
+                         readData = true;
+                     }
+                     break;
+             }
+         }
+     }
+
+    client.stop();
+    String coordinateData = String(buffer + bodyIdx);
+    return coordinateData;
+}
+
+// TODO: look at handleActionData2
 void FollowBotClient::handleActionData(String dataString) {
     Serial.println(String("FollowBotClient.handleActionData(): Received data: ") + dataString);
     if(dataString == USER) {
@@ -288,6 +354,32 @@ void FollowBotClient::handleActionData(String dataString) {
             Serial.println(String("FollowBotClient.handleActionData - Current Motor Direction: ") + dataString);
             myMotors.setDirection(dataString);
         } 
+    }
+}
+
+void FollowBotClient::handleActionData2(String dataString) {
+    Serial.println(String("FollowBotClient.handleActionData(): Received data: ") + dataString);
+    if (dataString == USER) {
+        followBotManager.setCurrentControl(dataString);
+    } else if (dataString == ROBOT) {
+        followBotManager.setCurrentControl(dataString);
+    } else if (dataString == MAPPING) {
+        followBotManager.setCurrentControl(dataString);
+    } else {
+        Serial.println("THERE WAS NO CONTROL MODE CHANGE.");
+    }
+
+    if (followBotManager.getCurrentControl() == USER) {
+        myMotors.setDirection(dataString);
+    } else if (followBotManager.getCurrentControl() == MAPPING) {
+        int commaIdx = dataString.indexOf(',');
+        if (commaIdx == -1) {
+            Serial.println(String("[ERROR]dataString: " + dataString));
+        }
+        float lat = data.substring(0, commaIdx).toFloat();
+        float lng = data.substring(commaIdx+1).toFloat();
+
+        // TODO: send via Serial
     }
 }
 
