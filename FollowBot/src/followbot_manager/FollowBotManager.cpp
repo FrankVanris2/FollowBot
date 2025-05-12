@@ -43,11 +43,11 @@ FollowBotManager::FollowBotManager(): mIsDirty(false), mCurrentControl(ROBOT){
 //the setup that will store the many objects that will set in the main
 void FollowBotManager::followBotSetup() { 
 
+    followBotBluetooth.setup();
     eepromStorage.setup();  
     myLCDScreen.myLCDScreen_Setup();
-
-    myMotors.motorSetup();
     followBotClient.followBotClient_Setup();  
+    myMotors.motorSetup();
     myGPS.gps_setup();
 
     //Testing
@@ -59,6 +59,7 @@ void FollowBotManager::followBotSetup() {
 }
 
 void FollowBotManager::followBotLoop() {
+    followBotBluetooth.loop();
     batteryReader.batteryReaderLoop();
     myLCDScreen.myLCDScreen_Loop();
     followBotClient.followBotClient_Loop(); 

@@ -11,6 +11,7 @@ Desc: Creating a testing env for ROS2 in order to determine if there is communic
 #include "sensors/Gyroscope.h"
 #include "sensors/Encoders.h"
 #include "gps/GPS.h"
+#include "followbot_client/FollowBotBluetooth.h"
 
 
 //Singelton
@@ -41,6 +42,7 @@ void ROS2_Serial::dataToSerial() {
     imuDataDoc();
     encoderDataDoc();
     gpsDataDoc();
+    phoneGPSDataDoc();
 }
 
 void ROS2_Serial::imuDataDoc() {
@@ -82,5 +84,18 @@ void ROS2_Serial::gpsDataDoc() {
     gpsDataDoc["longitude"] = myGPS.getRobotGPSData().lon;
 
     serializeJson(gpsDoc, Serial);
+    Serial.println();
+}
+
+void ROS2_Serial::phoneGPSDataDoc() {
+    StaticJsonDocument<256> phoneGPSDoc; 
+
+    // this is gps data from the phone
+    phoneGPSDoc["sensor_type"] = "goal";
+    JsonObject phoneGPSDataDoc = phoneGPSDoc.createNestedObject("data");
+    phoneGPSDataDoc["latitude"] = followBotBluetooth.getMobileGPSData().lat;
+    phoneGPSDataDoc["longitude"] = followBotBluetooth.getMobileGPSData().lon;
+
+    serializeJson(phoneGPSDoc, Serial);
     Serial.println();
 }

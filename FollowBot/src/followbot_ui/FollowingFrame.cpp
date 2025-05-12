@@ -33,7 +33,6 @@ bool FollowingFrame::touchScreenEvent(int x, int y) {
     FollowingFrameComponents selected = getComponentForTouch(x, y);
 
     if(selected == TO_MAIN_SCREEN) {
-        Serial.println("Main screen button pressed"); 
         ((TextBase*) getComponents()[FOLLOWING_TEXT_WAIT])->setHide(false);
         getComponents()[FOLLOWING_TEXT_WAIT]->draw();
         myLCDScreen.setCurrentFrame(MAIN_SCREEN);

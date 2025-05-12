@@ -33,7 +33,9 @@ class MainActivity : ReactActivity() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
       ActivityCompat.requestPermissions(this, arrayOf(
         Manifest.permission.BLUETOOTH_SCAN,
-        Manifest.permission.BLUETOOTH_CONNECT
+        Manifest.permission.BLUETOOTH_CONNECT,
+        Manifest.permission.ACCESS_COARSE_LOCATION,
+        Manifest.permission.ACCESS_FINE_LOCATION
       ), REQUEST_CODE)
     }
   }
