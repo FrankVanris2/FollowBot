@@ -20,6 +20,7 @@
 
 #include "sensors/Gyroscope.h"
 #include "sensors/Encoders.h"
+#include "sensors/BatteryReader.h"
 
 #include "gps/GPS.h"
 #include "following_mechanics/FollowMechanics.h"
@@ -42,10 +43,11 @@ FollowBotManager::FollowBotManager(): mIsDirty(false), mCurrentControl(ROBOT){
 //the setup that will store the many objects that will set in the main
 void FollowBotManager::followBotSetup() { 
 
-    // eepromStorage.setup();  
-    // myLCDScreen.myLCDScreen_Setup();
-    // myMotors.motorSetup();
-    // followBotClient.followBotClient_Setup();  
+    eepromStorage.setup();  
+    myLCDScreen.myLCDScreen_Setup();
+
+    myMotors.motorSetup();
+    followBotClient.followBotClient_Setup();  
     myGPS.gps_setup();
 
     //Testing
@@ -57,14 +59,16 @@ void FollowBotManager::followBotSetup() {
 }
 
 void FollowBotManager::followBotLoop() {
-  
-    // myLCDScreen.myLCDScreen_Loop();
-    // followBotClient.followBotClient_Loop(); 
+    batteryReader.batteryReaderLoop();
+    myLCDScreen.myLCDScreen_Loop();
+    followBotClient.followBotClient_Loop(); 
     myGPS.gps_loop(); 
-    // if (mCurrentControl == ROBOT) {
-    //     followMechanics.followMechanics_Loop();
-    // }
-    // myMotors.motorLoop();
+    if(mCurrentControl == IDLE) {
+        myMotors.setDirection(MOTOR_STOP);
+    } else if (mCurrentControl == ROBOT) {
+        followMechanics.followMechanics_Loop();
+    }
+    myMotors.motorLoop();
 
     // Testing
     encoders.loopEncoders();

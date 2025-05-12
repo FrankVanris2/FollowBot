@@ -11,7 +11,6 @@ Desc: Creating a Framebase which will be used in multiple frames
 template<typename T>
 class FrameBase : public UIComponent {
 public:
-
     virtual void setup(TFT_eSPI&  tft) = 0;
 
 protected:

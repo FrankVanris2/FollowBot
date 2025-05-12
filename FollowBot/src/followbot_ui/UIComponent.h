@@ -20,6 +20,9 @@ public:
         return false;
     } 
 
+    // Add virtual loop method
+    virtual void loop() {}
+
 protected:
     TFT_eSPI&  getTFT() const { 
         return *tft;
