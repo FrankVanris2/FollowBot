@@ -99,6 +99,19 @@ const api = {
       }),
     });
     return handleResponse(response);
+  },
+  
+  setNavMode: async (mode) => {
+    const response = await fetch(`${API_BASE_URL}/set-navigation-mode`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ 
+        mode  // 'mapping' or 'following'
+      }),
+    });
+    return handleResponse(response);
   }
 };
 
