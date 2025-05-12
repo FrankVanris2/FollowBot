@@ -132,7 +132,10 @@ const getCurrentPosition = (setLocation: (loc: Location) => void) => {
     (error) => {
       console.log('Geolocation error:', error);
     },
-    { enableHighAccuracy: true, timeout:15000, maximumAge:10000 }
+    { enableHighAccuracy: false,  // previously true for old gps protocols
+      timeout:15000
+      //maximumAge:10000  // needed for old gps protocols
+    }
   );
 };
 
