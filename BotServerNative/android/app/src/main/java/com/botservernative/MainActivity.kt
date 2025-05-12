@@ -30,17 +30,17 @@ class MainActivity : ReactActivity() {
     super.onCreate(savedInstanceState)
 
     // Request Bluetooth permissions for Android 12+
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+    /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
       ActivityCompat.requestPermissions(this, arrayOf(
         Manifest.permission.BLUETOOTH_SCAN,
         Manifest.permission.BLUETOOTH_CONNECT,
         Manifest.permission.ACCESS_COARSE_LOCATION,
         Manifest.permission.ACCESS_FINE_LOCATION
       ), REQUEST_CODE)
-    }
+    }*/
   }
 
-  override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+  /*override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
     super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
     if (requestCode == REQUEST_CODE) {
@@ -50,5 +50,5 @@ class MainActivity : ReactActivity() {
         android.util.Log.d("Bluetooth", "Bluetooth permissions denied!")
       }
     }
-  }
+  }*/
 }
