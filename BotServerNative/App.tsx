@@ -101,27 +101,6 @@ const getFollowBotCharacteristic = async (setCharacteristicData: (characteristic
   setCharacteristicData(characteristicData);
 };
 
-const checkLocationPermission = async () => {
-  if (Platform.OS === 'android') {
-    try {
-      const fineLocationGranted = await PermissionsAndroid.check(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-      );
-      const coarseLocationGranted = await PermissionsAndroid.check(
-        PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
-      );
-      if (!fineLocationGranted && !coarseLocationGranted) {
-        console.log('Location permissions not granted.');
-        // Optionally, prompt the user again or navigate to settings
-        return false;
-      }
-      return true;
-    } catch(err) {
-    console.warn('Error checking location permission:')
-    }
-  } 
-}
-
 const getCurrentPosition = (setLocation: (loc: Location) => void) => {
   Geolocation.getCurrentPosition(
     (position) => {
@@ -176,7 +155,7 @@ const App = () => {
     setInterval(() => {
       getCurrentPosition(setLocation);
 
-    }, 1000);
+    }, 300);
 
   }, [characteristicData]);
 
