@@ -47,7 +47,7 @@ void ROS2_Serial::dataToSerial() {
 
 void ROS2_Serial::imuDataDoc() {
     const double* gyroData = gyroscope.getGyroData();
-    StaticJsonDocument<256> imuDoc; 
+    StaticJsonDocument<128> imuDoc; 
 
     imuDoc["sensor_type"] = "imu";
     JsonObject imuData = imuDoc.createNestedObject("data");
@@ -64,7 +64,7 @@ void ROS2_Serial::imuDataDoc() {
 
 void ROS2_Serial::encoderDataDoc() {
     const double* encoderData = encoders.getEncoderData();
-    StaticJsonDocument<256> encoderDoc;
+    StaticJsonDocument<96> encoderDoc;
 
     encoderDoc["sensor_type"] = "encoder";
     JsonObject encodeData = encoderDoc.createNestedObject("data");
@@ -76,7 +76,7 @@ void ROS2_Serial::encoderDataDoc() {
 }
 
 void ROS2_Serial::gpsDataDoc() {
-    StaticJsonDocument<256> gpsDoc; 
+    StaticJsonDocument<128> gpsDoc; 
 
     gpsDoc["sensor_type"] = "gps";
     JsonObject gpsDataDoc = gpsDoc.createNestedObject("data");
@@ -88,7 +88,7 @@ void ROS2_Serial::gpsDataDoc() {
 }
 
 void ROS2_Serial::phoneGPSDataDoc() {
-    StaticJsonDocument<256> phoneGPSDoc; 
+    StaticJsonDocument<128> phoneGPSDoc; 
 
     // this is gps data from the phone
     phoneGPSDoc["sensor_type"] = "goal";
