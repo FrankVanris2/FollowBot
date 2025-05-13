@@ -7,20 +7,43 @@
 #pragma once
 #include <Arduino.h>
 
-// TODO: change this enums goddamnit Frank i.e. IDLE = 0
-const String IDLE = "Idle";
-const String USER = "User"; // manual
-const String ROBOT = "Robot"; // following
-const String MAPPING = "Mapping";
-const String ERROR = "Error";
+// Control modes as numeric constants
+enum ControlMode {
+    MODE_IDLE = 0,
+    MODE_USER = 1,      // manual control
+    MODE_ROBOT = 2,     // following mode
+    MODE_MAPPING = 3,   // mapping mode
+    MODE_ERROR = 4
+};
 
-const String MOTOR_FORWARD = "Forward";
-const String MOTOR_BACKWARD = "Backward";
-const String MOTOR_LEFT = "Left";
-const String MOTOR_RIGHT = "Right";
-const String MOTOR_STOP = "Stop";
+// String representations for control modes (for display/debugging)
+const String CONTROL_MODE_STRINGS[] = {
+    "Idle",
+    "User",     // manual
+    "Robot",    // following
+    "Mapping",
+    "Error"
+};
 
+// Motor direction constants
+enum MotorDirection {
+    MOTOR_DIRECTION_STOP = 0,
+    MOTOR_DIRECTION_FORWARD = 1,
+    MOTOR_DIRECTION_BACKWARD = 2,
+    MOTOR_DIRECTION_LEFT = 3,
+    MOTOR_DIRECTION_RIGHT = 4
+};
 
+// String representations for motor directions (for display/debugging)
+const String MOTOR_DIRECTION_STRINGS[] = {
+    "Stop",
+    "Forward",
+    "Backward",
+    "Left",
+    "Right"
+};
+
+// Original MotorStates enum (kept for backward compatibility)
 enum MotorStates {
     FORWARDS,
     BACKWARDS,
