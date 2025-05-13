@@ -36,7 +36,7 @@ unsigned long lastPostTime = 0;
 // Server IP address
 //IPAddress server(3, 145, 197, 165); // numeric IP for Google (no DNS)
 //IPAddress server(3, 131, 97, 5); // numeric IP for Google (no DNS) /
-IPAddress server(192, 168, 0, 38);
+IPAddress server(192, 168, 0, 54);
 const int PORT = 5000; //Originally 80
 
 // WiFi client
@@ -376,8 +376,8 @@ void FollowBotClient::handleActionData2(String dataString) {
         if (commaIdx == -1) {
             Serial.println(String("[ERROR]dataString: " + dataString));
         }
-        float lat = data.substring(0, commaIdx).toFloat();
-        float lng = data.substring(commaIdx+1).toFloat();
+        float lat = dataString.substring(0, commaIdx).toFloat();
+        float lng = dataString.substring(commaIdx+1).toFloat();
 
         // TODO: send via Serial
     }

@@ -12,6 +12,7 @@ Desc: Creating a Following Frame for when the robot is following a user
 #include "ScreenState.h"
 #include "FollowBotLCD.h"
 #include "followbot_manager/FollowBotManager.h"
+#include "followbot_client/FollowBotBluetooth.h"
 
 // Singelton Object
 FollowingFrame followingFrame;
@@ -49,20 +50,9 @@ void FollowingFrame::loop() {
         myLCDScreen.setCurrentFrame(MANUAL_SCREEN);
         ((TextBase*) getComponents()[FOLLOWING_TEXT_WAIT])->setHide(true);
     } else if(followBotManager.getCurrentControl() == MAPPING) {
-        // TODO: confirm this with Frank
-        // Show mapping UI
-        ((TextBase*) getComponents()[FOLLOWING_TEXT_MAPPING])->setHide(false);
-        getComponents()[FOLLOWING_TEXT_MAPPING]->draw();
-
-        // Example: Display coordinates
-        String coordText = "LAT: " + String(followBotManager.getLat()) + " LNG: " + String(followBotManager.getLng());
-        ((TextBase*) getComponents()[FOLLOWING_TEXT_COORD])->setText(coordText.c_str());
-        ((TextBase*) getComponents()[FOLLOWING_TEXT_COORD])->draw();
-
-        myLCDScreen.setCurrentFrame(MAPPING_SCREEN); // Switch to mapping screen
-
-        // Hide elements after update
-        ((TextBase*) getComponents()[FOLLOWING_TEXT_MAPPING])->setHide(true);
-        ((TextBase*) getComponents()[FOLLOWING_TEXT_COORD])->setHide(true);
+        ((TextBase*) getComponents()[FOLLOWING_TEXT_WAIT])->setHide(false);
+        getComponents()[FOLLOWING_TEXT_WAIT]->draw();
+        myLCDScreen.setCurrentFrame(MAPPING_SCREEN);
+        ((TextBase*) getComponents()[FOLLOWING_TEXT_WAIT])->setHide(true);
     }
 }

@@ -70,7 +70,7 @@ const startBluetooth = async (setCharacteristicData: (characteristicData: Charac
 const getFollowBotCharacteristic = async (setCharacteristicData: (characteristicData: CharacteristicData) => void) => {
   const peripherals = await BleManager.getBondedPeripherals();
   console.log('Bonded peripherals:', peripherals);
-  const followBotPeripheral = peripherals.find((per) => per.name === 'FollowBot_Proto1');
+  const followBotPeripheral = peripherals.find((per) => per.name === 'FollowBot_Proto1' || per.name === 'Arduino');
   if (!followBotPeripheral) {
     console.log('FollowBot Peripheral not found');
     return;
@@ -155,7 +155,7 @@ const App = () => {
     setInterval(() => {
       getCurrentPosition(setLocation);
 
-    }, 300);
+    }, 1000);
 
   }, [characteristicData]);
 
