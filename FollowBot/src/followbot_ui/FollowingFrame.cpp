@@ -49,20 +49,6 @@ void FollowingFrame::loop() {
         myLCDScreen.setCurrentFrame(MANUAL_SCREEN);
         ((TextBase*) getComponents()[FOLLOWING_TEXT_WAIT])->setHide(true);
     } else if(followBotManager.getCurrentControl() == MAPPING) {
-        // TODO: confirm this with Frank
-        // Show mapping UI
-        ((TextBase*) getComponents()[FOLLOWING_TEXT_MAPPING])->setHide(false);
-        getComponents()[FOLLOWING_TEXT_MAPPING]->draw();
-
-        // Example: Display coordinates
-        String coordText = "LAT: " + String(followBotManager.getLat()) + " LNG: " + String(followBotManager.getLng());
-        ((TextBase*) getComponents()[FOLLOWING_TEXT_COORD])->setText(coordText.c_str());
-        ((TextBase*) getComponents()[FOLLOWING_TEXT_COORD])->draw();
-
-        myLCDScreen.setCurrentFrame(MAPPING_SCREEN); // Switch to mapping screen
-
-        // Hide elements after update
-        ((TextBase*) getComponents()[FOLLOWING_TEXT_MAPPING])->setHide(true);
-        ((TextBase*) getComponents()[FOLLOWING_TEXT_COORD])->setHide(true);
+        // To Do 
     }
 }

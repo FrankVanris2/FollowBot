@@ -14,8 +14,8 @@ public:
     //loop method for testing purposes
     void ros2_loop();
 
-    void ros2SerialData();
-    void dataToSerial();
+    void readSerialData();
+    void writeSerialData();
 
     void imuDataDoc();
     void encoderDataDoc();

@@ -16,7 +16,7 @@
 const int MAX_SPEED = 255;
 const int MED_SPEED = 200;
 const int LOW_SPEED = 150;
-const int MIN_EFFECT = 50;
+const int MIN_EFFECTIVE = 50;
 
 const int ANGLE_THRESHOLD = 45; // degrees
 
@@ -65,12 +65,12 @@ void Motors::motorLoop() {
     Serial.println("test1 left wheel");
     setLeftRightSpeeds(100, 0);
     delay(2000);
-    motorsStop()
+    motorStop();
 
     Serial.println("test1 right wheel");
     setLeftRightSpeeds(0, 100);
     delay(2000);
-    motorsStop();
+    motorStop();
 
     Serial.println("test2");
     myMotors.setNormalizedSpeeds(0.3, 0.3);

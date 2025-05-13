@@ -50,6 +50,6 @@ void ManualFrame::loop() {
         myLCDScreen.setCurrentFrame(FOLLOWING_SCREEN);
         ((TextBase*) getComponents()[MANUAL_TEXT_WAIT])->setHide(true);
     } else if(followBotManager.getCurrentControl() == MAPPING) {
-
+        // To Do 
     }
 }

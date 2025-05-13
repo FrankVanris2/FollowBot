@@ -31,6 +31,13 @@ private:
     String getActionData();
     void handleActionData(String dataString);
 
+    // Coordinates related
+    String getCoordinatesData();
+    void handleCoordinatesData(String dataString);
+
+    //Reduing the HandlleActionData function
+    void handleActionData2(String dataString);
+
     unsigned long mPreviousMillisMove;
     unsigned long lastServerCheck;
 

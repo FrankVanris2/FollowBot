@@ -376,8 +376,8 @@ void FollowBotClient::handleActionData2(String dataString) {
         if (commaIdx == -1) {
             Serial.println(String("[ERROR]dataString: " + dataString));
         }
-        float lat = data.substring(0, commaIdx).toFloat();
-        float lng = data.substring(commaIdx+1).toFloat();
+        float lat = dataString.substring(0, commaIdx).toFloat();
+        float lng = dataString.substring(commaIdx+1).toFloat();
 
         // TODO: send via Serial
     }

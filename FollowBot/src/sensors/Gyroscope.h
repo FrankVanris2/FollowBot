@@ -42,7 +42,7 @@ class Gyroscope {
         unsigned long previousMillis;   
         double gyroData[DATA_SIZE];
 
-        float currenYaw = 0;
+        float currentYaw = 0;
 };
 
 extern Gyroscope gyroscope;
