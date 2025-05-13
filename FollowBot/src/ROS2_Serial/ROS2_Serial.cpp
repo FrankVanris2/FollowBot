@@ -14,23 +14,24 @@ Desc: Creating a testing env for ROS2 in order to determine if there is communic
 #include "followbot_client/FollowBotBluetooth.h"
 
 
-//Singelton
+//Singleton
 ROS2_Serial ros2_serial;
 
 ROS2_Serial::ROS2_Serial(): interval(TEST_INTERVAL), previousMillis(0) {}
 
+// TODO: change name to serial_loop
 void ROS2_Serial::ros2_loop() {
     if ((millis() - previousMillis) >= interval) {
         previousMillis = millis();
-        ros2SerialData();
-        dataToSerial();
+        readSerialData();
+        writeSerialData();
     } 
 }
 
-void ROS2_Serial::ros2SerialData() {
+// change to return a String?
+void ROS2_Serial::readSerialData() {
     if(Serial.available() > 0) {
         String message = Serial.readStringUntil('\n');
-        //to do, put this into a logger file
         Serial.print("Received message: ");
         Serial.print(message);
     } else {
@@ -38,7 +39,7 @@ void ROS2_Serial::ros2SerialData() {
     }
 }
 
-void ROS2_Serial::dataToSerial() {
+void ROS2_Serial::writeSerialData() {
     imuDataDoc();
     encoderDataDoc();
     gpsDataDoc();

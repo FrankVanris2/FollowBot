@@ -32,7 +32,9 @@ class Gyroscope {
             gyroData[GZ] = gz;
         }
 
-        double* getGyroData() { return gyroData;}
+        double* getGyroData() { return gyroData; }
+        float getYaw() { return currentYaw; }
+        void resetYaw() { currentYaw = 0; }
         
     private:
         //Interval
@@ -40,7 +42,7 @@ class Gyroscope {
         unsigned long previousMillis;   
         double gyroData[DATA_SIZE];
 
-        
+        float currenYaw = 0;
 };
 
 extern Gyroscope gyroscope;

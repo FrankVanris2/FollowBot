@@ -12,7 +12,7 @@ Desc: Creating setup code for obtaining the rotations of the wheels through the 
 
 // The Encoder gives 48 CPR (counts per revolution)
 
-//Singelton
+//Singleton
 Encoders encoders;
 
 // Static Variable definition
@@ -47,6 +47,7 @@ void Encoders::loopEncoders() {
 
         previousPosition1 = mPosition1;
         previousPosition2 = mPosition2;
+        // TODO: maybe remove reset
         mPosition1 = 0;
         mPosition2 = 0;
     }
@@ -65,9 +66,9 @@ void Encoders::readEncoder1() {
 void Encoders::readEncoder2() {
     int b = digitalRead(ENCODER_OUT_B2);
     if (b == HIGH) {
-        mPosition2--;
-    } else {
         mPosition2++;
+    } else {
+        mPosition2--;
     }
 }
 

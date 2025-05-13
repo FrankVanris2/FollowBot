@@ -13,7 +13,7 @@ Desc: Creating a gyroscope which is needed for mapping
 
 Adafruit_MPU6050 mpu; 
 
-//Singelton
+//Singleton
 Gyroscope gyroscope;
 
 Gyroscope::Gyroscope(): interval(500), previousMillis(0) {}
@@ -32,10 +32,22 @@ void Gyroscope::gyroscope_Setup() {
 void Gyroscope::gyroscope_Loop() {
     if ((millis() - previousMillis) >= interval) {
         previousMillis = millis();
+
         sensors_event_t a, g, temp;
         mpu.getEvent(&a, &g, &temp);
+
+        // calculate dt since last successful read (in seconds)
+        static unsigned long lastUpdate = 0;
+        float dt = (millis() - lastUpdate) / 1000.0;
+        lastUpdate = millis();
+
+        // integrate gyro Z over time (dt in seconds)
+        currentYaw += g.gyro.z * dt; // radians
     
-        setGyroData(a.acceleration.x, a.acceleration.y, a.acceleration.z, g.gyro.x, g.gyro.y, g.gyro.z);
+        setGyroData(a.acceleration.x, a.acceleration.y, a.acceleration.z,
+            g.gyro.x, g.gyro.y, g.gyro.z);
+
+        // IMU has a temperature reader
         followBotManager.setTemperatureParams(temp.temperature);
     } 
 }
