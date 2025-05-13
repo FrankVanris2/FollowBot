@@ -17,6 +17,7 @@ const MappingPage = () => {
   const [showTileLayer, setShowTileLayer] = useState(true);
   const [isSending, setIsSending] = useState(false);
   const [sendStatus, setSendStatus] = useState(null);
+  const [currentMode, setCurrentMode] = useState('mapping'); // 'mapping' or 'following'
 
   // Load campus data on component mount
   useEffect(() => {
@@ -159,6 +160,16 @@ const MappingPage = () => {
       }
     } else {
       setShowConfirmation(false);
+    }
+  };
+
+  // Toggle navigation mode
+  const toggleNavigationMode = async (mode) => {
+    try {
+      await api.setNavMode(mode); // 'mapping' or 'following'
+      setCurrentMode(mode);
+    } catch (error) {
+      console.error('Error switching navigation mode:', error);
     }
   };
 

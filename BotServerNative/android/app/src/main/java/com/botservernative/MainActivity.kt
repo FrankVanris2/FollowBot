@@ -29,24 +29,7 @@ class MainActivity : ReactActivity() {
   override fun onCreate(savedInstanceState: android.os.Bundle?) {
     super.onCreate(savedInstanceState)
 
-    // Request Bluetooth permissions for Android 12+
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-      ActivityCompat.requestPermissions(this, arrayOf(
-        Manifest.permission.BLUETOOTH_SCAN,
-        Manifest.permission.BLUETOOTH_CONNECT
-      ), REQUEST_CODE)
-    }
   }
 
-  override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-    super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-    if (requestCode == REQUEST_CODE) {
-      if (grantResults.isNotEmpty() && grantResults[0] == android.content.pm.PackageManager.PERMISSION_GRANTED) {
-        android.util.Log.d("Bluetooth", "Permissions granted!")
-      } else {
-        android.util.Log.d("Bluetooth", "Bluetooth permissions denied!")
-      }
-    }
-  }
+  
 }

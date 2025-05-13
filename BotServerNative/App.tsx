@@ -32,11 +32,13 @@ const requestPermissions = async () => {
   if (Platform.OS === 'android') {
     try {
       const granted = await PermissionsAndroid.requestMultiple([
+        PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN,
         PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT,
       ]);
       if (
+        granted['android.permission.ACCESS_COARSE_LOCATION'] === PermissionsAndroid.RESULTS.GRANTED &&
         granted['android.permission.ACCESS_FINE_LOCATION'] === PermissionsAndroid.RESULTS.GRANTED &&
         granted['android.permission.BLUETOOTH_SCAN'] === PermissionsAndroid.RESULTS.GRANTED &&
         granted['android.permission.BLUETOOTH_CONNECT'] === PermissionsAndroid.RESULTS.GRANTED
@@ -68,7 +70,7 @@ const startBluetooth = async (setCharacteristicData: (characteristicData: Charac
 const getFollowBotCharacteristic = async (setCharacteristicData: (characteristicData: CharacteristicData) => void) => {
   const peripherals = await BleManager.getBondedPeripherals();
   console.log('Bonded peripherals:', peripherals);
-  const followBotPeripheral = peripherals.find((per) => per.name === 'FollowBot_Proto1');
+  const followBotPeripheral = peripherals.find((per) => per.name === 'FollowBot_Proto1' || per.name === 'Arduino');
   if (!followBotPeripheral) {
     console.log('FollowBot Peripheral not found');
     return;
@@ -109,7 +111,10 @@ const getCurrentPosition = (setLocation: (loc: Location) => void) => {
     (error) => {
       console.log('Geolocation error:', error);
     },
-    { enableHighAccuracy: true, timeout:15000, maximumAge:10000 }
+    { enableHighAccuracy: false,  // previously true for old gps protocols
+      timeout:15000
+      //maximumAge:10000  // needed for old gps protocols
+    }
   );
 };
 

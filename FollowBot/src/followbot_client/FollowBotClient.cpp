@@ -13,6 +13,7 @@
 #include "following_mechanics/FollowMechanics.h"
 #include "secrets/EEPROMStorage.h"
 #include "states&types/DataStates.h"
+#include "states&types/MotorControlStates.h"
 
 
 // Universal Object
@@ -22,6 +23,7 @@ FollowBotClient followBotClient;
 const int TENTH_SECOND = 100;
 const int HALF_SECOND = 500;
 const int SECOND = 1000;
+const int FIVE_SECONDS = 5000;
 const int TEN_SECONDS = 10000;
 const int SIXTY_SECONDS = 60000;
 const int HOUR = 3600000;
@@ -36,7 +38,7 @@ unsigned long lastPostTime = 0;
 // Server IP address
 //IPAddress server(3, 145, 197, 165); // numeric IP for Google (no DNS)
 //IPAddress server(3, 131, 97, 5); // numeric IP for Google (no DNS) /
-IPAddress server(10, 0, 0, 245);
+IPAddress server(192, 168, 0, 54);
 const int PORT = 5000; //Originally 80
 
 // WiFi client
@@ -91,8 +93,28 @@ void FollowBotClient::followBotClient_Setup() {
 }
 
 void FollowBotClient::followBotClient_Loop() {
-    int intervalTime = mServerNotConnectedCnt < MAX_SERVER_NOT_CONNECTED ? TENTH_SECOND : SIXTY_SECONDS;
+    int baseIntervalTime = mServerNotConnectedCnt < MAX_SERVER_NOT_CONNECTED ? TENTH_SECOND : SIXTY_SECONDS;
     
+    // Adjust interval based on mode, but only if server is responsive
+    int intervalTime;
+    if(mServerNotConnectedCnt >= MAX_SERVER_NOT_CONNECTED) {
+        // If server is unresponsive, use the long interval regardless of mode
+        intervalTime = SIXTY_SECONDS;
+    } else {
+        // Server is responsive, adjust interval based o mode
+        String currentMode = followBotManager.getCurrentControl();
+
+        if (currentMode == USER) {
+            // Manual control needs most frequent updates
+            intervalTime = TENTH_SECOND;
+        } else if (currentMode == ROBOT) {
+            // Following mode can use a moderate interval
+            intervalTime = FIVE_SECONDS;
+        } else {
+            // Other modes (IDLE, etc.) can user a longer interval
+            intervalTime = SECOND;
+        }
+    }
     unsigned long currentTime = millis();
     if((currentTime - mPreviousMillisMove) >= intervalTime) {
         mPreviousMillisMove = currentTime;
@@ -100,10 +122,8 @@ void FollowBotClient::followBotClient_Loop() {
         // Check WiFi connection status 
         if(WiFi.status() != WL_CONNECTED) {
             mWifiConnectionStatus = WL_DISCONNECTED;
-            //Serial.println("FollowBotClient, Wifi disconnected");
         } else {
             mWifiConnectionStatus = WL_CONNECTED;
-            Serial.println("FollowBotClient, Wifi connected");
         }
 
         if(mWifiConnectionStatus == WL_CONNECTED) {
@@ -119,6 +139,11 @@ void FollowBotClient::followBotClient_Loop() {
                     lastPostTime = currentTime; // Update last post time only on success
                     Serial.println("Posted robot info - next post in 1 hour");
                 }
+            }
+
+            // During extended intervals, continously print RSSI
+            if(mServerNotConnectedCnt >= MAX_SERVER_NOT_CONNECTED) {
+                checkRSSI();
             }
         }
 
@@ -202,6 +227,7 @@ bool FollowBotClient::postRobotInfo() {
     return true;
 }
 
+// TODO: change this name so it is more specific to manual movement, adjust api.jsx accordingly
 String FollowBotClient::getActionData() {
     Serial.println("FollowBotClient.getMove(): Connecting to server...") ;
     if(!client.connect(server, PORT)) {
@@ -277,6 +303,71 @@ String FollowBotClient::getActionData() {
      return dataActionString;
 }
 
+String FollowBotClient::getCoordinatesData() {
+    Serial.println("Fetching coordinates...");
+    if (!client.connect(server, PORT)) {
+        Serial.println("Server connection failed");
+        mServerNotConnectedCnt = min(mServerNotConnectedCnt + 1, MAX_SERVER_NOT_CONNECTED);
+        return "ERROR";
+    }
+
+    // TODO: align this with api.jsx
+    client.println("GET /api/getcoordinates HTTP/1.1");
+    client.print("Host: "); client.println(mIPAddress);
+    client.println("Connection: close");
+    client.println();
+
+
+     String robotUserSwitch;
+     const int SIZE = 1024;
+     char buffer[SIZE];
+     int bufLength = 0;
+     int bodyIdx = 0; // Start of body in buffer
+     Data_States dataState = HEADER_STATE;
+     bool readData = true;
+
+     while (dataState != FINISHED) {
+         int prevBufLen = bufLength;
+         int numChars = 0;
+         if(readData) {
+
+             numChars = client.read(reinterpret_cast<uint8_t*>(buffer + bufLength), SIZE - bufLength);
+             bufLength += numChars;
+             buffer[bufLength] = 0;
+         }
+
+         if(!readData || numChars > 0) {
+             switch(dataState) {
+                 case HEADER_STATE: {
+                     char* bufPtr;
+                     for (bufPtr = buffer + prevBufLen; *(bufPtr + 3); ++bufPtr) {
+                         if (*bufPtr == 0x0d && *(bufPtr + 1) == 0x0a && *(bufPtr + 2) == 0x0d && *(bufPtr + 3) == 0x0a) {
+                             bodyIdx = bufPtr - buffer + 4;
+                             dataState = BODY_STATE;
+                             readData = false;
+                             break;
+                         }
+                     }
+                     break;
+                 }
+
+                 case BODY_STATE:
+                     if(bufLength > bodyIdx) {
+                         dataState = FINISHED;
+                     } else {
+                         readData = true;
+                     }
+                     break;
+             }
+         }
+     }
+
+    client.stop();
+    String coordinateData = String(buffer + bodyIdx);
+    return coordinateData;
+}
+
+// TODO: look at handleActionData2
 void FollowBotClient::handleActionData(String dataString) {
     Serial.println(String("FollowBotClient.handleActionData(): Received data: ") + dataString);
     if(dataString == USER) {
@@ -288,6 +379,32 @@ void FollowBotClient::handleActionData(String dataString) {
             Serial.println(String("FollowBotClient.handleActionData - Current Motor Direction: ") + dataString);
             myMotors.setDirection(dataString);
         } 
+    }
+}
+
+void FollowBotClient::handleActionData2(String dataString) {
+    Serial.println(String("FollowBotClient.handleActionData(): Received data: ") + dataString);
+    if (dataString == USER) {
+        followBotManager.setCurrentControl(dataString);
+    } else if (dataString == ROBOT) {
+        followBotManager.setCurrentControl(dataString);
+    } else if (dataString == MAPPING) {
+        followBotManager.setCurrentControl(dataString);
+    } else {
+        Serial.println("THERE WAS NO CONTROL MODE CHANGE.");
+    }
+
+    if (followBotManager.getCurrentControl() == USER) {
+        myMotors.setDirection(dataString);
+    } else if (followBotManager.getCurrentControl() == MAPPING) {
+        int commaIdx = dataString.indexOf(',');
+        if (commaIdx == -1) {
+            Serial.println(String("[ERROR]dataString: " + dataString));
+        }
+        float lat = dataString.substring(0, commaIdx).toFloat();
+        float lng = dataString.substring(commaIdx+1).toFloat();
+
+        // TODO: send via Serial
     }
 }
 

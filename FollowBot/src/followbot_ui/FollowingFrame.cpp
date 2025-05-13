@@ -12,6 +12,7 @@ Desc: Creating a Following Frame for when the robot is following a user
 #include "ScreenState.h"
 #include "FollowBotLCD.h"
 #include "followbot_manager/FollowBotManager.h"
+#include "followbot_client/FollowBotBluetooth.h"
 
 // Singelton Object
 FollowingFrame followingFrame;
@@ -33,7 +34,6 @@ bool FollowingFrame::touchScreenEvent(int x, int y) {
     FollowingFrameComponents selected = getComponentForTouch(x, y);
 
     if(selected == TO_MAIN_SCREEN) {
-        Serial.println("Main screen button pressed"); 
         ((TextBase*) getComponents()[FOLLOWING_TEXT_WAIT])->setHide(false);
         getComponents()[FOLLOWING_TEXT_WAIT]->draw();
         myLCDScreen.setCurrentFrame(MAIN_SCREEN);
@@ -50,6 +50,9 @@ void FollowingFrame::loop() {
         myLCDScreen.setCurrentFrame(MANUAL_SCREEN);
         ((TextBase*) getComponents()[FOLLOWING_TEXT_WAIT])->setHide(true);
     } else if(followBotManager.getCurrentControl() == MAPPING) {
-        // You will do things here.
+        ((TextBase*) getComponents()[FOLLOWING_TEXT_WAIT])->setHide(false);
+        getComponents()[FOLLOWING_TEXT_WAIT]->draw();
+        myLCDScreen.setCurrentFrame(MAPPING_SCREEN);
+        ((TextBase*) getComponents()[FOLLOWING_TEXT_WAIT])->setHide(true);
     }
 }

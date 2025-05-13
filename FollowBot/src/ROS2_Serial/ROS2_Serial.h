@@ -20,6 +20,7 @@ public:
     void imuDataDoc();
     void encoderDataDoc();
     void gpsDataDoc();
+    void phoneGPSDataDoc();
     
 
 private:

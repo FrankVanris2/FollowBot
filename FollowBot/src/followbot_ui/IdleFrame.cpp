@@ -41,7 +41,7 @@ void IdleFrame::loop() {
         if(followBotClient.isConnected()) {
             // After idle time, set to ROBOT mode by default
             followBotManager.setCurrentControl(ROBOT);
-            myLCDScreen.setCurrentFrame(FOLLOWING_SCREEN);
+            myLCDScreen.setCurrentFrame(FOLLOWING_SCREEN); //Was FOLLOWING_SCREEN
         } else {
             followBotManager.setCurrentControl(IDLE);
             myLCDScreen.setCurrentFrame(MAIN_SCREEN);

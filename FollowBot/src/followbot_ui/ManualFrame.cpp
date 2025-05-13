@@ -34,7 +34,6 @@ bool ManualFrame::touchScreenEvent(int x, int y) {
     ManualFrameComponents selected = getComponentForTouch(x, y);
 
     if(selected == TO_MAIN_SCREEN_MANUAL) {
-        Serial.println("Main screen button pressed");
         ((TextBase*) getComponents()[MANUAL_TEXT_WAIT])->setHide(false);
         getComponents()[MANUAL_TEXT_WAIT]->draw();
         myLCDScreen.setCurrentFrame(MAIN_SCREEN);
@@ -51,6 +50,9 @@ void ManualFrame::loop() {
         myLCDScreen.setCurrentFrame(FOLLOWING_SCREEN);
         ((TextBase*) getComponents()[MANUAL_TEXT_WAIT])->setHide(true);
     } else if(followBotManager.getCurrentControl() == MAPPING) {
-
+        ((TextBase*) getComponents()[MANUAL_TEXT_WAIT])->setHide(false);
+        getComponents()[MANUAL_TEXT_WAIT]->draw();
+        myLCDScreen.setCurrentFrame(MAPPING_SCREEN);
+        ((TextBase*) getComponents()[MANUAL_TEXT_WAIT])->setHide(true);
     }
 }

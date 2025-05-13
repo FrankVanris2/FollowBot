@@ -30,6 +30,13 @@ private:
     bool getMove();
     String getActionData();
     void handleActionData(String dataString);
+    
+    //This is for getting the coordinates
+    String getCoordinatesData();
+    void handleCoordinatesData(String dataString);
+    
+    // Handling the action data 2
+    void handleActionData2(String dataString);
 
     unsigned long mPreviousMillisMove;
     unsigned long lastServerCheck;

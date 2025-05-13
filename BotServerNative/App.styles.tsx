@@ -7,4 +7,9 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 30,
   },
+  errorText: { // Add this style
+    color: 'red',
+    fontSize: 16,
+    marginTop: 10,
+  },
 });
