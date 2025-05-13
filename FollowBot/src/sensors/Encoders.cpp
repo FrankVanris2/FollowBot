@@ -16,11 +16,11 @@ Desc: Creating setup code for obtaining the rotations of the wheels through the 
 Encoders encoders;
 
 // Static Variable definition
-volatile double Encoders::mPosition1 = 0.0;
-volatile double Encoders::mPosition2 = 0.0;
+volatile double Encoders::mPositionRight = 0.0;
+volatile double Encoders::mPositionLeft = 0.0;
 
 Encoders::Encoders() : currentTime(0), previousTime(0),
-previousPosition1(0), previousPosition2(0) {}
+previousPositionRight(0), previousPositionLeft(0) {}
 
 void Encoders::setupEncoders() {
     pinMode(ENCODER_OUT_A, INPUT);
@@ -33,7 +33,6 @@ void Encoders::setupEncoders() {
 }
 
 void Encoders::loopEncoders() {
-
     // time difference
     currentTime = micros();
     
@@ -43,35 +42,39 @@ void Encoders::loopEncoders() {
 
     if(currentTime - previousTime >= THREE_SECONDS * 1000) {
         previousTime = currentTime;
-        setEncoderData(mPosition1, mPosition2);
+        setEncoderData(mPositionRight, mPositionLeft);
 
-        previousPosition1 = mPosition1;
-        previousPosition2 = mPosition2;
-        // TODO: maybe remove reset
-        mPosition1 = 0;
-        mPosition2 = 0;
+        previousPositionRight = mPositionRight;
+        previousPositionLeft = mPositionLeft;
     }
-
 }
 
-void Encoders::readEncoder1() {
+float getAverageDistance() const {
+    return (getDistanceMetersRight() + getDistanceMetersLeft()) / 2.0f;
+}
+
+float Encoders::getDistanceMetersRight() const {
+    return mPositionRight * METERS_PER_TICK;
+}
+
+float Encoders::getDistanceMetersLeft() const {
+    return mPositionLeft * METERS_PER_TICK;
+}
+
+void Encoders::readEncoderRight() {
     int b = digitalRead(ENCODER_OUT_B);
     if (b == HIGH) {
-        mPosition1++;
+        mPositionRight++;
     } else {
-        mPosition1--;
+        mPositionRight--;
     }
 }
 
-void Encoders::readEncoder2() {
+void Encoders::readEncoderLeft() {
     int b = digitalRead(ENCODER_OUT_B2);
     if (b == HIGH) {
-        mPosition2++;
+        mPositionLeft++; // originally --
     } else {
-        mPosition2--;
+        mPositionLeft--; // originally ++
     }
 }
-
-
-
-

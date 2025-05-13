@@ -16,8 +16,8 @@ Desc: Creating encoders that will read rotation speed of the motors. the wheel D
 #define ENCODER_OUT_B2 5
 
 enum  MotorDistances {
-    MOTOR_DISTANCE_IN_TICKS_1 = 0,
-    MOTOR_DISTANCE_IN_TICKS_2,
+    MOTOR_DISTANCE_IN_TICKS_RIGHT = 0,
+    MOTOR_DISTANCE_IN_TICKS_LEFT,
 };
 
 class Encoders {   
@@ -27,23 +27,29 @@ public:
     void setupEncoders();
     void loopEncoders();
 
-    static void readEncoder1();
-    static void readEncoder2();
+    static void readEncoderRight();
+    static void readEncoderLeft();
+    float getDistanceMetersRight() const;
+    float getDistanceMetersLeft() const;
+    float getSpeedMpsRight() const;
+    float getSpeedMpsLeft() const;
 
-    void setEncoderData(int numTicks1, int numTicks2) {
-        encoderData[MOTOR_DISTANCE_IN_TICKS_1] = numTicks1;
-        encoderData[MOTOR_DISTANCE_IN_TICKS_2] = numTicks2;
+    void setEncoderData(int rightTicks, int leftTicks) {
+        encoderData[MOTOR_DISTANCE_IN_TICKS_RIGHT] = rightTicks;
+        encoderData[MOTOR_DISTANCE_IN_TICKS_LEFT] = leftTicks;
     }
 
     double* getEncoderData() { return encoderData; }
 
 
 private:  
-    static volatile double mPosition1;
-    static volatile double mPosition2;
+    static volatile double mPositionRight;
+    static volatile double mPositionLeft;
 
-    int previousPosition1;
-    int previousPosition2;
+    const float METERS_PER_TICK = (0.1963f / 48.0f);  // 0.1963m circumference / 48 ticks
+
+    int previousPositionRight;
+    int previousPositionLeft;
 
     unsigned long currentTime; 
     unsigned long previousTime;

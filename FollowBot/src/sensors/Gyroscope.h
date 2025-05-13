@@ -33,16 +33,16 @@ class Gyroscope {
         }
 
         double* getGyroData() { return gyroData; }
-        float getYaw() { return currentYaw; }
-        void resetYaw() { currentYaw = 0; }
+        float getYaw() const { return m_currentYaw; }
+        void resetYaw() { m_currentYaw = 0; }
         
     private:
-        //Interval
+        // interval to send to pi
         unsigned long interval;
         unsigned long previousMillis;   
         double gyroData[DATA_SIZE];
 
-        float currentYaw = 0;
+        float m_currentYaw = 0;
 };
 
 extern Gyroscope gyroscope;

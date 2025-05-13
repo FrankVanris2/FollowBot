@@ -11,10 +11,10 @@ Desc: Creating a testing env for ROS2 in order to determine if there is communic
 #include "sensors/Gyroscope.h"
 #include "sensors/Encoders.h"
 #include "gps/GPS.h"
-#include "followbot_client/FollowBotBluetooth.h"
+#include "motion/motion.h"
 
+//#include "followbot_client/FollowBotBluetooth.h"
 
-//Singleton
 ROS2_Serial ros2_serial;
 
 ROS2_Serial::ROS2_Serial(): interval(TEST_INTERVAL), previousMillis(0) {}
@@ -28,14 +28,28 @@ void ROS2_Serial::ros2_loop() {
     } 
 }
 
-// change to return a String?
 void ROS2_Serial::readSerialData() {
     if(Serial.available() > 0) {
         String message = Serial.readStringUntil('\n');
-        Serial.print("Received message: ");
-        Serial.print(message);
-    } else {
-        Serial.println("Pi is not sending any data");
+        Serial.print("Received: ");
+        Serial.println(message);
+
+        StaticJsonDocument<256> doc;
+        DeserializationError error = deserializeJson(doc, message);
+
+        if (error) {
+            Serial.print("JSON Error: ");
+            Serial.println(error.c_str());
+            return;
+        }
+
+        // handle cmd_vel commands
+        if (doc["sensor_type"] == "cmd_vel") {
+            float linear = doc["data"]["linear"]["x"];
+            float angular = doc["data"]["angular"]["z"];
+            motion.setVelocity(linear, angular);
+        }
+        // add other message types here as needed
     }
 }
 

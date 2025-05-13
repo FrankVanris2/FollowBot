@@ -23,6 +23,7 @@
 #include "sensors/BatteryReader.h"
 
 #include "gps/GPS.h"
+#include "motion/motion.h"
 #include "following_mechanics/FollowMechanics.h"
 
 //CURRENTLY NOT NEEDED
@@ -43,21 +44,17 @@ FollowBotManager::FollowBotManager(): mIsDirty(false), mCurrentControl(ROBOT){
 //the setup that will store the many objects that will set in the main
 void FollowBotManager::followBotSetup() { 
 
-//    followBotBluetooth.setup();
-//    eepromStorage.setup();
-//    myLCDScreen.myLCDScreen_Setup();
-//    followBotClient.followBotClient_Setup();
-//    myMotors.motorSetup();
-//    myGPS.gps_setup();
-//
-//    //Testing
-//    encoders.setupEncoders();
-//
-//    // ROS2 specific:
-//    gyroscope.gyroscope_Setup();
+    followBotBluetooth.setup();
+    eepromStorage.setup();
+    myLCDScreen.myLCDScreen_Setup();
+    followBotClient.followBotClient_Setup();
 
+    myGPS.gps_setup();
     myMotors.motorSetup();
-
+    encoders.setupEncoders();
+    gyroscope.gyroscope_Setup();
+    myMotors.motorSetup();
+    motion.initialize(encoders, gyroscope, myMotors);
 }
 
 void FollowBotManager::followBotLoop() {

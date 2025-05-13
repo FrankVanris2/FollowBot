@@ -35,7 +35,6 @@ Adafruit_DCMotor *motor4 = motorShield.getMotor(4);
 // My constructor
 Motors::Motors(): mCurrentDirection(MOTOR_STOP) {}
 
-// TODO: change to new
 void Motors::motorSetup() {
     Serial.println("Motor Setup");
 
@@ -85,8 +84,6 @@ void Motors::motorLoop() {
     delay(2000);
 }
 
-/** NEW CONTROL MODE FUNCTIONS */
-
 int Motors::scaleSpeed(float normalized) {
     // map [-1.0, 1.0] to [MIN_SPEED, MAX_SPEED]
     return constrain(
@@ -106,11 +103,11 @@ void Motors::setNormalizedSpeeds(float left, float right) {
 void Motors::setLeftRightSpeeds(int leftSpeed, int rightSpeed) {
     // left side motors (1 & 4)
     setMotorDirection(motor1, leftSpeed);
-    setMotorDirection(motor4, leftSpeed); // No inversion if physically mirrored
+    setMotorDirection(motor4, leftSpeed);
 
     // right side motors (2 & 3)
     setMotorDirection(motor2, rightSpeed);
-    setMotorDirection(motor3, rightSpeed); // No inversion if mirrored
+    setMotorDirection(motor3, rightSpeed);
 
     // set speeds after setting direction
     motor1->setSpeed(constrain(abs(leftSpeed), MIN_EFFECTIVE, MAX_SPEED));
@@ -130,7 +127,6 @@ void Motors::setMotorDirection(Adafruit_DCMotor* motor, int speed) {
 }
 
 /** BEGINNING OF LEGACY FUNCTIONS: */
-
 void Motors::setMotorSpeed(int leftSpeed, int rightSpeed) {
     motor1->setSpeed(leftSpeed);
     motor2->setSpeed(rightSpeed);
@@ -222,5 +218,4 @@ void Motors::motorStop() {
     motor3->run(RELEASE);
     motor4->run(RELEASE);
 }
-
 /** END OF LEGACY FUNCTIONS: */
