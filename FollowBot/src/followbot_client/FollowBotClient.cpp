@@ -13,6 +13,7 @@
 #include "following_mechanics/FollowMechanics.h"
 #include "secrets/EEPROMStorage.h"
 #include "states&types/DataStates.h"
+#include "states&types/MotorControlStates.h"
 
 
 // Universal Object
@@ -22,6 +23,7 @@ FollowBotClient followBotClient;
 const int TENTH_SECOND = 100;
 const int HALF_SECOND = 500;
 const int SECOND = 1000;
+const int FIVE_SECONDS = 5000;
 const int TEN_SECONDS = 10000;
 const int SIXTY_SECONDS = 60000;
 const int HOUR = 3600000;
@@ -36,7 +38,7 @@ unsigned long lastPostTime = 0;
 // Server IP address
 //IPAddress server(3, 145, 197, 165); // numeric IP for Google (no DNS)
 //IPAddress server(3, 131, 97, 5); // numeric IP for Google (no DNS) /
-IPAddress server(192, 168, 0, 38);
+IPAddress server(10, 12, 199, 209);
 const int PORT = 5000; //Originally 80
 
 // WiFi client
@@ -91,8 +93,28 @@ void FollowBotClient::followBotClient_Setup() {
 }
 
 void FollowBotClient::followBotClient_Loop() {
-    int intervalTime = mServerNotConnectedCnt < MAX_SERVER_NOT_CONNECTED ? TENTH_SECOND : SIXTY_SECONDS;
+    int baseIntervalTime = mServerNotConnectedCnt < MAX_SERVER_NOT_CONNECTED ? TENTH_SECOND : SIXTY_SECONDS;
     
+    // Adjust interval based on mode, but only if server is responsive
+    int intervalTime;
+    if(mServerNotConnectedCnt >= MAX_SERVER_NOT_CONNECTED) {
+        // If server is unresponsive, use the long interval regardless of mode
+        intervalTime = SIXTY_SECONDS;
+    } else {
+        // Server is responsive, adjust interval based o mode
+        String currentMode = followBotManager.getCurrentControl();
+
+        if (currentMode == USER) {
+            // Manual control needs most frequent updates
+            intervalTime = TENTH_SECOND;
+        } else if (currentMode == ROBOT) {
+            // Following mode can use a moderate interval
+            intervalTime = FIVE_SECONDS;
+        } else {
+            // Other modes (IDLE, etc.) can user a longer interval
+            intervalTime = SECOND;
+        }
+    }
     unsigned long currentTime = millis();
     if((currentTime - mPreviousMillisMove) >= intervalTime) {
         mPreviousMillisMove = currentTime;
@@ -100,10 +122,8 @@ void FollowBotClient::followBotClient_Loop() {
         // Check WiFi connection status 
         if(WiFi.status() != WL_CONNECTED) {
             mWifiConnectionStatus = WL_DISCONNECTED;
-            //Serial.println("FollowBotClient, Wifi disconnected");
         } else {
             mWifiConnectionStatus = WL_CONNECTED;
-            Serial.println("FollowBotClient, Wifi connected");
         }
 
         if(mWifiConnectionStatus == WL_CONNECTED) {
@@ -119,6 +139,11 @@ void FollowBotClient::followBotClient_Loop() {
                     lastPostTime = currentTime; // Update last post time only on success
                     Serial.println("Posted robot info - next post in 1 hour");
                 }
+            }
+
+            // During extended intervals, continously print RSSI
+            if(mServerNotConnectedCnt >= MAX_SERVER_NOT_CONNECTED) {
+                checkRSSI();
             }
         }
 
@@ -376,8 +401,8 @@ void FollowBotClient::handleActionData2(String dataString) {
         if (commaIdx == -1) {
             Serial.println(String("[ERROR]dataString: " + dataString));
         }
-        float lat = data.substring(0, commaIdx).toFloat();
-        float lng = data.substring(commaIdx+1).toFloat();
+        float lat = dataString.substring(0, commaIdx).toFloat();
+        float lng = dataString.substring(commaIdx+1).toFloat();
 
         // TODO: send via Serial
     }

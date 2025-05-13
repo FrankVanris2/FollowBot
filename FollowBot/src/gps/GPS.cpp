@@ -20,7 +20,7 @@ GPS myGPS;
 TinyGPSPlus gps;
 
 
-GPS::GPS(): GPSBaud(9600), interval(3000), previousMillis(0) {
+GPS::GPS(): GPSBaud(9600), interval(5000), previousMillis(0) {
     robotGPSData.lat = 0.0;
     robotGPSData.lon = 0.0;
 }

@@ -71,6 +71,7 @@ void FollowBotBluetooth::setup() {
 
     // Set the local name and service
     BLE.setLocalName("FollowBot_Proto1");
+    
     BLE.setAdvertisedService(followBotGPSService);
     followBotGPSService.addCharacteristic(followBotGPSCharacteristic);
     BLE.addService(followBotGPSService);
