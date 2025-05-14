@@ -100,7 +100,8 @@ void ROS2_Serial::encoderDataDoc() {
 
 void ROS2_Serial::gpsDataDoc() {
     if (myGPS.getRobotGPSData().lat == 0.0 && myGPS.getRobotGPSData().lon == 0.0) {
-            return;         // If GPS data is equal to zero, return
+        
+        return;         // If GPS data is equal to zero, return
     }
 
     StaticJsonDocument<128> gpsDoc;

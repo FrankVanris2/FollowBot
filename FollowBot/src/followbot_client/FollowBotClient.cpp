@@ -21,13 +21,14 @@
 
 
 // Server configuration
-IPAddress server(192, 168, 0, 38); // Would be AWS instance but choose local for no production devices.
+IPAddress server(10, 12, 233, 78); // Would be AWS instance but choose local for no production devices.
 const int PORT = 5000; //Originally 80
 
 // Singleton instance
 FollowBotClient followBotClient;
 
 // Time interval constants
+const int TEN_MILLISECONDS = 10;       // 0.01 seconds
 const int TENTH_SECOND = 100;       // 0.1 seconds
 const int HALF_SECOND = 500;        // 0.5 seconds
 const int SECOND = 1000;            // 1 second
@@ -125,7 +126,7 @@ void FollowBotClient::followBotClient_Loop() {
         if (currentMode == MANUAL) {
             intervalTime = TENTH_SECOND;        // Most responsive for manual control
         } else if (currentMode == FOLLOWING) {
-            intervalTime = FIVE_SECONDS;        // Moderate for following mode
+            intervalTime = TENTH_SECOND;        // Moderate for following mode
         } else {
             intervalTime = SECOND;              // Default for other modes
         }
@@ -194,7 +195,7 @@ String FollowBotClient::getActionData() {
     client.println("Connection: close"); // We expect the server to close the connection after response
     client.println();
 
-    const int BUFFER_SIZE = 1024;
+    const int BUFFER_SIZE = 2048;
     char buffer[BUFFER_SIZE];
     int bufLength = 0;
     int bodyStartIndex = 0; // Index in buffer where the HTTP body starts
@@ -284,11 +285,12 @@ String FollowBotClient::getActionData() {
 
 /**
  * Process data received from the server
- * @pre dataString has to contain `{mode},{command}`
- * Message format:
- * - "MODE" - Simple mode change (e.g., "FOLLOWING")
- * - "MODE,COMMAND" - Mode with command (e.g., "MANUAL,Forward")
- * - "MODE,PARAM1,PARAM2" - Mode with parameters (e.g., "MAPPING,37.7749,-122.4194")
+ * @pre dataString can be in formats like "MODE", "MODE,COMMAND", or "MODE,PARAM1,PARAM2".
+ *      An empty dataString will result in no action.
+ * Message format examples:
+ * - "FOLLOWING" - Simple mode change
+ * - "MANUAL,Forward" - Mode with command
+ * - "MAPPING,37.7749,-122.4194" - Mode with parameters (Note: MAPPING data via this path is illustrative)
  *
  * @param dataString The received data string to process
  */
@@ -296,73 +298,69 @@ void FollowBotClient::handleActionData(String dataString) {
     // Trim any whitespace
     dataString.trim();
 
+    // If dataString is empty (e.g., from a 204 No Content response), do nothing.
+    if (dataString.length() == 0) {
+        Serial.println("FollowBotClient: Received empty data string. No action taken.");
+        return;
+    }
+
     // Log the received data for debugging
     Serial.println(String("FollowBotClient: Received data: ") + dataString);
 
-    // Find the first comma (if any)
     int firstComma = dataString.indexOf(',');
-    String mode = (firstComma >= 0) ? dataString.substring(0, firstComma) : dataString;
+    String mode;
+    String params = "";
 
-    if (firstComma < 0) {
-        return;
-    }
-    // Always update control mode first
-    if (mode == FOLLOWING || mode == MANUAL || mode == MAPPING) {
-        // Update the robot's control mode
-        followBotManager.setCurrentControl(mode);
-
-        //For debugging purposes
-        Serial.print(String("Control mode changed to: ") + mode);
+    if (firstComma >= 0) {
+        mode = dataString.substring(0, firstComma);
+        // Ensure there are characters after the comma before creating the params string
+        if (dataString.length() > firstComma + 1) {
+            params = dataString.substring(firstComma + 1);
+        }
     } else {
-        // Action data did not specify a mode
-        return;
+        mode = dataString; // No comma, the whole string is the mode
     }
 
-    // Process any additional parameters based on the mode
-    if (mode == MANUAL) {
-        // For manual mode, everything after the comma is the direction command
-        String direction = dataString.substring(firstComma + 1);
+    // Attempt to set control mode if it's a valid mode
+    if (mode == FOLLOWING || mode == MANUAL || mode == MAPPING) {
+        followBotManager.setCurrentControl(mode);
+        Serial.println(String("Control mode changed to: ") + mode); // Log after successful mode change
 
-        // Printing if the direction has been received (debugging purposes)
-        Serial.println(String("Direction command received: ") + direction);
-
-        // Set motor direction based on the command
-        if (direction == MOTOR_FORWARD || direction == MOTOR_BACKWARD || direction == MOTOR_LEFT || direction == MOTOR_RIGHT || direction == MOTOR_STOP) {
-            myMotors.setDirection(direction);
+        // Process parameters only if they exist (i.e., firstComma was found) and the mode is set
+        if (firstComma >= 0) {
+            if (mode == MANUAL) {
+                // For manual mode, params is the direction command
+                String direction = params;
+                Serial.println(String("Direction command received: ") + direction);
+                if (direction == MOTOR_FORWARD || direction == MOTOR_BACKWARD || direction == MOTOR_LEFT || direction == MOTOR_RIGHT || direction == MOTOR_STOP) {
+                    myMotors.setDirection(direction);
+                } else {
+                    Serial.println(String("FollowBotClient: Unknown MANUAL command: ") + direction);
+                }
+            } else if (mode == MAPPING) {
+                // For mapping mode, params should be "latitude,longitude"
+                int secondComma = params.indexOf(',');
+                if (secondComma >= 0) {
+                    String latStr = params.substring(0, secondComma);
+                    String lonStr = params.substring(secondComma + 1);
+                    float lat = latStr.toFloat();
+                    float lon = lonStr.toFloat();
+                    Serial.print("Mapping coordinates: ");
+                    Serial.print(lat, 6);
+                    Serial.print(", ");
+                    Serial.println(lon, 6);
+                    // TODO: send the coordinates to ROS2 to create a path
+                } else {
+                    Serial.println(String("FollowBotClient: Invalid MAPPING params format: ") + params);
+                }
+            }
+            // No specific parameters are expected for FOLLOWING mode when firstComma >= 0,
+            // but the mode has already been set.
         }
-    } else if (mode == MAPPING) {
-        // For mapping mode, we expect latitude and longitude values
-        String remainder = dataString.substring(firstComma + 1);
-        int secondComma = remainder.indexOf(',');
-
-        if (secondComma < 0) {
-            return;     // Invalid format for coordinates
-        }
-
-        // Extract latitude and longitude from the remainder
-        String latStr = remainder.substring(0, secondComma);
-        String lonStr = remainder.substring(secondComma + 1);
-
-        // setting the coordinates.
-        float lat = latStr.toFloat();
-        float lon = lonStr.toFloat();
-
-        // Printing the Mapping coordinates (debugging purposes)
-        Serial.print("Mapping coordinates: ");
-        Serial.print(lat, 6);
-        Serial.print(", ");
-        Serial.println(lon, 6);
-
-        // TODO: send the coordinates to ROS2 to create a path
-        // For example:
-        // ros2_serial.sendCoordinates(lat, lon);
-        // replace bluetooth function in ros2_serial.
-
-    } else if (mode == FOLLOWING) {
-        // Following mode with no parameters - robot does the work (debugging)
-        // TODO: Block other functionalities while in FOLLOWING mode
-        Serial.println("Following mode activated - robot controlling movement");
-        // No additional parameters needed for FOLLOWING mode.
+        // If firstComma < 0, the mode is set, and there are no parameters to process, which is valid.
+    } else {
+        Serial.println(String("FollowBotClient: Unknown mode received: ") + mode);
+        // If the mode itself is unknown, no action is taken.
     }
 }
 
