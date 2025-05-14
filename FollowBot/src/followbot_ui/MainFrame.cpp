@@ -70,7 +70,7 @@ bool MainFrame::touchScreenEvent(int x, int y) {
             Serial.println("Start Following button pressed");
             ((TextBase*) getComponents()[TEXT_WAIT])->setHide(false);
             getComponents()[TEXT_WAIT]->draw();
-            followBotManager.setCurrentControl(ROBOT);
+            followBotManager.setCurrentControl(FOLLOWING);
             myLCDScreen.setCurrentFrame(FOLLOWING_SCREEN);
             ((TextBase*) getComponents()[TEXT_WAIT])->setHide(true);
             return true;

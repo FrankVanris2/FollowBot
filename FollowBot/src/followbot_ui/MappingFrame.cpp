@@ -45,12 +45,12 @@ bool MappingFrame::touchScreenEvent(int x, int y) {
 
 void MappingFrame::loop() {
     updateCoordinatesStatus();
-    if(followBotManager.getCurrentControl() == USER) {
+    if(followBotManager.getCurrentControl() == MANUAL) {
         ((TextBase*) getComponents()[MAPPING_TEXT_WAIT])->setHide(false);
         getComponents()[MAPPING_TEXT_WAIT]->draw();
         myLCDScreen.setCurrentFrame(MANUAL_SCREEN);
         ((TextBase*) getComponents()[MAPPING_TEXT_WAIT])->setHide(true);
-    } else if (followBotManager.getCurrentControl() == ROBOT) {
+    } else if (followBotManager.getCurrentControl() == FOLLOWING) {
         ((TextBase*) getComponents()[MAPPING_TEXT_WAIT])->setHide(false);
         getComponents()[MAPPING_TEXT_WAIT]->draw();
         myLCDScreen.setCurrentFrame(FOLLOWING_SCREEN);

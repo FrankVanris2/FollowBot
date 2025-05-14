@@ -44,7 +44,7 @@ bool FollowingFrame::touchScreenEvent(int x, int y) {
 }
 
 void FollowingFrame::loop() {
-    if(followBotManager.getCurrentControl() == USER) {
+    if(followBotManager.getCurrentControl() == MANUAL) {
         ((TextBase*) getComponents()[FOLLOWING_TEXT_WAIT])->setHide(false);
         getComponents()[FOLLOWING_TEXT_WAIT]->draw();
         myLCDScreen.setCurrentFrame(MANUAL_SCREEN);
