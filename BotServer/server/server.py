@@ -297,6 +297,59 @@ def create_follow_bot_entry():
         print(f"Error creating FollowBot entry: {e}")
         return jsonify({"error": "An unexpected error occurred"}), 500
 
+@app.route('/api/postActionData', methods=['POST'])
+def post_action_data():
+    payload = request.get_json(force=True)
+    data_string = payload.get('dataString')
+    if not data_string:
+        return jsonify({ 'error': 'Missing dataString' }), 400
+
+    # Enqueue it (or overwrite a single “last command” variable, as you prefer)
+    command_queue.append(data_string)
+    return jsonify({ 'status': 'ok' }), 200
+
+@app.route('/api/getActionData', methods=['GET'])
+def get_action_data():
+    if command_queue:
+        # Pop oldest command
+        next_cmd = command_queue.popleft()
+        # Return as plain text
+        return make_response(next_cmd, 200, { 'Content-Type': 'text/plain' })
+    else:
+        # Nothing to do
+        return make_response('', 204)  # No Content
+
+@app.get("/api/getTempInfo")
+def getTemperatureInfo():
+    if temperature_data is not None:
+        return jsonify({"temperature": temperature_data})
+    
+
+@app.get("/api/getHeatIdxInfo")
+def getHeatIdxInfo():
+    if heatIndex_data is not None:
+        return jsonify({"heatIndex": heatIndex_data})
+
+
+
+@app.post("/api/robotinfo")
+def postRobotInfo():
+    global temperature_data
+    global heatIndex_data
+
+    robotData = request.get_json()
+    handleRobotData(robotData)
+    temperature_data = robotData.get('temperature')
+    heatIndex_data = robotData.get('heatIndex')
+
+    return "OK"
+
+#post info for website->server->robot
+@app.post("/api/postmovement") 
+def postMovementInfo():
+    movementInfoData = request.get_json()
+    handleMovementData(movementInfoData)
+    return "OK"
 
 def get_index_html():
     try:
@@ -358,62 +411,6 @@ def get_image_files(filename):
 
 
 
-@app.route('/api/postActionData', methods=['POST'])
-def post_action_data():
-    payload = request.get_json(force=True)
-    data_string = payload.get('dataString')
-    if not data_string:
-        return jsonify({ 'error': 'Missing dataString' }), 400
-
-    # Enqueue it (or overwrite a single “last command” variable, as you prefer)
-    command_queue.append(data_string)
-    return jsonify({ 'status': 'ok' }), 200
-
-@app.route('/api/getActionData', methods=['GET'])
-def get_action_data():
-    if command_queue:
-        # Pop oldest command
-        next_cmd = command_queue.popleft()
-        # Return as plain text
-        return make_response(next_cmd, 200, { 'Content-Type': 'text/plain' })
-    else:
-        # Nothing to do
-        return make_response('', 204)  # No Content
-
-@app.get("/api/getTempInfo")
-def getTemperatureInfo():
-    if temperature_data is not None:
-        return jsonify({"temperature": temperature_data})
-    
-
-@app.get("/api/getHeatIdxInfo")
-def getHeatIdxInfo():
-    if heatIndex_data is not None:
-        return jsonify({"heatIndex": heatIndex_data})
 
 
-
-@app.post("/api/robotinfo")
-def postRobotInfo():
-    global temperature_data
-    global heatIndex_data
-
-    robotData = request.get_json()
-    handleRobotData(robotData)
-    temperature_data = robotData.get('temperature')
-    heatIndex_data = robotData.get('heatIndex')
-
-    return "OK"
-
-#post info for website->server->robot
-@app.post("/api/postmovement") 
-def postMovementInfo():
-    movementInfoData = request.get_json()
-    handleMovementData(movementInfoData)
-    return "OK"
-
-
-
-
-    
 

@@ -30,6 +30,7 @@ void IdleFrame::setup(TFT_eSPI& tft) {
 }
 
 void IdleFrame::loop() {
+    Serial.println("IdleFrame::loop() called");
     if (!mTimerStarted) {
         mStartTime = millis();
         mTimerStarted = true;
@@ -38,8 +39,12 @@ void IdleFrame::loop() {
 
     if (mTimerStarted && (millis() - mStartTime >= IDLE_TIME_INTERVAL)) {
         mTimerStarted = false;
+        Serial.println("Idle time elapsed, checking connection status..." + String(followBotClient.isConnected()));
+        ((TextBase*) getComponents()[IDLE_TEXT_WAIT])->setHide(false);
         if(followBotClient.isConnected()) {
             // After idle time, set to ROBOT mode by default
+            Serial.println("Idle time elapsed, setting to ROBOT mode");
+            ((TextBase*) getComponents()[IDLE_TEXT_WAIT])->setHide(false);
             followBotManager.setCurrentControl(FOLLOWING);
             myLCDScreen.setCurrentFrame(FOLLOWING_SCREEN); //Was FOLLOWING_SCREEN
         } else {

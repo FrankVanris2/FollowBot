@@ -20,6 +20,10 @@
 #include "states&types/MotorControlStates.h"
 
 
+// Server configuration
+IPAddress server(192, 168, 0, 38); // Would be AWS instance but choose local for no production devices.
+const int PORT = 5000; //Originally 80
+
 // Singleton instance
 FollowBotClient followBotClient;
 
@@ -39,9 +43,6 @@ unsigned long lastPostTime = 0;
 //JSON document for robot information
  StaticJsonDocument<128> robotInformationJson; // changed from 200 to 128 could potentially cause an issue 
 
-// Server configuration
-IPAddress server(192, 168, 0, 38); // Would be AWS instance but choose local for no production devices.
-const int PORT = 5000; //Originally 80
 
 // WiFi client
 WiFiClient client;
@@ -186,79 +187,109 @@ String FollowBotClient::getActionData() {
     // Check if server is reachable
     Serial.println("Retrieving action data from server...");
 
-    // Connect to server
-    if(!client.connect(server, PORT)) {
-        Serial.println("Server connection failed");
-        if(mServerNotConnectedCnt < MAX_SERVER_NOT_CONNECTED) {
+    if (!client.connect(server, PORT)) {
+        Serial.println("getActionData(): Server connection failed");
+        if (mServerNotConnectedCnt < MAX_SERVER_NOT_CONNECTED) {
             mServerNotConnectedCnt++;
         }
         return ERROR;
     }
-    Serial.println("Server connected");
+    Serial.println("getActionData(): Server connected");
     mServerNotConnectedCnt = 0;
 
     // Send HTTP GET request
     client.println("GET /api/getActionData HTTP/1.1");
     client.print("Host: ");
     client.println(mIPAddress);
-    client.println("Connection: close");
+    client.println("Connection: close"); // We expect the server to close the connection after response
     client.println();
 
-    // Buffer for response
-    const int SIZE = 1024;
-    char buffer[SIZE];
+    const int BUFFER_SIZE = 1024;
+    char buffer[BUFFER_SIZE];
     int bufLength = 0;
-    int bodyIdx = 0; // Start of body in buffer
+    int bodyStartIndex = 0; // Index in buffer where the HTTP body starts
     Data_States dataState = HEADER_STATE;
-    bool readData = true;
 
-    // Process HTTP response to extract body
+    unsigned long responseStartTime = millis();
+    const unsigned long RESPONSE_TIMEOUT_MS = 10000; // 10-second timeout for the entire response
+
     while (dataState != FINISHED) {
-        int prevBufLen = bufLength;
-        int numChars = 0; 
-
-        // Read available data if needed
-        if(readData) {      
-            numChars = client.read(reinterpret_cast<uint8_t*>(buffer + bufLength), SIZE - bufLength);
-            bufLength += numChars;
-            buffer[bufLength] = 0;  // Null terminate
+        // Check for overall response timeout
+        if (millis() - responseStartTime > RESPONSE_TIMEOUT_MS) {
+            Serial.println("getActionData(): Response timeout!");
+            client.stop();
+            return ERROR;
         }
 
-        // Process data if available or if we're waiting for more
-        if(!readData || numChars > 0) {
-            switch(dataState) {
-                // Parse headers to find start of body
-                case HEADER_STATE: {
-                    char* bufPtr;
-                    for (bufPtr = buffer + prevBufLen; *(bufPtr + 3); ++bufPtr) {
-                        // Look for empty line (CRLFCRLF) between headers and body
-                        if (*bufPtr == 0x0d && *(bufPtr + 1) == 0x0a && *(bufPtr + 2) == 0x0d && *(bufPtr + 3) == 0x0a) {
-                            bodyIdx = bufPtr - buffer + 4; // Skip past CRLFCRLF
-                            dataState = BODY_STATE;
-                            readData = false;
-                            break;
-                        } 
-                    }
-                    break;
-                }
-
-                // Process body state
-                case BODY_STATE:
-                    if(bufLength > bodyIdx) {
-                        dataState = FINISHED;   // Body found, we're done
-                    } else {
-                        readData = true;        // Need more data
-                    }
-                    break;
+        // Try to read data if the client is connected and there's space in the buffer
+        if (client.connected() && bufLength < BUFFER_SIZE - 1) {
+            int bytesRead = client.read(reinterpret_cast<uint8_t*>(buffer + bufLength), BUFFER_SIZE - 1 - bufLength);
+            if (bytesRead > 0) {
+                bufLength += bytesRead;
+                buffer[bufLength] = '\0'; // Null-terminate the currently received data
+                // Serial.print("getActionData(): Read "); Serial.print(bytesRead); Serial.println(" bytes.");
             }
-        }         
-    } 
+        }
 
-    client.stop();
+        if (dataState == HEADER_STATE) {
+            // Try to find the end of headers (\r\n\r\n)
+            char* headerEndPtr = strstr(buffer, "\r\n\r\n");
+            if (headerEndPtr != nullptr) {
+                bodyStartIndex = (headerEndPtr - buffer) + 4; // Calculate where the body begins
+                dataState = BODY_STATE;
+                Serial.println("getActionData(): Headers received, moving to BODY_STATE.");
+            } else {
+                // Headers not yet complete
+                if (bufLength >= BUFFER_SIZE - 1) {
+                    Serial.println("getActionData(): Buffer full, but headers not complete.");
+                    client.stop();
+                    return ERROR;
+                }
+                // If client disconnected before headers were fully received
+                if (!client.connected() && client.available() == 0) { // Check available too
+                     Serial.println("getActionData(): Client disconnected before headers complete.");
+                     client.stop();
+                     return ERROR;
+                }
+            }
+        }
 
-    // Create string from response body
-    String dataActionString(buffer + bodyIdx);
-    return dataActionString;
+        if (dataState == BODY_STATE) {
+            // Since we sent "Connection: close", the server should close the connection
+            // after sending the response. The end of the body is when the client is no longer connected
+            // and no more data is available.
+            if (!client.connected() && client.available() == 0) {
+                Serial.println("getActionData(): Client disconnected, assuming end of body.");
+                dataState = FINISHED;
+            }
+            // If still connected, but no more data is coming in, the timeout will eventually trigger.
+            // If the buffer is full and we are expecting more body (e.g. based on Content-Length, not parsed here)
+            // this would be an issue, but for "Connection: close" we read till disconnect.
+            if (bufLength >= BUFFER_SIZE - 1 && client.connected() && client.available() > 0) {
+                 Serial.println("getActionData(): Buffer full while reading body, potential data loss.");
+                 // Continue, but data might be truncated. Server should have closed.
+                 // Or, treat as error if full body is critical and larger than buffer.
+            }
+        }
+        
+        // If no data was read and client is still connected, yield briefly to avoid tight spin
+        // This is a fallback, the timeout is the main guard.
+        if (client.connected() && client.available() == 0) {
+            delay(1); // Small delay if waiting for data
+        }
+    }
+
+    client.stop(); // Ensure the client connection is closed from our side as well
+
+    if (bodyStartIndex > bufLength) {
+        // This case should ideally not be reached if headers were parsed correctly.
+        Serial.println("getActionData(): Error, bodyStartIndex is beyond buffer length after parsing.");
+        return ERROR;
+    }
+    
+    String responseBody = String(buffer + bodyStartIndex);
+    // Serial.print("getActionData(): Response body: '"); Serial.print(responseBody); Serial.println("'");
+    return responseBody;
 }
 
 /**
