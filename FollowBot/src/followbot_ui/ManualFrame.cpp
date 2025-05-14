@@ -44,12 +44,15 @@ bool ManualFrame::touchScreenEvent(int x, int y) {
 }
 
 void ManualFrame::loop() {
-    if (followBotManager.getCurrentControl() == ROBOT) {
+    if (followBotManager.getCurrentControl() == FOLLOWING) {
         ((TextBase*) getComponents()[MANUAL_TEXT_WAIT])->setHide(false);
         getComponents()[MANUAL_TEXT_WAIT]->draw();
         myLCDScreen.setCurrentFrame(FOLLOWING_SCREEN);
         ((TextBase*) getComponents()[MANUAL_TEXT_WAIT])->setHide(true);
     } else if(followBotManager.getCurrentControl() == MAPPING) {
-        // To Do 
+        ((TextBase*) getComponents()[MANUAL_TEXT_WAIT])->setHide(false);
+        getComponents()[MANUAL_TEXT_WAIT]->draw();
+        myLCDScreen.setCurrentFrame(MAPPING_SCREEN);
+        ((TextBase*) getComponents()[MANUAL_TEXT_WAIT])->setHide(true);
     }
 }

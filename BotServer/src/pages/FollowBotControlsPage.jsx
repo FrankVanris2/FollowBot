@@ -9,14 +9,14 @@ import api from '../services/api';
 import cameradisconnected from '../res/cameradisconnected.jpg';
 import '../styles/FollowBotControlsPage.style.css'; // Import the CSS file
 
-const USER = 'User';
-const ROBOT = 'Robot';
+const MANUAL = 'MANUAL';
+const FOLLOWING = 'FOLLOWING';
 
 const FollowBotControlsPage = () => {
     const [presses, setPresses] = useState([]);
     const [temperature, setTemperature] = useState(null);
     const [heatIndex, setHeatIndex] = useState(null);
-    const [controlMode, setControlMode] = useState('Robot');
+    const [controlMode, setControlMode] = useState('FOLLOWING');
     const holdThreshold = 5000; // 5 seconds
     const holdTimer = useRef(null);
 
@@ -48,9 +48,15 @@ const FollowBotControlsPage = () => {
         fetchHeatIndex();
     }, []);
 
-    const toggleControlMode = () => {
-        setControlMode(controlMode === ROBOT ? USER : ROBOT);
-        handleButtonClick(controlMode === ROBOT ? USER : ROBOT);
+    const toggleControlMode = async () => {
+        setControlMode(controlMode === FOLLOWING ? MANUAL : FOLLOWING);
+        handleButtonClick(controlMode === FOLLOWING ? MANUAL : FOLLOWING);
+
+        try {
+            await api.postModeChange(controlMode);
+        } catch (e) {
+            console.error();
+        }
     }
 
     const handleMouseDown = (direction) => {
@@ -81,7 +87,7 @@ const FollowBotControlsPage = () => {
                 <div className="button-wrapper">
                     <Box mb={10}>
                         <Button variant="contained" onClick={toggleControlMode}>
-                            {controlMode === ROBOT ? 'User Control' : 'Robot Control'}
+                            {controlMode === FOLLOWING ? 'User Control' : 'Robot Control'}
                         </Button>
                     </Box>  
 
@@ -89,7 +95,7 @@ const FollowBotControlsPage = () => {
                         handleMouseDown={handleMouseDown}
                         handleMouseUp={handleMouseUp}
                         handleButtonClick={handleButtonClick}
-                        disabled={controlMode === ROBOT}
+                        disabled={controlMode === FOLLOWING}
                     />
                     <DirectionList presses={presses} />
                 </div>

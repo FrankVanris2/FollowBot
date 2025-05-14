@@ -120,6 +120,89 @@
   background-color: #d32f2f;
 }
 
+/* Replace bottom confirmation bar with floating notification */
+.map-notification {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  max-width: 250px;
+  pointer-events: auto;
+}
+
+.notification-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.distance-info {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.notification-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.map-button {
+  flex: 1;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.confirm-button {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.cancel-button {
+  background-color: #f44336;
+  color: white;
+}
+
+.sending-indicator {
+  text-align: center;
+  margin-top: 5px;
+  font-size: 13px;
+  color: #666;
+}
+
+.status-message {
+  text-align: center;
+  margin-top: 5px;
+  padding: 4px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.status-message.success {
+  background-color: rgba(76, 175, 80, 0.2);
+  color: #2e7d32;
+}
+
+.status-message.error {
+  background-color: rgba(244, 67, 54, 0.2);
+  color: #c62828;
+}
+
+/* Make sure the notification doesn't block map controls */
+.leaflet-top {
+  z-index: 1001;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .mapping-container {
@@ -146,4 +229,115 @@
 
 .leaflet-popup-content p {
   margin: 5px 0;
+}
+
+/* Add styles for the near-dropoff notification */
+.map-notification.near-dropoff {
+  position: absolute;
+  top: 10px; /* Position at top */
+  left: 10px; /* Position at left */
+  transform: none; /* Remove vertical centering */
+  transition: opacity 0.2s ease;
+  z-index: 1000;
+  pointer-events: auto;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  max-width: 250px;
+  border-left: 4px solid #f44336; /* Keep the red accent */
+}
+
+/* Remove the arrow pointer since it's not next to the drop-off point anymore */
+.map-notification.near-dropoff::before {
+  display: none;
+}
+
+/* Make sure the notification is compact and doesn't take too much space */
+.map-notification.near-dropoff .distance-info {
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+/* Adjust the button size to be more compact */
+.map-notification.near-dropoff .map-button {
+  padding: 5px 8px;
+  font-size: 12px;
+}
+
+/* Add styles for the top controls section */
+.top-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  position: relative;
+  flex-wrap: wrap;
+}
+
+/* Update the map notification to be inline next to the button */
+.map-notification.near-dropoff {
+  position: relative;
+  top: auto;
+  left: auto;
+  transform: none;
+  transition: opacity 0.2s ease;
+  z-index: 1000;
+  pointer-events: auto;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  padding: 8px 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  order: -1; /* Make it appear before the toggle button */
+  flex: 0 0 auto; /* Don't grow or shrink */
+}
+
+.notification-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.distance-info {
+  font-size: 13px;
+  color: #333;
+  margin-bottom: 2px;
+}
+
+.notification-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.map-button {
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* Make buttons look more consistent with the toggle button */
+.toggle-button {
+  padding: 8px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* For mobile screens, stack them vertically */
+@media (max-width: 600px) {
+  .top-controls {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .map-notification.near-dropoff {
+    width: 100%;
+    margin-bottom: 10px;
+  }
 }

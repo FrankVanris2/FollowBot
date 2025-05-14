@@ -19,17 +19,6 @@ const api = {
     return handleResponse(response);
   },
   
-  postMovement: async (direction) => {
-    const response = await fetch(`${API_BASE_URL}/postmovement`, {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ direction }),
-    });
-    return handleResponse(response);
-  },
-
   getBot: async (bot_id) => {
     const response = await fetch(`${API_BASE_URL}/getBot`, {
       method: 'POST',
@@ -87,19 +76,44 @@ const api = {
     return handleResponse(response);
   },
 
-  sendCoordinates: async (latitude, longitude) => {
-    const response = await fetch(`${API_BASE_URL}/send-coordinates`, {
+
+  postCoordinates: async (latitude, longitude) => {
+    const dataString = `MAPPING,${latitude},${longitude}`;
+    const response = await fetch(`${API_BASE_URL}/postActionData`, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ 
-        latitude,
-        longitude 
-      }),
+      body: JSON.stringify({ dataString }),  
+    });
+    return handleResponse(response);
+  },
+
+  postMovement: async (direction) => {
+    const dataString = `MANUAL,${direction}`;
+    const response = await fetch(`${API_BASE_URL}/postActionData`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ dataString }),  
+    });
+    return handleResponse(response);
+  },
+
+  postModeChange: async (mode) => {
+    const dataString = `FOLLOWING`;
+    const response = await fetch(`${API_BASE_URL}/postActionData`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ dataString }),  
     });
     return handleResponse(response);
   }
+
+  
 };
 
 export default api;

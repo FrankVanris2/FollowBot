@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { GeoJSON, MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -17,6 +17,11 @@ const MappingPage = () => {
   const [showTileLayer, setShowTileLayer] = useState(true);
   const [isSending, setIsSending] = useState(false);
   const [sendStatus, setSendStatus] = useState(null);
+  const [currentMode, setCurrentMode] = useState('mapping'); // 'mapping' or 'following'
+  const [nearestDropOffPoint, setNearestDropOffPoint] = useState(null);
+
+  const notificationRef = useRef(null);
+  const [notificationVisible, setNotificationVisible] = useState(false);
 
   // Load campus data on component mount
   useEffect(() => {
@@ -68,12 +73,20 @@ const MappingPage = () => {
     useEffect(() => {
       const handleClick = (event) => {
         const { lat, lng } = event.latlng;
+        
+        // Find the nearest drop-off point automatically
         const nearestDropOff = findNearestDropOff(lat, lng);
         
+        // Set selected position with nearest drop-off
         setSelectedPosition({
           clicked: { lat, lng },
           nearestDropOff: nearestDropOff
         });
+        
+        // Also set the nearest drop-off point for highlighting
+        setNearestDropOffPoint(nearestDropOff);
+        
+        // Show confirmation dialog
         setShowConfirmation(true);
       };
 
@@ -122,11 +135,20 @@ const MappingPage = () => {
     layer.on('click', (event) => {
       event.originalEvent.stopPropagation();
       const buildingCenter = getBuildingCenter(feature);
+      
+      // Find nearest drop-off automatically
       const nearestDropOff = findNearestDropOff(buildingCenter.lat, buildingCenter.lng);
+      
+      // Set selected position
       setSelectedPosition({
         clicked: buildingCenter,
         nearestDropOff: nearestDropOff
       });
+      
+      // Also set the nearest drop-off point for highlighting
+      setNearestDropOffPoint(nearestDropOff);
+      
+      // Show confirmation dialog
       setShowConfirmation(true);
     });
   };
@@ -138,7 +160,7 @@ const MappingPage = () => {
       setSendStatus(null);
       try {
         // Send coordinates to API
-        const response = await api.sendCoordinates(
+        const response = await api.postCoordinates(
           selectedPosition.clicked.lat,
           selectedPosition.clicked.lng
         );
@@ -175,13 +197,101 @@ const MappingPage = () => {
     iconAnchor: [8, 8] 
   });
 
+  // Add this new function to handle finding the nearest drop-off point
+  const handleFindNearestDropOff = () => {
+    if (selectedPosition) {
+      const nearestDropOff = findNearestDropOff(
+        selectedPosition.clicked.lat, 
+        selectedPosition.clicked.lng
+      );
+      
+      setNearestDropOffPoint(nearestDropOff);
+    } else if (confirmedPosition) {
+      const nearestDropOff = findNearestDropOff(
+        confirmedPosition.clicked.lat, 
+        confirmedPosition.clicked.lng
+      );
+      
+      setNearestDropOffPoint(nearestDropOff);
+    }
+  };
+
+  // Add this hook to get the map instance
+  const MapWithContext = () => {
+    const map = useMap();
+    
+    // Store map reference in a context or ref that can be accessed by the component
+    useEffect(() => {
+      if (map) {
+        window.mapInstance = map; // Store in window for simplicity
+      }
+    }, [map]);
+    
+    return null;
+  };
+
+  // Replace your positioning useEffect with this simpler version
+  useEffect(() => {
+    // Just handle visibility timing
+    if (showConfirmation) {
+      setTimeout(() => setNotificationVisible(true), 50);
+    } else {
+      setNotificationVisible(false);
+    }
+  }, [showConfirmation]);
+
   return (
     <div className="container">
       <h1 className="header">My Campus Map</h1>
 
-      <button className="toggle-button" onClick={() => setShowTileLayer(prev => !prev)}>
-        {showTileLayer ? "Hide Map Layer" : "Show Map Layer"}
-      </button>
+      <div className="top-controls">
+        {/* Floating notification */}
+        {showConfirmation && (
+          <div 
+            className="map-notification near-dropoff"
+            style={{
+              opacity: notificationVisible ? 1 : 0
+            }}
+            ref={notificationRef}
+          >
+            <div className="notification-content">
+              <div className="distance-info">
+                Nearest drop-off: {selectedPosition?.nearestDropOff?.dist.toFixed(2)}m
+              </div>
+              <div className="notification-buttons">
+                <button 
+                  className="map-button confirm-button"
+                  onClick={() => handleConfirmation(true)}
+                  disabled={isSending}
+                >
+                  Confirm
+                </button>
+                <button 
+                  className="map-button cancel-button"
+                  onClick={() => handleConfirmation(false)}
+                  disabled={isSending}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+            
+            {isSending && (
+              <div className="sending-indicator">Sending...</div>
+            )}
+            
+            {sendStatus && (
+              <div className={`status-message ${sendStatus}`}>
+                {sendStatus === 'success' ? 'Sent!' : 'Failed!'}
+              </div>
+            )}
+          </div>
+        )}
+        
+        <button className="toggle-button" onClick={() => setShowTileLayer(prev => !prev)}>
+          {showTileLayer ? "Hide Map Layer" : "Show Map Layer"}
+        </button>
+      </div>
 
       <div className="controls-wrapper">
         {/* Display confirmed position */}
@@ -201,6 +311,25 @@ const MappingPage = () => {
                 <p>Distance: {confirmedPosition.nearestDropOff.dist.toFixed(2)} meters</p>
               </div>
             )}
+          </div>
+        )}
+        
+        {/* Add this button */}
+        <button 
+          className="find-nearest-button"
+          onClick={handleFindNearestDropOff}
+          disabled={!selectedPosition && !confirmedPosition}
+        >
+          Find Nearest Drop-off Point
+        </button>
+        
+        {/* Display nearest drop-off information when found */}
+        {nearestDropOffPoint && (
+          <div className="nearest-dropoff">
+            <h3>Nearest Drop-off Point</h3>
+            <p>Latitude: {nearestDropOffPoint.lat.toFixed(6)}</p>
+            <p>Longitude: {nearestDropOffPoint.lng.toFixed(6)}</p>
+            <p>Distance: {nearestDropOffPoint.dist.toFixed(2)} meters</p>
           </div>
         )}
       </div>
@@ -258,6 +387,7 @@ const MappingPage = () => {
 
           <MapClickHandler />
           <ResizeHandler />
+          <MapWithContext />
 
           {/* Click position marker */}
           {selectedPosition?.clicked && (
@@ -291,52 +421,29 @@ const MappingPage = () => {
               </Popup>
             </Marker>
           )}
+
+          {/* Nearest drop-off point marker */}
+          {nearestDropOffPoint && (
+            <Marker 
+              position={[nearestDropOffPoint.lat, nearestDropOffPoint.lng]} 
+              icon={new L.Icon({ 
+                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41]
+              })}
+            >
+              <Popup>
+                <div>
+                  <p>Nearest Drop-off Point</p>
+                  <p>Distance: {nearestDropOffPoint.dist.toFixed(2)} meters</p>
+                </div>
+              </Popup>
+            </Marker>
+          )}
         </MapContainer>
       </div>
 
-      {showConfirmation && (
-        <div className="confirmation-dialog">
-          <div className="confirmation-content">
-            <h3>Confirm this location?</h3>
-            
-            {selectedPosition?.nearestDropOff && (
-              <div className="nearest-dropoff-section">
-                <h4>Nearest Drop-off Point:</h4>
-                <p>Latitude: {selectedPosition.nearestDropOff.lat.toFixed(6)}</p>
-                <p>Longitude: {selectedPosition.nearestDropOff.lng.toFixed(6)}</p>
-                <p>Distance: {selectedPosition.nearestDropOff.dist.toFixed(2)} meters</p>
-              </div>
-            )}
-
-            {isSending ? (
-              <div className="loading-spinner">Sending...</div>
-            ) : (
-              <div className="button-wrapper">
-                <button 
-                  className="confirm-button yes-button"
-                  onClick={() => handleConfirmation(true)}
-                  disabled={isSending}
-                >
-                  Yes
-                </button>
-                <button 
-                  className="confirm-button no-button"
-                  onClick={() => handleConfirmation(false)}
-                  disabled={isSending}
-                >
-                  No
-                </button>
-              </div>
-            )}
-            {sendStatus === 'success' && (
-              <div className="status-message success">Location sent successfully!</div>
-            )}
-            {sendStatus === 'error' && (
-              <div className="status-message error">Failed to send location</div>
-            )}
-          </div>
-        </div>
-      )}
+      <div className="bottom-space" /> {/* To ensure the map container is not covered */}
     </div>
   );
 };

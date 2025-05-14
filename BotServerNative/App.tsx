@@ -70,7 +70,7 @@ const startBluetooth = async (setCharacteristicData: (characteristicData: Charac
 const getFollowBotCharacteristic = async (setCharacteristicData: (characteristicData: CharacteristicData) => void) => {
   const peripherals = await BleManager.getBondedPeripherals();
   console.log('Bonded peripherals:', peripherals);
-  const followBotPeripheral = peripherals.find((per) => per.name === 'FollowBot_Proto1');
+  const followBotPeripheral = peripherals.find((per) => per.name === 'FollowBot_Proto1' || per.name === 'Arduino');
   if (!followBotPeripheral) {
     console.log('FollowBot Peripheral not found');
     return;
@@ -100,27 +100,6 @@ const getFollowBotCharacteristic = async (setCharacteristicData: (characteristic
   console.log('Characteristic Data:', characteristicData);
   setCharacteristicData(characteristicData);
 };
-
-const checkLocationPermission = async () => {
-  if (Platform.OS === 'android') {
-    try {
-      const fineLocationGranted = await PermissionsAndroid.check(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-      );
-      const coarseLocationGranted = await PermissionsAndroid.check(
-        PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
-      );
-      if (!fineLocationGranted && !coarseLocationGranted) {
-        console.log('Location permissions not granted.');
-        // Optionally, prompt the user again or navigate to settings
-        return false;
-      }
-      return true;
-    } catch(err) {
-    console.warn('Error checking location permission:')
-    }
-  } 
-}
 
 const getCurrentPosition = (setLocation: (loc: Location) => void) => {
   Geolocation.getCurrentPosition(

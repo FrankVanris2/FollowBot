@@ -1,8 +1,17 @@
 /*
-By: Frank Vanris
-Date: 11/27/2024
-Desc: Creating a testing env for ROS2 in order to determine if there is communication between both devices
-*/
+ * ROS2_Serial.cpp
+ * By: Frank Vanris
+ * Date: 11/27/2024
+ *
+ * Description:
+ * Implementation of ROS2 serial communication interface.
+ * Manages bidirectional communication between Arduino and ROS2 system:
+ * 1. Formats and sends sensor data as JSON messages
+ * 2. Receives and processes commands from ROS2
+ *
+ * Message format:
+ * {"sensor_type":"<type>","data":{<key-value pairs>}}
+ */
 
 #include <ArduinoJson.h>
 #include <Arduino.h>
@@ -13,19 +22,19 @@ Desc: Creating a testing env for ROS2 in order to determine if there is communic
 #include "gps/GPS.h"
 #include "motion/motion.h"
 
-//#include "followbot_client/FollowBotBluetooth.h"
 
 ROS2_Serial ros2_serial;
 
 ROS2_Serial::ROS2_Serial(): interval(TEST_INTERVAL), previousMillis(0) {}
 
-// TODO: change name to serial_loop
 void ROS2_Serial::ros2_loop() {
-    if ((millis() - previousMillis) >= interval) {
-        previousMillis = millis();
+    unsigned long currentMillis = millis();
+
+    if ((currentMillis - previousMillis) >= interval) {
+        previousMillis = currentMillis;
         readSerialData();
         writeSerialData();
-    } 
+    }
 }
 
 void ROS2_Serial::readSerialData() {
@@ -61,7 +70,7 @@ void ROS2_Serial::writeSerialData() {
 
 void ROS2_Serial::imuDataDoc() {
     const double* gyroData = gyroscope.getGyroData();
-    StaticJsonDocument<256> imuDoc; 
+    StaticJsonDocument<128> imuDoc;
 
     imuDoc["sensor_type"] = "imu";
     JsonObject imuData = imuDoc.createNestedObject("data");
@@ -78,7 +87,7 @@ void ROS2_Serial::imuDataDoc() {
 
 void ROS2_Serial::encoderDataDoc() {
     const double* encoderData = encoders.getEncoderData();
-    StaticJsonDocument<256> encoderDoc;
+    StaticJsonDocument<96> encoderDoc;
 
     encoderDoc["sensor_type"] = "encoder";
     JsonObject encodeData = encoderDoc.createNestedObject("data");
@@ -90,7 +99,11 @@ void ROS2_Serial::encoderDataDoc() {
 }
 
 void ROS2_Serial::gpsDataDoc() {
-    StaticJsonDocument<256> gpsDoc; 
+    if (myGPS.getRobotGPSData().lat == 0.0 && myGPS.getRobotGPSData().lon == 0.0) {
+            return;         // If GPS data is equal to zero, return
+    }
+
+    StaticJsonDocument<128> gpsDoc;
 
     gpsDoc["sensor_type"] = "gps";
     JsonObject gpsDataDoc = gpsDoc.createNestedObject("data");

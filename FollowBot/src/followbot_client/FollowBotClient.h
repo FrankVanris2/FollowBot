@@ -31,22 +31,17 @@ private:
     String getActionData();
     void handleActionData(String dataString);
 
-    // Coordinates related
-    String getCoordinatesData();
-    void handleCoordinatesData(String dataString);
-
-    //Reduing the HandlleActionData function
-    void handleActionData2(String dataString);
-
     unsigned long mPreviousMillisMove;
     unsigned long lastServerCheck;
 
-    bool mIsConnected;
-    int mCountMoves;
-    int mWifiConnectionStatus;
-    int mServerNotConnectedCnt;
-    long mRSSI;
-    String mIPAddress;
+    // Connection state
+    bool mIsConnected;              // WiFi connection state
+    int mCountMoves;                // Count of movement commands
+    int mWifiConnectionStatus;      // WiFi status code
+    int mServerNotConnectedCnt;     // Failed connection counter
+    long mRSSI;                     // Signal Strength in dBm
+    String mIPAddress;              // Server IP address
 };
 
+// Global singleton instance
 extern FollowBotClient followBotClient;
