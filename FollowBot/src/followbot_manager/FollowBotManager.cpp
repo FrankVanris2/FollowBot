@@ -36,7 +36,7 @@
 //universal object
 FollowBotManager followBotManager;
 
-FollowBotManager::FollowBotManager(): mIsDirty(false), mCurrentControl(ROBOT){
+FollowBotManager::FollowBotManager(): mIsDirty(false), mCurrentControl(IDLE){ // potentially setting the currentControl to IDLE could cause issues
     //mDirection(MOTOR_STOP)
 }
 
@@ -66,7 +66,7 @@ void FollowBotManager::followBotLoop() {
     myGPS.gps_loop(); 
     if(mCurrentControl == IDLE) {
         myMotors.setDirection(MOTOR_STOP);
-    } else if (mCurrentControl == ROBOT) {
+    } else if (mCurrentControl == FOLLOWING) {
 
     } 
     myMotors.motorLoop();
