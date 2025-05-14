@@ -29,10 +29,9 @@ public:
 
     static void readEncoderRight();
     static void readEncoderLeft();
+    float getAverageDistance() const;
     float getDistanceMetersRight() const;
     float getDistanceMetersLeft() const;
-    float getSpeedMpsRight() const;
-    float getSpeedMpsLeft() const;
 
     void setEncoderData(int rightTicks, int leftTicks) {
         encoderData[MOTOR_DISTANCE_IN_TICKS_RIGHT] = rightTicks;

@@ -47,7 +47,7 @@ void ROS2_Serial::readSerialData() {
         if (doc["sensor_type"] == "cmd_vel") {
             float linear = doc["data"]["linear"]["x"];
             float angular = doc["data"]["angular"]["z"];
-            motion.setVelocity(linear, angular);
+            Motion::getInstance().setVelocity(linear, angular);
         }
         // add other message types here as needed
     }
@@ -57,7 +57,6 @@ void ROS2_Serial::writeSerialData() {
     imuDataDoc();
     encoderDataDoc();
     gpsDataDoc();
-    phoneGPSDataDoc();
 }
 
 void ROS2_Serial::imuDataDoc() {
@@ -83,8 +82,8 @@ void ROS2_Serial::encoderDataDoc() {
 
     encoderDoc["sensor_type"] = "encoder";
     JsonObject encodeData = encoderDoc.createNestedObject("data");
-    encodeData["left_wheel_ticks"] = encoderData[MOTOR_DISTANCE_IN_TICKS_2]; // This is LEFT
-    encodeData["right_wheel_ticks"] = encoderData[MOTOR_DISTANCE_IN_TICKS_1]; // This is RIGHT (Weird I know)
+    encodeData["left_wheel_ticks"] = encoderData[MOTOR_DISTANCE_IN_TICKS_LEFT]; // This is LEFT
+    encodeData["right_wheel_ticks"] = encoderData[MOTOR_DISTANCE_IN_TICKS_RIGHT]; // This is RIGHT (Weird I know)
     
     serializeJson(encoderDoc, Serial);
     Serial.println();
@@ -102,15 +101,3 @@ void ROS2_Serial::gpsDataDoc() {
     Serial.println();
 }
 
-void ROS2_Serial::phoneGPSDataDoc() {
-    StaticJsonDocument<256> phoneGPSDoc; 
-
-    // this is gps data from the phone
-    phoneGPSDoc["sensor_type"] = "goal";
-    JsonObject phoneGPSDataDoc = phoneGPSDoc.createNestedObject("data");
-    phoneGPSDataDoc["latitude"] = followBotBluetooth.getMobileGPSData().lat;
-    phoneGPSDataDoc["longitude"] = followBotBluetooth.getMobileGPSData().lon;
-
-    serializeJson(phoneGPSDoc, Serial);
-    Serial.println();
-}

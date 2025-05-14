@@ -1,7 +1,7 @@
 #pragma once
-#include "Encoders.h"
-#include "Gyroscope.h"
-#include "Motors.h"
+#include "sensors/Encoders.h"
+#include "sensors/Gyroscope.h"
+#include "motors/Motors.h"
 
 class Motion {
 public:
@@ -25,6 +25,8 @@ public:
     // motion interface
     void setVelocity(float linear, float angular);
     void update();
+    void waitUntilTurnFinished(float radians);
+    void waitUntilMoveFinished(float meters);
 
 private:
     Motion() = default; // private constructor
@@ -35,10 +37,10 @@ private:
     Motors* mMotors = nullptr;
 
     // motion state
-    float m_targetLinear = 0;
-    float m_targetAngular = 0;
+    float m_targetLinear = 0.0f;
+    float m_targetAngular = 0.0f;
     const float WHEEL_BASE = 0.28f; // meters
 };
 
 // Singleton instance declaration
-extern Motion motion;
+//extern Motion motion;

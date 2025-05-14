@@ -1,25 +1,26 @@
 #include "motion.h"
-
-Motion motion;
+#include <Arduino.h>
 
 void Motion::setVelocity(float linear, float angular) {
     if(!mEncoders || !mGyro || !mMotors) return;
 
-    targetLinear = linear;
-    targetAngular = angular;
+    m_targetLinear = linear;
+    m_targetAngular = angular;
 }
 
 void Motion::update() {
     if(!mEncoders || !mGyro || !mMotors) return;
 
     // differential speeds
-    float left = targetLinear - (targetAngular * WHEEL_BASE / 2);
-    float right = targetLinear + (targetAngular * WHEEL_BASE / 2);
+    float left = m_targetLinear - (m_targetAngular * WHEEL_BASE / 2);
+    float right = m_targetLinear + (m_targetAngular * WHEEL_BASE / 2);
 
     mMotors->setNormalizedSpeeds(left, right);
 }
 
-void Motion::waitUntilTurnFinished(float radians) {
+/*void Motion::waitUntilTurnFinished(float radians) {
+    if (!mGyro || !mMotors) return; // Ensure dependencies
+
     const float tolerance = 0.0349f; // ~2 degrees in radians
     float targetYaw = gyro.getYaw() + radians;
 
@@ -29,9 +30,11 @@ void Motion::waitUntilTurnFinished(float radians) {
     }
     setVelocity(0, 0);
     update();
-}
+}*/
 
-void Motion::waitUntilMoveFinished(float meters) {
+/* void Motion::waitUntilMoveFinished(float meters) {
+    if (!mEncoders || !mMotors) return; // Ensure dependencies are initialized
+
     const float tolerance = 0.05f; // meters
     float startDistance = encoders.getAverageDistance();
 
@@ -41,4 +44,4 @@ void Motion::waitUntilMoveFinished(float meters) {
     }
     setVelocity(0, 0);
     update();
-}
+}*/

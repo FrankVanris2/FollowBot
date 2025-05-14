@@ -53,8 +53,7 @@ void FollowBotManager::followBotSetup() {
     myMotors.motorSetup();
     encoders.setupEncoders();
     gyroscope.gyroscope_Setup();
-    myMotors.motorSetup();
-    motion.initialize(encoders, gyroscope, myMotors);
+    Motion::getInstance().initialize(encoders, gyroscope, myMotors);
 }
 
 void FollowBotManager::followBotLoop() {

@@ -28,8 +28,8 @@ void Encoders::setupEncoders() {
     pinMode(ENCODER_OUT_A2, INPUT);
     pinMode(ENCODER_OUT_B2, INPUT);
 
-    attachInterrupt(digitalPinToInterrupt(ENCODER_OUT_A), readEncoder1, RISING);
-    attachInterrupt(digitalPinToInterrupt(ENCODER_OUT_A2), readEncoder2, RISING);
+    attachInterrupt(digitalPinToInterrupt(ENCODER_OUT_A), readEncoderRight, RISING);
+    attachInterrupt(digitalPinToInterrupt(ENCODER_OUT_A2), readEncoderLeft, RISING);
 }
 
 void Encoders::loopEncoders() {
@@ -49,7 +49,7 @@ void Encoders::loopEncoders() {
     }
 }
 
-float getAverageDistance() const {
+float Encoders::getAverageDistance() const {
     return (getDistanceMetersRight() + getDistanceMetersLeft()) / 2.0f;
 }
 

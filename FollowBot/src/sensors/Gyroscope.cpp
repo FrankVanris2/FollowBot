@@ -42,7 +42,7 @@ void Gyroscope::gyroscope_Loop() {
         lastUpdate = millis();
 
         // integrate gyro Z over time (dt in seconds)
-        currentYaw += g.gyro.z * dt; // radians
+        m_currentYaw += g.gyro.z * dt; // radians
     
         setGyroData(a.acceleration.x, a.acceleration.y, a.acceleration.z,
             g.gyro.x, g.gyro.y, g.gyro.z);
