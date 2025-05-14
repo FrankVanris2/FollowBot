@@ -54,7 +54,7 @@ void Encoders::setupEncoders() {
 
     // Initialize timing
     previousTime = micros();
-}
+}  
 
 /**
  * Process encoder data at regular intervals

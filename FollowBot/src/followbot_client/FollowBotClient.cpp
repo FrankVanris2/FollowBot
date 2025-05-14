@@ -104,10 +104,10 @@ void FollowBotClient::followBotClient_Loop() {
         // Server is responsive, adjust interval based o mode
         String currentMode = followBotManager.getCurrentControl();
 
-        if (currentMode == USER) {
+        if (currentMode == MANUAL) {
             // Manual control needs most frequent updates
             intervalTime = TENTH_SECOND;
-        } else if (currentMode == ROBOT) {
+        } else if (currentMode == FOLLOWING) {
             // Following mode can use a moderate interval
             intervalTime = FIVE_SECONDS;
         } else {
@@ -367,46 +367,92 @@ String FollowBotClient::getCoordinatesData() {
     return coordinateData;
 }
 
-// TODO: look at handleActionData2
+/**
+ * Process data received from the server
+ * 
+ * Message format:
+ * - "MODE" - Simple mode change (e.g., "FOLLOWING")
+ * - "MODE,COMMAND" - Mode with command (e.g., "MANUAL,Forward")
+ * - "MODE,PARAM1,PARAM2" - Mode with parameters (e.g., "MAPPING,37.7749,-122.4194")
+ * 
+ * @param dataString The received data string to process
+ */
 void FollowBotClient::handleActionData(String dataString) {
-    Serial.println(String("FollowBotClient.handleActionData(): Received data: ") + dataString);
-    if(dataString == USER) {
-        followBotManager.setCurrentControl(dataString);
-    } else if (dataString == ROBOT) {
-        followBotManager.setCurrentControl(dataString);
-    } else {
-        if(followBotManager.getCurrentControl() == USER) {
-            Serial.println(String("FollowBotClient.handleActionData - Current Motor Direction: ") + dataString);
-            myMotors.setDirection(dataString);
+    // Trim any whitespace
+    dataString.trim();
+
+    // Log the received data for debugging
+    Serial.println(String("FollowBotClient: Received data: ") + dataString);
+
+    // Find the first comma (if any)
+    int firstComma = dataString.indexOf(',');
+
+    // Extract mode (everything before first comma, or the entire string if no comma)
+    String mode = (firstComma >= 0) ? dataString.substring(0, firstComma) : dataString;
+
+    // Always update control mode first
+    if (mode == FOLLOWING || mode == MANUAL || mode == MAPPING) {
+        // Update the robot's control mode
+        followBotManager.setCurrentControl(mode);
+
+        //For debugging purposes
+        Serial.print(String("Control mode changed to: ") + mode);
+    }
+
+    // Process any additional parameters based on the mode
+    if (firstComma >= 0) {
+        if (mode == MANUAL) {
+            // For manual mode, everything after the comma is the direction command
+            String direction = dataString.substring(firstComma + 1);
+
+            // Printing if the direction has been received (debugging purposes)
+            Serial.println(String("Direction command received: ") + direction);
+
+            // Set motor direction based on the command
+            if (direction == MOTOR_FORWARD || direction == MOTOR_BACKWARD || direction == MOTOR_LEFT || direction == MOTOR_RIGHT || direction == MOTOR_STOP) {
+                // Set motor direction based on the command
+                myMotors.setDirection(direction);
+            } 
         } 
-    }
-}
+        else if (mode == MAPPING) {
+            // For mapping mode, we expect latitude and longitude values
+            String remainder = dataString.substring(firstComma + 1);
+            int secondComma = remainder.indexOf(',');
 
-void FollowBotClient::handleActionData2(String dataString) {
-    Serial.println(String("FollowBotClient.handleActionData(): Received data: ") + dataString);
-    if (dataString == USER) {
-        followBotManager.setCurrentControl(dataString);
-    } else if (dataString == ROBOT) {
-        followBotManager.setCurrentControl(dataString);
-    } else if (dataString == MAPPING) {
-        followBotManager.setCurrentControl(dataString);
-    } else {
-        Serial.println("THERE WAS NO CONTROL MODE CHANGE.");
-    }
+            if (secondComma >= 0) {
+                // Extract latitude and longitude from the remainder
+                String latStr = remainder.substring(0, secondComma);
+                String lonStr = remainder.substring(secondComma + 1);
 
-    if (followBotManager.getCurrentControl() == USER) {
-        myMotors.setDirection(dataString);
-    } else if (followBotManager.getCurrentControl() == MAPPING) {
-        int commaIdx = dataString.indexOf(',');
-        if (commaIdx == -1) {
-            Serial.println(String("[ERROR]dataString: " + dataString));
+                // setting the coordinates.
+                float lat = latStr.toFloat();
+                float lon = lonStr.toFloat();
+
+                // Printing the Mapping coordinates (debugging purposes)
+                Serial.print("Mapping coordinates: ");
+                Serial.print(lat, 6);
+                Serial.print(", ");
+                Serial.println(lon, 6);
+
+                // TODO: send the coordinates to ROS2 to create a path
+                // For example:
+                // ros2_serial.sendCoordinates(lat, lon);
+                // replace bluetooth function in ros2_serial.
+            }
+            else {
+                Serial.println("ERROR: Invalid mapping data format (missing second comma)");
+            }
         }
-        float lat = dataString.substring(0, commaIdx).toFloat();
-        float lng = dataString.substring(commaIdx+1).toFloat();
-
-        // TODO: send via Serial
+    }
+    // Handle FOLLOWING mode - no additional parameters needed
+    else if (mode == FOLLOWING) {
+        // Following mode with no parameters - robot does the work (debugging)
+        Serial.println("Following mode activated - robot controlling movement");
+        // No additional parameters needed for FOLLOWING mode.
     }
 }
+
+
 
 void FollowBotClient::checkRSSI() {
     // The RSSI check is now handled by the FreeRTOS task
