@@ -160,7 +160,7 @@ const MappingPage = () => {
       setSendStatus(null);
       try {
         // Send coordinates to API
-        const response = await api.sendCoordinates(
+        const response = await api.postCoordinates(
           selectedPosition.clicked.lat,
           selectedPosition.clicked.lng
         );
@@ -181,16 +181,6 @@ const MappingPage = () => {
       }
     } else {
       setShowConfirmation(false);
-    }
-  };
-
-  // Toggle navigation mode
-  const toggleNavigationMode = async (mode) => {
-    try {
-      await api.setNavMode(mode); // 'mapping' or 'following'
-      setCurrentMode(mode);
-    } catch (error) {
-      console.error('Error switching navigation mode:', error);
     }
   };
 

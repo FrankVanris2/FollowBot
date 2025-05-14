@@ -82,7 +82,6 @@ void ROS2_Serial::dataToSerial() {
     imuDataDoc();           // IMU (accelerometer and gyroscope)
     encoderDataDoc();       // Wheel encoders
     gpsDataDoc();           // Robot GPS position
-    phoneGPSDataDoc();      // Phone/goal position
 }
 
 /**
@@ -142,6 +141,11 @@ void ROS2_Serial::encoderDataDoc() {
  * Format and send robot GPS data
  */
 void ROS2_Serial::gpsDataDoc() {
+    // If GPS data is equal to zero, return
+    if (myGPS.getRobotGPSData().lat == 0.0 && myGPS.getRobotGPSData().lon == 0.0) {
+        return;
+    }
+
     // Create JSON document (optimized size for GPS data)
     StaticJsonDocument<128> gpsDoc; 
 

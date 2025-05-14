@@ -40,7 +40,7 @@ unsigned long lastPostTime = 0;
  StaticJsonDocument<128> robotInformationJson; // changed from 200 to 128 could potentially cause an issue 
 
 // Server configuration
-IPAddress server(10, 12, 199, 209); // Would be AWS instance but choose local for no production devices.
+IPAddress server(192, 168, 0, 38); // Would be AWS instance but choose local for no production devices.
 const int PORT = 5000; //Originally 80
 
 // WiFi client
@@ -179,6 +179,173 @@ void FollowBotClient::followBotClient_Loop() {
 }
 
 /**
+ * Retrieve action commands from server
+ * @return String containing action data or ERROR if connection fails
+ */
+String FollowBotClient::getActionData() {
+    // Check if server is reachable
+    Serial.println("Retrieving action data from server...");
+
+    // Connect to server
+    if(!client.connect(server, PORT)) {
+        Serial.println("Server connection failed");
+        if(mServerNotConnectedCnt < MAX_SERVER_NOT_CONNECTED) {
+            mServerNotConnectedCnt++;
+        }
+        return ERROR;
+    }
+    Serial.println("Server connected");
+    mServerNotConnectedCnt = 0;
+
+    // Send HTTP GET request
+    client.println("GET /api/getActionData HTTP/1.1");
+    client.print("Host: ");
+    client.println(mIPAddress);
+    client.println("Connection: close");
+    client.println();
+
+    // Buffer for response
+    const int SIZE = 1024;
+    char buffer[SIZE];
+    int bufLength = 0;
+    int bodyIdx = 0; // Start of body in buffer
+    Data_States dataState = HEADER_STATE;
+    bool readData = true;
+
+    // Process HTTP response to extract body
+    while (dataState != FINISHED) {
+        int prevBufLen = bufLength;
+        int numChars = 0; 
+
+        // Read available data if needed
+        if(readData) {      
+            numChars = client.read(reinterpret_cast<uint8_t*>(buffer + bufLength), SIZE - bufLength);
+            bufLength += numChars;
+            buffer[bufLength] = 0;  // Null terminate
+        }
+
+        // Process data if available or if we're waiting for more
+        if(!readData || numChars > 0) {
+            switch(dataState) {
+                // Parse headers to find start of body
+                case HEADER_STATE: {
+                    char* bufPtr;
+                    for (bufPtr = buffer + prevBufLen; *(bufPtr + 3); ++bufPtr) {
+                        // Look for empty line (CRLFCRLF) between headers and body
+                        if (*bufPtr == 0x0d && *(bufPtr + 1) == 0x0a && *(bufPtr + 2) == 0x0d && *(bufPtr + 3) == 0x0a) {
+                            bodyIdx = bufPtr - buffer + 4; // Skip past CRLFCRLF
+                            dataState = BODY_STATE;
+                            readData = false;
+                            break;
+                        } 
+                    }
+                    break;
+                }
+
+                // Process body state
+                case BODY_STATE:
+                    if(bufLength > bodyIdx) {
+                        dataState = FINISHED;   // Body found, we're done
+                    } else {
+                        readData = true;        // Need more data
+                    }
+                    break;
+            }
+        }         
+    } 
+
+    client.stop();
+
+    // Create string from response body
+    String dataActionString(buffer + bodyIdx);
+    return dataActionString;
+}
+
+/**
+ * Process data received from the server
+ * @pre dataString has to contain `{mode},{command}`
+ * Message format:
+ * - "MODE" - Simple mode change (e.g., "FOLLOWING")
+ * - "MODE,COMMAND" - Mode with command (e.g., "MANUAL,Forward")
+ * - "MODE,PARAM1,PARAM2" - Mode with parameters (e.g., "MAPPING,37.7749,-122.4194")
+ * 
+ * @param dataString The received data string to process
+ */
+void FollowBotClient::handleActionData(String dataString) {
+    // Trim any whitespace
+    dataString.trim();
+
+    // Log the received data for debugging
+    Serial.println(String("FollowBotClient: Received data: ") + dataString);
+
+    // Find the first comma (if any)
+    int firstComma = dataString.indexOf(',');
+    String mode = (firstComma >= 0) ? dataString.substring(0, firstComma) : dataString;
+
+    if (firstComma < 0) {
+        return;
+    }
+    // Always update control mode first
+    if (mode == FOLLOWING || mode == MANUAL || mode == MAPPING) {
+        // Update the robot's control mode
+        followBotManager.setCurrentControl(mode);
+
+        //For debugging purposes
+        Serial.print(String("Control mode changed to: ") + mode);
+    } else {
+        // Action data did not specify a mode
+        return;
+    }
+
+    // Process any additional parameters based on the mode
+    if (mode == MANUAL) {
+        // For manual mode, everything after the comma is the direction command
+        String direction = dataString.substring(firstComma + 1);
+
+        // Printing if the direction has been received (debugging purposes)
+        Serial.println(String("Direction command received: ") + direction);
+
+        // Set motor direction based on the command
+        if (direction == MOTOR_FORWARD || direction == MOTOR_BACKWARD || direction == MOTOR_LEFT || direction == MOTOR_RIGHT || direction == MOTOR_STOP) {
+            myMotors.setDirection(direction);
+        } 
+    } else if (mode == MAPPING) {
+        // For mapping mode, we expect latitude and longitude values
+        String remainder = dataString.substring(firstComma + 1);
+        int secondComma = remainder.indexOf(',');
+
+        if (secondComma < 0) {
+            return;     // Invalid format for coordinates
+        }
+        
+        // Extract latitude and longitude from the remainder
+        String latStr = remainder.substring(0, secondComma);
+        String lonStr = remainder.substring(secondComma + 1);
+
+        // setting the coordinates.
+        float lat = latStr.toFloat();
+        float lon = lonStr.toFloat();
+
+        // Printing the Mapping coordinates (debugging purposes)
+        Serial.print("Mapping coordinates: ");
+        Serial.print(lat, 6);
+        Serial.print(", ");
+        Serial.println(lon, 6);
+
+        // TODO: send the coordinates to ROS2 to create a path
+        // For example:
+        // ros2_serial.sendCoordinates(lat, lon);
+        // replace bluetooth function in ros2_serial.
+        
+    } else if (mode == FOLLOWING) {
+        // Following mode with no parameters - robot does the work (debugging)
+        // TODO: Block other functionalities while in FOLLOWING mode
+        Serial.println("Following mode activated - robot controlling movement");
+        // No additional parameters needed for FOLLOWING mode.
+    }
+}
+
+/**
  * Display current WiFi connection information
  */
 void FollowBotClient::printWifiStatus() {
@@ -261,176 +428,6 @@ bool FollowBotClient::postRobotInfo() {
 
     return true;
 }
-
-/**
- * Retrieve action commands from server
- * 
- * @return String containing action data or ERROR if connection fails
- */
-String FollowBotClient::getActionData() {
-    // Check if server is reachable
-    Serial.println("Retrieving action data from server...");
-
-    // Connect to server
-    if(!client.connect(server, PORT)) {
-        Serial.println("Server connection failed");
-        if(mServerNotConnectedCnt < MAX_SERVER_NOT_CONNECTED) {
-            mServerNotConnectedCnt++;
-        }
-        return ERROR;
-    }
-    Serial.println("Server connected");
-    mServerNotConnectedCnt = 0;
-
-    // Send HTTP GET request
-    client.println("GET /api/getactiondata HTTP/1.1");
-    client.print("Host: ");
-    client.println(mIPAddress);
-    client.println("Connection: close");
-    client.println();
-
-    // Buffer for response
-    const int SIZE = 1024;
-    char buffer[SIZE];
-    int bufLength = 0;
-    int bodyIdx = 0; // Start of body in buffer
-    Data_States dataState = HEADER_STATE;
-    bool readData = true;
-
-    // Process HTTP response to extract body
-    while (dataState != FINISHED) {
-        int prevBufLen = bufLength;
-        int numChars = 0; 
-
-        // Read available data if needed
-        if(readData) {      
-            numChars = client.read(reinterpret_cast<uint8_t*>(buffer + bufLength), SIZE - bufLength);
-            bufLength += numChars;
-            buffer[bufLength] = 0;  // Null terminate
-        }
-
-        // Process data if available or if we're waiting for more
-        if(!readData || numChars > 0) {
-            switch(dataState) {
-                // Parse headers to find start of body
-                case HEADER_STATE: {
-                    char* bufPtr;
-                    for (bufPtr = buffer + prevBufLen; *(bufPtr + 3); ++bufPtr) {
-                        // Look for empty line (CRLFCRLF) between headers and body
-                        if (*bufPtr == 0x0d && *(bufPtr + 1) == 0x0a && *(bufPtr + 2) == 0x0d && *(bufPtr + 3) == 0x0a) {
-                            bodyIdx = bufPtr - buffer + 4; // Skip past CRLFCRLF
-                            dataState = BODY_STATE;
-                            readData = false;
-                            break;
-                        } 
-                    }
-                    break;
-                }
-
-                // Process body state
-                case BODY_STATE:
-                    if(bufLength > bodyIdx) {
-                        dataState = FINISHED;   // Body found, we're done
-                    } else {
-                        readData = true;        // Need more data
-                    }
-                    break;
-            }
-        }         
-    } 
-
-    client.stop();
-
-    // Create string from response body
-    String dataActionString(buffer + bodyIdx);
-    return dataActionString;
-}
-
-/**
- * Process data received from the server
- * 
- * Message format:
- * - "MODE" - Simple mode change (e.g., "FOLLOWING")
- * - "MODE,COMMAND" - Mode with command (e.g., "MANUAL,Forward")
- * - "MODE,PARAM1,PARAM2" - Mode with parameters (e.g., "MAPPING,37.7749,-122.4194")
- * 
- * @param dataString The received data string to process
- */
-void FollowBotClient::handleActionData(String dataString) {
-    // Trim any whitespace
-    dataString.trim();
-
-    // Log the received data for debugging
-    Serial.println(String("FollowBotClient: Received data: ") + dataString);
-
-    // Find the first comma (if any)
-    int firstComma = dataString.indexOf(',');
-
-    // Extract mode (everything before first comma, or the entire string if no comma)
-    String mode = (firstComma >= 0) ? dataString.substring(0, firstComma) : dataString;
-
-    // Always update control mode first
-    if (mode == FOLLOWING || mode == MANUAL || mode == MAPPING) {
-        // Update the robot's control mode
-        followBotManager.setCurrentControl(mode);
-
-        //For debugging purposes
-        Serial.print(String("Control mode changed to: ") + mode);
-    }
-
-    // Process any additional parameters based on the mode
-    if (firstComma >= 0) {
-        if (mode == MANUAL) {
-            // For manual mode, everything after the comma is the direction command
-            String direction = dataString.substring(firstComma + 1);
-
-            // Printing if the direction has been received (debugging purposes)
-            Serial.println(String("Direction command received: ") + direction);
-
-            // Set motor direction based on the command
-            if (direction == MOTOR_FORWARD || direction == MOTOR_BACKWARD || direction == MOTOR_LEFT || direction == MOTOR_RIGHT || direction == MOTOR_STOP) {
-                // Set motor direction based on the command
-                myMotors.setDirection(direction);
-            } 
-        } 
-        else if (mode == MAPPING) {
-            // For mapping mode, we expect latitude and longitude values
-            String remainder = dataString.substring(firstComma + 1);
-            int secondComma = remainder.indexOf(',');
-
-            if (secondComma >= 0) {
-                // Extract latitude and longitude from the remainder
-                String latStr = remainder.substring(0, secondComma);
-                String lonStr = remainder.substring(secondComma + 1);
-
-                // setting the coordinates.
-                float lat = latStr.toFloat();
-                float lon = lonStr.toFloat();
-
-                // Printing the Mapping coordinates (debugging purposes)
-                Serial.print("Mapping coordinates: ");
-                Serial.print(lat, 6);
-                Serial.print(", ");
-                Serial.println(lon, 6);
-
-                // TODO: send the coordinates to ROS2 to create a path
-                // For example:
-                // ros2_serial.sendCoordinates(lat, lon);
-                // replace bluetooth function in ros2_serial.
-            }
-            else {
-                Serial.println("ERROR: Invalid mapping data format (missing second comma)");
-            }
-        }
-    }
-    // Handle FOLLOWING mode - no additional parameters needed
-    else if (mode == FOLLOWING) {
-        // Following mode with no parameters - robot does the work (debugging)
-        Serial.println("Following mode activated - robot controlling movement");
-        // No additional parameters needed for FOLLOWING mode.
-    }
-}
-
 
 /**
  * Update and monitor WiFi signal strength
