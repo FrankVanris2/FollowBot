@@ -1,9 +1,13 @@
 /*
-* By: Frank Vanris
-* Date: 8/21/2024
-* Desc: Creating a client in which I will be able to send information up to the server and the server 
-* will be able to send information up to the website and the mobile app
-*/
+ * FollowBotClient.cpp
+ * By: Frank Vanris
+ * Date: 8/21/2024
+ * 
+ * Description:
+ * Implementation of the client interface for robot-server communication.
+ * Manages WiFi connectivity, HTTP requests, and command processing.
+ */
+
 #include <WiFiS3.h>
 #include <ArduinoJson.h>
 
@@ -16,56 +20,71 @@
 #include "states&types/MotorControlStates.h"
 
 
-// Universal Object
+// Singleton instance
 FollowBotClient followBotClient;
 
-// Interval
-const int TENTH_SECOND = 100;
-const int HALF_SECOND = 500;
-const int SECOND = 1000;
-const int FIVE_SECONDS = 5000;
-const int TEN_SECONDS = 10000;
-const int SIXTY_SECONDS = 60000;
-const int HOUR = 3600000;
-const int MAX_SERVER_NOT_CONNECTED = 3;
+// Time interval constants
+const int TENTH_SECOND = 100;       // 0.1 seconds
+const int HALF_SECOND = 500;        // 0.5 seconds
+const int SECOND = 1000;            // 1 second
+const int FIVE_SECONDS = 5000;      // 5 seconds   
+const int TEN_SECONDS = 10000;      // 10 seconds
+const int SIXTY_SECONDS = 60000;    // 60 seconds
+const int HOUR = 3600000;           // 1 hour
+const int MAX_SERVER_NOT_CONNECTED = 3; // Max failed connection attemps before backoff
 
 // Variable to track the last time postRobotInfo was executed
 unsigned long lastPostTime = 0;
 
-//My Json creator
- StaticJsonDocument<200> robotInformationJson;
+//JSON document for robot information
+ StaticJsonDocument<128> robotInformationJson; // changed from 200 to 128 could potentially cause an issue 
 
-// Server IP address
-//IPAddress server(3, 145, 197, 165); // numeric IP for Google (no DNS)
-//IPAddress server(3, 131, 97, 5); // numeric IP for Google (no DNS) /
-IPAddress server(10, 12, 199, 209);
+// Server configuration
+IPAddress server(10, 12, 199, 209); // Would be AWS instance but choose local for no production devices.
 const int PORT = 5000; //Originally 80
 
 // WiFi client
 WiFiClient client;
 
-// Constructor
-FollowBotClient::FollowBotClient(): mWifiConnectionStatus(WL_IDLE_STATUS), mPreviousMillisMove(0), mCountMoves(0), 
-mIPAddress(server.toString()), mRSSI(0), lastServerCheck(0), mServerNotConnectedCnt(0), mIsConnected(false){
+/**
+ * Constructor - initialize connection state variables
+ */
+FollowBotClient::FollowBotClient() : 
+    mWifiConnectionStatus(WL_IDLE_STATUS), 
+    mPreviousMillisMove(0), 
+    mCountMoves(0), 
+    mIPAddress(server.toString()),
+    mRSSI(0), 
+    lastServerCheck(0), 
+    mServerNotConnectedCnt(0), 
+    mIsConnected(false)
+{
+    // Set connection timeout (15 seconds)
     client.setConnectionTimeout(15000);
 }
 
+/**
+ * Initialize WiFi connection and prepare for communication
+ */
 void FollowBotClient::followBotClient_Setup() {
-
+    // Check firmware version
     String firmVersion = WiFi.firmwareVersion(); 
     if(firmVersion < WIFI_FIRMWARE_LATEST_VERSION) {
         Serial.println("Please upgrade the firmware");
     }
-    Serial.println("Client Setup");
+    Serial.println("Client Setup Starting");
     
+    // Check for WiFi module
     if (WiFi.status() == WL_NO_MODULE) {
         Serial.println("Communication with WiFi module failed!");  
     }
 
-    // Attempt to connect to WiFi network;
+    // Attempt to connect to WiFi network with timeout
     unsigned long startAttemptTime = millis();
     while(mWifiConnectionStatus != WL_CONNECTED && millis() - startAttemptTime < TEN_SECONDS) {
         Serial.print(String("Attempting to connect to SSID: ") + eepromStorage.getSSID());
+
+        // Convert String to char array for WiFi.begin()
         int ssidLength  = eepromStorage.getSSID().length() + 1; 
         int passLength  = eepromStorage.getPassword().length() + 1;   //The +1 is for the 0x00h Terminator
         char ssidArray[ssidLength];
@@ -73,16 +92,17 @@ void FollowBotClient::followBotClient_Setup() {
         eepromStorage.getSSID().toCharArray(ssidArray, ssidLength);
         eepromStorage.getPassword().toCharArray(passArray, passLength);
 
+        // Connect with or without password based on password length
         if(eepromStorage.getPassword().length() == 0) {
             mWifiConnectionStatus = WiFi.begin(ssidArray);
         } else {
-            mWifiConnectionStatus = WiFi.begin(ssidArray, passArray);    //pass for private networks
+            mWifiConnectionStatus = WiFi.begin(ssidArray, passArray);
         }
         
-        // non-blocking delay:
-        delay(100);
+        delay(100); // Short delay between attempts
     }
 
+    // Update connection state based on result
     if(mWifiConnectionStatus == WL_CONNECTED) {
         printWifiStatus();
         mIsConnected = true;
@@ -92,81 +112,86 @@ void FollowBotClient::followBotClient_Setup() {
     }
 }
 
+/**
+ * Main client update loop
+ * Handles periodic server communication and manages connection state
+ */
 void FollowBotClient::followBotClient_Loop() {
+    // Use ternary to determine base interval based on server connectivity
     int baseIntervalTime = mServerNotConnectedCnt < MAX_SERVER_NOT_CONNECTED ? TENTH_SECOND : SIXTY_SECONDS;
-    
-    // Adjust interval based on mode, but only if server is responsive
+
+    // Determine communication interval based on robot mode and server availability
     int intervalTime;
+
     if(mServerNotConnectedCnt >= MAX_SERVER_NOT_CONNECTED) {
         // If server is unresponsive, use the long interval regardless of mode
         intervalTime = SIXTY_SECONDS;
     } else {
-        // Server is responsive, adjust interval based o mode
+        // Server is responsive, adjust interval based on mode
         String currentMode = followBotManager.getCurrentControl();
 
         if (currentMode == MANUAL) {
-            // Manual control needs most frequent updates
-            intervalTime = TENTH_SECOND;
+            intervalTime = TENTH_SECOND;        // Most responsive for manual control
         } else if (currentMode == FOLLOWING) {
-            // Following mode can use a moderate interval
-            intervalTime = FIVE_SECONDS;
+            intervalTime = FIVE_SECONDS;        // Moderate for following mode
         } else {
-            // Other modes (IDLE, etc.) can user a longer interval
-            intervalTime = SECOND;
+            intervalTime = SECOND;              // Default for other modes
         }
     }
+
+    // Only process when interval has elapsed
     unsigned long currentTime = millis();
     if((currentTime - mPreviousMillisMove) >= intervalTime) {
         mPreviousMillisMove = currentTime;
 
-        // Check WiFi connection status 
-        if(WiFi.status() != WL_CONNECTED) {
-            mWifiConnectionStatus = WL_DISCONNECTED;
-        } else {
-            mWifiConnectionStatus = WL_CONNECTED;
-        }
+        // Update connection state
+        mWifiConnectionStatus = WiFi.status() == WL_CONNECTED ? WL_CONNECTED : WL_DISCONNECTED;
+        mIsConnected = mWifiConnectionStatus == WL_CONNECTED;
 
-        if(mWifiConnectionStatus == WL_CONNECTED) {
-            Serial.println(String("mServerNotConnectedCnt: ") + mServerNotConnectedCnt);
+        // Only communicate if connected
+        if(mIsConnected) {
+            // Debug output during server reconnect backoff
+            // if (intervalTime > SECOND) {
+            //     Serial.println(String("Server connection attempts: ") + mServerNotConnectedCnt);
+            // }
 
+            // Process commands from server
             String dataString = getActionData();
             handleActionData(dataString);
 
-            // Check if it's time to post robot info (once per hour)
+            // Post robot status if it's time (once per hour)
             if(followBotManager.getDirtyFlag() && (currentTime - lastPostTime >= HOUR || lastPostTime == 0)) {
                 bool postSuccess = postRobotInfo();
                 if(postSuccess) {
-                    lastPostTime = currentTime; // Update last post time only on success
+                    lastPostTime = currentTime;
+                    
+                    // Debug output
                     Serial.println("Posted robot info - next post in 1 hour");
                 }
-            }
+            } 
+        }  
 
-            // During extended intervals, continously print RSSI
-            if(mServerNotConnectedCnt >= MAX_SERVER_NOT_CONNECTED) {
-                checkRSSI();
-            }
-        }
-
-        
-        // During extended intervals, continuously print RSSI
+        // Check signal strength during  connection problems
         if(mServerNotConnectedCnt >= MAX_SERVER_NOT_CONNECTED) {
-            Serial.println("I am inside of this RSSI if statement");
             checkRSSI();
         }
     }  
 }
 
+/**
+ * Display current WiFi connection information
+ */
 void FollowBotClient::printWifiStatus() {
-    // Print the SSID of the network you're attached to:
+    // Print network information
     Serial.print("SSID: ");
     Serial.println(WiFi.SSID());
 
-    // Print your board's IP address:
+    // Print IP address
     IPAddress ip = WiFi.localIP();
-    Serial.print("IP Address from board to hotspot: ");
+    Serial.print("IP Address: ");
     Serial.println(ip);
     Serial.print("Server IP address: ");
-    Serial.println(server.toString());
+    Serial.println(mIPAddress);
 
     // Print the received signal strength:
     long rssi = WiFi.RSSI();
@@ -175,9 +200,16 @@ void FollowBotClient::printWifiStatus() {
     Serial.println(" dBm");
 }
 
+/**
+ * Send robot status information to server
+ * 
+ * @return True if successful, false otherwise
+ */
 bool FollowBotClient::postRobotInfo() {
-    Serial.println("Post Robot Info");
-    Serial.println("FollowBotClient.postRobotInfo(): Connecting to server...") ;
+    // Check if server is reachable
+    Serial.println("Posting robot information to server...");
+
+    // Connect to server
     if(!client.connect(server, PORT)) {
         Serial.println("FollowBotClient.postRobotInfo(): Server did not connect");
         if(mServerNotConnectedCnt < MAX_SERVER_NOT_CONNECTED) {
@@ -185,12 +217,14 @@ bool FollowBotClient::postRobotInfo() {
         }
         return false;
     }
-    Serial.println("FollowBotClient.postRobotInfo(): Server connected");
+
+    Serial.println("Server connected");
     mServerNotConnectedCnt = 0;
 
+    // Get current robot state data
     const OutputData& outputData = followBotManager.getOutputData();
         
-    //Adding given components to json object
+    //Build JSON object with robot information
     robotInformationJson["botID"] = 123;
     robotInformationJson["temperature"] = outputData.mTemperature;
     robotInformationJson["battery"] = 100;
@@ -201,11 +235,11 @@ bool FollowBotClient::postRobotInfo() {
 
     robotInformationJson["clock"] = outputData.mClock;
 
-
+    // Serialize JSON to string
     String outputDataStr;
     serializeJson(robotInformationJson, outputDataStr);
 
-    //Serial.println("connected to server");
+    // Send HTTP POST request
     client.println("POST /api/postBotLogs HTTP/1.1"); //Originally /api/robotinfo
     client.print("Host: "); // main server is 3.145.197.165
     client.println(mIPAddress);
@@ -217,6 +251,7 @@ bool FollowBotClient::postRobotInfo() {
     client.println("Connection: close");
     client.println(); 
 
+    // Read response (for future use)
     String response = "";
     while (client.available()) {
         char c = client.read();
@@ -227,83 +262,89 @@ bool FollowBotClient::postRobotInfo() {
     return true;
 }
 
-// TODO: change this name so it is more specific to manual movement, adjust api.jsx accordingly
+/**
+ * Retrieve action commands from server
+ * 
+ * @return String containing action data or ERROR if connection fails
+ */
 String FollowBotClient::getActionData() {
-    Serial.println("FollowBotClient.getMove(): Connecting to server...") ;
+    // Check if server is reachable
+    Serial.println("Retrieving action data from server...");
+
+    // Connect to server
     if(!client.connect(server, PORT)) {
-        Serial.println("FollowBotClient.getMove(): Server did not connect");
+        Serial.println("Server connection failed");
         if(mServerNotConnectedCnt < MAX_SERVER_NOT_CONNECTED) {
             mServerNotConnectedCnt++;
         }
         return ERROR;
     }
-    Serial.println("FollowBotClient.getMove(): Server connected");
+    Serial.println("Server connected");
     mServerNotConnectedCnt = 0;
 
-    // get the information to make the robot move
-     client.println("GET /api/getactiondata HTTP/1.1");
-     client.print("Host: ");
-     client.println(mIPAddress);
-     client.println("Connection: close");
-     client.println();
- 
-     String robotUserSwitch;
-     const int SIZE = 1024;
-     char buffer[SIZE];
-     int bufLength = 0;
-     int bodyIdx = 0; // Start of body in buffer
-     Data_States dataState = HEADER_STATE;
-     bool readData = true;
- 
-     while (dataState != FINISHED) {
-         int prevBufLen = bufLength;
-         int numChars = 0; 
-         if(readData) {
-             
-             numChars = client.read(reinterpret_cast<uint8_t*>(buffer + bufLength), SIZE - bufLength);
-             bufLength += numChars;
-             buffer[bufLength] = 0;
-         }
- 
-         if(!readData || numChars > 0) {
-             switch(dataState) {
-                 // Find start of body in just read data
-                 case HEADER_STATE: {
-                     char* bufPtr;
-                     for (bufPtr = buffer + prevBufLen; *(bufPtr + 3); ++bufPtr) {
-                         /*if (isprint(*bufPtr)) Serial.print(*bufPtr);
-                         char buf[5];
-                         Serial.print(" ");
-                         Serial.print(itoa(*bufPtr, buf, 16));
-                         Serial.print(", ");*/
-                         if (*bufPtr == 0x0d && *(bufPtr + 1) == 0x0a && *(bufPtr + 2) == 0x0d && *(bufPtr + 3) == 0x0a) {
-                             bodyIdx = bufPtr - buffer + 4; // Calculate index relative to buffer start
-                             dataState = BODY_STATE;
-                             readData = false;
-                             break;
-                         } 
-                     }
-                     break;
-                 }
- 
-                 // Wait for the body to arrive
-                 case BODY_STATE:
-                     if(bufLength > bodyIdx) {
-                         dataState = FINISHED;
-                     } else {
-                         readData = true;
-                     }
-                     break;
-             }
-         }         
-     } 
-     client.stop();
+    // Send HTTP GET request
+    client.println("GET /api/getactiondata HTTP/1.1");
+    client.print("Host: ");
+    client.println(mIPAddress);
+    client.println("Connection: close");
+    client.println();
 
-     String dataActionString(buffer + bodyIdx); // Create a string starting at the body
-     return dataActionString;
+    // Buffer for response
+    const int SIZE = 1024;
+    char buffer[SIZE];
+    int bufLength = 0;
+    int bodyIdx = 0; // Start of body in buffer
+    Data_States dataState = HEADER_STATE;
+    bool readData = true;
+
+    // Process HTTP response to extract body
+    while (dataState != FINISHED) {
+        int prevBufLen = bufLength;
+        int numChars = 0; 
+
+        // Read available data if needed
+        if(readData) {      
+            numChars = client.read(reinterpret_cast<uint8_t*>(buffer + bufLength), SIZE - bufLength);
+            bufLength += numChars;
+            buffer[bufLength] = 0;  // Null terminate
+        }
+
+        // Process data if available or if we're waiting for more
+        if(!readData || numChars > 0) {
+            switch(dataState) {
+                // Parse headers to find start of body
+                case HEADER_STATE: {
+                    char* bufPtr;
+                    for (bufPtr = buffer + prevBufLen; *(bufPtr + 3); ++bufPtr) {
+                        // Look for empty line (CRLFCRLF) between headers and body
+                        if (*bufPtr == 0x0d && *(bufPtr + 1) == 0x0a && *(bufPtr + 2) == 0x0d && *(bufPtr + 3) == 0x0a) {
+                            bodyIdx = bufPtr - buffer + 4; // Skip past CRLFCRLF
+                            dataState = BODY_STATE;
+                            readData = false;
+                            break;
+                        } 
+                    }
+                    break;
+                }
+
+                // Process body state
+                case BODY_STATE:
+                    if(bufLength > bodyIdx) {
+                        dataState = FINISHED;   // Body found, we're done
+                    } else {
+                        readData = true;        // Need more data
+                    }
+                    break;
+            }
+        }         
+    } 
+
+    client.stop();
+
+    // Create string from response body
+    String dataActionString(buffer + bodyIdx);
+    return dataActionString;
 }
-
-
 
 /**
  * Process data received from the server
@@ -391,12 +432,18 @@ void FollowBotClient::handleActionData(String dataString) {
 }
 
 
-
+/**
+ * Update and monitor WiFi signal strength
+ */
 void FollowBotClient::checkRSSI() {
-    // The RSSI check is now handled by the FreeRTOS task
     mRSSI = WiFi.RSSI();
-    //Serial.print("FollowBotClient, mRSSI = ");
-    //Serial.println(mRSSI);
+
+    // Only log RSSI if it's very poor or debugging is enabled
+    if (mRSSI < -80) {
+        Serial.print("Signal strength is weak: ");
+        Serial.print(mRSSI);
+        Serial.println(" dBm");
+    }
 }
 
 

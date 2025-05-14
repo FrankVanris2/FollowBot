@@ -12,6 +12,7 @@ const String IDLE = "Idle";
 const String MANUAL = "MANUAL"; // manual
 const String FOLLOWING = "FOLLOWING"; // following
 const String MAPPING = "MAPPING";
+
 const String ERROR = "Error";
 
 const String MOTOR_FORWARD = "Forward";
