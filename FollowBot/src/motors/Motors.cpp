@@ -54,34 +54,34 @@ void Motors::motorSetup() {
 
 // TODO: change to new
 void Motors::motorLoop() {
-//   if(mNewDirection != mCurrentDirection) {
-//        Serial.print("Motors.motorLoop - Updated Motor Direction: ");
-//        Serial.println(mNewDirection);
-//       mCurrentDirection = mNewDirection;
-//       adjustDirection();
-//   }
+  if(mNewDirection != mCurrentDirection) {
+       Serial.print("Motors.motorLoop - Updated Motor Direction: ");
+       Serial.println(mNewDirection);
+      mCurrentDirection = mNewDirection;
+      adjustDirection();
+  }
 
-    Serial.println("test1 left wheel");
-    setLeftRightSpeeds(100, 0);
-    delay(2000);
-    motorStop();
+    // Serial.println("test1 left wheel");
+    // setLeftRightSpeeds(100, 0);
+    // delay(2000);
+    // motorStop();
 
-    Serial.println("test1 right wheel");
-    setLeftRightSpeeds(0, 100);
-    delay(2000);
-    motorStop();
+    // Serial.println("test1 right wheel");
+    // setLeftRightSpeeds(0, 100);
+    // delay(2000);
+    // motorStop();
 
-    Serial.println("test2");
-    myMotors.setNormalizedSpeeds(0.3, 0.3);
-    delay(2000);
+    // Serial.println("test2");
+    // myMotors.setNormalizedSpeeds(0.3, 0.3);
+    // delay(2000);
 
-    Serial.println("test3");
-    myMotors.setNormalizedSpeeds(1.0, 1.0);
-    delay(2000);
+    // Serial.println("test3");
+    // myMotors.setNormalizedSpeeds(1.0, 1.0);
+    // delay(2000);
 
-    Serial.print("stop");
-    setNormalizedSpeeds(0, 0);
-    delay(2000);
+    // Serial.print("stop");
+    // setNormalizedSpeeds(0, 0);
+    // delay(2000);
 }
 
 int Motors::scaleSpeed(float normalized) {

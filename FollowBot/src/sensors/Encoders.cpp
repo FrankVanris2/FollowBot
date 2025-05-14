@@ -19,8 +19,8 @@
 Encoders encoders;
 
 // Initialize static variables
-volatile double Encoders::mPosition1 = 0.0; // RIGHT motor position
-volatile double Encoders::mPosition2 = 0.0; // Left motor position
+volatile double Encoders::mPositionRight = 0.0; // RIGHT motor position
+volatile double Encoders::mPositionLeft = 0.0; // Left motor position
 
 /**
  * Constructor - initializes counter and timing variables
@@ -28,8 +28,8 @@ volatile double Encoders::mPosition2 = 0.0; // Left motor position
 Encoders::Encoders() : 
     currentTime(0), 
     previousTime(0),
-    previousPosition1(0), 
-    previousPosition2(0) 
+    previousPositionRight(0), 
+    previousPositionLeft(0) 
 {
     // Initialize encoder data array
     for (int i = 0; i < DATA_SIZE; i++) {
@@ -49,8 +49,8 @@ void Encoders::setupEncoders() {
 
     // Attach interrupt handlers for both encoders
     // RISING edge triggers an interrupt when the signal goes from low to high
-    attachInterrupt(digitalPinToInterrupt(ENCODER_OUT_A), readEncoder1, RISING);
-    attachInterrupt(digitalPinToInterrupt(ENCODER_OUT_A2), readEncoder2, RISING);
+    attachInterrupt(digitalPinToInterrupt(ENCODER_OUT_A), readEncoderRight, RISING);
+    attachInterrupt(digitalPinToInterrupt(ENCODER_OUT_A2), readEncoderLeft, RISING);
 
     // Initialize timing
     previousTime = micros();
@@ -65,9 +65,9 @@ void Encoders::loopEncoders() {
     currentTime = micros();
     
    // Only update data at regular intervals (every UPDATE_INTERVAL milleseconds)
-    if(currentTime - previousTime >= UPDATE_INTERVAL * 1000) {
+    if(currentTime - previousTime >= THREE_SECONDS) {
         // Save current tick counts to data array
-        setEncoderData(mPosition1, mPosition2);
+        setEncoderData(mPositionRight, mPositionLeft);
 
         // Debug output (uncomment when needed)
         // Serial.println("Encoder data updated:");
@@ -75,12 +75,12 @@ void Encoders::loopEncoders() {
         // Serial.println("  LEFT motor (Encoder 2): " + String(mPosition2) + " ticks");
    
         // Save current position for next cycle
-        previousPosition1 = mPosition1;
-        previousPosition2 = mPosition2;
+        previousPositionRight = mPositionRight;
+        previousPositionLeft = mPositionLeft;
 
         // Reset counters for next interval
-        mPosition1 = 0;
-        mPosition2 = 0;
+        mPositionRight = 0;
+        mPositionLeft = 0;
 
         // Update time for next interval
         previousTime = currentTime;
@@ -91,15 +91,15 @@ void Encoders::loopEncoders() {
  * Interrupt service routine for RIGHT motor encoder (Encoder 1)
  * Called on RISING edge of channel A
  */
-void Encoders::readEncoder1() {
+void Encoders::readEncoderRight() {
     // Read channel B to determine direction
     int b = digitalRead(ENCODER_OUT_B);
 
     // Update position based on direction
     if (b == HIGH) {
-        mPosition1++;   // Forward rotation
+        mPositionRight++;   // Forward rotation
     } else {
-        mPosition1--;   // Reverse rotation
+        mPositionRight--;   // Reverse rotation
     }
 }
 
@@ -110,15 +110,15 @@ void Encoders::readEncoder1() {
  * Note: Direction is inverted compared to RIGHT encoder due to 
  * physical mounting orientation of the LEFT motor and encoder
  */
-void Encoders::readEncoder2() {
+void Encoders::readEncoderLeft() {
     // Read channel B to determine direction
     int b = digitalRead(ENCODER_OUT_B2);
 
     // Direction is inverted for left motor due to physical mounting
     if (b == HIGH) {
-        mPosition2--;   // Forward rotation (inverted)
+        mPositionLeft--;   // Forward rotation (inverted)
     } else {
-        mPosition2++;   // Reverse rotation (inverted)
+        mPositionLeft++;   // Reverse rotation (inverted)
     }
 }
 
