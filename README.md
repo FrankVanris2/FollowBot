@@ -4,6 +4,7 @@
 
 ## Table of Contents
  - [Introduction](#introduction)
+ - [About the Team](#about-the-team)
  - [Features](#features)
  - [Design Details](#design-details)
  - [Installation](#installation)
@@ -13,6 +14,18 @@
 
 ## Introduction
 Followbot is a companion robot that follows you around. The goal for this project is to build a low-cost robot that can carry you belongings for you. Currently, FollowBot is useful within school/city settings. Future endeavors include developing the capability for FollowBot to traverse uneven terrain such as dirt of gravel
+
+## About the Team
+We are a dedicated group of students committed to making robotics accessible and affordable for everyone. Our goal is to develop innovative robotic solutions that serve those in need while prioritizing safety and minimizing risks to humans. Through ethical engineering and thoughtful design, we strive to advance robotics in a way that benefits society and ensures responsible technological progress.
+### Team at the Park
+![TeamAtThePark_1](https://github.com/user-attachments/assets/76b7fb17-bf65-4df1-980f-1cf6344f8753)
+### Close-up with the Robot
+![TeamCloseToRobot](https://github.com/user-attachments/assets/842f2095-bb8a-443b-8343-8484e76f58ff)
+### Buiding the Future
+![image](https://github.com/user-attachments/assets/47134119-a80a-460e-81ce-f403b045a9ef)
+### Probem-Solving in Action
+![image](https://github.com/user-attachments/assets/a573d56d-7a8c-4139-aef1-bceac1660649)
+
 
 ## Features
 - Carry up to 50 lbs
