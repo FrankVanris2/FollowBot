@@ -12,6 +12,7 @@ Desc: Creating a Following Frame for when the robot is following a user
 #include "ScreenState.h"
 #include "FollowBotLCD.h"
 #include "followbot_manager/FollowBotManager.h"
+#include "states&types/FollowBotModes.h"
 
 // Singelton Object
 FollowingFrame followingFrame;

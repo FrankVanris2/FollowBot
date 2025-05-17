@@ -18,6 +18,7 @@
 #include "secrets/EEPROMStorage.h"
 #include "states&types/DataStates.h"
 #include "states&types/MotorControlStates.h"
+#include "states&types/FollowBotModes.h"
 
 
 // Server configuration

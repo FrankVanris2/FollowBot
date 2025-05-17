@@ -13,6 +13,7 @@ Desc: Creating a mapping frame that would show up if the Mode is now mapping
 #include "FollowBotLCD.h"
 #include "followbot_manager/FollowBotManager.h"
 #include "followbot_client/FollowBotBluetooth.h"
+#include "states&types/FollowBotModes.h"
 
 // Singelton Object
 MappingFrame mappingFrame;

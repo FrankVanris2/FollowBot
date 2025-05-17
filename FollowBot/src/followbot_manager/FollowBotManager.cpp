@@ -16,6 +16,7 @@
 
 #include "ROS2_Serial/ROS2_Serial.h"
 #include "states&types/MotorControlStates.h"
+#include "states&types/FollowBotModes.h"
 #include "motors/Motors.h"
 
 #include "sensors/Gyroscope.h"

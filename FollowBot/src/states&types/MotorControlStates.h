@@ -7,14 +7,6 @@
 #pragma once
 #include <Arduino.h>
 
-// TODO: change this enums goddamnit Frank i.e. IDLE = 0
-const String IDLE = "Idle";
-const String MANUAL = "MANUAL"; // manual
-const String FOLLOWING = "FOLLOWING"; // following
-const String MAPPING = "MAPPING";
-
-const String ERROR = "Error";
-
 const String MOTOR_FORWARD = "Forward";
 const String MOTOR_BACKWARD = "Backward";
 const String MOTOR_LEFT = "Left";
