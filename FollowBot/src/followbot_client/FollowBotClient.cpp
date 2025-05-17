@@ -21,7 +21,7 @@
 
 
 // Server configuration
-IPAddress server(10, 12, 233, 78); // Would be AWS instance but choose local for no production devices.
+IPAddress server(10, 0, 0, 245); // Would be AWS instance but choose local for no production devices.
 const int PORT = 5000; //Originally 80
 
 // Singleton instance

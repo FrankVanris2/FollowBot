@@ -25,14 +25,20 @@
 
 ROS2_Serial ros2_serial;
 
-ROS2_Serial::ROS2_Serial(): interval(TEST_INTERVAL), previousMillis(0) {}
+// Json Documents
+JsonDocument doc;
+
+ROS2_Serial::ROS2_Serial() : 
+    interval(TEST_INTERVAL), 
+    previousMillis(0) 
+{}
 
 void ROS2_Serial::ros2_loop() {
     unsigned long currentMillis = millis();
 
     if ((currentMillis - previousMillis) >= interval) {
         previousMillis = currentMillis;
-        readSerialData();
+        // readSerialData();
         writeSerialData();
     }
 }
@@ -43,7 +49,7 @@ void ROS2_Serial::readSerialData() {
         Serial.print("Received: ");
         Serial.println(message);
 
-        StaticJsonDocument<256> doc;
+        doc.clear();
         DeserializationError error = deserializeJson(doc, message);
 
         if (error) {
@@ -70,10 +76,10 @@ void ROS2_Serial::writeSerialData() {
 
 void ROS2_Serial::imuDataDoc() {
     const double* gyroData = gyroscope.getGyroData();
-    StaticJsonDocument<128> imuDoc;
-
-    imuDoc["sensor_type"] = "imu";
-    JsonObject imuData = imuDoc.createNestedObject("data");
+    
+    doc.clear();
+    doc["sensor_type"] = "imu";
+    JsonObject imuData = doc.createNestedObject("data");
     imuData["ax"] = gyroData[AX];
     imuData["ay"] = gyroData[AY];
     imuData["az"] = gyroData[AZ];
@@ -81,20 +87,20 @@ void ROS2_Serial::imuDataDoc() {
     imuData["gy"] = gyroData[GY];
     imuData["gz"] = gyroData[GZ];
 
-    serializeJson(imuDoc, Serial);
+    serializeJson(doc, Serial);
     Serial.println();
 }
 
 void ROS2_Serial::encoderDataDoc() {
     const double* encoderData = encoders.getEncoderData();
-    StaticJsonDocument<96> encoderDoc;
 
-    encoderDoc["sensor_type"] = "encoder";
-    JsonObject encodeData = encoderDoc.createNestedObject("data");
+    doc.clear();
+    doc["sensor_type"] = "encoder";
+    JsonObject encodeData = doc.createNestedObject("data");
     encodeData["left_wheel_ticks"] = encoderData[MOTOR_DISTANCE_IN_TICKS_LEFT]; // This is LEFT
     encodeData["right_wheel_ticks"] = encoderData[MOTOR_DISTANCE_IN_TICKS_RIGHT]; // This is RIGHT (Weird I know)
     
-    serializeJson(encoderDoc, Serial);
+    serializeJson(doc, Serial);
     Serial.println();
 }
 
@@ -104,14 +110,13 @@ void ROS2_Serial::gpsDataDoc() {
         return;         // If GPS data is equal to zero, return
     }
 
-    StaticJsonDocument<128> gpsDoc;
-
-    gpsDoc["sensor_type"] = "gps";
-    JsonObject gpsDataDoc = gpsDoc.createNestedObject("data");
+    doc.clear();
+    doc["sensor_type"] = "gps";
+    JsonObject gpsDataDoc = doc.createNestedObject("data");
     gpsDataDoc["latitude"] = myGPS.getRobotGPSData().lat;
     gpsDataDoc["longitude"] = myGPS.getRobotGPSData().lon;
 
-    serializeJson(gpsDoc, Serial);
+    serializeJson(doc, Serial);
     Serial.println();
 }
 
