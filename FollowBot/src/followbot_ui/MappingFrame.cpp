@@ -13,9 +13,11 @@ Desc: Creating a mapping frame that would show up if the Mode is now mapping
 #include "FollowBotLCD.h"
 #include "followbot_manager/FollowBotManager.h"
 #include "followbot_client/FollowBotBluetooth.h"
+#include "states&types/FollowBotModes.h"
 
 // Singelton Object
 MappingFrame mappingFrame;
+
 void MappingFrame::setup(TFT_eSPI& tft) {
     setTFT(tft);
     getComponents()[MAPPING_TEXT] = new TextBase(tft, 110, 75, "Mapping", 5, TFT_BLACK, TFT_WHITE);

@@ -16,6 +16,7 @@
 const int MAX_SPEED = 255;
 const int MED_SPEED = 200;
 const int LOW_SPEED = 150;
+const int MIN_EFFECTIVE = 50;
 
 const int ANGLE_THRESHOLD = 45; // degrees
 
@@ -34,11 +35,10 @@ Adafruit_DCMotor *motor4 = motorShield.getMotor(4);
 // My constructor
 Motors::Motors(): mCurrentDirection(MOTOR_STOP) {}
 
-//where I initialize my motors
 void Motors::motorSetup() {
     Serial.println("Motor Setup");
 
-    if (!motorShield.begin()) {         // create with the default frequency 1.6KHz
+    if (!motorShield.begin()) {             // create with the default frequency 1.6KHz
         // if (!motorShield.begin(1000)) {  // OR with a different frequency, say 1KHz
         Serial.println("Could not find Motor Shield. Check wiring.");
         while (1);
@@ -52,16 +52,81 @@ void Motors::motorSetup() {
     motor4->setSpeed(MED_SPEED);
 }
 
-void Motors::motorLoop() {  
-    
-   if(mNewDirection != mCurrentDirection) {
-        Serial.print("Motors.motorLoop - Updated Motor Direction: ");
-        Serial.println(mNewDirection);
-       mCurrentDirection = mNewDirection;
-       adjustDirection();
-   } 
+// TODO: change to new
+void Motors::motorLoop() {
+  if(mNewDirection != mCurrentDirection) {
+       Serial.print("Motors.motorLoop - Updated Motor Direction: ");
+       Serial.println(mNewDirection);
+      mCurrentDirection = mNewDirection;
+      adjustDirection();
+  }
+
+    // Serial.println("test1 left wheel");
+    // setLeftRightSpeeds(100, 0);
+    // delay(2000);
+    // motorStop();
+
+    // Serial.println("test1 right wheel");
+    // setLeftRightSpeeds(0, 100);
+    // delay(2000);
+    // motorStop();
+
+    // Serial.println("test2");
+    // myMotors.setNormalizedSpeeds(0.3, 0.3);
+    // delay(2000);
+
+    // Serial.println("test3");
+    // myMotors.setNormalizedSpeeds(1.0, 1.0);
+    // delay(2000);
+
+    // Serial.print("stop");
+    // setNormalizedSpeeds(0, 0);
+    // delay(2000);
 }
 
+int Motors::scaleSpeed(float normalized) {
+    // map [-1.0, 1.0] to [MIN_SPEED, MAX_SPEED]
+    return constrain(
+        (abs(normalized) * (MAX_SPEED - MIN_EFFECTIVE)) + MIN_EFFECTIVE,
+        MIN_EFFECTIVE,
+        MAX_SPEED
+    ) * (normalized > 0 ? 1 : -1);
+}
+
+void Motors::setNormalizedSpeeds(float left, float right) {
+    setLeftRightSpeeds(
+        scaleSpeed(left),
+        scaleSpeed(right)
+    );
+}
+
+void Motors::setLeftRightSpeeds(int leftSpeed, int rightSpeed) {
+    // left side motors (1 & 4)
+    setMotorDirection(motor1, leftSpeed);
+    setMotorDirection(motor4, leftSpeed);
+
+    // right side motors (2 & 3)
+    setMotorDirection(motor2, rightSpeed);
+    setMotorDirection(motor3, rightSpeed);
+
+    // set speeds after setting direction
+    motor1->setSpeed(constrain(abs(leftSpeed), MIN_EFFECTIVE, MAX_SPEED));
+    motor4->setSpeed(constrain(abs(leftSpeed), MIN_EFFECTIVE, MAX_SPEED));
+    motor2->setSpeed(constrain(abs(rightSpeed), MIN_EFFECTIVE, MAX_SPEED));
+    motor3->setSpeed(constrain(abs(rightSpeed), MIN_EFFECTIVE, MAX_SPEED));
+}
+
+void Motors::setMotorDirection(Adafruit_DCMotor* motor, int speed) {
+    if(speed > 0) {
+        motor->run(FORWARD);
+    } else if(speed < 0) {
+        motor->run(BACKWARD);
+    } else {
+        motor->run(RELEASE);
+    }
+}
+
+/** BEGINNING OF LEGACY FUNCTIONS: */
 void Motors::setMotorSpeed(int leftSpeed, int rightSpeed) {
     motor1->setSpeed(leftSpeed);
     motor2->setSpeed(rightSpeed);
@@ -70,8 +135,10 @@ void Motors::setMotorSpeed(int leftSpeed, int rightSpeed) {
     motorForwards();
 }
 
-//testing client, (very important)
+// testing client, (very important)
 void Motors::adjustDirection() {
+    if (mUseVelocity) return; // skip if using new control
+
     Serial.println(String("Motors.adjustDirection - Current Direction: ") + mCurrentDirection); 
     if (mCurrentDirection == MOTOR_FORWARD) {
         motorForwards();
@@ -151,3 +218,4 @@ void Motors::motorStop() {
     motor3->run(RELEASE);
     motor4->run(RELEASE);
 }
+/** END OF LEGACY FUNCTIONS: */

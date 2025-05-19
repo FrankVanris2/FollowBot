@@ -13,6 +13,7 @@ screen on the TFT screen.
 #include "ScreenState.h"
 #include "FollowBotLCD.h"
 #include "followbot_manager/FollowBotManager.h"
+#include "states&types/FollowBotModes.h"
 
 // Singelton Object
 ManualFrame manualFrame;

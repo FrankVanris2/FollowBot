@@ -8,6 +8,7 @@
 #include <Arduino.h>
 
 #include "states&types/MotorControlStates.h"
+#include <Adafruit_MotorShield.h>
 
 const int MOTOR_LEFT_OFFSET = 0; // Adjust as needed
 const int MOTOR_RIGHT_OFFSET = 0; // Adjust as needed
@@ -21,10 +22,20 @@ public:
     void motorSetup();
     void motorLoop();
 
+    void setControlMode(bool useVelocityControl) {
+        mUseVelocity = useVelocityControl;
+    }
+
+    int scaleSpeed(float);
+    void setNormalizedSpeeds(float left, float right);
+    void setLeftRightSpeeds(int left, int right);
+    void setMotorDirection(Adafruit_DCMotor* motor, int speed);
+
+
     void setMotorSpeed(int leftSpeed, int rightSpeed);
 
     void setDirection(String dir) {
-       mNewDirection = dir;   
+       mNewDirection = dir;
     }
 
     void moveForwards(float distance) {
@@ -55,9 +66,11 @@ public:
     void stopMoving();
 
 private:
+    bool mUseVelocity = false; // for safe rollback, default to legacy mode
+
     String mCurrentDirection;
     String mNewDirection;
-    
+
     void adjustDirection();
 
     void motorForwards();

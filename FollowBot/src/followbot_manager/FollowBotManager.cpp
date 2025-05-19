@@ -16,6 +16,7 @@
 
 #include "ROS2_Serial/ROS2_Serial.h"
 #include "states&types/MotorControlStates.h"
+#include "states&types/FollowBotModes.h"
 #include "motors/Motors.h"
 
 #include "sensors/Gyroscope.h"
@@ -23,6 +24,7 @@
 #include "sensors/BatteryReader.h"
 
 #include "gps/GPS.h"
+#include "motion/motion.h"
 #include "following_mechanics/FollowMechanics.h"
 
 //CURRENTLY NOT NEEDED
@@ -42,31 +44,31 @@ FollowBotManager::FollowBotManager(): mIsDirty(false), mCurrentControl(IDLE){ //
 
 //the setup that will store the many objects that will set in the main
 void FollowBotManager::followBotSetup() { 
-    eepromStorage.setup();  
+    eepromStorage.setup();
     myLCDScreen.myLCDScreen_Setup();
     myGPS.gps_setup();
-    followBotClient.followBotClient_Setup();  
+    followBotClient.followBotClient_Setup();
     myMotors.motorSetup();
-    
+
 
     //Testing
     encoders.setupEncoders();
   
     // ROS2 specific:
     gyroscope.gyroscope_Setup();
-
+    Motion::getInstance().initialize(encoders, gyroscope, myMotors);
 }
 
 void FollowBotManager::followBotLoop() {
     batteryReader.batteryReaderLoop();
     myLCDScreen.myLCDScreen_Loop();
-    followBotClient.followBotClient_Loop(); 
-    myGPS.gps_loop(); 
+    followBotClient.followBotClient_Loop();
+    myGPS.gps_loop();
     if(mCurrentControl == IDLE) {
         myMotors.setDirection(MOTOR_STOP);
     } else if (mCurrentControl == FOLLOWING) {
 
-    } 
+    }
     myMotors.motorLoop();
 
     // Testing

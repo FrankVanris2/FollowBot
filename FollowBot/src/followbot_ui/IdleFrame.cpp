@@ -13,7 +13,8 @@ Desc: Creating an idle screen, a screen that will be printed out when things are
 #include "FollowBotLCD.h"
 #include "followbot_manager/FollowBotManager.h"
 #include "followbot_client/FollowBotClient.h"
-#include "states&types/MotorControlStates.h"
+#include "states&types/FollowBotModes.h"
+
 
 // Singelton Object
 IdleFrame idleFrame;

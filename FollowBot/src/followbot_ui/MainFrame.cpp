@@ -12,6 +12,7 @@ Desc: Creating the Main frame*/
 #include "FollowBotLCD.h"
 #include "followbot_client/FollowBotClient.h"
 #include "followbot_manager/FollowBotManager.h"
+#include "states&types/FollowBotModes.h"
 #include "sensors/BatteryReader.h"
 
 //Singelton Object

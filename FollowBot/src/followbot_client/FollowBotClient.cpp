@@ -2,7 +2,7 @@
  * FollowBotClient.cpp
  * By: Frank Vanris
  * Date: 8/21/2024
- * 
+ *
  * Description:
  * Implementation of the client interface for robot-server communication.
  * Manages WiFi connectivity, HTTP requests, and command processing.
@@ -18,20 +18,22 @@
 #include "secrets/EEPROMStorage.h"
 #include "states&types/DataStates.h"
 #include "states&types/MotorControlStates.h"
+#include "states&types/FollowBotModes.h"
 
 
 // Server configuration
-IPAddress server(192, 168, 0, 38); // Would be AWS instance but choose local for no production devices.
+IPAddress server(10, 0, 0, 245); // Would be AWS instance but choose local for no production devices.
 const int PORT = 5000; //Originally 80
 
 // Singleton instance
 FollowBotClient followBotClient;
 
 // Time interval constants
+const int TEN_MILLISECONDS = 10;       // 0.01 seconds
 const int TENTH_SECOND = 100;       // 0.1 seconds
 const int HALF_SECOND = 500;        // 0.5 seconds
 const int SECOND = 1000;            // 1 second
-const int FIVE_SECONDS = 5000;      // 5 seconds   
+const int FIVE_SECONDS = 5000;      // 5 seconds
 const int TEN_SECONDS = 10000;      // 10 seconds
 const int SIXTY_SECONDS = 60000;    // 60 seconds
 const int HOUR = 3600000;           // 1 hour
@@ -41,7 +43,7 @@ const int MAX_SERVER_NOT_CONNECTED = 3; // Max failed connection attemps before 
 unsigned long lastPostTime = 0;
 
 //JSON document for robot information
- StaticJsonDocument<128> robotInformationJson; // changed from 200 to 128 could potentially cause an issue 
+ StaticJsonDocument<128> robotInformationJson; // changed from 200 to 128 could potentially cause an issue
 
 
 // WiFi client
@@ -50,23 +52,20 @@ WiFiClient client;
 /**
  * Constructor - initialize connection state variables
  */
-FollowBotClient::FollowBotClient() : 
-    mWifiConnectionStatus(WL_IDLE_STATUS), 
-    mPreviousMillisMove(0), 
-    mCountMoves(0), 
+FollowBotClient::FollowBotClient() :
+    mWifiConnectionStatus(WL_IDLE_STATUS),
+    mPreviousMillisMove(0),
+    mCountMoves(0),
     mIPAddress(server.toString()),
-    mRSSI(0), 
-    lastServerCheck(0), 
-    mServerNotConnectedCnt(0), 
+    mRSSI(0),
+    lastServerCheck(0),
+    mServerNotConnectedCnt(0),
     mIsConnected(false)
 {
     // Set connection timeout (15 seconds)
     client.setConnectionTimeout(15000);
 }
 
-/**
- * Initialize WiFi connection and prepare for communication
- */
 void FollowBotClient::followBotClient_Setup() {
     // Check firmware version
     String firmVersion = WiFi.firmwareVersion(); 
@@ -75,18 +74,17 @@ void FollowBotClient::followBotClient_Setup() {
     }
     Serial.println("Client Setup Starting");
     
-    // Check for WiFi module
     if (WiFi.status() == WL_NO_MODULE) {
         Serial.println("Communication with WiFi module failed!");  
     }
 
-    // Attempt to connect to WiFi network with timeout
+    // Attempt to connect to WiFi network;
     unsigned long startAttemptTime = millis();
     while(mWifiConnectionStatus != WL_CONNECTED && millis() - startAttemptTime < TEN_SECONDS) {
         Serial.print(String("Attempting to connect to SSID: ") + eepromStorage.getSSID());
 
         // Convert String to char array for WiFi.begin()
-        int ssidLength  = eepromStorage.getSSID().length() + 1; 
+        int ssidLength  = eepromStorage.getSSID().length() + 1;
         int passLength  = eepromStorage.getPassword().length() + 1;   //The +1 is for the 0x00h Terminator
         char ssidArray[ssidLength];
         char passArray[passLength];
@@ -103,7 +101,6 @@ void FollowBotClient::followBotClient_Setup() {
         delay(100); // Short delay between attempts
     }
 
-    // Update connection state based on result
     if(mWifiConnectionStatus == WL_CONNECTED) {
         printWifiStatus();
         mIsConnected = true;
@@ -113,10 +110,6 @@ void FollowBotClient::followBotClient_Setup() {
     }
 }
 
-/**
- * Main client update loop
- * Handles periodic server communication and manages connection state
- */
 void FollowBotClient::followBotClient_Loop() {
     // Use ternary to determine base interval based on server connectivity
     int baseIntervalTime = mServerNotConnectedCnt < MAX_SERVER_NOT_CONNECTED ? TENTH_SECOND : SIXTY_SECONDS;
@@ -134,7 +127,7 @@ void FollowBotClient::followBotClient_Loop() {
         if (currentMode == MANUAL) {
             intervalTime = TENTH_SECOND;        // Most responsive for manual control
         } else if (currentMode == FOLLOWING) {
-            intervalTime = FIVE_SECONDS;        // Moderate for following mode
+            intervalTime = TENTH_SECOND;        // Moderate for following mode
         } else {
             intervalTime = SECOND;              // Default for other modes
         }
@@ -156,7 +149,6 @@ void FollowBotClient::followBotClient_Loop() {
             //     Serial.println(String("Server connection attempts: ") + mServerNotConnectedCnt);
             // }
 
-            // Process commands from server
             String dataString = getActionData();
             handleActionData(dataString);
 
@@ -165,12 +157,12 @@ void FollowBotClient::followBotClient_Loop() {
                 bool postSuccess = postRobotInfo();
                 if(postSuccess) {
                     lastPostTime = currentTime;
-                    
+
                     // Debug output
                     Serial.println("Posted robot info - next post in 1 hour");
                 }
-            } 
-        }  
+            }
+        }
 
         // Check signal strength during  connection problems
         if(mServerNotConnectedCnt >= MAX_SERVER_NOT_CONNECTED) {
@@ -204,7 +196,7 @@ String FollowBotClient::getActionData() {
     client.println("Connection: close"); // We expect the server to close the connection after response
     client.println();
 
-    const int BUFFER_SIZE = 1024;
+    const int BUFFER_SIZE = 2048;
     char buffer[BUFFER_SIZE];
     int bufLength = 0;
     int bodyStartIndex = 0; // Index in buffer where the HTTP body starts
@@ -271,7 +263,7 @@ String FollowBotClient::getActionData() {
                  // Or, treat as error if full body is critical and larger than buffer.
             }
         }
-        
+
         // If no data was read and client is still connected, yield briefly to avoid tight spin
         // This is a fallback, the timeout is the main guard.
         if (client.connected() && client.available() == 0) {
@@ -286,7 +278,7 @@ String FollowBotClient::getActionData() {
         Serial.println("getActionData(): Error, bodyStartIndex is beyond buffer length after parsing.");
         return ERROR;
     }
-    
+
     String responseBody = String(buffer + bodyStartIndex);
     // Serial.print("getActionData(): Response body: '"); Serial.print(responseBody); Serial.println("'");
     return responseBody;
@@ -294,85 +286,82 @@ String FollowBotClient::getActionData() {
 
 /**
  * Process data received from the server
- * @pre dataString has to contain `{mode},{command}`
- * Message format:
- * - "MODE" - Simple mode change (e.g., "FOLLOWING")
- * - "MODE,COMMAND" - Mode with command (e.g., "MANUAL,Forward")
- * - "MODE,PARAM1,PARAM2" - Mode with parameters (e.g., "MAPPING,37.7749,-122.4194")
- * 
+ * @pre dataString can be in formats like "MODE", "MODE,COMMAND", or "MODE,PARAM1,PARAM2".
+ *      An empty dataString will result in no action.
+ * Message format examples:
+ * - "FOLLOWING" - Simple mode change
+ * - "MANUAL,Forward" - Mode with command
+ * - "MAPPING,37.7749,-122.4194" - Mode with parameters (Note: MAPPING data via this path is illustrative)
+ *
  * @param dataString The received data string to process
  */
 void FollowBotClient::handleActionData(String dataString) {
     // Trim any whitespace
     dataString.trim();
 
+    // If dataString is empty (e.g., from a 204 No Content response), do nothing.
+    if (dataString.length() == 0) {
+        Serial.println("FollowBotClient: Received empty data string. No action taken.");
+        return;
+    }
+
     // Log the received data for debugging
     Serial.println(String("FollowBotClient: Received data: ") + dataString);
 
-    // Find the first comma (if any)
     int firstComma = dataString.indexOf(',');
-    String mode = (firstComma >= 0) ? dataString.substring(0, firstComma) : dataString;
+    String mode;
+    String params = "";
 
-    if (firstComma < 0) {
-        return;
-    }
-    // Always update control mode first
-    if (mode == FOLLOWING || mode == MANUAL || mode == MAPPING) {
-        // Update the robot's control mode
-        followBotManager.setCurrentControl(mode);
-
-        //For debugging purposes
-        Serial.print(String("Control mode changed to: ") + mode);
-    } else {
-        // Action data did not specify a mode
-        return;
-    }
-
-    // Process any additional parameters based on the mode
-    if (mode == MANUAL) {
-        // For manual mode, everything after the comma is the direction command
-        String direction = dataString.substring(firstComma + 1);
-
-        // Printing if the direction has been received (debugging purposes)
-        Serial.println(String("Direction command received: ") + direction);
-
-        // Set motor direction based on the command
-        if (direction == MOTOR_FORWARD || direction == MOTOR_BACKWARD || direction == MOTOR_LEFT || direction == MOTOR_RIGHT || direction == MOTOR_STOP) {
-            myMotors.setDirection(direction);
-        } 
-    } else if (mode == MAPPING) {
-        // For mapping mode, we expect latitude and longitude values
-        String remainder = dataString.substring(firstComma + 1);
-        int secondComma = remainder.indexOf(',');
-
-        if (secondComma < 0) {
-            return;     // Invalid format for coordinates
+    if (firstComma >= 0) {
+        mode = dataString.substring(0, firstComma);
+        // Ensure there are characters after the comma before creating the params string
+        if (dataString.length() > firstComma + 1) {
+            params = dataString.substring(firstComma + 1);
         }
-        
-        // Extract latitude and longitude from the remainder
-        String latStr = remainder.substring(0, secondComma);
-        String lonStr = remainder.substring(secondComma + 1);
+    } else {
+        mode = dataString; // No comma, the whole string is the mode
+    }
 
-        // setting the coordinates.
-        float lat = latStr.toFloat();
-        float lon = lonStr.toFloat();
+    // Attempt to set control mode if it's a valid mode
+    if (mode == FOLLOWING || mode == MANUAL || mode == MAPPING) {
+        followBotManager.setCurrentControl(mode);
+        Serial.println(String("Control mode changed to: ") + mode); // Log after successful mode change
 
-        // Printing the Mapping coordinates (debugging purposes)
-        Serial.print("Mapping coordinates: ");
-        Serial.print(lat, 6);
-        Serial.print(", ");
-        Serial.println(lon, 6);
-
-        // TODO: send the coordinates to ROS2 to create a path
-        // For example:
-        // ros2_serial.sendCoordinates(lat, lon);
-        // replace bluetooth function in ros2_serial.
-        
-    } else if (mode == FOLLOWING) {
-        // Following mode with no parameters - robot does the work (debugging)
-        // TODO: Block other functionalities while in FOLLOWING mode
-        Serial.println("Following mode activated - robot controlling movement");
-        // No additional parameters needed for FOLLOWING mode.
+        // Process parameters only if they exist (i.e., firstComma was found) and the mode is set
+        if (firstComma >= 0) {
+            if (mode == MANUAL) {
+                // For manual mode, params is the direction command
+                String direction = params;
+                Serial.println(String("Direction command received: ") + direction);
+                if (direction == MOTOR_FORWARD || direction == MOTOR_BACKWARD || direction == MOTOR_LEFT || direction == MOTOR_RIGHT || direction == MOTOR_STOP) {
+                    myMotors.setDirection(direction);
+                } else {
+                    Serial.println(String("FollowBotClient: Unknown MANUAL command: ") + direction);
+                }
+            } else if (mode == MAPPING) {
+                // For mapping mode, params should be "latitude,longitude"
+                int secondComma = params.indexOf(',');
+                if (secondComma >= 0) {
+                    String latStr = params.substring(0, secondComma);
+                    String lonStr = params.substring(secondComma + 1);
+                    float lat = latStr.toFloat();
+                    float lon = lonStr.toFloat();
+                    Serial.print("Mapping coordinates: ");
+                    Serial.print(lat, 6);
+                    Serial.print(", ");
+                    Serial.println(lon, 6);
+                    // TODO: send the coordinates to ROS2 to create a path
+                } else {
+                    Serial.println(String("FollowBotClient: Invalid MAPPING params format: ") + params);
+                }
+            }
+            // No specific parameters are expected for FOLLOWING mode when firstComma >= 0,
+            // but the mode has already been set.
+        }
+        // If firstComma < 0, the mode is set, and there are no parameters to process, which is valid.
+    } else {
+        Serial.println(String("FollowBotClient: Unknown mode received: ") + mode);
+        // If the mode itself is unknown, no action is taken.
     }
 }
 
@@ -380,16 +369,16 @@ void FollowBotClient::handleActionData(String dataString) {
  * Display current WiFi connection information
  */
 void FollowBotClient::printWifiStatus() {
-    // Print network information
+    // Print the SSID of the network you're attached to:
     Serial.print("SSID: ");
     Serial.println(WiFi.SSID());
 
-    // Print IP address
+    // Print your board's IP address:
     IPAddress ip = WiFi.localIP();
-    Serial.print("IP Address: ");
+    Serial.print("IP Address from board to hotspot: ");
     Serial.println(ip);
     Serial.print("Server IP address: ");
-    Serial.println(mIPAddress);
+    Serial.println(server.toString());
 
     // Print the received signal strength:
     long rssi = WiFi.RSSI();
@@ -398,11 +387,6 @@ void FollowBotClient::printWifiStatus() {
     Serial.println(" dBm");
 }
 
-/**
- * Send robot status information to server
- * 
- * @return True if successful, false otherwise
- */
 bool FollowBotClient::postRobotInfo() {
     // Check if server is reachable
     Serial.println("Posting robot information to server...");
@@ -419,10 +403,9 @@ bool FollowBotClient::postRobotInfo() {
     Serial.println("Server connected");
     mServerNotConnectedCnt = 0;
 
-    // Get current robot state data
     const OutputData& outputData = followBotManager.getOutputData();
         
-    //Build JSON object with robot information
+    //Adding given components to json object
     robotInformationJson["botID"] = 123;
     robotInformationJson["temperature"] = outputData.mTemperature;
     robotInformationJson["battery"] = 100;
@@ -433,11 +416,11 @@ bool FollowBotClient::postRobotInfo() {
 
     robotInformationJson["clock"] = outputData.mClock;
 
-    // Serialize JSON to string
+
     String outputDataStr;
     serializeJson(robotInformationJson, outputDataStr);
 
-    // Send HTTP POST request
+    //Serial.println("connected to server");
     client.println("POST /api/postBotLogs HTTP/1.1"); //Originally /api/robotinfo
     client.print("Host: "); // main server is 3.145.197.165
     client.println(mIPAddress);
