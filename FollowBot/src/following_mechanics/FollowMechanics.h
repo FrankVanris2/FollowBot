@@ -28,11 +28,12 @@ private:
     int mRSSIAvg;
     long mMaxRSSI;
     long mMinRSSI;
-
+    
     void followMechanics_Averaging();
 
     //drive mechanics
     void driveTo_Test_1();
+    void driveTo_Test_WithHysteresis();
 
     void drive(float distance, float turn);
 

@@ -22,7 +22,7 @@ const int ECHO_PIN1 = A3;
 
 
 //Constructor
-ObjectDetection::ObjectDetection(): mDistance1(0.0), mDistance2(0.0), mDistance3(0.0), mPreviousMillis(0) {}
+ObjectDetection::ObjectDetection(): mDistance(0.0), mPreviousMillis(0) {}
 
 void ObjectDetection::objectDetection_Setup() {
     Serial.println("Object Detection Setup");
@@ -50,8 +50,7 @@ void ObjectDetection::checkDistance() {
     delayMicroseconds(10);
     digitalWrite(TRIG_PIN1, LOW);
     float duration1 = pulseIn(ECHO_PIN1, HIGH);
-    setDistance1((duration1 * .0343) / 2);
-
+    setDistance((duration1 * .0343) / 2);
 }
 
 

@@ -114,10 +114,6 @@ void FollowMechanics::followMechanics_Averaging() {
     Serial.println(mRSSIAvg);
 }
 
-void FollowMechanics::driveTo_Test_1() {
-
-}
-
 
 
 

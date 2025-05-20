@@ -13,33 +13,13 @@ public:
     void objectDetection_Loop();
 
     //getting the distance;
-    float getDistance1() const {
-        return mDistance1;
-    }
+    float getDistance() const { return mDistance; }
 
-    float getDistance2() const {
-        return mDistance2;
-    }
-
-    float getDistance3() const {
-        return mDistance3;
-    }
-
-    void setDistance1(float distance1) {
-        mDistance1 = distance1;
-    }
-
-    void setDistance2(float distance2) {
-        mDistance2 = distance2;
-    }
-
-    void setDistance3(float distance3) {
-        mDistance3 = distance3;
-    }
+    void setDistance(float distance) { mDistance = distance; }
 
 private:
     unsigned long mPreviousMillis;
-    float mDistance1, mDistance2, mDistance3;
+    float mDistance;
     
     void checkDistance();
 };

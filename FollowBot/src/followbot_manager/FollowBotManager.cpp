@@ -27,14 +27,6 @@
 #include "motion/motion.h"
 #include "following_mechanics/FollowMechanics.h"
 
-//CURRENTLY NOT NEEDED
-//#include "objectavoidance&detection/ObjectAvoidance.h"
-//#include "objectavoidance&detection/ObjectDetection.h"
-
-//#include "sensors/TemperatureReader.h"
-
-
-
 //universal object
 FollowBotManager followBotManager;
 
@@ -49,9 +41,6 @@ void FollowBotManager::followBotSetup() {
     myGPS.gps_setup();
     followBotClient.followBotClient_Setup();
     myMotors.motorSetup();
-
-
-    //Testing
     encoders.setupEncoders();
   
     // ROS2 specific:
@@ -70,14 +59,11 @@ void FollowBotManager::followBotLoop() {
         followMechanics.followMechanics_Loop();
     }
     myMotors.motorLoop();
-
-    // Testing
     encoders.loopEncoders();
 
     // //ROS2 Specific
     gyroscope.gyroscope_Loop();
-    ros2_serial.ros2_loop();
-    
+    ros2_serial.ros2_loop();   
 }
 
 
