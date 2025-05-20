@@ -19,24 +19,23 @@ public:
 
 private:
     unsigned long previousMillis;
+    unsigned long previousMinute;
 
     //list for RSSI Avg
     std::list<int> rssiList;
 
     int mRSSITotal;
     int mRSSIAvg;
+    long mMaxRSSI;
+    long mMinRSSI;
 
     void followMechanics_Averaging();
 
     //drive mechanics
     void driveTo_Test_1();
-    void driveTo_Test_2();
 
     void drive(float distance, float turn);
 
-    //Mathematical stuff
-    float geoDistance(struct GeoLoc &a, struct GeoLoc &b);
-    float geoBearing(struct GeoLoc &a, struct GeoLoc &b);
 };
 
 extern FollowMechanics followMechanics;

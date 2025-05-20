@@ -67,7 +67,7 @@ void FollowBotManager::followBotLoop() {
     if(mCurrentControl == IDLE) {
         myMotors.setDirection(MOTOR_STOP);
     } else if (mCurrentControl == FOLLOWING) {
-
+        followMechanics.followMechanics_Loop();
     }
     myMotors.motorLoop();
 

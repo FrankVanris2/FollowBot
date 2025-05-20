@@ -11,6 +11,9 @@ Desc: Creating follow mechanics between the user and the robot
 
 #include "FollowMechanics.h"
 #include "followbot_client/FollowBotClient.h"
+#include "followbot_manager/FollowBotManager.h"
+#include "states&types/FollowBotModes.h"
+#include "objectavoidance&detection/ObjectDetection.h"
 
 #include "states&types/MotorControlStates.h"
 #include "states&types/FollowBotNavigation.h"
@@ -30,7 +33,12 @@ const int TENTH_SECOND = 100; // ms
 FollowMechanics followMechanics;
 
 // Constructor
-FollowMechanics::FollowMechanics():  mRSSIAvg(0), mRSSITotal(0), previousMillis(0) {}
+FollowMechanics::FollowMechanics() :  
+    mRSSIAvg(0), 
+    mRSSITotal(0), 
+    previousMillis(0),
+    previousMinute(0)
+{}
 
 
 // Setup
@@ -40,10 +48,34 @@ void FollowMechanics::followMechanics_Setup() {
 
 // Loop
 void FollowMechanics::followMechanics_Loop() {
-    if ((unsigned long) (millis() - previousMillis) >= TENTH_SECOND) {
-        previousMillis = millis();
-        
-        Serial.println(String("Bluetooth is enabled: ") + followBotBluetooth.isEnabled());
+    unsigned long currentMillis = millis();
+    if ((unsigned long) (currentMillis - previousMillis) >= TENTH_SECOND) {
+        previousMillis = currentMillis;
+        if(followBotManager.getCurrentControl() != FOLLOWING) {
+            return;
+        }
+
+        if (myMotors.getDirection() != MOTOR_RIGHT) {
+            myMotors.setDirection(MOTOR_RIGHT);
+        }
+
+        if (currentMillis - previousMinute >= 60000) {
+            previousMinute = currentMillis;
+            mMinRSSI = 0;
+            mMaxRSSI = -1000;
+        }
+
+        long rssiValue = followBotClient.getRSSI();
+        if (rssiValue > mMaxRSSI) {
+            mMaxRSSI = rssiValue;
+        }
+        if (rssiValue < mMinRSSI) {
+            mMinRSSI = rssiValue;
+        }
+
+        Serial.println(String("FollowMechanics_Loop(), RSSI Value: ") + rssiValue + " Max RSSI: " + mMaxRSSI + " Min RSSI: " + mMinRSSI);
+
+        /*Serial.println(String("Bluetooth is enabled: ") + followBotBluetooth.isEnabled());
         if (followBotBluetooth.isEnabled()) {
             followMechanics_Averaging(); // Get and average RSSI
             //Serial.println(String("FollowMechanics_Loop(), RSSI Value: ") + mRSSIAvg);
@@ -56,14 +88,14 @@ void FollowMechanics::followMechanics_Loop() {
             
             //driveTo_Test_2();
 
-            /*if (mRSSIAvg < -50) {
+            if (mRSSIAvg < -50) {
                 Serial.println("Moving Forwards");
                 myMotors.moveForward();
             } else {
                 Serial.println("Stopping Motors");
                 myMotors.stopMoving();
-            }*/
-        }
+            }
+        }*/
     }
 }
 
@@ -80,6 +112,10 @@ void FollowMechanics::followMechanics_Averaging() {
 
     Serial.print("FollowMechanics, RSSI Avg Value: ");
     Serial.println(mRSSIAvg);
+}
+
+void FollowMechanics::driveTo_Test_1() {
+
 }
 
 

@@ -38,27 +38,17 @@ public:
        mNewDirection = dir;
     }
 
-    void moveForwards(float distance) {
-        mNewDirection = MOTOR_FORWARD;
-    }
-
-    void moveBackwards(float distance) {
-        mNewDirection = MOTOR_BACKWARD;
-    }
-
-    void turnLeft(float rads) {
-        mNewDirection = MOTOR_LEFT;
-    }
-
-    void turnRight(float rads) {
-        mNewDirection = MOTOR_RIGHT;
-    }
-
-    void justStop() {
-        mNewDirection = MOTOR_STOP;
-    }
-
+    const String& getDirection() const { return mNewDirection; }
     
+    void moveForwards(float distance) { mNewDirection = MOTOR_FORWARD; }
+
+    void moveBackwards(float distance) { mNewDirection = MOTOR_BACKWARD; }
+
+    void turnLeft(float rads) { mNewDirection = MOTOR_LEFT; }
+
+    void turnRight(float rads) { mNewDirection = MOTOR_RIGHT; }
+
+    void justStop() { mNewDirection = MOTOR_STOP; }
 
     void moveForward();
     void moveBackward();
