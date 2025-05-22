@@ -26,6 +26,7 @@
 #include "gps/GPS.h"
 #include "motion/motion.h"
 #include "following_mechanics/FollowMechanics.h"
+#include "followbot_client/FollowBotBluetooth.h"
 
 //universal object
 FollowBotManager followBotManager;
@@ -38,6 +39,7 @@ FollowBotManager::FollowBotManager(): mIsDirty(false), mCurrentControl(IDLE){ //
 void FollowBotManager::followBotSetup() { 
     eepromStorage.setup();
     myLCDScreen.myLCDScreen_Setup();
+    followBotBluetooth.setup();
     myGPS.gps_setup();
     followBotClient.followBotClient_Setup();
     myMotors.motorSetup();
@@ -51,12 +53,13 @@ void FollowBotManager::followBotSetup() {
 void FollowBotManager::followBotLoop() {
     batteryReader.batteryReaderLoop();
     myLCDScreen.myLCDScreen_Loop();
+    followBotBluetooth.loop();
     followBotClient.followBotClient_Loop();
     myGPS.gps_loop();
     if(mCurrentControl == IDLE) {
         myMotors.setDirection(MOTOR_STOP);
     } else if (mCurrentControl == FOLLOWING) {
-        followMechanics.followMechanics_Loop();
+       followMechanics.followMechanics_Loop();
     }
     myMotors.motorLoop();
     encoders.loopEncoders();

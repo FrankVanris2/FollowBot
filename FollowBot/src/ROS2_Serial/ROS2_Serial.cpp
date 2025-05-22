@@ -38,12 +38,13 @@ void ROS2_Serial::ros2_loop() {
 
     if ((currentMillis - previousMillis) >= interval) {
         previousMillis = currentMillis;
-        // readSerialData();
+        readSerialData();
         writeSerialData();
     }
 }
 
 void ROS2_Serial::readSerialData() {
+    Serial.println("BEFORE_SERIAL_ARD_ACK");
     if(Serial.available() > 0) {
         String message = Serial.readStringUntil('\n');
         Serial.print("Received: ");
@@ -53,6 +54,7 @@ void ROS2_Serial::readSerialData() {
         DeserializationError error = deserializeJson(doc, message);
 
         if (error) {
+            Serial.println("JSON_ERROR_ACK"); // Acknowledge error command
             Serial.print("JSON Error: ");
             Serial.println(error.c_str());
             return;
@@ -62,10 +64,12 @@ void ROS2_Serial::readSerialData() {
         if (doc["sensor_type"] == "cmd_vel") {
             float linear = doc["data"]["linear"]["x"];
             float angular = doc["data"]["angular"]["z"];
-            Motion::getInstance().setVelocity(linear, angular);
+            Serial.println("ARDUINO_CMD_VEL_ACK"); // Acknowledge command
+            //Motion::getInstance().setVelocity(linear, angular);
         }
         // add other message types here as needed
     }
+    Serial.println("OUTSIDE_SERIAL_ARD_ACK");
 }
 
 void ROS2_Serial::writeSerialData() {

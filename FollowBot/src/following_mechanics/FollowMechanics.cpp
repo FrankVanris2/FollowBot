@@ -57,15 +57,16 @@ void FollowMechanics::followMechanics_Loop() {
 
         if (myMotors.getDirection() != MOTOR_RIGHT) {
             myMotors.setDirection(MOTOR_RIGHT);
+            //Serial.println("FollowMechanics_Loop(), Motors going Right");
         }
 
-        if (currentMillis - previousMinute >= 60000) {
+        if (currentMillis - previousMinute >= 5000) {
             previousMinute = currentMillis;
             mMinRSSI = 0;
             mMaxRSSI = -1000;
         }
 
-        long rssiValue = followBotClient.getRSSI();
+        long rssiValue = followBotBluetooth.getRSSI();
         if (rssiValue > mMaxRSSI) {
             mMaxRSSI = rssiValue;
         }
@@ -73,7 +74,7 @@ void FollowMechanics::followMechanics_Loop() {
             mMinRSSI = rssiValue;
         }
 
-        Serial.println(String("FollowMechanics_Loop(), RSSI Value: ") + rssiValue + " Max RSSI: " + mMaxRSSI + " Min RSSI: " + mMinRSSI);
+        //Serial.println(String("FollowMechanics_Loop(), RSSI Value: ") + rssiValue + " Max RSSI: " + mMaxRSSI + " Min RSSI: " + mMinRSSI);
 
         /*Serial.println(String("Bluetooth is enabled: ") + followBotBluetooth.isEnabled());
         if (followBotBluetooth.isEnabled()) {
