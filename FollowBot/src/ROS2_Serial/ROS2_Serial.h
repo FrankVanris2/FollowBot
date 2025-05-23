@@ -12,7 +12,7 @@
 #pragma once
 
 // Communication timing constants
-#define DEFAULT_UPDATE_INTERVAL 1000 // 1 second between updates
+#define DEFAULT_UPDATE_INTERVAL 1000  // 1 second between updates
 
 /**
  * ROS2_Serial Class
