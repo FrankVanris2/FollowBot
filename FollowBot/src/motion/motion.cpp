@@ -2,20 +2,27 @@
 #include <Arduino.h>
 
 void Motion::setVelocity(float linear, float angular) {
+    Serial.println("Motion::setVelocity() called");
     if(!mEncoders || !mGyro || !mMotors) return;
 
     m_targetLinear = linear;
     m_targetAngular = angular;
+    Serial.println(String("Motion::setVelocity() - Target Linear: ") + m_targetLinear + ", Target Angular: " + m_targetAngular);
 }
 
-void Motion::update() {
+void Motion::motion_loop() {
     if(!mEncoders || !mGyro || !mMotors) return;
 
     // differential speeds
-    float left = m_targetLinear - (m_targetAngular * WHEEL_BASE / 2);
-    float right = m_targetLinear + (m_targetAngular * WHEEL_BASE / 2);
+    if (m_targetLinear != m_prevTargetLinear || m_targetAngular != m_prevTargetAngular) {
+        Serial.println("Motion::update() - Updating target velocities");
+        m_prevTargetLinear = m_targetLinear;
+        m_prevTargetAngular = m_targetAngular;
 
-    mMotors->setNormalizedSpeeds(left, right);
+        float left = m_targetLinear - (m_targetAngular * WHEEL_BASE / 2);
+        float right = m_targetLinear + (m_targetAngular * WHEEL_BASE / 2);
+        mMotors->setNormalizedSpeeds(left, right);     
+    }  
 }
 
 /*void Motion::waitUntilTurnFinished(float radians) {

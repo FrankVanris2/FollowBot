@@ -64,7 +64,7 @@ void ROS2_Serial::readSerialData() {
             float linear = doc["data"]["linear"]["x"];
             float angular = doc["data"]["angular"]["z"];
             Serial.println(String("ARDUINO_CMD_VEL_ACK, Linear: ") + linear + " Angular: " + angular); // Acknowledge command
-            //Motion::getInstance().setVelocity(linear, angular);
+            Motion::getInstance().setVelocity(linear, angular);
         }
         // add other message types here as needed
     }

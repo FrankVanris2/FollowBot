@@ -39,7 +39,6 @@ FollowBotManager::FollowBotManager(): mIsDirty(false), mCurrentControl(IDLE){ //
 void FollowBotManager::followBotSetup() { 
     eepromStorage.setup();
     myLCDScreen.myLCDScreen_Setup();
-    followBotBluetooth.setup();
     myGPS.gps_setup();
     followBotClient.followBotClient_Setup();
     myMotors.motorSetup();
@@ -53,7 +52,6 @@ void FollowBotManager::followBotSetup() {
 void FollowBotManager::followBotLoop() {
     batteryReader.batteryReaderLoop();
     myLCDScreen.myLCDScreen_Loop();
-    followBotBluetooth.loop();
     followBotClient.followBotClient_Loop();
     myGPS.gps_loop();
     if(mCurrentControl == IDLE) {
@@ -61,7 +59,8 @@ void FollowBotManager::followBotLoop() {
     } else if (mCurrentControl == FOLLOWING) {
        followMechanics.followMechanics_Loop();
     }
-    myMotors.motorLoop();
+    Motion::getInstance().motion_loop();
+    //myMotors.motorLoop();
     encoders.loopEncoders();
 
     // //ROS2 Specific

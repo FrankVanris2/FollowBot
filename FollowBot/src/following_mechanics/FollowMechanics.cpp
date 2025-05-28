@@ -73,7 +73,7 @@ void FollowMechanics::followMechanics_Loop() {
         if (rssiValue < mMinRSSI) {
             mMinRSSI = rssiValue;
         }
-
+        followMechanics_Averaging(); // Get and average RSSI
         //Serial.println(String("FollowMechanics_Loop(), RSSI Value: ") + rssiValue + " Max RSSI: " + mMaxRSSI + " Min RSSI: " + mMinRSSI);
 
         /*Serial.println(String("Bluetooth is enabled: ") + followBotBluetooth.isEnabled());

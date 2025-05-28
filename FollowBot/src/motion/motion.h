@@ -24,7 +24,7 @@ public:
 
     // motion interface
     void setVelocity(float linear, float angular);
-    void update();
+    void motion_loop();
     void waitUntilTurnFinished(float radians);
     void waitUntilMoveFinished(float meters);
 
@@ -37,6 +37,8 @@ private:
     Motors* mMotors = nullptr;
 
     // motion state
+    float m_prevTargetLinear = 0.0f;
+    float m_prevTargetAngular = 0.0f;
     float m_targetLinear = 0.0f;
     float m_targetAngular = 0.0f;
     const float WHEEL_BASE = 0.28f; // meters
