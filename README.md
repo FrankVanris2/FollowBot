@@ -8,7 +8,7 @@
  - [Features](#features)
  - [Design Details](#design-details)
  - [Installation](#installation)
- - [Configuration & Usage](#configuration--usage)
+ - [Other Resources](#other-resources)
  - [Contributing](#contributing)
  - [License](#license)
 
@@ -65,6 +65,8 @@ easier and for you to not try and configure PlatformIO on another IDE with hassl
 ![image](/Images/readMe_images/Install.png)
 
 After VSCode with the PlatformIO extension has been installed we can now git clone the repo.
+
+## Other Resources
 
 ## Website development
 The website development has been migrated to it's very own repository, same will occur for the Native React side. If you want to learn more about the website development for this project, please check out the link 
