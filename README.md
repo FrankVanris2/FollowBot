@@ -66,57 +66,11 @@ easier and for you to not try and configure PlatformIO on another IDE with hassl
 
 After VSCode with the PlatformIO extension has been installed we can now git clone the repo.
 
+## Website development
+The website development has been migrated to it's very own repository, same will occur for the Native React side. If you want to learn more about the website development for this project, please check out the link 
+below. Many changes within this repository will continue to occur throughout our production, along with our refactoring of our project:
 
-# Configuration & Usage
-
-## Front-end & Back-end
-Developing on the front-end requires to set up the server side. And it's quite easy.
-
-Firstly, we run our server with Node.js. Follow instructions [here](https://nodejs.org/en/download) to install.
-
-* In your command prompt go to the `BotServer` directory
-* Once in the directory you must run these pip commands:
-  ```cmd
-  pip install Flask
-  pip install -U flask-cors
-  ```
-
-Our database is built using AWS DynamoDB. Install this package in order to access and interact with AWS services like DynamoDB and S3.
-```
-pip install boto3 
-```
-For more information about database interactions between our website and Arduino clients, go to [DatabaseDocument](./Documentation/DatabaseDocument.md):
-
-* install these npm packages for front-end development:
-```
-pip install flask-login  # manage user sessions and authentication in Flask apps
-npm install react-leaflet@4 leaflet  # build mapping interfaces
-npm install chart.js react-chartjs-2 # interactive data visualizations
-```
-
-
-* Once those packages are installed alongside npm, you will need to do the next following commands:
-```cmd
-npm i
-npm i -g npm
-```
-* Now after these above steps you are ready to build the front-end and back-end
-```cmd
-npm run build
-```
-* After the build, run the server
-```cmd
-npm run start
-```
-
-* Run this to render changes to the server for testing
-```cmd
-npm run watch
-```
-
-* In your browser be sure to use this url: `http://xx.xx.xx.xx:5000`
-* the xx.xx.xx.xx is showed in the server command window.
-
+[Website Development for Followbot](https://github.com/FrankVanris2/FollowBotWebsite)
 
 ## Robotic-end
 The robotic side of this project will involve the integration and communication between an Arduino board and a Raspberry Pi running ROS2. The Arduino board will facilitate motor and sensory communication by allowing messages to be sent back and forth, enabling various applications supported by the Raspberry Pi with ROS2. Utilizing ROS2, we can develop learning models and employ computer vision technologies to enhance the accuracy of our mapping, following mechanics, voice recognition, path-finding, and user recognition. The required steps in order to begin development on the robotic side of this project is found in the link below. It will direct you to another Repository that will connect back as always to our master repository:
