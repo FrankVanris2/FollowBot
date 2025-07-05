@@ -7,6 +7,7 @@
  - [About the Team](#about-the-team)
  - [Features](#features)
  - [Design Details](#design-details)
+ - [Development Guidelines](#development-guidelines)
  - [Installation](#installation)
  - [Other Resources](#other-resources)
  - [Contributing](#contributing)
@@ -42,6 +43,57 @@ In terms of project success, our primary focus will be on systematic organizatio
 
 ### High Level Design Architecture
 ![image](/Images/High_Level_Design_Architecture1.png)
+
+## Development Guidelines
+
+### MANDATORY: Unit Testing Before Implementation
+
+**Every developer MUST implement comprehensive unit tests before adding any new feature to the codebase, regardless of framework or repository.**
+
+#### Testing Requirements:
+
+1. **Write Tests First**: Follow Test-Driven Development (TDD) principles
+   - Write failing tests that describe the expected behavior
+   - Implement the minimum code to make tests pass
+   - Refactor while keeping tests green
+
+2. **Test Coverage Requirements**:
+   - All new functions/methods must have corresponding unit tests
+   - Minimum 80% code coverage for new features
+   - Test both success and failure scenarios
+   - Mock external dependencies (server calls, hardware interfaces)
+
+3. **Framework-Specific Testing Standards**:
+   - **Arduino/PlatformIO**: Use PlatformIO's built-in testing framework
+   - **Python Backend**: Use Python's unittest or pytest
+   - **JavaScript/React**: Use Jest for components and API functions
+   - **C++ FollowBot Code**: Use PlatformIO native testing
+   - Follow naming convention: `test_[function_name]_[scenario]`
+   - Include setup and teardown for test isolation
+
+4. **Before Pull Request**:
+   ```bash
+   # For Arduino/PlatformIO projects
+   pio test
+   
+   # For Python backend
+   python -m pytest
+   
+   # For JavaScript projects
+   npm test
+   
+   # Verify build still works
+   pio run  # For Arduino
+   python -m py_compile *.py  # For Python
+   npm run build  # For JavaScript
+   ```
+
+5. **Test Documentation**:
+   - Document test scenarios in commit messages
+   - Update test documentation when adding new test patterns
+   - Reference our testing documentation: [Running Unit Tests PlatformIO](./Documentation/RunningUnitTestsPlatformIO.md)
+
+**⚠️ CRITICAL**: No feature implementation should be merged without corresponding unit tests. This applies to all repositories in the FollowBot ecosystem, including the main robotics code, web applications, and mobile apps.
 
 # Installation
 
